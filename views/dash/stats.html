@@ -1,0 +1,29 @@
+<ul class="nav nav-tabs">
+  <li><a href="/dash">To Do</a></li>
+  <li><a href="/dash/list">List</a></li>
+  <li class="active"><a href="/dash/stats">Stats</a></li>
+</ul>
+
+<form class="form-vertical search" action="fixme" method="get">
+	<span class="callout">
+		<select name="select">
+		  <option value="all" selected>All fields</option> 
+		  <option value="date">Date</option>
+		  <option value="owner">Copyright Owner</option>
+		  <option value="poster">Poster</option>
+		  <option value="resource">Infringing Resource</option>
+		  <option value="status">Status</option>
+		  <option value="urgency">Urgency</option>
+		  <option value="work">Work Infringed</option>
+		</select>
+	
+		<input type="text" name="query" id="query" placeholder="enter your search">
+		<a href="fixme" class="btn btn-principal">Search</a>
+	</span>
+</form>
+
+<h3>Requests by month</h3>
+<img src="/img/takedownrequestsbymonth.png" alt="">
+
+<h3>Requests by sector</h3>
+<img src="/img/takedownsbysector.png" alt="">

@@ -1,0 +1,127 @@
+
+/* ===== Primary Styles ========================================================
+   Author: Lucas Gonze <lucas@gonze.com>
+
+   Fixme: this file is a mess. Clean out unused styles.
+   Fixme: switch to sass/less/compass.
+   ========================================================================== */
+
+div#loginform div.alert-error, div#loginform div.alert-success { display: none }
+div#loginform.fail div.alert-error { display: block }
+div#loginform.success div.alert-success { display: block }
+
+/* kludge: show/hide stuff for logged-in customers depending on what page you're on */
+.loggedinonly {display:none}
+.loggedoutonly {display:none}
+body.firstrun .loggedoutonly {display:block}
+body.reg .loggedoutonly {display:block}
+body.dash .loggedinonly {display:block}
+
+
+p.upper {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    margin-top: .5em
+}
+
+.bigass p {
+    font-size: 1.5em !important;
+    line-height: 2em;
+}
+
+.bigass input[type="text"], 
+.bigass input[type="password"], 
+.bigass textarea
+ { width: 22em; }
+.bigass input[type="submit"] { width: 20em; }
+
+.bigass textarea {
+	height: 5em;
+}
+
+div.designatedagent {
+    margin-left: 4em;
+}
+.designatedagent, .designatedagent p {
+    font-family: monospace;
+}
+div.verticalspacer {
+    margin-top: 2em
+}
+
+#complaintform div.help { font-style: italic }
+#complaintform blockquote a { color: blue }
+
+p.primary { 
+	text-align: center;
+	margin: 2em;
+}
+
+div.explanation { 
+	font-style: italic;
+}
+.labeler label {
+	float: left;
+	min-width: 30em;
+	text-align: right;
+	margin-right: 1em;
+}
+.labeler input, .labeler textarea {
+    width: 30em;
+}
+
+/* stuff for the page used to make a request */
+body.doreq {
+	padding-top: 2em;
+}
+h2#request_takedown {
+	margin-bottom: 1em;
+}
+
+div#emailsent { display: none }
+form#enteremail { display: block }
+h3 { margin-bottom: 2em }
+
+/*
+ * for the /dash section 
+ */
+
+ol.takedownlist {
+    list-style-type: none
+}
+ol.takedownlist a.viewrequest { 
+	position: relative;
+	left: 0;
+	}
+ol.takedownlist li {
+    margin-bottom: 1em;
+    border-bottom: 1px dotted #ccc;
+	clear: right;
+}
+ol.takedownlist div.suggestedactions {
+    float: right;
+    text-align: right;
+}
+ol.takedownlist  label, div.synopsisblock label {
+	width: 10em;
+	text-align: right;
+	display: inline;
+	margin-right: 1em;
+	float: left;
+	font-size: 70%;
+}
+ol.takedownlist div.suggestedactions p {
+    font-size: 70%;
+}
+
+body.dash form.search { 
+    text-align: right;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+body.dash form.search span { 
+    border: 3px dotted #ccc;
+    padding: 1.5em;
+}
+
+

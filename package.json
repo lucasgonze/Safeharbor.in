@@ -1,0 +1,10 @@
+{
+    "name": "Safeharbor.in",
+    "version": "0.0.2",
+    "private": true,
+    "dependencies": {
+        "express": "2.5.8",
+        "handlebars": ">= 1.0.5beta",
+        "pg": "0.6.15"
+    }
+}
