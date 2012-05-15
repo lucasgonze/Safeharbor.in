@@ -33,7 +33,7 @@ function createUserTable() {
 	selectQuery.on('row', function(row) {
 	  console.log(row);
 	});
-
+	
 	//fired after last row is emitted
 	selectQuery.on('end', function() { 
 	  client.end();
