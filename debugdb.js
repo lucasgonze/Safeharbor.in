@@ -1,7 +1,5 @@
 console.log("bp 1");
 
-/*
-
 var pg = require('pg'); //native libpq bindings = `var pg = require('pg').native`
 var conString = process.env.DATABASE_URL;
 
@@ -27,5 +25,8 @@ query.on('row', function(row) {
 query.on('end', function() { 
   client.end();
 });
+
+/*
+
 
 */
