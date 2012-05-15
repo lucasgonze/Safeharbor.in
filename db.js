@@ -15,7 +15,7 @@ function handler(err,result){
 
 function createUserTable() {
 
-	console.log("bp 2.-a");
+	console.log("bp 2.-a-2");
 	
     // this config var is a Heroku thing
     var client = new pg.Client(process.env.DATABASE_URL);
