@@ -1,9 +1,8 @@
-/**
- * Module dependencies.
- */
+//******************************
+// Housekeeping
+//******************************
 
 var express = require('express')
-,
 routes = require('./routes');
 
 var app = module.exports = express.createServer();
@@ -36,13 +35,6 @@ app.configure('production',
 // Routes
 //******************************
 
-console.log("returning"); return;
-
-return;
-
-//*****
-
-
 trivialRoute = function(name,partial,pathOffsetFromViews,pageTitle){
 	app.get(name,function(req, res) {
 	    res.render(
@@ -72,6 +64,10 @@ app.post("/login", routes.loginPost);
 trivialRoute("/dash","home","dash","Todo");
 trivialRoute("/dash/list","list","dash","List");
 trivialRoute("/dash/stats","stats","dash","Stats");
+
+//******************************
+// Server loop
+//******************************
 
 // heroku needs us to accept a dynamically assigned port
 var port = process.env.PORT || 3000; 

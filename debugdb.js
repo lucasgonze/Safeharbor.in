@@ -10,7 +10,7 @@ var client = new pg.Client(conString);
 client.connect();
 
 //queries are queued and executed one after another once the connection becomes available
-client.query("CREATE TEMP TABLE user (id serial,emailConfirmed bool default false,email text not null,password text not null)",
+client.query("CREATE TEMP TABLE user (id serial)",
 	function (err,result){
 		console.log("got error on create table");
 		console.log(err);
