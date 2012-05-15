@@ -6,7 +6,7 @@ var conString = process.env.DATABASE_URL || "tcp://postgres:EMbr4EDS@localhost/s
 var client = new pg.Client(conString);
 client.connect();
 
-function dbErr(err,result)
+function dbErr(err,result){
 	if( err !== null ) {
 		console.log("got error on create table");
 		console.log(err);
