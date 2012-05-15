@@ -1,10 +1,13 @@
+console.log("bp 1");
+
+/*
+
 var pg = require('pg'); //native libpq bindings = `var pg = require('pg').native`
 var conString = process.env.DATABASE_URL;
 
 var client = new pg.Client(conString);
 client.connect();
 
-/*
 
 //queries are queued and executed one after another once the connection becomes available
 client.query("CREATE TEMP user (id serial,emailConfirmed bool default false,email text not null,password text not null)");
