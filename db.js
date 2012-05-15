@@ -1,3 +1,6 @@
+
+console.log("bp 1");
+
 // documentation:
 // https://devcenter.heroku.com/articles/database
 // https://github.com/brianc/node-postgres/wiki
@@ -6,6 +9,7 @@ var pg = require('pg');
 
 function createUserTable() {
 
+	console.log("bp 2");
     // this config var is a Heroku thing
     var client = new pg.Client(process.env.DATABASE_URL);
     client.connect();
@@ -33,7 +37,8 @@ query.on('end', function() {
 });
 */
     client.end();
+	console.log("bp 3");
 
 }
 
-
+createUserTable();
