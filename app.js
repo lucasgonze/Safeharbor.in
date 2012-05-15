@@ -38,17 +38,6 @@ app.configure('production',
 
 console.log("returning"); return;
 
-var pg = require('pg');
-
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-  var query = client.query('CREATE TABLE  `mytakedownrequests`.`acct` ( `uid` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY , `emailConfirmed` BOOL NOT NULL , `password` CHAR( 32 ) NOT NULL , `email` CHAR( 32 ) NOT NULL , `sitename` VARCHAR( 64 ) NOT NULL , `sitelink` VARCHAR( 128 ) NOT NULL ,`agent-snail` VARCHAR( 256 ) NOT NULL ,`agent-email` VARCHAR( 32 ) NOT NULL)'');
-
-  query.on('row', function(row) {
-    console.log(JSON.stringify(row));
-  });
-});
-
-
 return;
 
 //*****
