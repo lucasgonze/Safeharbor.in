@@ -5,6 +5,6 @@
     "dependencies": {
         "express": "2.5.8",
         "handlebars": ">= 1.0.5beta",
-        "pg": "0.6.15"
+        "pg": "0.6.17"
     }
 }
