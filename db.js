@@ -1,23 +1,17 @@
-
 // documentation:
 // https://devcenter.heroku.com/articles/database
 // https://github.com/brianc/node-postgres/wiki
 // https://github.com/brianc/node-postgres
-
-/*
-User table: 
-
-drop table users;
-create table users (id serial,emailConfirmed bool default false,email text not null,password text not null)
-*/
-
 var pg = require('pg');
-var connectionString = process.env.DATABASE_URL; // this config var is a Heroku thing
 
-var client = new pg.Client(connectionString);
-client.connect();
-client.query("drop table if exists user");
-/*
+function createUserTable() {
+
+    // this config var is a Heroku thing
+    var client = new pg.Client(process.env.DATABASE_URL);
+    client.connect();
+    client.query("drop table if exists user");
+
+    /*
 client.query("create table user (id serial,emailConfirmed bool default false,email text not null,password text not null)");
 
 client.query({
@@ -38,4 +32,8 @@ query.on('end', function() {
   client.end();
 });
 */
-client.end();
+    client.end();
+
+}
+
+

@@ -1,2 +1,3 @@
-web: node exampleapp.js 
+web: node db.js
+
 
