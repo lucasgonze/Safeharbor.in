@@ -1,3 +1,3 @@
-web: node db.js
+web: node debugdb.js
 
 

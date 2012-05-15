@@ -1,8 +1,9 @@
+
 var sys = require('util');
 var http = require('http');
 //var pg = require('pg').native;
-var pg = require('pg');
-var connectionString = "postgres://postgres:abcd@localhost:5432/postgres";
+var pg = require('pg').native;
+var connectionString = process.env.DATABASE_URL;
 
 var server = http.createServer(function(req, res) {
   var start = new Date();
