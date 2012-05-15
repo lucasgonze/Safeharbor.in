@@ -18,7 +18,7 @@ function createUserTable() {
 	console.log("bp 2.-a-2");
 	
     // this config var is a Heroku thing
-    var client = new pg.Client(process.env.DATABASE_URL);
+    var client = new pg.Client(process.env.DATABASE_URL || "tcp://postgres:EMbr4EDS@localhost/safeharborin);
     client.connect();
     client.query("drop table if exists user");
 

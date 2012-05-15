@@ -32,6 +32,15 @@ app.configure('production',
 	});
 
 //******************************
+// flailing away
+//******************************
+
+require("./models")
+console.log("about to");
+createAcctTable();
+console.log("just did");
+
+//******************************
 // Routes
 //******************************
 
