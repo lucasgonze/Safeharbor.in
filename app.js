@@ -4,6 +4,7 @@
 
 var express = require('express')
 routes = require('./routes');
+models = require("./models")
 
 var app = module.exports = express.createServer();
 
@@ -35,9 +36,8 @@ app.configure('production',
 // flailing away
 //******************************
 
-require("./models")
 console.log("about to");
-createAcctTable();
+models.createAcctTable();
 console.log("just did");
 
 //******************************

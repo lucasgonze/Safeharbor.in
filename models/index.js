@@ -27,9 +27,8 @@ function logAcct(){
 	});	
 }
 
-function createAcctTable(){
+exports.createAcctTable = function(){
 	client.query("drop table if exists acct");
 	client.query("create table acct (id serial,emailConfirmed bool default false,email text not null,password text not null)",dbErr);
 }
 
-createAcctTable();
