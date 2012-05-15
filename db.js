@@ -35,7 +35,7 @@ function createUserTable() {
 	});
 
 	//fired after last row is emitted
-	query.on('end', function() { 
+	selectQuery.on('end', function() { 
 	  client.end();
 	});
 	
