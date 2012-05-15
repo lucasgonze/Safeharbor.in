@@ -19,6 +19,7 @@ var server = http.createServer(function(req, res) {
     }
   }
 
+/*
 	var pg = require('pg'); //native libpq bindings = `var pg = require('pg').native`
 	var conString = process.env.DATABASE_URL;
 
@@ -44,6 +45,7 @@ var server = http.createServer(function(req, res) {
 	query.on('end', function() { 
 	  client.end();
 	});
+*/
 
 });
 
