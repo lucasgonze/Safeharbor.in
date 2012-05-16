@@ -3,8 +3,8 @@
 //******************************
 
 var express = require('express')
-routes = require('./routes');
-models = require("./models")
+var routes = require('./routes');
+var models = require("./models");
 
 var app = module.exports = express.createServer();
 
@@ -17,6 +17,21 @@ app.configure(function() {
 	    app.use(express.methodOverride());
 	    app.use(app.router);
 	    app.use(express.static(__dirname + '/public'));
+
+		// 404s in particular
+		app.use(function(req, res, next){ 
+		    res.status(404);
+			throw new Error("Not found!?");
+		});
+
+		// misc exceptions
+		app.use(function(err, req, res, next) {
+			console.log("BP 300");
+			if( err.statusCode !== undefined )
+				res.statusCode = err.statusCode; 
+			res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:err.message});
+		});
+
 	});
 
 app.configure('development',
@@ -33,16 +48,17 @@ app.configure('production',
 	});
 
 //******************************
-// flailing away
-//******************************
-
-console.log("about to");
-models.createAcctTable();
-console.log("just did");
-
-//******************************
 // Routes
 //******************************
+
+app.get("/throw1",function(){
+	throw new Error("testing 2");
+});
+app.get("/throw2",function(){
+	var E = new Error("testing 3");
+	E.statusCode = "403";
+	throw(E);
+});
 
 trivialRoute = function(name,partial,pathOffsetFromViews,pageTitle){
 	app.get(name,function(req, res) {

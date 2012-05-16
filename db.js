@@ -15,7 +15,8 @@ function handler(err,result){
 
 function createUserTable() {
 
-	console.log("bp 2.-a-2");
+	console.log("do you really want to delete the user table? Then modify createUserTable to let it happen.");
+	return;
 	
     // this config var is a Heroku thing
     var client = new pg.Client(process.env.DATABASE_URL || "tcp://postgres:EMbr4EDS@localhost/safeharborin);

@@ -1,8 +1,3 @@
-/* This file is intended just for the router for the home page. 
- * However I can't get any other router working in its own file. 
- * For the sake of moving on I'm just putting all the routers 
- * in this file for now.
- */
 
 // helpful for debugging
 exports.nop = function(req, res) {
@@ -17,8 +12,27 @@ exports.loginPost = function(req, res) {
 };
 
 exports.regStep1Post = function(req, res) {
-	// this method is a stub for now. in the future we'll validate the form input.
-	res.redirect("/reg/step2");
+	// validate form input for corruption but not for user-friendliness. User-friendliness is handled in the browser before submitting the form.
+	if( req.body.email === undefined ||
+		req.body.password === undefined ||
+		req.body.confirm === undefined ||
+		req.body.confirm !== req.body.password ||
+		req.body.email == "" ||
+		req.body.password == "" ||
+		req.body.confirm == "" ){
+			var E = new Error();
+			E.statusCode = "400";
+			E.message = "Bogus arguments";
+			throw(E);
+	}
+
+	require("../models").createAcct(req.body.email, req.body.password,function accountCreationCallback(err,result){
+		if( undefined !== err && null !== err ){
+			var msg = 'Unable to create account. Do you already have one? Maybe you should <a href="/login" class="btn">Log In</a> instead.'
+			res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:msg,code:"500"});
+		} else 
+			res.render("reg/step2.html",{"layout":"global.html","pageTitle":"Try It","bodyClass":"reg"});
+	});	
 };
 
 exports.regStep4Post = function(req, res) {
