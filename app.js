@@ -50,15 +50,6 @@ app.configure('production',
 // Routes
 //******************************
 
-app.get("/throw1",function(){
-	throw new Error("testing 2");
-});
-app.get("/throw2",function(){
-	var E = new Error("testing 3");
-	E.statusCode = "403";
-	throw(E);
-});
-
 trivialRoute = function(name,partial,pathOffsetFromViews,pageTitle){
 	app.get(name,function(req, res) {
 	    res.render(
@@ -74,28 +65,13 @@ trivialRoute("/box/:id","top","box","Submit Request");
 app.get("/nop", routes.nop);
 
 // Account creation, login, password recovery
-trivialRoute("/reg","step1","reg","Try It");
+trivialRoute("/reg","step1","reg","Try It"); 
 app.post("/reg",routes.regStep1Post);
 app.get("^/reg/:regid([0-9]+)$",function(req, res){
 	console.log(req.params.regid);
 	res.render("reg/clickthrough-from-email.html",{"layout":"global.html","pageTitle":"Verify","bodyClass":"regid",regid:req.params.regid});
 });
-app.post("^/reg/:regid([0-9]+)$",function(req, res){
-	console.log("POSTing to "+req.params.regid);
-	// validate params
-	// save inputs to DB
-	models.handshakeEmailConfirmation(req.params.regid,function(err,result){
-		if( !result || result.rowCount < 1)
-			; // fixme: 404 error page. also, this is where a crack attempt will manifest.
-		else {
-			// fixme: look up the user's ID to construct
-			var cloakedid = "fixme"; // don't just show a serial number
-			res.render("reg/alldone.html",{"layout":"global.html","pageTitle":"Complete","bodyClass":"alldone","inboxid":cloakedid});
-		}
-	});
-	
-	// render page (dynamic version of step5.html)
-});
+app.post("^/reg/:regid([0-9]+)$",routes.regSaveConfig(req,res));
 
 trivialRoute("/reg/step2","step2","reg","Try It");
 trivialRoute("/reg/step3","step3","reg","Try It");

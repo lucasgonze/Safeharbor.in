@@ -1,4 +1,6 @@
 
+// Posgres reference: https://github.com/brianc/node-postgres/wiki/Query
+
 //var D = new Date(); console.log("Debug logging at (hours:minutes) "); console.log(D.getHours()); console.log(D.getMinutes());
 
 
