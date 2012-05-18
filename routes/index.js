@@ -166,7 +166,6 @@ exports.regStep1Post = function(req, res) {
 				
 };
 
-exports.regCheckEmail = function(req,res){
-	
+exports.regSaveConfig(req,res){
+	res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Not Implemented yet",code:"500"})
 }
-
