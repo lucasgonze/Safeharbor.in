@@ -6,7 +6,7 @@
         "express": "2.5.8",
         "handlebars": ">= 1.0.5beta",
         "pg": "0.6.17",
-		"mailer": ">= 0.6.7",
-		"sendgrid": "0.2.1"
+		"sendgrid": "0.2.1",
+		"MD5":"0.0.0"
     }
 }

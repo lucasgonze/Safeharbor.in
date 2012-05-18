@@ -11,15 +11,45 @@ function getClient(){
 }
 
 exports.createAcct = function(email,password,callback){
+	
 	getClient().query({
 	  name: 'insert acct',
-	  text: "INSERT INTO acct(email,password) values($1, $2)",
+	  text: "INSERT INTO acct(email,password,opaque_id) values($1, $2, $3)",
+	  values: [email,password,opacified]
+	}, function(err,insertCallback){
+		callback(err,opacified);
+	});
+}
+
+exports.initEmailConfirmation = function(email,password,callback){
+	getClient().query({
+	  name: 'insert confirmation',
+	  text: "INSERT INTO emailHandshake(email,password) values($1,$2)",
 	  values: [email,password]
 	}, callback);
 }
 
-exports.createAcctTable = function(){
-	client.query("drop table if exists acct");
-	client.query("create table acct (id serial,emailConfirmed bool default false,email text not null unique,password text not null)",dbErr);
+exports.handshakeEmailConfirmation = function(oid,callback){
+	var client = getClient();
+	client.query(
+		{text: "select email,password from emailHandshake where oid = $1",values: [oid]},
+		function (err,selectResult){
+			if( undefined !== err && null !== err )
+				callback(err);
+		 	else {
+				client.query({text: "delete from emailHandshake where oid = $1",values: [oid]});
+				callback(err,selectResult);
+			}
+		}
+	);
 }
+
+exports.recreateTables = function(){
+	client = getClient();
+	client.query("drop table if exists acct");
+	client.query("create table acct (id serial,email text not null unique,password text not null,opaque_id varchar(32) not null unique)");
+	client.query("drop table if exists emailHandshake");
+	client.query("create table emailHandshake (creation timestamp DEFAULT current_timestamp,id serial, email text not null unique,password text not null) with oids;");
+}
+
 

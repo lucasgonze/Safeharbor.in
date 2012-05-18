@@ -26,7 +26,6 @@ app.configure(function() {
 
 		// misc exceptions
 		app.use(function(err, req, res, next) {
-			console.log("BP 300");
 			if( err.statusCode !== undefined )
 				res.statusCode = err.statusCode; 
 			res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:err.message});
@@ -76,7 +75,28 @@ app.get("/nop", routes.nop);
 
 // Account creation, login, password recovery
 trivialRoute("/reg","step1","reg","Try It");
-app.post("/reg/step1",routes.regStep1Post);
+app.post("/reg",routes.regStep1Post);
+app.get("^/reg/:regid([0-9]+)$",function(req, res){
+	console.log(req.params.regid);
+	res.render("reg/clickthrough-from-email.html",{"layout":"global.html","pageTitle":"Verify","bodyClass":"regid",regid:req.params.regid});
+});
+app.post("^/reg/:regid([0-9]+)$",function(req, res){
+	console.log("POSTing to "+req.params.regid);
+	// validate params
+	// save inputs to DB
+	models.handshakeEmailConfirmation(req.params.regid,function(err,result){
+		if( !result || result.rowCount < 1)
+			; // fixme: 404 error page. also, this is where a crack attempt will manifest.
+		else {
+			// fixme: look up the user's ID to construct
+			var cloakedid = "fixme"; // don't just show a serial number
+			res.render("reg/alldone.html",{"layout":"global.html","pageTitle":"Complete","bodyClass":"alldone","inboxid":cloakedid});
+		}
+	});
+	
+	// render page (dynamic version of step5.html)
+});
+
 trivialRoute("/reg/step2","step2","reg","Try It");
 trivialRoute("/reg/step3","step3","reg","Try It");
 trivialRoute("/reg/step4","step4","reg","Try It");

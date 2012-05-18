@@ -11,22 +11,32 @@ exports.loginPost = function(req, res) {
 //    res.render('firstrun/login.html',{layout:"firstrun/layout.html",loginStatus:"success"});
 };
 
-var regConfirmEmail = function(to){
-	console.log("BP V");
-	console.log(process.env.SENDGRID_USERNAME);
-	console.log(process.env.SENDGRID_PASSWORD);
-	var SendGrid = require('sendgrid').SendGrid;
-	var sendgrid = new SendGrid(
-	  process.env.SENDGRID_USERNAME,
-	  process.env.SENDGRID_PASSWORD
-	  );
-	sendgrid.send({
-		to : "lucas@gonze.com",
-		from : "noreply@safeharbor.in",
-		subject : "node_mailer test email",
-		text: 'Sending email with NodeJS through SendGrid!'
-	}, function(err, result){
-	  if(err){ console.log(err); }
+var regEmitEmailConfirmationRequest = function(tgt,opaque_id,callback){
+	var fs = require('fs');
+	var htmlMail = fs.readFile(__dirname+"/../views/reg/confirmemail.html", 'utf8', function(err, data){
+
+		if(err) {
+			callback(true,"Unable to read file");
+			return;
+		}
+		
+		// fixme: find a way to insert the opaque_id into the URL in the email
+		
+		var SendGrid = require('sendgrid').SendGrid;
+		var username = process.env.SENDGRID_USERNAME || "app4651289@heroku.com";
+		var password = process.env.SENDGRID_PASSWORD || "2z6pwu9y";
+		var sendgrid = new SendGrid(username, password);
+		sendgrid.send({
+		    to: tgt,
+		    from: "noreply@safeharbor.in",
+		    subject: "Please confirm account",
+		    text: 'Please confirm your copyright account at Safeharbor.in. ',
+			html: data
+			}, function(ok) { 
+				if( !ok ) callback(true); 
+			}
+		);
+		
 	});
 }
 
@@ -46,7 +56,11 @@ exports.regStep1Post = function(req, res) {
 			throw(E);
 	}
 
-	regConfirmEmail(req.body.email);
+	regEmitEmailConfirmationRequest(req.body.email, function mailFailed(){
+		var msg = 'Unable to send confirmation email. Please come back and try again tomorrow.';
+		res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:msg,code:"500"});
+		return;	
+	});
 
 	var model = require("../models");
 	model.createAcct(req.body.email, req.body.password,function accountCreationCallback(err,result){
