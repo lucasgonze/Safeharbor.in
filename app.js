@@ -71,7 +71,9 @@ app.get("^/reg/:regid([0-9]+)$",function(req, res){
 	console.log(req.params.regid);
 	res.render("reg/clickthrough-from-email.html",{"layout":"global.html","pageTitle":"Verify","bodyClass":"regid",regid:req.params.regid});
 });
+/* Causing a crash. Temporarily commented out until I can get to the root cause.
 app.post("^/reg/:regid([0-9]+)$",routes.regSaveConfig(req,res));
+*/
 
 trivialRoute("/reg/step2","step2","reg","Try It");
 trivialRoute("/reg/step3","step3","reg","Try It");
