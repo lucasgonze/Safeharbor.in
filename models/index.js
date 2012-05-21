@@ -20,6 +20,11 @@ create table site (ownerid integer not null, id serial, sitename text not null, 
 */
 exports.recreateTables = function(){
 	client = exports.getClient();
-	// see above for sql to execute here.
+	client.query('drop table if exists acct');
+	client.query('create table acct (id serial,email text not null unique,password text not null not null unique) with oids');
+	client.query('drop table if exists emailHandshake');
+	client.query('create table emailHandshake (creation timestamp DEFAULT current_timestamp,id serial, email text not null unique,password text not null) with oids');
+	client.query('drop table if exists site');
+	client.query('create table site (ownerid integer not null, id serial, sitename text not null, domain text not null unique, agentaddress text not null, agentemail text not null) with oids; ');
 }
 

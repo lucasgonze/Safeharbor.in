@@ -35,12 +35,13 @@ exports.setup = function(app){
 	});
 	app.post("^/reg/:regid([0-9]+)$",reg.saveConfig);
 
-	// vestigial mockups
-	trivialRoute("/reg/step2","step2","reg","Try It");
-	trivialRoute("/reg/step3","step3","reg","Try It");
-	trivialRoute("/reg/step4","step4","reg","Try It");
-	app.post("/reg/step4",reg.step4Post);
-	trivialRoute("/reg/step5","step5","reg","Try It");	
+	// Scaffolding for setting up a fresh install
+	app.post("/scaffolding",function(req,res){
+		var models = require("../models");
+		models.recreateTables();
+		res.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\"><html><head><title>what?</title></head><body>huh?</body></html>");
+	    res.end();
+	})
 
 	// Login and password recovery
 	trivialRoute("/login","home","login","Log In");
