@@ -109,6 +109,7 @@ exports.saveAcct = function(req, res) {
 			if( typeof result === 'object' && typeof result.oid === "number"){
 				// all good
 				emailHandshake(req.body.email,""+result.oid,req.headers.host);
+				return(res.render("reg/checkyouremail.html",{layout:"global.html",pageTitle:"Check Your Email","bodyClass":"gocheckemail"}));
 			} else {
 				// we have an error
 				console.log("Fatal error in initEmailConfirmation.")
@@ -116,8 +117,6 @@ exports.saveAcct = function(req, res) {
 				return(res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Database 23",code:"500"}));
 			}
 		});
-
-		return(res.render("reg/checkyouremail.html",{layout:"global.html",pageTitle:"Check Your Email","bodyClass":"gocheckemail"}));
 
 	}); // end checkForAccount call
 
