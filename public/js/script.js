@@ -8,8 +8,8 @@ $(document).ready(function() {
 		/* http://docs.jquery.com/Plugins/Validation#List_of_built-in_Validation_methods */
 		rules: {
 			email: {
-				required: true,
-				email: true
+				required: true,	
+				email: true		
 			},
 			password: {
 				required: true,
