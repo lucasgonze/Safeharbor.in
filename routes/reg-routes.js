@@ -1,4 +1,8 @@
 
+/*****************************
+ * Account Creation
+ *****************************/
+
 var models = require("../models/reg-models.js");
 
 exports.saveConfig = function(req,res){

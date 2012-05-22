@@ -1,7 +1,9 @@
 
 var models = require('./index.js');
 
-//var D = new Date(); console.log("Debug logging at (hours:minutes) "); console.log(D.getHours()); console.log(D.getMinutes());
+/*****************************
+ * Account Creation
+ *****************************/
 
 function getSecureUniquePublicID(){
 	var id = Math.floor((Math.random()*10000000)+1);

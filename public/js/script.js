@@ -3,9 +3,9 @@ Lucas Gonze <lucas@gonze.com>
 */
 
 $(document).ready(function() {
-	$("#reg1form").validate({
-		
-		/* http://docs.jquery.com/Plugins/Validation#List_of_built-in_Validation_methods */
+
+	/* http://docs.jquery.com/Plugins/Validation#List_of_built-in_Validation_methods */
+	$("#reg1form").validate({	
 		rules: {
 			email: {
 				required: true,	
@@ -19,9 +19,9 @@ $(document).ready(function() {
 				required: true,						
 				equalTo: "#password"		
 			}	
-			
+		
 		}
-			
+		
 	});
 
 });
