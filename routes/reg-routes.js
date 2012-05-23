@@ -44,7 +44,7 @@ exports.saveConfig = function(req,res){
 
 var emailHandshake = function(email,regid,host){	
 	var to = email;
-	var subject = "Confirm account for Safeharbor.in";
+	var subject = "New account at Safeharbor.in";
 	var text = 'Please confirm your Safeharbor.in account by going to http://safeharbor.in/reg/'+regid;
 	var templateRelativePath = "/../views/reg/handshake.html";
 	var templateVars = {'regid': regid,'host':host};

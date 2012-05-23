@@ -37,6 +37,7 @@ exports.initPasswordReset = function(email,callback){
 		});
 
 	query.on('error', function(error) {
+		console.log(error);
 		throw("Error 447");
 	});
 
