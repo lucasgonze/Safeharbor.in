@@ -42,40 +42,18 @@ exports.saveConfig = function(req,res){
 	
 }
 
-var emailHandshake = function(email,regid,host){
-	
-	var fs = require('fs');
-	var Handlebars = require('handlebars');
-	fs.readFile(__dirname+"/../views/reg/handshake.html", 'utf8',function(err,source){
-
-		if(err){
-			console.log("ERROR READING EMAIL TEMPLATE");
+var emailHandshake = function(email,regid,host){	
+	var to = email;
+	var subject = "Confirm account for Safeharbor.in";
+	var text = 'Please confirm your Safeharbor.in account by going to http://safeharbor.in/reg/'+regid;
+	var templateRelativePath = "/../views/reg/handshake.html";
+	var templateVars = {'regid': regid,'host':host};
+	require('../lib/mail.js').emailFromTemplate(to,subject,text,templateRelativePath,templateVars,function(success,message){
+		if(!success){
+			console.log("ERROR: unable to send handshake email");
 			console.log(err);
-			return;
+			console.log(message);
 		}
-
-		var template = Handlebars.compile(source);
-		var context = {regid: regid,'host':host};
-		var html    = template(context);
-
-		var SendGrid = require('sendgrid').SendGrid;
-		var username = process.env.SENDGRID_USERNAME || "app4651289@heroku.com";
-		var password = process.env.SENDGRID_PASSWORD || "2z6pwu9y";
-		var sendgrid = new SendGrid(username, password);
-
-		var params = {
-		    to: email,
-		    from: "noreply@safeharbor.in",
-		    subject: "Confirm email for Safeharbor.in",
-		    text: 'Please confirm your Safeharbor.in account by going to http://safeharbor.in/reg/'+regid,
-			'html': html
-		};
-		sendgrid.send(params, function(success, message) {
-			if (!success) {
-				console.log("ERROR: unable to send handshake email")
-				console.log(message);
-			}
-		});	
 	});
 }
 
@@ -102,9 +80,9 @@ exports.saveAcct = function(req, res) {
  			typeof (result.rows[0]) === "object" &&
 			typeof (result.rows[0].count) === "number" &&
 			result.rows[0].count > 0 ){
-			res.render("login/home.html",{
+			res.render("profile/login.html",{
 				layout:"global.html",pageTitle:"Account exists","bodyClass":"login",
-				alert: '<div class="alert alert-info">You already have an account</div>'
+				'alert-from-create': '<div class="alert alert-info">You already have an account</div>'
 			});
 			return;
 		} 

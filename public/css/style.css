@@ -6,9 +6,9 @@
    Fixme: switch to sass/less/compass.
    ========================================================================== */
 
-div#loginform div.alert-error, div#loginform div.alert-success { display: none }
-div#loginform.fail div.alert-error { display: block }
-div#loginform.success div.alert-success { display: block }
+.hideerroruntilfail div.alert-error, .hideerroruntilfail div.alert-success { display: none }
+.hideerroruntilfail.fail div.alert-error { display: block }
+.hideerroruntilfail .success div.alert-success { display: block }
 
 /* kludge: show/hide stuff for logged-in customers depending on what page you're on */
 .loggedinonly {display:none}

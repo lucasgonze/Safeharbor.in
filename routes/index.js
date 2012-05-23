@@ -40,8 +40,12 @@ exports.setup = function(app){
 	})
 
 	// Login, password recovery, acct management
-	trivialRoute("/login","login","acct","Log In");
+	trivialRoute("/login","login","profile","Log In");
 	app.post("/login",profile.saveLogin);
+	trivialRoute("/lostpassword","lostpassword","profile","Lost Password");
+	app.post("/lostpassword",profile.recoverPassword);
+	app.get("/lostpassword/:resetSecret([0-9a-z]{10})$",profile.verifySecret);
+	app.post("/lostpassword/:resetSecret([0-9a-z]{10})$",profile.postNewPassword);
 	
 	// Components for aggrieved rights holders
 	trivialRoute("/box/:id","top","box","Submit Request");
