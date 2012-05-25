@@ -1,21 +1,26 @@
 {{{alert-from-reset}}}
-<form action="/login" method="post" id="loginform" class="bigass hideerroruntilfail {{loginStatus}}">
 
-	<div class="alert alert-error">
-		<!-- fixme: on typing, hide error message -->
-		Not found. 
-	</div>
+<div class="narrowblock">
+	<form action="/login" method="post" id="loginform" class="bigass hideerroruntilfail {{loginStatus}}">
 
-	{{{alert-from-create}}}
+		<div class="alert alert-error">
+			<!-- fixme: on typing, hide error message -->
+			Not found. 
+		</div>
 
-	<p class="upper">Email address:</p>
-	<p><input type="text" placeholder="your-email@example.com" autofocus required name="email"></p>
-	<p class="upper">Password:</p>
-	<p><input type="password" placeholder="***" required name="password"></p>
-	<p><input type="submit" class="btn btn-primary btn-large" value="Sign in"></p>
+		{{{alert-from-create}}}
 
-</form>
+		<p class="upper">Email address:</p>
+		<p><input type="text" placeholder="your-email@example.com" autofocus required name="email"></p>
+		<p class="upper">Password:</p>
+		<p><input type="password" placeholder="***" required name="password"></p>
+		<p><input type="submit" class="btn btn-primary btn-large" value="Sign in"></p>
 
-<p><a href="/lostpassword" class="btn">Lost password</a></p>
-<p><a href="/reg" class="btn">Create account</a></p>
+		<div style="text-align: left">
+			<p><a href="/lostpassword">Lost password</a></p>
+			<p><a href="/reg">Create account</a></p>
+		</div>
+	</form>
+
+</div>
 

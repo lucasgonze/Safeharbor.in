@@ -21,6 +21,17 @@ body.firstrun .loggedoutonly {display:block}
 body.reg .loggedoutonly {display:block}
 body.dash .loggedinonly {display:block}
 
+/* used when the content is a narrow column that looks weird if not centered */
+div.narrowblock {
+	margin-left: auto; 
+	margin-right: auto; 
+	width: 18em
+}
+div.notsonarrowblock {
+	margin-left: auto; 
+	margin-right: auto; 
+	width: 32em
+}
 
 p.upper {
     margin-bottom: 0;
@@ -33,6 +44,7 @@ p.upper {
     line-height: 2em;
 }
 
+*.sizeofinput,
 .bigass input[type="text"], 
 .bigass input[type="password"], 
 .bigass textarea

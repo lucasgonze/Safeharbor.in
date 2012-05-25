@@ -9,11 +9,15 @@ global_isUserLoggedIn = false;  // ONLY referenced directly by code in lib/login
 // modules
 //******************************
 
-var express = require('express')
+var express = require('express');
 var routes = require('./routes');
 var models = require("./models");
 var loginstate = require("./lib/loginstate.js");
-var app = module.exports = express.createServer(express.cookieParser(),express.session({ secret: 'I loved KH.', userid: null }));
+
+var app = module.exports = express.createServer(
+	express.cookieParser(),
+	express.session({ secret: 'I loved KH.', userid: null })
+	);
 
 //******************************
 // middleware
@@ -22,7 +26,7 @@ var app = module.exports = express.createServer(express.cookieParser(),express.s
 app.configure(function() {
 
 	    app.set('views', __dirname + '/views');
-	
+
 		var Handlebars = require('handlebars');
 		Handlebars.registerHelper('loggedInStatusClass', function() {
 			var isLoggedIn = loginstate.isLoggedIn();

@@ -15,12 +15,6 @@
 
 	<link rel="stylesheet" href="/css/bootstrap.css">
 	<link rel="stylesheet" href="/css/font-awesome.css">
-	<style>
-	body {
-	  padding-top: 60px;
-	  padding-bottom: 40px;
-	}
-	</style>
 	<link rel="stylesheet" href="/css/bootstrap-responsive.css">
 	<link rel="stylesheet" href="/css/style.css">
 
@@ -31,7 +25,7 @@
 </head>
 <body {{#if bodyClass}}class="{{bodyClass}}"{{/if}}>
 
-	<div class="navbar navbar-fixed-top {{loggedInStatusClass}}">
+	<div class="navbar {{loggedInStatusClass}}">
 	  <div class="navbar-inner">
 	    <div class="container">
 
@@ -52,6 +46,7 @@
 	    </div>
 	  </div>
 	</div>
+
 
 	<div id="filling" class="container">{{{body}}}</div>
 	

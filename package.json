@@ -11,6 +11,7 @@
         "handlebars": ">= 1.0.5beta",
         "pg": "0.6.17",
 		"sendgrid": "0.2.1",
-		"MD5":"0.0.0"
+		"MD5":"0.0.0",
+		"connect-cookie-session":">= 0.0.2"
     }
 }
