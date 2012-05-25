@@ -6,6 +6,10 @@
    Fixme: switch to sass/less/compass.
    ========================================================================== */
 
+/* options for managing profile and registration status the top nav bar */
+.loggedout .hideifloggedout {display:none}
+.loggedin .hideifloggedin {display:none}
+
 .hideerroruntilfail div.alert-error, .hideerroruntilfail div.alert-success { display: none }
 .hideerroruntilfail.fail div.alert-error { display: block }
 .hideerroruntilfail .success div.alert-success { display: block }

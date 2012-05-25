@@ -14,6 +14,7 @@
 	<meta name="viewport" content="width=device-width">
 
 	<link rel="stylesheet" href="/css/bootstrap.css">
+	<link rel="stylesheet" href="/css/font-awesome.css">
 	<style>
 	body {
 	  padding-top: 60px;
@@ -30,12 +31,24 @@
 </head>
 <body {{#if bodyClass}}class="{{bodyClass}}"{{/if}}>
 
-	<div class="navbar navbar-fixed-top">
+	<div class="navbar navbar-fixed-top {{loggedInStatusClass}}">
 	  <div class="navbar-inner">
 	    <div class="container">
-		  <a href="/login" class="loggedoutonly btn pull-right">Log in</a>		
-		  <a href="/fixme?section=logout" class="loggedinonly btn pull-right">Log out</a>		
-	      <a class="brand" href="/">Safeharbor.in</a>
+
+			<div class="btn-group pull-right hideifloggedout" style="margin-right: 4em">
+			    <a class="btn" href="#"><i class="icon-user"></i></a>
+			    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-chevron-down"></span></a>
+			    <ul class="dropdown-menu">
+			        <li><a href="/passwordreset"><i class="icon-key"></i> Change Password</a></li>
+			        <li><a href="/dash"><i class="icon-inbox"></i> Inbox</a></li>
+			        <li><a href="/accountdeleter"><i class="icon-trash"></i> Delete Account</a></li>
+			        <li><a href="/siteeditor"><i class="icon-cog"></i> Site Settings</a></li>
+			        <li><a href="/logout"><i class="icon-signout"></i> Sign Out</a></li>
+			    </ul>
+			</div>
+
+			<a href="/login" class="btn pull-right hideifloggedin"><i class="icon-signin"></i> Sign in</a>
+			<a class="brand" href="/">Safeharbor.in</a>
 	    </div>
 	  </div>
 	</div>
@@ -51,6 +64,5 @@
 	<script src="/js/libs/bootstrap/tab.js"></script>
 	<script src="/js/libs/jquery-validation/jquery.validate.js"></script>
 	<script src="/js/script.js"></script>
-	
 	
 </body>

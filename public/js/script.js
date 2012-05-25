@@ -22,7 +22,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	$("#passwordresetform").validate({	
+	$("#lostpasswordform").validate({	
 		rules: {
 			password: {
 				required: true,
@@ -54,7 +54,35 @@ $(document).ready(function() {
 		}
 	});
 
+	$("#loginform").validate({	
+		rules: {
+			email: {
+				required: true,	
+				email: true		
+			},
+			password: {
+				required: true,
+				minlength: 4
+			}	
+		}
+	});
 
+	$("#passwordresetform").validate({	
+		rules: {
+			current: {
+				required: true,
+				minlength: 4
+			},	
+			newpassword: {
+				required: true,
+				minlength: 4
+			},	
+			confirm: {
+				equalTo: "#newpassword"	
+			}	
+		}
+	});
+	
 });
 
 

@@ -4,6 +4,7 @@
  *****************************/
 
 var models = require("../models/reg-models.js");
+var loginstate = require('../lib/loginstate.js');
 
 exports.saveConfig = function(req,res){
 
@@ -26,7 +27,7 @@ exports.saveConfig = function(req,res){
 		}
 
 		// save newly created user ID to a session variable
-		req.session.userid = result.id;
+		loginstate.enable(req,result.id);
 
 		// insert the site data into db
 		models.createSite(result.id,req.body.sitename,req.body.domain,req.body.agentaddress,req.body.agentemail,

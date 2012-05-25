@@ -23,7 +23,7 @@ create table resets (ts timestamp,userid integer not null,secret text not null);
 exports.recreateTables = function(){
 	client = exports.getClient();
 	client.query('drop table if exists acct');
-	client.query('create table acct (id serial,email text not null unique,password text not null unique,resetSecret text,resetDate timestamp) with oids');
+	client.query('create table acct (id serial,email text not null unique,password text not null,resetSecret text,resetDate timestamp) with oids');
 	client.query('drop table if exists emailHandshake');
 	client.query('create table emailHandshake (creation timestamp DEFAULT current_timestamp,id serial, email text not null,password text not null) with oids');
 	client.query('drop table if exists site');

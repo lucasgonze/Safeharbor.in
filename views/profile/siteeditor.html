@@ -1,0 +1,23 @@
+<div class="bigass">
+
+<!--
+	<div class="alert alert-success">
+		<p style="font-style: italic">Welcome back!</p>			
+	</div>
+-->
+
+	<form action="/siteeditor" method="post" id="siteeditor">
+
+		<p class="upper">Title of your site:</p>
+		<p><input type="text" value="{{{sitename}}}" name="sitename" id="sitename"></p>
+		<p class="upper">Domain name of your site:</p>
+		<p><input type="text" value="{{{sitedomain}}}" name="domain" id="domain"></p>
+		<p class="upper">Mailing address of your <a href="http://www.copyright.gov/onlinesp/" target="safeharbor.in-newwin">designated agent to receive notifications of claimed infringement</a>:</p>
+		<textarea required name="agentaddress" id="mailing">{{{agentaddress}}}</textarea>
+		<p class="upper">Email address of your designated agent:</p>
+		<p><input type="text" value="{{{agentemail}}}" name="agentemail"></p>
+
+		<p style="text-align: center""><input class="btn btn-primary btn-large"" type="submit" value="Save"></p>
+
+	</form>
+</div>

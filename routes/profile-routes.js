@@ -4,6 +4,13 @@
  *****************************/
 
 var models = require("../models/profile-models.js");
+var loginstate = require('../lib/loginstate.js');
+
+// log out
+exports.clearLogin = function(req,res){
+	loginstate.disable(req);
+	res.redirect("/login");
+}
 
 exports.saveLogin = function(req,res){
 	
@@ -20,7 +27,7 @@ exports.saveLogin = function(req,res){
 				// reject and show an error
 				res.render("profile/login.html",{"layout":"global.html","pageTitle":"Log In","loginStatus":"fail",code:400});
 			} else {
-				req.session.userid = result.id;			
+				loginstate.enable(req,result.id);
 				res.redirect("/dash");
 			}
 		});
@@ -106,3 +113,118 @@ exports.postNewPassword = function(req,res){
 	}
 }
 
+/* Different than postNewPassword in that it's used by a logged-in user rather than one who has lost their password. */
+exports.savePasswordReset = function(req,res){
+	try {		
+		if( typeof req.body.current !== "string" || req.body.current < 4 || 
+			typeof req.body.newpassword !== "string" || req.body.newpassword < 4 || 
+			typeof req.body.confirm !== "string" || 
+			req.body.newpassword !== req.body.confirm 
+		 )
+			throw new Error("flaky lunch");
+
+		models.resetPasswordForLoggedInUser(loginstate.getID(req),req.body.current,req.body.newpassword,function(err,result){
+			if(err){
+				var alert = '<div class="alert alert-error"><i class="icon-error"></i> Check your password</div>';	
+				var vars = {layout:"global.html",pageTitle:"Reset Password",'alert':alert};
+				res.render("profile/passwordreset.html",vars);	
+				return;
+			} 
+			var alert = '<div class="alert alert-success"><i class="icon-ok"></i> Success</div>';
+			var vars = {layout:"global.html",pageTitle:"Log In",'alert':alert,'nastykludge':'display:none'};
+			res.render("profile/passwordreset.html",vars);	
+		});
+	} catch(exception){
+		// 500 error 
+		console.log("Internal error in savePasswordReset");
+		console.log(exception);
+		res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Error ( *_)",code:"500"});
+	}	
+}
+
+exports.deleteAccount = function(req,res){
+	try {		
+		models.deleteAccount(req.session.userid,function(err,result){
+
+			var loginstate = require('../lib/loginstate.js');
+			loginstate.disable(req);
+			
+			var alert = '<div class="alert alert-success"><i class="icon-ok"></i> Success</div>';
+			var vars = {layout:"global.html",pageTitle:"Log In",'alert':alert,'nastykludge':'display:none'};
+			res.render("profile/passwordreset.html",vars);	
+		});
+	} catch(exception){
+		// 500 error 
+		console.log("Internal error in deleteAccount");
+		console.log(exception);
+		res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Error ( *_)",code:"500"});
+	}	
+}
+
+exports.emitSiteEditor = function(req,res){	
+	if( ! loginstate.isLoggedIn() )
+		return(res.render("error/error.html",
+		{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Not Found",code:"404"}));
+	
+	try {
+		var uid = loginstate.getID(req);
+		if( uid === null )
+			throw("Corrupt session");
+			
+		models.getSiteForUser(uid, function(err,result){
+		
+			if(err) throw("No site for UID");
+			var vars = {
+					layout: "global.html",
+					pagetitle: "Edit Site",
+					bodyClass: "siteeditor",
+					sitename: result.sitename,
+					sitedomain: result.domain,
+					agentaddress: result.agentaddress,
+					agentemail: result.agentemail
+				};			
+			res.render("profile/siteeditor.html",vars);
+		
+		});
+	} catch(ex){
+		console.log("girls in apartment 3G: ");
+		console.log(ex);
+		res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Error from the girls in apartment 3G",code:"500"});		
+	}	
+}
+
+exports.saveSiteEdit = function(req,res){
+	if( ! loginstate.isLoggedIn() )
+		return(res.render("error/error.html",
+		{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Not Found",code:"404"}));
+	
+	try {
+		var uid = loginstate.getID(req);
+		if( uid === null )
+			throw("Corrupt session");
+
+		models.setSiteForUser(
+			uid,
+			req.body.sitename, 
+			req.body.domain, 
+			req.body.agentaddress, 
+			req.body.agentemail, 
+			function(err,result){
+		
+			if(err) throw("Unable to save");
+			
+			var vars = {
+					layout: "global.html",
+					pageTitle: "Success",
+					bodyClass: "success",
+				};			
+			res.render("success.html",vars);
+		
+		});
+	} catch(ex){
+		console.log("girls in apartment 13G: ");
+		console.log(ex);
+		res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Error from the girls in apartment 13G",code:"500"});		
+	}	
+
+}

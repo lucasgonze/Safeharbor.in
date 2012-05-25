@@ -4,6 +4,9 @@ var reg = require("./reg-routes.js");
 
 // helpful for debugging
 var nopRoute = function(req, res) {
+	console.log("req.session: ")
+	console.log(req.session);
+	require('../lib/loginstate.js').logstate(req);
     res.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\"><html><head><title>NOP</title></head><body>NOP</body></html>");
     res.end();
 };
@@ -46,9 +49,17 @@ exports.setup = function(app){
 	app.post("/lostpassword",profile.recoverPassword);
 	app.get("/lostpassword/:resetSecret([0-9a-z]{10})$",profile.verifySecret);
 	app.post("/lostpassword/:resetSecret([0-9a-z]{10})$",profile.postNewPassword);
+	trivialRoute("/logout","logout","profile","Log Out");
+	app.post("/logout",profile.clearLogin);
+	trivialRoute('/passwordreset','passwordreset','profile','Reset Password');
+	app.post('/passwordreset',profile.savePasswordReset);
+	trivialRoute('/accountdeleter','delete','profile','Delete Account');
+	app.post('/accountdeleter',profile.deleteAccount);
+	app.get('/siteeditor',profile.emitSiteEditor);
+	app.post('/siteeditor',profile.saveSiteEdit);
 	
 	// Components for aggrieved rights holders
-	trivialRoute("/box/:id","top","box","Submit Request");
+	trivialRoute("/box/:id","top","box","Submit Request")
 
 	// Dealing with takedown requests for logged in customers
 	trivialRoute("/dash","home","dash","Todo");

@@ -1,20 +1,47 @@
 
+//******************************
+// global variables
+//******************************
+
+global_isUserLoggedIn = false;  // ONLY referenced directly by code in lib/loginstate.js
+
+//******************************
+// modules
+//******************************
+
 var express = require('express')
 var routes = require('./routes');
 var models = require("./models");
+var loginstate = require("./lib/loginstate.js");
 var app = module.exports = express.createServer(express.cookieParser(),express.session({ secret: 'I loved KH.', userid: null }));
 
 //******************************
-// Middleware
+// middleware
 //******************************
 
 app.configure(function() {
 
 	    app.set('views', __dirname + '/views');
-	    app.register('.html', require('handlebars'));
+	
+		var Handlebars = require('handlebars');
+		Handlebars.registerHelper('loggedInStatusClass', function() {
+			var isLoggedIn = loginstate.isLoggedIn();
+			if( isLoggedIn )
+				return('loggedin'); // that's a class name
+			else
+				return('loggedout');
+		});
+	    app.register('.html', Handlebars);
 	    app.set('view engine', 'handlebars');
+
+		app.use(function(req, res, next){
+			loginstate.initFromReq(req);
+			next();
+		});	
+	
 	    app.use(express.bodyParser());
 	    app.use(express.methodOverride());
+	
 	    app.use(app.router);
 	    app.use(express.static(__dirname + '/public'));
 
