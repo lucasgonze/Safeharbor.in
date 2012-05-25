@@ -55,6 +55,7 @@ exports.setup = function(app){
 	app.post('/passwordreset',profile.savePasswordReset);
 	trivialRoute('/accountdeleter','delete','profile','Delete Account');
 	app.post('/accountdeleter',profile.deleteAccount);
+
 	app.get('/siteeditor',profile.emitSiteEditor);
 	app.post('/siteeditor',profile.saveSiteEdit);
 	
