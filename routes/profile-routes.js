@@ -172,11 +172,9 @@ exports.emitSiteEditor = function(req,res){
 	
 	try {
 		var uid = loginstate.getID(req);
-		if( uid === null )
-			throw("Corrupt session");
-			
-			throw("this should be caught below");
 		models.getSiteForUser(uid, function(err,result){
+
+			throw("thrown within callback");
 		
 			if(err) throw("No site for UID");
 			var vars = {
