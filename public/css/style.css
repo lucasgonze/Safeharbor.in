@@ -6,6 +6,9 @@
    Fixme: switch to sass/less/compass.
    ========================================================================== */
 
+/* Thanks, http://subtlepatterns.com */
+stubbed-out body { background-image: url(/img/bkg.png) }
+
 /* options for managing profile and registration status the top nav bar */
 .loggedout .hideifloggedout {display:none}
 .loggedin .hideifloggedin {display:none}
@@ -78,7 +81,7 @@ div.explanation {
 }
 .labeler label {
 	float: left;
-	min-width: 30em;
+	min-width: 15em;
 	text-align: right;
 	margin-right: 1em;
 }
@@ -138,6 +141,44 @@ body.dash form.search {
 body.dash form.search span { 
     border: 3px dotted #ccc;
     padding: 1.5em;
+}
+
+/****************
+ * Form for requesting a takedown
+ ****************/
+
+#request legend {
+    border: 0;
+    width: auto;
+    padding: 3px;
+    display: inline;
+    font-size: 1.2em;
+    line-height: 2em;
+    }
+#request fieldset { 
+    border: 1px solid #ccc; 
+    padding: 1em
+}
+
+/* context-sensitive help for input fields */
+#request .help-block { display: none; }
+#request .show-block .help-block, .help-block:active { display: inline }
+
+#request input[type="text"], 
+#request input[type="password"], 
+#request textarea
+ { width: 30em; }
+#request input[type="submit"] { width: 30em; }
+
+#request textarea {height: 5em}
+
+#request q { font-style: italic }
+#request q:before { content: open-quote } /* not working - fixme */
+#request q:after { content: close-quote } /* not working - fixme */
+
+#request em { 
+	font-style: normal;
+	font-weight: bold;
 }
 
 

@@ -107,8 +107,6 @@ exports.deleteAccount = function(userid,callback){
 	
 	// PT 1: delete any sites owned by this user
 	// (in the future when there are multiple accounts per site this will become more complex)
-	console.log('bp 555');
-	console.log(userid);
 	var siteQuery = models.getClient().query({
 		text: "delete from site where ownerid = $1",
 		values: [userid]

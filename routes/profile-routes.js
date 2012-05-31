@@ -145,7 +145,7 @@ exports.savePasswordReset = function(req,res){
 exports.deleteAccount = function(req,res){
 	try {		
 		models.deleteAccount(req.session.userid,function(err,result){
-
+			
 			var loginstate = require('../lib/loginstate.js');
 			loginstate.disable(req);
 			
