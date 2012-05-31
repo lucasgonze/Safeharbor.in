@@ -163,30 +163,15 @@ exports.deleteAccount = function(req,res){
 
 exports.emitSiteEditor = function(req,res){	
 	
-	console.log("bp 444");
-	process.on('uncaughtException', function (exception) {
-		console.log("bp 445");
-	   res.send("yay!");
-	  });
-	console.log("bp 446");
-	
-	var pageTitle = "";
-	console.log("emitSiteEditor session state");
-	console.log(req.session);
-	
 	if( ! loginstate.isLoggedIn() ){
-		console.log("bp 444");
 		return(res.render("error/error.html",
 		{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Not Found",code:"404"}));		
 	}
 	
 	try {
-		console.log("bp 447");
 		var uid = loginstate.getID(req);
 		models.getSiteForUser(uid, function(err,result){
 
-			throw("thrown within callback");
-		
 			if(err) throw("No site for UID");
 			var vars = {
 					layout: "global.html",
