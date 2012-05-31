@@ -193,7 +193,9 @@ exports.emitSiteEditor = function(req,res){
 		console.log("girls in apartment 3G: ");
 		console.log(ex);
 		res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Error from the girls in apartment 3G",code:"500"});		
-	}	
+	} finally {
+		res.send("it worked!");
+	}
 }
 
 exports.saveSiteEdit = function(req,res){
