@@ -162,6 +162,10 @@ exports.deleteAccount = function(req,res){
 }
 
 exports.emitSiteEditor = function(req,res){	
+
+	console.log("emitSiteEditor session state");
+	console.log(req.session);
+	
 	if( ! loginstate.isLoggedIn() )
 		return(res.render("error/error.html",
 		{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Not Found",code:"404"}));
@@ -194,6 +198,10 @@ exports.emitSiteEditor = function(req,res){
 }
 
 exports.saveSiteEdit = function(req,res){
+
+	console.log("saveSiteEdit session state");
+	console.log(req.session);	
+	
 	if( ! loginstate.isLoggedIn() )
 		return(res.render("error/error.html",
 		{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Not Found",code:"404"}));
