@@ -175,6 +175,7 @@ exports.emitSiteEditor = function(req,res){
 		if( uid === null )
 			throw("Corrupt session");
 			
+			throw("this should be caught below");
 		models.getSiteForUser(uid, function(err,result){
 		
 			if(err) throw("No site for UID");
