@@ -162,7 +162,12 @@ exports.deleteAccount = function(req,res){
 }
 
 exports.emitSiteEditor = function(req,res){	
-
+	
+	process.on('uncaughtException', function (exception) {
+	   res.send("yay!");
+	  });
+	
+	var pageTitle = "";
 	console.log("emitSiteEditor session state");
 	console.log(req.session);
 	
@@ -193,8 +198,6 @@ exports.emitSiteEditor = function(req,res){
 		console.log("girls in apartment 3G: ");
 		console.log(ex);
 		res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Error from the girls in apartment 3G",code:"500"});		
-	} finally {
-		res.send("it worked!");
 	}
 }
 
