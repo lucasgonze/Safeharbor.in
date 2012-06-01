@@ -8,15 +8,17 @@ exports.get = function(siteid,callback){
 		values: [siteid]
 		});	
 
-	query.on('error', function(error) {throw(error);}); // code problem
+	query.on('error', function(error) {
+		callback(error);
+	});
 	
 	query.on('row', function(row) {	
-		callback(false,row);
+		callback(null,row);
 	});
 
 	query.on('end', function(result) {
 		if( result.rowCount < 1)
-			callback(true);
+			callback("Box ID not found");
 	});
 }
 

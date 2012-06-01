@@ -127,18 +127,14 @@ var initValidation = function(){
 // When you go into an entry field in the takedown request form, show a fairly 
 // long and detailed help message. See routes/box-routes.js.
 function initContextSensitiveHelp(){
-	$("input").focus(function(){
+	
+	$("#request input, #request textarea").focus(function(){
 		$(this).closest(".control-group").addClass("show-block");
 	});
-	$("input").blur(function(){
+	$("#request input, #request textarea").blur(function(){
 		$(this).closest(".control-group").removeClass("show-block");
 	});
 
-	// we don't do this to set focus - the autofocus attr does that. we do this 
-	// because the autofocus input won't get a focus event otherwise, and thus
-	// won't show the context sensitive help.
-	$("input[autofocus]").focus();
-	
 	// the .focus and .blur events above aren't triggered on checkboxes. (except
 	// maybe for keyboard nav. fixme: check keyboard nav events).
 	$(':checkbox, label.checkbox').hover( 
@@ -148,6 +144,12 @@ function initContextSensitiveHelp(){
 			$(this).closest(".control-group").removeClass("show-block");			
 		}
 	);
+
+	// we don't do this to set focus - the autofocus attr does that. we do this 
+	// because the input with autofocus won't get a focus event otherwise, and thus
+	// won't show the context sensitive help.
+	$("input[autofocus]").focus();
+
 }
 
 // client side JS specific to the takedown request pages at /box/:id 

@@ -13,19 +13,17 @@ exports.checkAcct = function(email,password,callback){
 		});	
 
 	query.on('error', function(error) {
-		console.log("Account query returning error");
-		console.log(error);
-		// this is an application error, not a bad username or password
-		throw(error);
+		callback(error);
 	});
 	
 	query.on('row', function(row) {	
-		callback(false,row);
+		callback(null,row);
 	});
 
 	query.on('end', function(result) {
-		if( result.rowCount < 1)
-			callback(true);
+		if( typeof result !== 'undefined') // DB error
+			if( result.rowCount < 1) 
+				callback(null,null); // not found
 	});
 }
 
@@ -36,43 +34,35 @@ exports.initPasswordReset = function(email,callback){
 		values: [email]
 		});
 
-	query.on('error', function(error) {
-		console.log(error);
-		throw("Error 447");
-	});
+	query.on('error', function(error) {callback(error)});
 
 	query.on('row', function(row) {	
-		callback(false,row.resetsecret); // all lowercase is deliberate, not a bug
+		callback(null,row.resetsecret); // all lowercase is deliberate, not a bug
 	});
 
 	query.on('end',function(result){
-		if( typeof result !== "object" ||
-			typeof result.rowCount !== "number" || 
-			result.rowCount < 1 )
-			callback(true);
+		if( typeof result !== 'undefined') // DB error
+			if( result.rowCount < 1) 
+				callback(null,null); // not found
 	});		
 }
 
 exports.saveNewPassword = function(resetSecret,newPassword,callback){
+	
 	// fixme: check the date on the resetSecret and don't do the update if older than an hour
 	var query = models.getClient().query({
-		text: "update acct set password = $1 where resetSecret = $2 returning email",
+		text: "update acct set password = $1 where resetSecret = $2 and returning email",
 		values: [newPassword,resetSecret]
 		});
 
-	query.on('error', function(error) {
-		throw("Error [super sandstone]");
-	});
+	query.on('error', function(error) {callback(error)});
 
-	query.on('row', function(row) {	
-		callback(false); // false means an error did not occur
-	});
+	query.on('row', function(row) { callback(null,row); });
 
 	query.on('end',function(result){
-		if( typeof result !== "object" ||
-			typeof result.rowCount !== "number" || 
-			result.rowCount < 1 )
-			callback(true);
+		if( typeof result !== 'undefined') // DB error
+			if( result.rowCount < 1) 
+				callback(null,null); // not found
 	});		
 }
 
@@ -84,22 +74,13 @@ exports.resetPasswordForLoggedInUser = function(userID,currentPassword,newPasswo
 		values: [newPassword,userID,currentPassword]
 		});
 
-	query.on('error', function(error) {
-		console.log(error);
-		throw("Cat on a hot tin roof");
-	});
-
-	query.on('row', function(row) {	
-		callback(false); // false means an error did not occur
-	});
+	query.on('error', function(error) { callback(error); });
+	query.on('row', function(row) {	callback(null,row); });
 
 	query.on('end',function(result){
-		console.log('got end in resetPasswordForLoggedInUser');
-		console.log(result);
-		if( typeof result !== "object" ||
-			typeof result.rowCount !== "number" || 
-			result.rowCount < 1 )
-			callback(true);
+		if( typeof result !== 'undefined') // DB error
+			if( result.rowCount < 1) 
+				callback(null,null); // not found
 	});		
 }
 
@@ -124,16 +105,10 @@ exports.deleteAccount = function(userid,callback){
 		values: [userid]
 		});
 
-	acctQuery.on('error', function(error) { throw("Error [back nine]"); });
+	acctQuery.on('error', function(error) { callback(error); });
+	acctQuery.on('row', function(row) {	callback(null,row); });
 
-	acctQuery.on('end',function(result){
-		if( typeof result !== "object" ||
-			typeof result.rowCount !== "number" || 
-			result.rowCount < 1 )
-			callback(true); // an error did occur
-		else
-			callback(false); // an error did not occur
-	});		
+	// note: no handler for the 'end' event makes sense in this case.
 }
 
 exports.getSiteForUser = function(ownerid,callback){
@@ -142,39 +117,30 @@ exports.getSiteForUser = function(ownerid,callback){
 		values: [ownerid]
 		});
 
-	query.on('error', function(error) { throw("Eat a peach"); });
-
-	query.on('row', function(row) {	
-		callback(false,row); // false means an error did not occur
-	});
+	query.on('error', function(error) { callback(error); });
+	query.on('row', function(row) {	callback(null,row); });
 
 	query.on('end',function(result){
-		if( typeof result !== "object" ||
-			typeof result.rowCount !== "number" || 
-			result.rowCount < 1 )
-			callback(true); // an error did occur
-	});		
-	
+		if( typeof result !== 'undefined') // DB error
+			if( result.rowCount < 1) 
+				callback(null,null); // not found
+	});	
 }
 
-exports.setSiteForUser = function(ownerid,sitename,domain,agentaddress,agentemail,callback){
+exports.updateSiteForUser = function(ownerid,sitename,domain,agentaddress,agentemail,callback){
 	var query = models.getClient().query({
 		text: "update site set sitename = $2, domain = $3, agentaddress = $4, agentemail = $5 where ownerid = $1",
 		values: [ownerid,sitename,domain,agentaddress,agentemail]
 	});
-	// we now have either an insert id or an error to return to our caller
-	query.on('error', function(error) {
-		console.log('got error in setSiteForUser');
-		console.log(error);
-		callback(error);
-    });
-	query.on('end',function(result){
-		console.log('got end in setSiteForUser');
-		callback( typeof result !== "object" ||
-			typeof result.rowCount !== "number" || 
-			result.rowCount < 1);
-	});		
 
+	query.on('error', function(error) { callback(error); });
+	query.on('row', function(row) {	callback(null,row); });
+
+	query.on('end',function(result){
+		if( typeof result !== 'undefined') // DB error
+			if( result.rowCount < 1) 
+				callback(null,null); // not found
+	});	
 }
 
 

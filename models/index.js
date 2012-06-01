@@ -1,6 +1,6 @@
 
 
-// Posgres reference: https://github.com/brianc/node-postgres/wiki/Query
+// Postgres reference: https://github.com/brianc/node-postgres/wiki/Query
 
 exports.getClient = function() {
 	var pg = require('pg'); //native libpq bindings = `var pg = require('pg').native`

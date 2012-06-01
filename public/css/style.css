@@ -6,8 +6,9 @@
    Fixme: switch to sass/less/compass.
    ========================================================================== */
 
-/* Thanks, http://subtlepatterns.com */
-stubbed-out body { background-image: url(/img/bkg.png) }
+body.box .notforinbox {
+	display: none;
+}
 
 /* options for managing profile and registration status the top nav bar */
 .loggedout .hideifloggedout {display:none}
