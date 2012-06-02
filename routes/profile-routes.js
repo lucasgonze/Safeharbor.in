@@ -107,9 +107,13 @@ exports.postNewPassword = function(req,res){
 				return(errlib.render(res,"Not found","404",err)); // DB error
 			}
 
+			res.render("success.html",{layout:"global.html",pageTitle:"Success"});	
+/*
+
 			var alert = '<div class="alert alert-success"><i class="icon-ok"></i> Success</div>';
 			var vars = {layout:"global.html",pageTitle:"Log In",'alert-from-reset':alert};
 			res.render("profile/login.html",vars);			
+			*/
 		});
 }
 
@@ -135,15 +139,16 @@ exports.savePasswordReset = function(req,res){
 		}
 
 		if( result === null ){ // not found -> they got current password wrong
+			// fixme: instead of inserting html, have this be static html in the original page and show/hide
+			// by setting a class variable
+			// 'alert':alert,
 			var alert = '<div class="alert alert-error"><i class="icon-error"></i> Check your password</div>';	
-			var vars = {layout:"global.html",pageTitle:"Reset Password",'alert':alert};
+			var vars = {layout:"global.html",pageTitle:"Reset Password",bodyClass:'showerror'};
 			res.render("profile/passwordreset.html",vars);	
 			return;
 		}
 		
-		var alert = '<div class="alert alert-success"><i class="icon-ok"></i> Success</div>';
-		var vars = {layout:"global.html",pageTitle:"Log In",'alert':alert,'nastykludge':'display:none'};
-		res.render("profile/passwordreset.html",vars);	
+		res.render("success.html",{layout:"global.html",pageTitle:"Success"});	
 	});
 }
 
@@ -161,10 +166,7 @@ exports.deleteAccount = function(req,res){
 		}
 
 		loginstate.disable(req);
-	
-		var alert = '<div class="alert alert-success"><i class="icon-ok"></i> Success</div>';
-		var vars = {layout:"global.html",pageTitle:"Log In",'alert':alert,'nastykludge':'display:none'};
-		res.render("profile/passwordreset.html",vars);	
+		res.render("success.html",{layout:"global.html",pageTitle:"Success"});	
 	});
 }
 

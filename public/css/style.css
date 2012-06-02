@@ -14,6 +14,9 @@ body.box .notforinbox {
 .loggedout .hideifloggedout {display:none}
 .loggedin .hideifloggedin {display:none}
 
+.hideerror .alert-error { display: none }
+.showerror .alert-error { display: block }
+
 .hideerroruntilfail div.alert-error, .hideerroruntilfail div.alert-success { display: none }
 .hideerroruntilfail.fail div.alert-error { display: block }
 .hideerroruntilfail .success div.alert-success { display: block }
@@ -43,34 +46,25 @@ p.upper {
     margin-top: .5em
 }
 
-.bigass p {
+.tabindex p {
     font-size: 1.5em !important;
     line-height: 2em;
 }
 
 *.sizeofinput,
-.bigass input[type="text"], 
-.bigass input[type="password"], 
-.bigass textarea
+.tabindex input[type="text"], 
+.tabindex input[type="password"], 
+.tabindex textarea
  { width: 22em; }
-.bigass input[type="submit"] { width: 20em; }
+.tabindex input[type="submit"] { width: 20em; }
 
-.bigass textarea {
+.tabindex textarea {
 	height: 5em;
 }
 
-div.designatedagent {
-    margin-left: 4em;
-}
-.designatedagent, .designatedagent p {
-    font-family: monospace;
-}
 div.verticalspacer {
     margin-top: 2em
 }
-
-#complaintform div.help { font-style: italic }
-#complaintform blockquote a { color: blue }
 
 p.primary { 
 	text-align: center;
@@ -90,17 +84,11 @@ div.explanation {
     width: 30em;
 }
 
-/* stuff for the page used to make a request */
-body.doreq {
-	padding-top: 2em;
+/* I know this is stylistically evil but I don't have a better idea for now. At least it's better
+than a literal style=text-align:center attribute */
+.centered {
+	text-align:center
 }
-h2#request_takedown {
-	margin-bottom: 1em;
-}
-
-div#emailsent { display: none }
-form#enteremail { display: block }
-h3 { margin-bottom: 2em }
 
 /*
  * for the /dash section 
@@ -182,4 +170,10 @@ body.dash form.search span {
 	font-weight: bold;
 }
 
+div.designatedagent {
+    margin-left: 4em;
+}
+.designatedagent, .designatedagent p {
+    font-family: monospace;
+}
 

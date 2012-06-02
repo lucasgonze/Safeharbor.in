@@ -51,7 +51,7 @@ exports.saveNewPassword = function(resetSecret,newPassword,callback){
 	
 	// fixme: check the date on the resetSecret and don't do the update if older than an hour
 	var query = models.getClient().query({
-		text: "update acct set password = $1 where resetSecret = $2 and returning email",
+		text: "update acct set password = $1 where resetSecret = $2 returning email",
 		values: [newPassword,resetSecret]
 		});
 
