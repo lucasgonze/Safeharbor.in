@@ -41,7 +41,7 @@ function test()
                         return;
                     }
                     
-                    dm.getAuditTrail(  mediaId, 'full', function( err, results ) {
+                    dm.getAuditTrail(  mediaId, 'latest', function( err, results ) {
                         if( !!err )
                         {
                             console.log( 'FAIL (3)' );

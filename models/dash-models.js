@@ -50,7 +50,7 @@ function getTablesMeta()
                 '   urgency integer, ' +
                 '   action  integer ' +
                 ' )' , 
-            insert: 'INSERT INTO action_log (media,urgency,action) values($1,$2,$3) returning id',
+            insert: 'INSERT INTO action_log (media,filing,urgency,action) values($1,$2,$3,$4) returning id',
             deleteSQL: 'DELETE FROM action_log WHERE id = $1',
             deleteMedia: 'DELETE FROM action_log WHERE action_log.media = $1',
             values: [ ]            
@@ -58,6 +58,19 @@ function getTablesMeta()
     }
     
     return tables;
+}
+
+function formatDate()
+{
+    var d = new Date();
+    var a = d.getDate();
+    var m = d.getMonth();
+    var y = d.getFullYear();
+    var h = d.getHours();
+    var u = d.getMinutes();
+    var s = d.getSeconds();
+    
+    return( y + '-' + m + '-' + a + ' ' + h + ':' + u + ':' + s );
 }
 
 function dumpArgs(name,args)
@@ -79,8 +92,9 @@ function startAuditTrail( mediaId, initialState, callback )
     var client = models.getClient();
     var urgency = 1; // er, for now
     var initialState = initialState || ac.ACTION_STATES.received_web_form;
+    var filing = formatDate();
     
-    client.query( tables.action_log.insert, [ mediaId, urgency, initialState ], callback );
+    client.query( tables.action_log.insert, [ mediaId, filing, urgency, initialState ], callback );
 }
 
 function deleteTrail( mediaId, callback )
@@ -102,32 +116,49 @@ function deleteTrail( mediaId, callback )
 function queryMediaTrail( mediaId, type, callback ) 
 {
     var sql = '';
-    var ORDER = ' ORDER BY filing DESC ';
-    var LIMIT = '';
+    var ORDER = ' ORDER BY filing DESC ',
+        LIMIT = '', 
+        SINGLE_MEDIA = '';
     
-    switch( type )
+    if( mediaId )
     {
-        case 'latest':
-            LIMIT = ' LIMIT 1 ';
-
-            // fall thru
-            
-        case 'full':
-            sql = 'SELECT * FROM action_log, contested_media ' +
-                   'WHERE action_log.media = contested_media.id ' +
-                     'AND contested_media.id = ' + mediaId +
-                     ORDER + 
-                     LIMIT;
-            break;      
-            
-        default:
-            callback("Unknown type. Must be one of: 'full', 'latest'");
-            return;
+        SINGLE_MEDIA = ' AND contested_media.id = ' + mediaId;
+    }
+    else if( type != 'all' )
+    {
+        callback("Missing paremeter: mediaId");
+        return;
     }
     
+    if( type == 'latest' )
+    {
+        LIMIT = ' LIMIT 1 ';
+    }
+    else if( type == 'all' )
+    {
+        // TODO: Paging happens here (no idea how)
+        LIMIT = ' LIMIT 20';    
+    }
+    else if( type != 'full' )
+    {
+        callback("Unknown type. Must be one of: 'full', 'latest', 'all'");
+        return;
+    }
+    
+    sql = 'SELECT * FROM action_log, contested_media, site ' +
+           'WHERE action_log.media = contested_media.id ' +
+           '  AND contested_media.site = site.id ' + 
+             SINGLE_MEDIA + 
+             ORDER + 
+             LIMIT;
+
+    console.log( sql );
+    
     var query = models.getClient().query(sql);
-    query.on( 'error', callback );
-    query.on( 'row', function( result ) { callback( null, result ); } );
+    query.on( 'error', function( err )    { callback( err, null,  null   ); } );
+    query.on( 'row',   function( row )    { callback( null, row,  null   ); } );
+    query.on( 'end',   function( result ) { callback( null, null, result ); } );
+
 }
 
 function initDatabase (client) {
@@ -203,8 +234,10 @@ exports.deleteAuditTrail = deleteTrail;
 
 
 /*
-    getMediaTrail(   mediaId, 
-                     type,  // 'full' or 'latest'
+    getMediaTrail(   mediaId, // null means get 'all'
+                     type,  // 'all' means latest entries for all media 
+                            // 'full' trail of single item 
+                            // 'latest' entry for a single item
                      function( err, result ) {} ) 
 */
 exports.getAuditTrail = queryMediaTrail;

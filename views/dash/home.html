@@ -6,13 +6,16 @@
 
 <ol class="takedownlist">
 
+    {{#each auditItems}}
 	<li>
+	
 		<div class="suggestedactions">
 			<p>Suggested Action(s):</p>
 			<p><a href="fixme" class="btn">Not a DMCA takedown request</a></p>
 			<p><a href="fixme" class="btn">Take down content</a></p>
 			<p><a href="fixme" class="btn">Return to submitter for corrections</a></p>
 		</div>
+		<h3>sitename: {{this.sitename}}</h3>
 		<p><label>Date of filing:</label>August 21, 2049</p>
 		<p><label>Work:</label>Eye Scream</p>
 		<p><label>Urgency:</label> <span class="label label-important">High</span></p>
@@ -20,7 +23,8 @@
 		<p><label></label><a href="synopsis-justfiled" class="viewrequest"><i class="icon-info-sign"></i> Detailed View</a></p>
 		<div class="clearer"></div>
 	</li>
-
+	{{/each}}
+<!-- 
 	<li>
 		<div class="suggestedactions">
 			<p>Suggested Action(s):</p>
@@ -142,6 +146,7 @@
 		<p><label>Status:</label>Not a DMCA takedown request</p>
 		<p><label></label><a href="synopsis" class="viewrequest"><i class="icon-info-sign"></i> Detailed View</a></p>
 	</li>
+-->
 
 </ol>
 

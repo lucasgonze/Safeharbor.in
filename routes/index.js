@@ -65,8 +65,12 @@ exports.setup = function(app){
 	app.post('/box/:siteid([0-9]+)',box.post);
 //	app.post('/box/:siteid([0-9]+)$',box.post);
 
+    var dr = require( './dash-routes.js');
+    dr.install( app );
+    /*
 	// Dealing with takedown requests for logged in customers
 	trivialRoute('/dash','home','dash','Todo');
 	trivialRoute('/dash/list','list','dash','List');
 	trivialRoute('/dash/stats','stats','dash','Stats');
+	*/
 }
