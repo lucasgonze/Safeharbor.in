@@ -241,16 +241,15 @@ exports.emitSiteEditor_v2 = function(req,res){
 // OOPy version of _v1 that is no more verbose - success!
 exports.emitSiteEditor = function(req,res){	
 
-	loginstate = require('../lib/loginstate.js');
-	routeLib = require("./oop-router.js");
-	var userid = loginstate.getID(req);
+//	var userid = loginstate.getID(req);
 
+//		sqlParams: [userid],
 	routeLib.handleRoute({
 		req: req,
 		res: res,
 		view: "profile/siteeditor.html",
 		sql: "select *, oid from site where ownerid = $1",
-		sqlParams: [userid],
+		sqlParams: [loginstate.getID(req)],
 		viewVars: function(row){
 			return({
 					layout: "global.html",
@@ -269,8 +268,8 @@ exports.emitSiteEditor = function(req,res){
 			} else
 				return(true);
 		}
-	})
-});
+	});
+};
 
 exports.saveSiteEdit = function(req,res){
 
