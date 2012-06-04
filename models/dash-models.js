@@ -145,7 +145,9 @@ function queryMediaTrail( mediaId, type, callback )
         return;
     }
     
-    sql = 'SELECT * FROM action_log, contested_media, site ' +
+    sql = 'SELECT *, ' +
+           "to_char(action_log.filing, 'FMMonth FMDD, YYYY' ) as formatted_date " +
+           'FROM action_log, contested_media, site ' +
            'WHERE action_log.media = contested_media.id ' +
            '  AND contested_media.site = site.id ' + 
              SINGLE_MEDIA + 

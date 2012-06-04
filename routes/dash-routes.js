@@ -13,6 +13,11 @@ function getDash( req, resp )
         }
         if( row )
         {
+            row.suggested =
+                [ { text: 'Not a DMCA takedown request', url: '/dash/action/4' }, // hahahaha
+                  { text: 'Take down content', url: '/dash/action/4' }, // hahahaha
+                  { text: 'Return to submitter for corrections', url: '/dash/action/4' } ]; // hahahaha
+                
             rows.push(row);
         }
         else if( results ) 
