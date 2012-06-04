@@ -6,7 +6,7 @@
 var models = require("../models/profile-models.js");
 var loginstate = require('../lib/loginstate.js');
 var errlib = require("../lib/error.js");
-var routeUtils = require("./route-utils.js");
+var routeUtils = require("./oop-router.js");
 
 // log out
 exports.clearLogin = function(req,res){
@@ -139,10 +139,6 @@ exports.savePasswordReset = function(req,res){
 		}
 
 		if( result === null ){ // not found -> they got current password wrong
-			// fixme: instead of inserting html, have this be static html in the original page and show/hide
-			// by setting a class variable
-			// 'alert':alert,
-			var alert = '<div class="alert alert-error"><i class="icon-error"></i> Check your password</div>';	
 			var vars = {layout:"global.html",pageTitle:"Reset Password",bodyClass:'showerror'};
 			res.render("profile/passwordreset.html",vars);	
 			return;
@@ -171,7 +167,7 @@ exports.deleteAccount = function(req,res){
 }
 
 // fixme: OOPy rewrite using routeUtils.RouteHandler
-exports.emitSiteEditor = function(req,res){	
+exports.emitSiteEditor_v1 = function(req,res){	
 	
 	if( ! loginstate.isLoggedIn() ){
 		return(errlib.render(res,"You must be signed in to edit site info.","400",err));
@@ -199,6 +195,81 @@ exports.emitSiteEditor = function(req,res){
 		res.render("profile/siteeditor.html",vars);
 	});
 }
+
+//OOPy version of emitSiteEditor_orig. This is *more* verbose instead of less - not what I hoped for.
+exports.emitSiteEditor_v2 = function(req,res){	
+
+	// boilerplate to bootstrap OOP
+	function SiteEditRouter(req,res,view){ routeUtils.RouteHandler.call(this,req,res,view);}
+	SiteEditRouter.prototype = new routeUtils.RouteHandler();
+	SiteEditRouter.prototype.constructor = SiteEditRouter;
+	
+	SiteEditRouter.prototype.handleSuccess = function(row){
+		var vars = {
+				layout: "global.html",
+				pagetitle: "Edit Site",
+				bodyClass: "siteeditor",
+				sitename: row.sitename,
+				sitedomain: row.domain,
+				agentaddress: row.agentaddress,
+				agentemail: row.agentemail
+			};			
+		res.render(this.view,vars);
+	};
+	
+	SiteEditRouter.prototype.sql = function(){
+		return("select *, oid from site where ownerid = $1")
+	}
+
+	SiteEditRouter.prototype.values = function(){
+		return([loginstate.getID(this.req)]);
+	}
+
+	SiteEditRouter.prototype.validate = function(){
+		if( ! loginstate.isLoggedIn() ){
+			errlib.render(res,"You must be signed in to edit site info.","400");
+			return(false);
+		} else
+			return(true);
+	}
+
+	var handler = new SiteEditRouter(req,res,"profile/siteeditor.html");
+	handler.start();
+	
+}
+
+// OOPy version of _v1 that is no more verbose - success!
+exports.emitSiteEditor = function(req,res){	
+
+//	var userid = loginstate.getID(req);
+
+//		sqlParams: [userid],
+	routeLib.handleRoute({
+		req: req,
+		res: res,
+		view: "profile/siteeditor.html",
+		sql: "select *, oid from site where ownerid = $1",
+		sqlParams: [loginstate.getID(req)],
+		viewVars: function(row){
+			return({
+					layout: "global.html",
+					pagetitle: "Edit Site",
+					bodyClass: "siteeditor",
+					sitename: row.sitename,
+					sitedomain: row.domain,
+					agentaddress: row.agentaddress,
+					agentemail: row.agentemail
+				});
+			},
+		validate: function(){
+			if( ! loginstate.isLoggedIn() ){
+				errlib.render(res,"You must be signed in to edit site info.","400");
+				return(false);
+			} else
+				return(true);
+		}
+	});
+};
 
 exports.saveSiteEdit = function(req,res){
 
@@ -248,5 +319,7 @@ exports.saveSiteEdit = function(req,res){
 	handler.start();
 	
 }
+
+
 
 

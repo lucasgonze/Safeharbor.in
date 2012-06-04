@@ -3,7 +3,6 @@ var models = require("../models/profile-models.js");
 var loginstate = require('../lib/loginstate.js');
 var errlib = require("../lib/error.js");
 
-
 /**********
  * validation helpers
 **********/
@@ -100,3 +99,35 @@ RouteHandler.prototype.start = function(){
 	this.model(this.sql(),this.values(),this.modelCallback.bind(this));
 };	
 	
+	
+/**********
+ * terse wrapper for all of the above
+**********/
+
+exports.handleRoute = function(opts){
+
+	function OOPRouter(req,res,view){ exports.RouteHandler.call(this,opts.req,opts.res,opts.view);}
+	OOPRouter.prototype = new exports.RouteHandler();
+	OOPRouter.prototype.constructor = OOPRouter;
+
+	OOPRouter.prototype.handleSuccess = function(row){
+		opts.res.render(this.view,opts.viewVars(row));
+	};
+	
+	OOPRouter.prototype.sql = function(){
+		return(opts.sql);
+	}
+
+	OOPRouter.prototype.values = function(){
+		return(opts.sqlParams);
+	}
+
+	var opts = opts;
+	this.opts = opts;
+	OOPRouter.prototype.validate = opts.validate;
+	var handler = new OOPRouter(opts.req,opts.res,opts.view);
+	handler.start();
+	
+}
+
+
