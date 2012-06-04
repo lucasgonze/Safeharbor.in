@@ -30,5 +30,7 @@ exports.recreateTables = function(){
 	client.query('create table site (ownerid integer not null, id serial, sitename text not null, domain text not null unique, agentaddress text not null, agentemail text not null) with oids; ');
 	client.query('drop table if exists resets');
 	client.query('create table resets (ts timestamp,userid integer not null,secret text not null)');	
+	var dm = require('./dash-models.js');
+	dm.install();
 }
 
