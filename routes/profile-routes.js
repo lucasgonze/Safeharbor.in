@@ -123,16 +123,17 @@ function verifySecret(req,res){
 // the db and send them on to the password reset page if it checks out.
 function postNewPassword(req,res){ 
 
-	var values = checkStringParams( req, res, req.body, ['resetSecret',10,'password',4,'confirm',4] );
+    var resetId = checkStringParams( req, res, req.params, ['resetSecret',10] );
+	var values = checkStringParams( req, res, req.body, ['password',4,'confirm',4] );
     
-	if( values === false )
+	if( values === false || resetId === false )
         return;
 
     function success() {
          res.render("success.html",{layout:"global.html",pageTitle:"Success"});    
     }
     
-    models.saveNewPassword( values.resetSecret, values.password, 
+    models.saveNewPassword( resetId.resetSecret, values.password, 
                                genCallback( req, res, { is404: true }, success ) );
 
 }
