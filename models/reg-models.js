@@ -10,6 +10,7 @@ function getSecureUniquePublicID(){
 	return(""+id);
 }
 
+/* wups this was overwritten below 
 exports.createAcct = function(email,password,callback){
 	
 	models.getClient().query({
@@ -17,9 +18,11 @@ exports.createAcct = function(email,password,callback){
 	  text: "INSERT INTO acct(email,password,opaque_id) values($1, $2, $3)",
 	  values: [email,password,opacified]
 	}, function(err,insertCallback){
+	    console.log( [ 'createAcct: err', err ] );
 		callback(err,opacified);
 	});
 }
+*/
 
 exports.checkForAccount = function(email,callback){
 	models.getClient().query({
@@ -82,8 +85,12 @@ exports.createAcct = function(oid,callback){
 		callback(error);
     });
 
-	client.query('end',function(){
+	query.on('end', function() {
 		callback(null,result);		
+    });
+
+	client.query('end',function(){
+	    // what?
 	});
 }
 

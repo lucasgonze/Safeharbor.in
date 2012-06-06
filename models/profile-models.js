@@ -80,7 +80,7 @@ exports.resetPasswordForLoggedInUser = function(userID,currentPassword,newPasswo
 	query.on('end',function(result){
 		if( typeof result !== 'undefined') // DB error
 			if( result.rowCount < 1) 
-				callback(null,null); // not found
+				callback('incorrect password',null); // not found
 	});		
 }
 

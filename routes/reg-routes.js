@@ -3,47 +3,68 @@
  * Account Creation
  *****************************/
 
-var models = require("../models/reg-models.js");
+var models     = require("../models/reg-models.js");
 var loginstate = require('../lib/loginstate.js');
+var helpers    = require('./router-helpers.js');
 
-exports.saveConfig = function(req,res){
+var checkStringParams = helpers.checkStringParams;
+var genCallback = helpers.genCallback;
 
-	if( typeof req.params.regid !== "string" || req.params.regid.length < 1 ||
-		typeof req.body.sitename !== "string" || req.body.sitename.length < 1 ||
-		typeof req.body.domain !== "string" || req.body.domain.length < 1 ||
-		typeof req.body.agentaddress !== "string" || req.body.agentaddress.length < 1 ||
-		typeof req.body.agentemail !== "string" || req.body.agentemail.length < 1 ){						
-		res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"All params must be set.",code:"400"});
-		return;		
-	}
-
-	models.createAcct(req.params.regid,function(err,result){
-		
-		if( typeof result !== "object" || result === null || (typeof err === "object"  && err !== null)){
-			console.log("Fatal error returned by models.createAcct");
-			console.log(err);
-			res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Unable to save",code:"500"});
-			return;			
-		}
-
-		// save newly created user ID to a session variable
-		loginstate.enable(req,result.id);
-
-		// insert the site data into db
-		models.createSite(result.id,req.body.sitename,req.body.domain,req.body.agentaddress,req.body.agentemail,
-			function(err,result){
-				if( typeof result !== "object" || (typeof err === "object"  && err !== null)){
-					console.log("Fatal error returned by "+models.createAcct);
-					console.log(err);
-					res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Unable to save",code:"500"});			
-				} else 
-					res.render("reg/done.html",{layout:"global.html",pageTitle:"Setup Done","bodyClass":"regfinal",siteid:result.oid});				
-			});
-	});
-	
+exports.install = function( app )
+{
+	app.trivialRoute('/reg','acct','reg','Try It'); 
+	app.post('/reg', startEmailHandshake );	
+	app.get('^/reg/:regid([0-9]+)$', getVerifyAcct );
+	app.post('^/reg/:regid([0-9]+)$', saveConfig);
 }
 
-var emailHandshake = function(email,regid,host){	
+function getVerifyAcct( req, res ) {
+    // TODO: we should be checking the regid right here
+    res.render('reg/fromemail.html',
+        { layout: 'global.html', pageTitle:'Verify', bodyClass:'regid', regid: req.params.regid });
+}
+
+function saveConfig(req,res){
+
+    var p1 = [ 'sitename', 1, 'domain', 1, 'agentaddress', 1, 'agentemail', 1, ];
+    var p2 = [ 'regid', 1 ];
+    
+    var values     = checkStringParams( req, res, req.body, p1 );
+    var regidCheck = checkStringParams( req, res, req.params, p2 );
+
+    // console.log( [ 'req.body', req.body, 'values', values, 'regidCheck', regidCheck ] );
+    
+    if( values === false || regidCheck === false )
+        return;
+
+    var extraParams = { pageTitle:"Error (1)", bodyClass:"error",message:"Unable to save" };
+
+    function innerSuccess( result ) {
+        res.render( "reg/done.html",
+                   { layout:"global.html",
+                     pageTitle:"Setup Done",
+                     bodyClass:"regfinal",
+                     siteid: result.oid
+                     } );
+    }
+
+    function success( result ) {
+
+        // save newly created user ID to a session variable
+        loginstate.enable(req,result.id);
+    
+        extraParams.pageTitle = "Error (2)";
+         
+        // insert the site data into db
+        models.createSite( result.id, values.sitename, values.domain, 
+               values.agentaddress,values.agentemail, genCallback( req, res, extraParams, innerSuccess ) );
+    }
+    
+    
+	models.createAcct(regidCheck.regid, genCallback( req, res, extraParams, success ) );
+}
+
+function emailHandshake(email,regid,host) {	
 	var to = email;
 	var subject = "New account at Safeharbor.in";
 	var text = 'Please confirm your Safeharbor.in account by going to http://safeharbor.in/reg/'+regid;
@@ -58,51 +79,39 @@ var emailHandshake = function(email,regid,host){
 	});
 }
 
-exports.saveAcct = function(req, res) {
+function startEmailHandshake(req, res) {
 	
 	// validate form input for corruption but not for user-friendliness. User-friendliness is handled in the browser before submitting the form.
-	if( req.body.email === undefined ||
-		req.body.password === undefined ||
-		req.body.confirm === undefined ||
-		req.body.confirm !== req.body.password ||
-		req.body.email == "" ||
-		req.body.password == "" ||
-		req.body.confirm == "" ){
-			var E = new Error();
-			E.statusCode = "400";
-			E.message = "Bogus arguments";
-			throw(E);
-	}
-	
-	models.checkForAccount(req.body.email,function(err,result){
 
- 		if( typeof result === "object" &&  
-			typeof result.rows === "object" &&
- 			typeof (result.rows[0]) === "object" &&
-			typeof (result.rows[0].count) === "number" &&
-			result.rows[0].count > 0 ){
+    var values = checkStringParams( req, res, req.body, ['email',1,'password',1,'confirm',1] );
+	
+	if( values === false )
+	    return;
+
+    if( values.confirm != values.password )	    
+	    return(errlib.render(res,"Passwords don't match","400",err));
+
+    function innerSuccess(result) {
+        emailHandshake(req.body.email,""+result.oid,req.headers.host);
+        return(res.render("reg/checkyouremail.html",{layout:"global.html",pageTitle:"Check Your Email",bodyClass:"gocheckemail"}));
+    }
+    var extraParams = { t: "error/error.html", p: {layout:"global.html",pageTitle:"Error",bodyClass:"error",message:"Database 23",code:"500"}};
+        
+	    
+	models.checkForAccount(req.body.email, function(err,result) {
+        
+ 		if( result.rows[0].count > 0 ){
 			res.render("profile/login.html",{
-				layout:"global.html",pageTitle:"Account exists","bodyClass":"login",
+				layout:"global.html",pageTitle:"Account exists",bodyClass: "login",
 				'alert-from-create': '<div class="alert alert-info">You already have an account</div>'
 			});
-			return;
 		} 
-		
-		models.initEmailConfirmation(req.body.email,req.body.password,function(err,result){
-			if( typeof result === 'object' && typeof result.oid === "number"){
-				// all good
-				emailHandshake(req.body.email,""+result.oid,req.headers.host);
-				return(res.render("reg/checkyouremail.html",{layout:"global.html",pageTitle:"Check Your Email","bodyClass":"gocheckemail"}));
-			} else {
-				// we have an error
-				console.log("Fatal error in initEmailConfirmation.")
-				console.log(err);
-				return(res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:"Database 23",code:"500"}));
-			}
-		});
+		else {
+            models.initEmailConfirmation(req.body.email,req.body.password, 
+                                    genCallback( req, res, extraParams, innerSuccess ) );
+        }
 
 	}); // end checkForAccount call
 
-	
 };
 

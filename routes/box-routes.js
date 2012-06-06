@@ -7,41 +7,50 @@
 
 var models = require('../models/box-models.js');
 var errlib = require('../lib/error.js');
+var helpers = require('./router-helpers.js');
 
-// fixme: OOPy rewrite using routeUtils.RouteHandler
-exports.get = function(req,res){
-	// look up metadata for the box number
-	models.get(req.params.siteid,function(err,result){
-		if(err !== null){
-			return(errlib.render(res,'Box not found','404',"Box.get error: "+err));
-		}
+var checkStringParams = helpers.checkStringParams;
+var genCallback = helpers.genCallback;
+
+exports.install = function( app )
+{
+	app.get('/box/:siteid([0-9]+)$',  getBox);
+	app.post('/box/:siteid([0-9]+)',  postBox);
+//	app.post('/box/:siteid([0-9]+)$', postBox);
+}
+
+function getBox(req,res){
+
+    function success(result) {
 		var vars = {
-			'layout':'global.html',
-			'pageTitle':'Copyright Inbox',
-			'bodyClass':'box',
-			'sitename':result.sitename,
-			'domain':result.domain,
-			'agentaddress':result.agentaddress,
-			'agentemail':result.agentemail,
-			'oid':result.oid,
+			layout:       'global.html',
+			pageTitle:    'Copyright Inbox',
+			bodyClass:    'box',
+			sitename:     result.sitename,
+			domain:       result.domain,
+			agentaddress: result.agentaddress,
+			agentemail:   result.agentemail,
+			oid:          result.oid
 		};
 	    res.render('box/top.html',vars);			
-	});
+    }
+    
+	// look up metadata for the box number
+	models.get( req.params.siteid, genCallback( req, res, { is404: true }, success ) );
+
 };
 
-// fixme: OOPy rewrite using routeUtils.RouteHandler
-exports.post = function(req,res){
+function postBox(req,res){
 
-	if( typeof req.params.siteid !== "string" || req.params.siteid.length < 1 ||
-		typeof req.body.page !== "string" || req.body.page.length < 1 ||
-		typeof req.body.description !== "string" || req.body.description.length < 1 ||
-		typeof req.body.email !== "string" || req.body.email.length < 1 ||
-		typeof req.body.phone !== "string" || req.body.phone.length < 1 ||
-		typeof req.body.postal !== "string" || req.body.postal.length < 1 ||
-		typeof req.body.authorized !== "string" || req.body.authorized.length < 1 ||
-		typeof req.body.belief !== "string" || req.body.belief.length < 1 ||
-		req.body.belief !== "on" ||
-		req.body.authorized !== "on"){
+    var strs = [ 'page', 1, 'description', 1, 'email', 1, 'phone', 1,
+                 'postal', 1 ];
+    var values = checkStringParams( req, res, req.body, strs );
+    var siteIDval = checkStringParams( req, res, req.params, [ 'siteid', 1 ] );
+    
+    if( values === false || siteIDval === false  )
+        return;
+
+    if( req.body.belief !== "on" || req.body.authorized !== "on") {
 		return errlib.render(res,'I fail to see the humor in the situation','400');
 	}
 		
@@ -68,7 +77,12 @@ exports.post = function(req,res){
 		};
 
 		var mailer = require("../lib/mail.js");
-		mailer.emailFromTemplate(result.agentemail,subject,text,templateRelativePath,templateVars,callback);
+		mailer.emailFromTemplate( result.agentemail,
+		                          subject,
+		                          'text goes here', // TODO: um, did 'text' ever work here??
+		                          templateRelativePath,
+		                          templateVars,
+		                          callback);
 	});
 
 };

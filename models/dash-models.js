@@ -31,6 +31,7 @@ function getTablesMeta()
             values: [ ]
             },
         
+        /*
         action_flows: {
             schema: 
                 'CREATE TABLE action_flows (' +
@@ -41,6 +42,7 @@ function getTablesMeta()
             deleteSQL: 'DELETE FROM action_flows WHERE from_action = $1 AND to_action = $2',
             values: ac.ACTION_FLOWS
             },
+        */
         action_log: {
             schema: 
                 'CREATE TABLE action_log (' +
@@ -219,7 +221,7 @@ exports.logContestedMedia = addMediaInfo;
 
 /*
     startAuditTrail( mediaId   // from logContestedMedia,
-                     initialState, // ac = require('../models/actions.js'); ac.ACTIONS.recieved_web_form
+                     initialState, // require('../models/actions.js').ACTION_STATES.recieved_web_form
                     function( err,          // as returned from PostgreSQL
                              { id: ##### } ) // line item in action log (relatively useless)
                       { } 

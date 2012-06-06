@@ -15,12 +15,7 @@ function getDash( req, resp )
         if( row )
             console.log(row);    
     });
-    /*
-   res.render(
-				pathOffsetFromViews+'/'+partial+'.html',			
-				{'layout':'global.html','pageTitle':pageTitle,'bodyClass':pathOffsetFromViews}
-			);
-    */
+
 }
 
 getDash( null, null );
