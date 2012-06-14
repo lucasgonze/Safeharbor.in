@@ -116,8 +116,9 @@ var CODES  = {
     INSERT_SINGLE: 'ins'
 }
 
-CODES.OK           = CODES.SUCCESS;
-CODES.RECORD_FOUND = CODES.SUCCESS;
+CODES.OK            = 
+CODES.QUERY_SUCCESS = 
+CODES.RECORD_FOUND  = CODES.SUCCESS;
 
 // Postgres reference: https://github.com/brianc/node-postgres/wiki/Query
 
