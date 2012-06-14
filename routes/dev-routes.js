@@ -42,7 +42,6 @@ function checkRegBug( req, res )
     var loginstate = require('../lib/loginstate.js');
     var errlib     = require('../lib/error.js');
     var utils      = require('../lib/utils.js');
-    var Performer  = require('../lib/performer.js').Performer;
     
     var errout         = errlib.errout();
     var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
@@ -62,6 +61,8 @@ function checkRegBug( req, res )
                 this.stopChain();
             }
         });
+
+    htmlDump( res, res.app.settings );
 
     checkAcct.perform();
 }
