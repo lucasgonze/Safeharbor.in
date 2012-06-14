@@ -42,9 +42,10 @@ ModelPerformer.prototype.parseValues = function()
     for( var n = 0; n < numParams; n++ )
     {
         var name = this.paramNames[n];
-        if( typeof onThis[name] !== 'string' )
+        if( typeof onThis[name] !== 'string' && 
+            typeof onThis[name] !== 'number' )
         {
-            this.invalidargs = true;
+            this.invalidargs = name;
             return false;
         }
         else
@@ -61,9 +62,8 @@ ModelPerformer.prototype.prePerform = function()
 {
     if( this.invalidargs )
     {
-        this.cancelChain = true;
-        this.callback( CODES.INVALID_ARGS );
-        return false;
+        var err = new InvalidSQLValues('Missing values or wrong type for ' + this.invalidargs);
+        throw err;
     }
     this.table = this.getAPI();
     return true;
@@ -72,7 +72,7 @@ ModelPerformer.prototype.prePerform = function()
 ModelPerformer.prototype.postPerform = function( err )
 {
     if( err )
-    {
+    {   
         // we have to catch and swallow a null 'query'
         // because that will mask the underlying SQL
         // exception that caused the problem in the 
@@ -126,9 +126,19 @@ CODES.RECORD_FOUND = CODES.SUCCESS;
 function NullQueryError(msg)
 {
     Error.call( this, msg );
+    this.message = msg;
+    this.name = 'Null Query';
 }
 
-utils.extend( NullQueryError, Error );
+util.inherits( NullQueryError, Error );
+
+function InvalidSQLValues(msg)
+{
+    Error.call( this, msg );
+    this.message = msg;
+    this.name = 'Invalid SQL Values';
+}
+util.inherits( InvalidSQLValues, Error );
 
 function table(client, bindingObj, defaultCallback, values)
 {
@@ -143,6 +153,7 @@ var tablePrototype = {
     _getQ: function( sql, a, cb )
     {
         var args = a || this.values;
+        //console.log( [sql,args] );
         var query = this.client.query( sql, args ); // do NOT pass a callback here
         if( !query )
         {

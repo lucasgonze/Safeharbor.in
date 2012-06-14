@@ -28,27 +28,25 @@ function getVerifyAcct( req, res ) {
 
 function saveConfig(req,res){
 
-    var emailHandshakeId = req.params['regid'];    
+    var regid = req.params['regid'];    
     
-    var createAcct = models.createAcct( emailHandshakeId, function( code, acctId ) { 
-            console.log( code, acctId );
-            checkForSQLErr( req, res, code, acctId );
+    var createAcct = models.createAcct( regid, function( code, acctid ) { 
+            checkForSQLErr( req, res, code, acctid );
             if( code == models.CODES.INSERT_SINGLE )
             {
-                loginstate.enable(req,acctId);
+                loginstate.enable(req,acctid);
                 // setup for chaining this to next step
-                this.acctId = acctId;
+                this.acctid = acctid;
             }
         });
-    var createSite = models.createSite( req.body , function( code, siteId ) {
-            console.log( code, 'site', siteId );
-        checkForSQLErr( req, res, code, siteId );
+    var createSite = models.createSite( req.body , function( code, siteid ) {
+        checkForSQLErr( req, res, code, siteid );
         if( code == models.CODES.INSERT_SINGLE )
             res.render( "reg/done.html",
                            { layout:"global.html",
                              pageTitle:"Setup Done",
                              bodyClass:"regfinal",
-                             siteid:siteId
+                             siteid:siteid
                              } );    
        });
     
@@ -76,7 +74,7 @@ function emailHandshake(req, res, host) {
                 
                 performer: function() {            
                     var to    = req.body.email;
-                    var regid = this.prev.id;
+                    var regid = this.prev.regid;
                     var subj  = "New account at Safeharbor.in";
                     var text  = 'Please confirm your Safeharbor.in account by going to http://safeharbor.in/reg/'+regid;
                     var path  = "/../views/reg/handshake.html";
@@ -111,10 +109,10 @@ function startEmailHandshake(req, res) {
             }
         });
         
-    var initEmail = models.initEmailConfirmation( req.body, function( code, id ) {
-            checkForSQLErr( req, res, code, id );
+    var initEmail = models.initEmailConfirmation( req.body, function( code, regid ) {
+            checkForSQLErr( req, res, code, regid );
             if( code == models.CODES.INSERT_SINGLE )
-                this.id = id;
+                this.regid = regid;
         });
 
     var handshake = emailHandshake(req, res, req.headers.host);

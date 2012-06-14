@@ -10,7 +10,7 @@ exports.CODES = models.CODES;
  *****************************/
 
 exports.checkAcct = function(obj,callback){
-    var sql = "select id from acct where email = $1 and password = $2";
+    var sql = "select acctid from acct where email = $1 and password = $2";
     
     return new ModelPerformer( {parseObj: obj, names: ['email','password'], callback: callback, performer: function() {
         this.table.findSingleRecord( sql );
@@ -62,12 +62,13 @@ exports.saveNewPassword = function(obj,callback) {
 /* For a user who hasn't lost their password. */
 
 exports.resetPasswordForLoggedInUser = function( obj, callback ) {
-    var sql = "update acct set password = $1 where id = $2 and password = $3 returning id";
+    var sql = "update acct set password = $1 where acctid = $2 and password = $3 returning acctid";
     
-    return new ModelPerformer({ praseObj: obj, names: ['newpassword','userid','current'], callback: callback, 
-        performer: function() {
-            this.table.UpdateSingleRecord( sql );
-        }});    
+    return new ModelPerformer({ praseObj: obj, 
+                                names: ['newpassword','userid','current'], 
+                                callback: callback, 
+                                performer: function() {this.table.UpdateSingleRecord( sql ); }
+                              });    
 }
 
 exports.deleteAccount = function(userid,callback){
@@ -85,20 +86,23 @@ exports.deleteAccount = function(userid,callback){
 	var pt1 = helper("delete from site where ownerid = $1");
 	
 	// PT 2: delete the user
-	var pt2 = helper("delete from acct where id = $1 returning id");
+	var pt2 = helper("delete from acct where acctid = $1 returning acctid");
 
     return pt1.chain(pt2);
 }
 
 exports.getSiteForUser = function(ownerid,callback){
-    var sql = "select *, oid from site where ownerid = $1";
+    var sql = "select * from site where ownerid = $1";
     
-    return new ModelPerformer( {values:[ownerid], callback: callback, performer:function() { this.table.findSingleRecord(sql); }} );
+    return new ModelPerformer( { values:[ownerid], 
+                                 callback: callback, 
+                                 performer:function() { this.table.findSingleRecord(sql); }} );
 }
 
 exports.updateSiteForUser = function( obj, callback ) {
     var sql = 'update site set sitename = $2, domain = $3, agentaddress = $4, agentemail = $5 where ownerid = $1';
-    var args = ['owernerid','sitename','domain','agentaddress','agentemail'];
-
-    return new ModelPerformer( {parseObj: obj, names: args, callback: callback, performer: function(){ this.table.UpdateSingleRecord(sql); }} );
+    return new ModelPerformer( { parseObj: obj, 
+                                 names: ['ownerid','sitename','domain','agentaddress','agentemail'], 
+                                 callback: callback, 
+                                 performer: function(){ this.table.updateSingleRecord(sql); }} );
 }

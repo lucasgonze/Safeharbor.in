@@ -10,7 +10,7 @@ var errlib     = require("../lib/error.js");
 
 var err            = errlib.err;
 var errout         = errlib.errout();
-var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
+var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR, models.INVALID_ARGS ] );
 
 /*--------------------------
     EXPORTED
@@ -53,11 +53,11 @@ function clearLogin(req,res) {
 
 function saveLogin(req,res) {
 	
-    var model = models.checkAcct( req.body, function(code,id) { 
-        checkForSQLErr( req, res, code, id );
+    var model = models.checkAcct( req.body, function(code,row) { 
+        checkForSQLErr( req, res, code, row );
         if( code == models.CODES.SUCCESS )
         {
-            loginstate.enable(req,id);
+            loginstate.enable(req,row.acctid);
             res.redirect("/dash");
         }
     });
@@ -178,6 +178,7 @@ function emitSiteEditor(req,res){
 	var uid = loginstate.getID(req);
 
     function success(code, site) {
+        console.log( code, site );
 	    checkForSQLErr(req,res,code,site);
         if( code == models.CODES.OK )
         {
@@ -188,7 +189,7 @@ function emitSiteEditor(req,res){
         }
     }
     
-	models.getSiteForUser(uid, success ).perform();
+	models.getSiteForUser( uid, success ).perform();
 }
 
 function saveSiteEdit(req,res) {
@@ -199,13 +200,17 @@ function saveSiteEdit(req,res) {
 	    errout( req, res, err( 400, "Only somebody signed in can save site info." ) );
         return(false);
     }
-            
-    req.body['ownerid'] = uid;
-    var args = utils.copy( {ownerid: uid}, req.body );
-    models.updateSiteForUser(args, function( code, err ) {
+
+    function callback( code, err ) {
 	    checkForSQLErr(req,res,code,err);    
         if( code == models.CODES.OK )
-            res.render( 'success.html' );
-    });	
+            res.render("./success.html",
+                {layout:"global.html", pageTitle:"Edit Site", bodyClass: "profile"});			
+    }            
+    var args = utils.copy( {ownerid: uid}, req.body );
+
+    var model = models.updateSiteForUser( args, callback );    
+    model.error_output( req, res );
+    model.perform();
 }
 
