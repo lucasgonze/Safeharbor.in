@@ -47,8 +47,8 @@ function checkRegBug( req, res )
     var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
 
     var checkAcct = models.checkForAccount( 'foo@barc.om', function(code, err) { 
-            checkForSQLErr( req, res, code, err );
             htmlDump( res, [code,err] );
+            checkForSQLErr( req, res, code, err );
             if( code == models.CODES.RECORD_FOUND )
             {
                 res.render("profile/login.html",
@@ -62,7 +62,7 @@ function checkRegBug( req, res )
             }
         });
 
-    htmlDump( res, res.app.settings );
+    htmlDump( res, checkAcct);
 
     checkAcct.perform();
 }
