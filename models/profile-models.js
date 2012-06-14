@@ -5,6 +5,8 @@ var ModelPerformer = models.ModelPerformer;
 // re-export for convinience
 exports.CODES = models.CODES;
 
+exports.CODES.HANDSHAKE_EXPIRED = 'hs_expired';
+
 /*****************************
  * Account management
  *****************************/
@@ -18,41 +20,50 @@ exports.checkAcct = function(obj,callback){
 }
 
 exports.initPasswordReset = function(email,callback) {
-    var sql = "update acct set resetSecret = substring(md5(random()::text) from 2 for 10), resetDate = now() where email = $1 returning resetSecret";
+    var sql = "update acct set resetsecret = substring(md5(random()::text) from 2 for 10), resetDate = now() where email = $1 returning resetsecret";
 
     return new ModelPerformer( { values: [email], callback: callback, performer: function() {
-        this.table.UpdateSingleRecord( sql );
+        this.table.updateSingleRecord( sql );
     }});
 }
 
-exports.HANDSHAKE_EXPIRED = 'hsexpired';
 
-exports.saveNewPassword = function(obj,callback) {
+exports.saveNewPassword = function( values, callback ) {
 
+    // first... make sure the handshake hasn't expired
+
+	function performer() {
+//    	var sql = "select (current_timestamp - creation) > interval '1 hour' as expired from emailHandshake";
+    	var sql = "select (current_timestamp - resetdate) > interval '1 hour' as expired from acct;";
+        var m = this;
+        function performerCallback( c, row )  {
+            if( c == models.CODES.OK )
+            {
+                if( row.expired  )
+                {
+                    m.callback( models.CODES.HANDSHAKE_EXPIRED );
+                    m.stopChain();
+                }
+                c = 'hunky';
+            }
+            
+            m.callback( c, row );
+        }
+        
+        this.table.findSingleRecord( sql, null, performerCallback );
+    }
+        
+	var expireCheck = new ModelPerformer( { callback: callback, performer: performer } );
+    
     //  Update the record with user supplied password
 
     var sql = "UPDATE acct SET password = $1 WHERE resetSecret = $2 RETURNING email";
     
-    var savePass = new ModelPerformer( { parseObject: obj, names: ['newPassword', 'resetSecret'], 
-        callback: callback, performer: function() {
-            this.table.UpdateSingleRecord( sql );
-        }});
+    var savePass = new ModelPerformer( { parseObj: values, 
+                                         names: ['password', 'resetsecret'], 
+                                         callback: callback, 
+                                         performer: function() { this.table.updateSingleRecord( sql ); }});
 
-    // ...but first... make sure the handshake hasn't expired
-
-	sql = 'SELECT IF( creation > (current_time - interval "1 hour"), 1, 0 ) AS expired FROM emailHandshake RETURNING expired';
-	
-	var expireCheck = new ModelPerformer( {callback: callback, performer: function() {
-                var m = this;
-                this.table.findSingleRecord( sql, null, function(c,expired) {
-                    if( c == model.CODES.OK && expired )
-                    {
-                        m.callback( exports.HANDSHAKE_EXPIRED );
-                        m.stopChain();
-                    }
-                });
-            }});
-    
     // Chain the two together...
     
     return expireCheck.chain( savePass );
@@ -67,7 +78,7 @@ exports.resetPasswordForLoggedInUser = function( obj, callback ) {
     return new ModelPerformer({ praseObj: obj, 
                                 names: ['newpassword','userid','current'], 
                                 callback: callback, 
-                                performer: function() {this.table.UpdateSingleRecord( sql ); }
+                                performer: function() {this.table.updateSingleRecord( sql ); }
                               });    
 }
 
@@ -76,7 +87,7 @@ exports.deleteAccount = function(userid,callback){
 	function helper(sql) {
         return new ModelPerformer( { values: [userid], 
                                      callback: callback, 
-                                     performer: function() { this.table.DeleteSingleRecord(sql); }
+                                     performer: function() { this.table.deleteSingleRecord(sql); }
                                     } 
                                 );
     }

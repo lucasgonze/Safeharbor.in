@@ -12,7 +12,6 @@ var ModelPerformer = function ( params )
     this.parseObj   = params.parseObj || null;
     this.paramNames = params.names || null;
     this.values     = params.values || [ ];
-
         
     this.api       = table;   // prototype
     this.table     = null;    // instance
@@ -21,7 +20,7 @@ var ModelPerformer = function ( params )
     {
         this.parseValues();
     }
-    else
+    else 
     {
         this.invalidargs = false;
     }
@@ -223,7 +222,7 @@ var tablePrototype = {
         var value = null;            
         var me = this;
         var query = this._getQ(sql,args,callback);
-        query.on('row', function(row) { value = idName ? row[idName] : row; } );
+        query.on('row', function(row) {  value = idName ? row[idName] : row; } );
         query.on( 'end', function(result) {
             if( result.rowCount < 1 )
                 callback.apply( me.binder, [CODES.NO_RECORDS_UPDATED] );
@@ -246,7 +245,7 @@ var tablePrototype = {
         var query = this._getQ(sql,args,callback);
         var me = this;
         query.on( 'row', function(_row) { row = _row } );
-        query.on( 'end', function(result) { 
+        query.on( 'end', function(result) {
             if( result.rowCount < 1 ) 
                 callback.apply( me.binder,  [CODES.NO_RECORDS_FOUND] );
             else if( result.rowCount > 1 )

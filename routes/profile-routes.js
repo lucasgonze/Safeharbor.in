@@ -7,10 +7,13 @@ var models     = require("../models/profile-models.js");
 var loginstate = require('../lib/loginstate.js');
 var utils      = require('../lib/utils.js');
 var errlib     = require("../lib/error.js");
+var Performer  = require('../lib/performer.js').Performer;
 
 var err            = errlib.err;
 var errout         = errlib.errout();
-var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR, models.INVALID_ARGS ] );
+var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR,  
+                                      models.CODES.INVALID_ARGS, 
+                                      models.CODES.HANDSHAKE_EXPIRED ] );
 
 /*--------------------------
     EXPORTED
@@ -85,7 +88,7 @@ function resetPasswordEmail(req, res, to) {
                 },
                 
                 performer: function() {            
-                    var backlink = "http://"+req.headers.host+"/lostpassword/"+result,
+                    var backlink = "http://"+req.headers.host+"/lostpassword/"+this.prev.resetSecret,
                         subject = "Password reset for Safeharbor.in",
                         plainOldAscii = "To reset your password go to "+backlink,
                         htmlTemplate = "/../views/profile/theemail.html",
@@ -102,7 +105,11 @@ function resetPasswordEmail(req, res, to) {
 function recoverPassword(req,res){
     var email = req.body.email;
     var rpe = resetPasswordEmail( req, res, email );
-	var init = models.initPasswordReset( email, function( c, err ) { checkForSQLErr(req,res,c,err); } );
+	var init = models.initPasswordReset( email, function( c, resetSecret ) { 
+	        checkForSQLErr(req,res,c,resetSecret); 
+	        if( c == models.CODES.OK )
+	            this.resetSecret = resetSecret;
+	    } );
 	init.chain( rpe ).perform();
 }
 
@@ -121,7 +128,8 @@ function verifySecret(req,res){
 // the db and send them on to the password reset page if it checks out.
 function postNewPassword(req,res){ 
 
-    var args = utils.copy( {resetSecret: req.params.resetSecret},req.body );
+    var args = { password: req.body.password, 
+                 resetsecret: req.params.resetSecret }; 
 
     function cb(code,err) {
         checkForSQLErr( req, res, code, err );
