@@ -94,6 +94,8 @@ var getClient = function() {
     var pg = require('pg'); //native libpq bindings = `var pg = require('pg').native`
 	var conString = process.env.DATABASE_URL || "tcp://postgres:EMbr4EDS@localhost/safeharborin"; // on heroku and on my local dev box
 	var client = new pg.Client(conString);
+	if( !client )
+	    throw new InvalidConnect(conString);
 	client.connect();
 	return(client);
 }
@@ -139,6 +141,15 @@ function InvalidSQLValues(msg)
     this.name = 'Invalid SQL Values';
 }
 util.inherits( InvalidSQLValues, Error );
+
+function InvalidConnect(conString)
+{
+    var msg = 'Could not connect to database using: ' +  conString;
+    Error.call( this, msg );
+    this.message = msg;
+    this.name = 'Invalid Connect';
+}
+util.inherits( InvalidConnect, Error );
 
 function table(client, bindingObj, defaultCallback, values)
 {
