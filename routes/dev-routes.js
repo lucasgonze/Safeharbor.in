@@ -6,6 +6,13 @@ var errlib = require('../lib/error.js');
 var err      = errlib.err;
 var errCheck = errlib.errout( [model.CODES.SQL_ERROR] );
 
+function htmlDump(res,obj)
+{
+    html = '<!DOCTYPE html PUBLIC \'-//W3C//DTD HTML 4.01//EN\'><html><head><title>dumper</title></head>' +
+           '<body><pre> ' + require('util').inspect(obj,true,null) + '</pre></body></html>';
+    res.write(html);
+    res.end();
+}
 
 exports.install = function( app )
 {
@@ -24,7 +31,39 @@ exports.install = function( app )
 	app.get('/scaffolding', recreateTables );
 
 	app.get('/underbelly', dumpTables );
+	
+	app.get('/checkreg', checkRegBug );
     
+}
+
+function checkRegBug( req, res )
+{
+    var models     = require("../models/reg-models.js");
+    var loginstate = require('../lib/loginstate.js');
+    var errlib     = require('../lib/error.js');
+    var utils      = require('../lib/utils.js');
+    var Performer  = require('../lib/performer.js').Performer;
+    
+    var errout         = errlib.errout();
+    var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
+
+    var checkAcct = models.checkForAccount( 'foo@barc.om', function(code, err) { 
+            checkForSQLErr( req, res, code, err );
+            htmlDump( res, [code,err] );
+            if( code == models.CODES.RECORD_FOUND )
+            {
+                res.render("profile/login.html",
+                    {
+                        layout:"global.html",
+                        pageTitle:"Account exists",
+                        bodyClass: "login",
+                        'alert-from-create': '<div class="alert alert-info">You already have an account</div>'
+                    });
+                this.stopChain();
+            }
+        });
+
+    checkAcct.perform();
 }
 
 function dumpTables( req, res )

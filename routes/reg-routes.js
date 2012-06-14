@@ -117,7 +117,6 @@ function startEmailHandshake(req, res) {
 
     var handshake = emailHandshake(req, res, req.headers.host);
     
-    if( initEmail.validargs )
-        checkAcct.chain( initEmail.chain(handshake) ).perform();
+    checkAcct.chain( initEmail.chain(handshake) ).perform();
 };
 
