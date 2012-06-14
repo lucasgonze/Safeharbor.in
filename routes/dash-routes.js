@@ -2,42 +2,16 @@
 var dm = require('../models/dash-models.js');
 var ac = require('../models/actions.js');
 
-function getDash( req, resp )
+function getDash( req, res )
 {
     var rows = [];
-    dm.getAuditTrail( null, 'all', function( err, row, results ) {
-        if( !!err )
-        {
-            console.log( err ); // right, supposed to do something here
-            return;
-        }
-        if( row )
-        {
-            var action = ac.ACTIONS[row.action];
-            row.caption = action.cap;
-            row.suggested = [];
-            for( var i in action.flowsTo )
-            {
-                var actionID = action.flowsTo[i];
-                console.log( 'flowsTo: ' + actionID );
-                row.suggested.push( { url: '/dash/' + row.id + '/perform/' + actionID,
-                                      text: ac.ACTIONS[actionID].cap } );
-            }
-                
-            rows.push(row);
-        }
-        else if( results ) 
-        {
-            // we're done
-            resp.render( '../views/dash/home.html',
-                        {
-                           layout: 'global.html',
-                           pageTitle: 'Safe Harbor Dashboard',
-                           bodyClass: 'dash',
-                           auditItems: rows
-                        } );
-        }    
-    });
+    res.render( '../views/dash/home.html',
+                {
+                   layout: 'global.html',
+                   pageTitle: 'Safe Harbor Dashboard',
+                   bodyClass: 'dash',
+                   auditItems: rows
+                } );
 }
 
 exports.install = function(app) 

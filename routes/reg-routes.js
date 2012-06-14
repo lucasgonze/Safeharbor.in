@@ -5,10 +5,12 @@
 
 var models     = require("../models/reg-models.js");
 var loginstate = require('../lib/loginstate.js');
-var helpers    = require('./router-helpers.js');
+var errlib     = require('../lib/error.js');
+var utils      = require('../lib/utils.js');
+var Performer  = require('../lib/performer.js').Performer;
 
-var checkStringParams = helpers.checkStringParams;
-var genCallback = helpers.genCallback;
+var errout         = errlib.errout();
+var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
 
 exports.install = function( app )
 {
@@ -26,92 +28,98 @@ function getVerifyAcct( req, res ) {
 
 function saveConfig(req,res){
 
-    var p1 = [ 'sitename', 1, 'domain', 1, 'agentaddress', 1, 'agentemail', 1, ];
-    var p2 = [ 'regid', 1 ];
+    var emailHandshakeId = req.params['regid'];    
     
-    var values     = checkStringParams( req, res, req.body, p1 );
-    var regidCheck = checkStringParams( req, res, req.params, p2 );
-
-    // console.log( [ 'req.body', req.body, 'values', values, 'regidCheck', regidCheck ] );
+    var createAcct = models.createAcct( emailHandshakeId, function( code, acctId ) { 
+            console.log( code, acctId );
+            checkForSQLErr( req, res, code, acctId );
+            if( code == models.CODES.INSERT_SINGLE )
+            {
+                loginstate.enable(req,acctId);
+                // setup for chaining this to next step
+                this.acctId = acctId;
+            }
+        });
+    var createSite = models.createSite( req.body , function( code, siteId ) {
+            console.log( code, 'site', siteId );
+        checkForSQLErr( req, res, code, siteId );
+        if( code == models.CODES.INSERT_SINGLE )
+            res.render( "reg/done.html",
+                           { layout:"global.html",
+                             pageTitle:"Setup Done",
+                             bodyClass:"regfinal",
+                             siteid:siteId
+                             } );    
+       });
     
-    if( values === false || regidCheck === false )
-        return;
-
-    var extraParams = { pageTitle:"Error (1)", bodyClass:"error",message:"Unable to save" };
-
-    function innerSuccess( result ) {
-        res.render( "reg/done.html",
-                   { layout:"global.html",
-                     pageTitle:"Setup Done",
-                     bodyClass:"regfinal",
-                     siteid: result.oid
-                     } );
-    }
-
-    function success( result ) {
-
-        // save newly created user ID to a session variable
-        loginstate.enable(req,result.id);
-    
-        extraParams.pageTitle = "Error (2)";
-         
-        // insert the site data into db
-        models.createSite( result.id, values.sitename, values.domain, 
-               values.agentaddress,values.agentemail, genCallback( req, res, extraParams, innerSuccess ) );
-    }
-    
-    
-	models.createAcct(regidCheck.regid, genCallback( req, res, extraParams, success ) );
+    createAcct.chain( createSite ).perform();
 }
 
-function emailHandshake(email,regid,host) {	
-	var to = email;
-	var subject = "New account at Safeharbor.in";
-	var text = 'Please confirm your Safeharbor.in account by going to http://safeharbor.in/reg/'+regid;
-	var templateRelativePath = "/../views/reg/handshake.html";
-	var templateVars = {'regid': regid,'host':host};
-	require('../lib/mail.js').emailFromTemplate(to,subject,text,templateRelativePath,templateVars,function(success,message){
-		if(!success){
-			console.log("ERROR: unable to send handshake email");
-			console.log(err);
-			console.log(message);
-		}
-	});
+function emailHandshake(req, res, host) {	
+    return new Performer( 
+            { 
+                req: req,
+                
+                res: res,
+            
+                // N.B. these params are flipped coming from sendgrid
+                callback: function(success,message) {
+                    if( success ) {
+                        res.render("reg/checkyouremail.html",
+                              {layout:"global.html",pageTitle:"Check Your Email",bodyClass:"gocheckemail"} );
+                    }   
+                    else {
+                        errout( req, res, err( 400, 'Email handshake failed: ' + message)  );
+                        this.stopChain();
+                    }
+                },
+                
+                performer: function() {            
+                    var to    = req.body.email;
+                    var regid = this.prev.id;
+                    var subj  = "New account at Safeharbor.in";
+                    var text  = 'Please confirm your Safeharbor.in account by going to http://safeharbor.in/reg/'+regid;
+                    var path  = "/../views/reg/handshake.html";
+                    var vars  = {'regid': regid,'host':host};
+                    require('../lib/mail.js').emailFromTemplate(to,subj,text,path,vars,this.bound_callback());
+                }                
+            });            
 }
 
 function startEmailHandshake(req, res) {
-	
-	// validate form input for corruption but not for user-friendliness. User-friendliness is handled in the browser before submitting the form.
 
-    var values = checkStringParams( req, res, req.body, ['email',1,'password',1,'confirm',1] );
-	
-	if( values === false )
-	    return;
-
-    if( values.confirm != values.password )	    
-	    return(errlib.render(res,"Passwords don't match","400",err));
-
-    function innerSuccess(result) {
-        emailHandshake(req.body.email,""+result.oid,req.headers.host);
-        return(res.render("reg/checkyouremail.html",{layout:"global.html",pageTitle:"Check Your Email",bodyClass:"gocheckemail"}));
+	// validate form input for corruption but not for user-friendliness. 
+	// User-friendliness is handled in the browser before submitting the form.
+    if( req.body.confirm != req.body.password )	    
+    {
+        errout( req, res, err( 400, 'password mismatch' ) );
+        return;        
     }
-    var extraParams = { t: "error/error.html", p: {layout:"global.html",pageTitle:"Error",bodyClass:"error",message:"Database 23",code:"500"}};
+    
+    var checkAcct = models.checkForAccount( req.body.email, function(code, err) { 
+            checkForSQLErr( req, res, code, err );
+            if( code == models.CODES.RECORD_FOUND )
+            {
+                res.render("profile/login.html",
+                    {
+                        layout:"global.html",
+                        pageTitle:"Account exists",
+                        bodyClass: "login",
+                        'alert-from-create': '<div class="alert alert-info">You already have an account</div>'
+                    });
+                this.stopChain();
+            }
+        });
         
-	    
-	models.checkForAccount(req.body.email, function(err,result) {
-        
- 		if( result.rows[0].count > 0 ){
-			res.render("profile/login.html",{
-				layout:"global.html",pageTitle:"Account exists",bodyClass: "login",
-				'alert-from-create': '<div class="alert alert-info">You already have an account</div>'
-			});
-		} 
-		else {
-            models.initEmailConfirmation(req.body.email,req.body.password, 
-                                    genCallback( req, res, extraParams, innerSuccess ) );
-        }
+    var initEmail = models.initEmailConfirmation( req.body, function( code, id ) {
+            checkForSQLErr( req, res, code, id );
+            if( code == models.CODES.INSERT_SINGLE )
+                this.id = id;
+        });
 
-	}); // end checkForAccount call
-
+    var handshake = emailHandshake(req, res, req.headers.host);
+    
+    if( initEmail.validargs )
+        checkAcct.chain( initEmail.chain(handshake) ).perform();
 };
 

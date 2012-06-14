@@ -6,11 +6,14 @@
 "use strict";
 
 var models = require('../models/box-models.js');
-var errlib = require('../lib/error.js');
 var helpers = require('./router-helpers.js');
 
-var checkStringParams = helpers.checkStringParams;
-var genCallback = helpers.genCallback;
+var utils      = require('../lib/utils.js');
+var errlib     = require('../lib/error.js');
+var Performer  = require('../lib/performer.js').Performer;
+
+var errout           = errlib.errout();
+var checkForFoundErr = errlib.errout( [models.CODES.NO_RECORDS_FOUND, models.CODES.SQL_ERROR] );
 
 exports.install = function( app )
 {
@@ -20,69 +23,80 @@ exports.install = function( app )
 }
 
 function getBox(req,res){
-
-    function success(result) {
-		var vars = {
-			layout:       'global.html',
-			pageTitle:    'Copyright Inbox',
-			bodyClass:    'box',
-			sitename:     result.sitename,
-			domain:       result.domain,
-			agentaddress: result.agentaddress,
-			agentemail:   result.agentemail,
-			oid:          result.oid
-		};
-	    res.render('box/top.html',vars);			
-    }
-    
 	// look up metadata for the box number
-	models.get( req.params.siteid, genCallback( req, res, { is404: true }, success ) );
+	var p = models.get( parseInt(req.params.siteid), function (code, site) {
+        checkForFoundErr( req, res, code, site );
+        if( code == models.CODES.SUCCESS ) 
+        {
+            res.render( 'box/top.html', utils.copy( {
+                        layout:       'global.html',
+                        pageTitle:    'Copyright Inbox',
+                        bodyClass:    'box' }, site ));			
+        }
+    } );
 
+    p.perform();
 };
+
+function notifyEmailer(req, res) {	
+    return new Performer( 
+            { 
+                req: req,
+                
+                res: res,
+            
+                // N.B. these params are flipped coming from sendgrid
+                callback: function(success,message) {
+                    // Sendgrid's error flag doesn't use the Node.js convention of having non-null mean success			
+                    if( success ) {
+                        res.render("box/success.html",{layout:"global.html",pageTitle:"Success",bodyClass:"box"});
+                    }   
+                    else {
+                        errout( req, res, err( 400, 'Email notify failed: ' + message)  );
+                        this.stopChain();
+                    }                    
+                },
+                
+                performer: function() {            
+                    var site = this.prev.site;
+                    var subject = "IMPORTANT: DMCA takedown request received";
+                    var path = "../views/box/notificationemail.html";
+                    var vars = utils.copy( {}, req.body, site );
+                    var mailer = require("../lib/mail.js");
+                    mailer.emailFromTemplate( acct.agentemail,
+                                          subject,
+                                          'text goes here', // TODO: um, did 'text' ever work here??
+                                          path,
+                                          vars,
+                                          this.bound_callback());
+                }                
+            });            
+}
 
 function postBox(req,res){
 
-    var strs = [ 'page', 1, 'description', 1, 'email', 1, 'phone', 1,
-                 'postal', 1 ];
-    var values = checkStringParams( req, res, req.body, strs );
-    var siteIDval = checkStringParams( req, res, req.params, [ 'siteid', 1 ] );
-    
-    if( values === false || siteIDval === false  )
+    var values = checkStringParams( req, 
+                                    res, 
+                                    utils.copy( {}, req.body, req.params ), 
+                                    [ 'siteid','page','description','email','phone','postal'] );
+
+    if( !values )
         return;
-
+        
     if( req.body.belief !== "on" || req.body.authorized !== "on") {
-		return errlib.render(res,'I fail to see the humor in the situation','400');
+        errout( req, res, err( 400, 'invalid options to postBox') );
+        return;
 	}
-		
-	// look up metadata for the box number
-	models.get(req.params.siteid,function(err,result){
+	
+    // look up metadata for the box number
+    var verify = models.get( values.siteid, function(code,site) {
+        checkForFoundErr( req, res, code, site );
+        if( code == models.CODE.SUCCESS )
+            this.site = site;        
+    });
 
-		// Box ID not found. A real user should never be in this position, hence the 
-		// reason to consider it an application error.
-		if(err !== null){ return(errlib.render(res,"model fail","500")); }
-		
-		var subject = "IMPORTANT: DMCA takedown request received";
-		var templateRelativePath = "../views/box/notificationemail.html";
-		var templateVars = req.body;
-		templateVars.sitename = result.sitename;
-		templateVars.domain = result.domain;
-		
-		var callback = function(success,message){	
-			// Sendgrid's error flag doesn't use the Node.js convention of having non-null mean success			
-			if( !success ){
-				errlib.render(res,"Unable to send mail","500","Unable to send mail: "+message);
-			} else {
-				res.render("box/success.html",{layout:"global.html",pageTitle:"Success",bodyClass:"box"});
-			}
-		};
-
-		var mailer = require("../lib/mail.js");
-		mailer.emailFromTemplate( result.agentemail,
-		                          subject,
-		                          'text goes here', // TODO: um, did 'text' ever work here??
-		                          templateRelativePath,
-		                          templateVars,
-		                          callback);
-	});
+    var notifier = notifyEmailer( req, res );
+    
+    verify.chain( notifier ).perform();
 
 };

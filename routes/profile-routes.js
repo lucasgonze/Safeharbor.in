@@ -3,13 +3,14 @@
  * Login, logout, edit profile, reset password, edit site
  *****************************/
 
-var models = require("../models/profile-models.js");
+var models     = require("../models/profile-models.js");
 var loginstate = require('../lib/loginstate.js');
-var errlib = require("../lib/error.js");
-var helpers = require('./router-helpers.js');
+var utils      = require('../lib/utils.js');
+var errlib     = require("../lib/error.js");
 
-var checkStringParams = helpers.checkStringParams;
-var genCallback = helpers.genCallback;
+var err            = errlib.err;
+var errout         = errlib.errout();
+var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
 
 /*--------------------------
     EXPORTED
@@ -50,62 +51,59 @@ function clearLogin(req,res) {
 	res.redirect("/login");
 }
 
-
 function saveLogin(req,res) {
 	
-	var values = checkStringParams( req, res, req.body, ['email',1,'password',1] );
-	
-	if( values === false )
-	    return;
+    var model = models.checkAcct( req.body, function(code,id) { 
+        checkForSQLErr( req, res, code, id );
+        if( code == models.CODES.SUCCESS )
+        {
+            loginstate.enable(req,id);
+            res.redirect("/dash");
+        }
+    });
 
-    var extraParams = { t: 'profile/login.html', p: { pageTitle :"Log In", loginStatus:"fail" } };
+    model.perform();
+}
 
-    function success(result)
-    {
-        loginstate.enable(req,result.id);
-        res.redirect("/dash");
-    }
-    
-	// look into database to see whether the submitted information is correct
-	models.checkAcct( values.email, values.password, genCallback( req, res, extraParams, success ) );
+function resetPasswordEmail(req, res, to) {	
+    return new Performer( 
+            { 
+                req: req,
+                
+                res: res,
+            
+                // N.B. these params are flipped coming from sendgrid
+                callback: function(success,message) {
+                    if( success ) {
+                        res.render("profile/success.html",
+                            {layout:"global.html", pageTitle:"Password Reset", bodyClass: "profile"});			
+                    }   
+                    else {
+                        errout( req, res, err( 400, 'Email reset failed: ' + message)  );
+                        this.stopChain();
+                    }
+                },
+                
+                performer: function() {            
+                    var backlink = "http://"+req.headers.host+"/lostpassword/"+result,
+                        subject = "Password reset for Safeharbor.in",
+                        plainOldAscii = "To reset your password go to "+backlink,
+                        htmlTemplate = "/../views/profile/theemail.html",
+                        htmlVars = {'backlink':backlink},
+                        sendgrid = require('../lib/mail.js');
+                        sendgrid.emailFromTemplate(to,subject,plainOldAscii,
+                                                  htmlTemplate,htmlVars,this.bound_callback());
+                 }                
+            });            
 }
 
 // save a secret to the DB and email it to the email. note that we always show the "email sent" page, 
 // but we only actually send the email if it was found in the db!
 function recoverPassword(req,res){
-
-	var values = checkStringParams( req, res, req.body, ['email',1] );
-
-	if( values === false )
-        return;
-
-    // success.html?? really?
-    var extraParams = { t: 'profile/success.html', p: {pageTitle:"Password Reset"} };
-
-    function success( result ) {
-        // email a secret to the user with a link to the reset page	
-        var backlink = "http://"+req.headers.host+"/lostpassword/"+result,
-            subject = "Password reset for Safeharbor.in",
-            plainOldAscii = "To reset your password go to "+backlink,
-            htmlTemplate = "/../views/profile/theemail.html",
-            htmlVars = {'backlink':backlink},
-            sendgrid = require('../lib/mail.js');
-            
-        sendgrid.emailFromTemplate(values.email,subject,plainOldAscii,
-                                      htmlTemplate,htmlVars,
-            function( success, result ) {
-                if( !success ){
-                    console.log("Unable to send email:")
-                    console.log(result);
-                    throw new Error("Unable to send email");
-                }
-            });	
-
-        res.render("profile/success.html",
-            {layout:"global.html", pageTitle:"Password Reset", bodyClass: "profile"});			
-    }
-    
-	models.initPasswordReset(values.email, genCallback( req, res, extraParams, success ) );
+    var email = req.body.email;
+    var rpe = resetPasswordEmail( req, res, email );
+	var init = models.initPasswordReset( email, function( c, err ) { checkForSQLErr(req,res,c,err); } );
+	init.chain( rpe ).perform();
 }
 
 // given that the user has passed a password recovery token in the URL, send
@@ -123,108 +121,91 @@ function verifySecret(req,res){
 // the db and send them on to the password reset page if it checks out.
 function postNewPassword(req,res){ 
 
-    var resetId = checkStringParams( req, res, req.params, ['resetSecret',10] );
-	var values = checkStringParams( req, res, req.body, ['password',4,'confirm',4] );
-    
-	if( values === false || resetId === false )
-        return;
+    var args = utils.copy( {resetSecret: req.params.resetSecret},req.body );
 
-    function success() {
-         res.render("success.html",{layout:"global.html",pageTitle:"Success"});    
+    function cb(code,err) {
+        checkForSQLErr( req, res, code, err );
+        if( code == models.CODES.SUCCESS )
+            res.render("success.html",{layout:"global.html",pageTitle:"Success"});    
     }
     
-    models.saveNewPassword( resetId.resetSecret, values.password, 
-                               genCallback( req, res, { is404: true }, success ) );
-
+    models.saveNewPassword( args, cb ).perform();
 }
 
-/* Different than postNewPassword in that it's used by a logged-in user rather than one who has lost their password. */
-function savePasswordReset(req,res){
+/* Different than postNewPassword in that it's used by a logged-in 
+   user rather than one who has lost their password. */
+function savePasswordReset(req,res) {
 
-	var values = checkStringParams( req, res, req.body, ['current',4,'newpassword',4,'confirm',1] );
-
-	if( values === false )
-        return;
+	if( !loginstate.isLoggedIn() ) {
+	        errout( req, res, err( 400, "Only somebody signed in can reset their password." ) );
+        }
+	else if( req.body.newpassword !== req.body.confirm ) {
+    	    errout( req, res, err( 400, "Mismatch password." ) );
+	    }
+    else {
+        var args = utils.copy( { userid: loginstate.getID() }, req.body );
         
-    if( req.body.newpassword !== req.body.confirm ) 
-	    return(errlib.render(res,"Mismatched passwords","400","Bad params"));
-
-	if( !loginstate.isLoggedIn() )
-		 return(errlib.render(res,"Only somebody signed in can reset their password.","400"));
-
-    var extraParams = { t: 'profile/passwordreset.html', p: { pageTitle:"Reset Password",bodyClass:'showerror'} };
-
-    function success() {
-        res.render("profile/success.html",{layout:"global.html",pageTitle:"Success"});	
+        models.resetPasswordForLoggedInUser( args, function(code,err) {
+                checkForSQLErr( req, res, code, err );
+                if( code == models.CODES.SUCCESS )
+                    res.render("profile/success.html",{layout:"global.html",pageTitle:"Success"});	
+            } ).perform();
     }
-    
-	models.resetPasswordForLoggedInUser( loginstate.getID(req), values.current, values.newpassword, 
-	                                       genCallback( req, res, extraParams, success ) );
 }
 
 
 function deleteAccount(req,res){
 
 	if( ! loginstate.isLoggedIn() ){
-		return(errlib.render(res,"Sign in to sign out.","400"));
+    	    errout( req, res, err( 400, "not signed in!." ) );
+    	    return;
 	}
 
-	models.deleteAccount(req.session.userid,function(err,result){
-
-		if( err !== null ){ 
-			return(errlib.render(res,"Internal error (45)","500",err)); // DB error			
-		}
-
+	models.deleteAccount(req.session.userid,function(code,err){
+	    checkForSQLErr(req,res,code,err);
 		loginstate.disable(req);
 		res.render("success.html",{layout:"global.html",pageTitle:"Success"});	
-	});
+	}).perform();
 }
 
 function emitSiteEditor(req,res){	
 	
 	if( ! loginstate.isLoggedIn() ){
-		return(errlib.render(res,"You must be signed in to edit site info.","400",err));
+	    errout( req, res, err( 400, "Only somebody signed in can edit site info." ) );
+	    return;
 	}
 	
 	var uid = loginstate.getID(req);
 
-    function success(result) {
-        var vars = {
-                layout: "global.html",
-                pagetitle: "Edit Site",
-                bodyClass: "siteeditor",
-                sitename: result.sitename,
-                sitedomain: result.domain,
-                agentaddress: result.agentaddress,
-                agentemail: result.agentemail
-            };			
-        res.render("profile/siteeditor.html",vars);
+    function success(code, site) {
+	    checkForSQLErr(req,res,code,site);
+        if( code == models.CODES.OK )
+        {
+            res.render("profile/siteeditor.html", utils.copy({
+                                                    layout: "global.html",
+                                                    pagetitle: "Edit Site",
+                                                    bodyClass: "siteeditor" }, site) );
+        }
     }
     
-	models.getSiteForUser(uid, genCallback( req, res, { is404: true }, success ) );
+	models.getSiteForUser(uid, success ).perform();
 }
 
 function saveSiteEdit(req,res) {
 
-	var values = checkStringParams( req, res, req.body, 
-	                            ['sitename',1,'domain',4,'agentaddress',1,'agentemail',1] );
-
-	if( values === false )
-        return;
-
-    if( ! loginstate.isLoggedIn() ){
-        errlib.render(res,"You must be signed in to edit site info.","400");
-        return(false);
-    }
-
-    if( loginstate.getID(req) === null ){
-        errlib.render(res,"Corrupt session state.","500");
-        return(false);
-    }
-
-    uid = loginstate.getID(this.req);
+    var uid = loginstate.getID(req);
     
-    models.updateSiteForUser(uid,values.sitename,values.domain,values.agentaddress,values.agentemail,
-        genCallback(req,res,{t:'success.html'}));
-	
+    if( !uid ) {
+	    errout( req, res, err( 400, "Only somebody signed in can save site info." ) );
+        return(false);
+    }
+            
+    req.body['ownerid'] = uid;
+    var args = utils.copy( {ownerid: uid}, req.body );
+    models.updateSiteForUser(args, function( code, err ) {
+	    checkForSQLErr(req,res,code,err);    
+        if( code == models.CODES.OK )
+            res.render( 'success.html' );
+    });	
 }
+

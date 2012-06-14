@@ -13,6 +13,7 @@ var express = require('express');
 var routes = require('./routes');
 var models = require("./models");
 var loginstate = require("./lib/loginstate.js");
+var errlib = require('./lib/error.js');
 
 var app = module.exports = express.createServer(
 	express.cookieParser(),
@@ -22,6 +23,9 @@ var app = module.exports = express.createServer(
 //******************************
 // middleware
 //******************************
+
+// oh, I'm sure there's a prettier way to do this
+errlib.init( express.errorHandler({ dumpExceptions: true, showStack: true }) );
 
 app.configure(function() {
 
@@ -38,6 +42,8 @@ app.configure(function() {
 	    app.register('.html', Handlebars);
 	    app.set('view engine', 'handlebars');
 
+       // app.use(express.logger());
+        
 		app.use(function(req, res, next){
 			loginstate.initFromReq(req);
 			next();
@@ -49,17 +55,19 @@ app.configure(function() {
 	    app.use(app.router);
 	    app.use(express.static(__dirname + '/public'));
 
-		// 404s in particular
+        // if you are here that means that no header
+        // has been sent out the response object so
+        // it's a 404
 		app.use(function(req, res, next){ 
-		    res.status(404);
-			throw new Error("Not found!?");
+            res.status(404);
+            throw new Error("Not found!? " + req.originalUrl );
 		});
 
 		// misc exceptions
-		app.use(function(err, req, res, next) {
+		app.error(function(err, req, res, next) {
 			if( err.statusCode !== undefined )
 				res.statusCode = err.statusCode; 
-			res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:err.message});
+			errlib.render( res,err.message,err.statusCode,{});
 		});
 
 	});
@@ -77,11 +85,24 @@ app.configure('production',
 	    app.use(express.errorHandler());
 	});
 
+express.errorHandler.title = 'Safe Harbor: Geek Error <h4>please report this to the proper authorities</h4>';
+
 //******************************
 // Routes
 //******************************
 
 routes.setup(app);
+
+process.on('uncaughtException', function (err) {
+    // by the time you get to this point
+    // the session is screwed. The app will
+    // continue to run for other users and
+    // this user can use browser's 'back' to
+    // unhork. 
+    // TODO: notify admin when this happens...
+  console.log(['******* Caught-uncaught exception: ', err] );
+  console.trace('call stack:');
+});
 
 //******************************
 // Server loop
