@@ -36,7 +36,36 @@ exports.install = function( app )
     
 }
 
+var checkForAccount = function(email,callback)
+{
+    var models = require('../models/index.js');
+    var ModelPerformer = models.ModelPerformer;
+    var CODES = models.CODES;
+
+    var sql = "select acct from acct where email = $1";
+    return new ModelPerformer( { values: [email], 
+                                 callback: callback, 
+                                 performer: function() { 
+                                    htmlDump( this.res, sql );
+                                    this.table.findSingleRecord(sql); 
+                                 } } );
+}
+
 function checkRegBug( req, res )
+{
+    var models = require('../models/index.js');
+    var client = models.getClient();
+
+    var data = {};
+    
+    var sql = "select acct from acct where email = $1";
+    var query = client.query( sql, ['foo@bar.com'] ); 
+    query.on( 'error', function( err ) { data.err = err; } );
+    query.on( 'row', function( row ) { data.row = row; } );
+    query.on( 'end', function( result ) { data.end = result; htmlDump( res, data ); } );    
+}
+
+function checkRegBugXXX( req, res )
 {
     var models     = require("../models/reg-models.js");
     var loginstate = require('../lib/loginstate.js');
@@ -46,7 +75,7 @@ function checkRegBug( req, res )
     var errout         = errlib.errout();
     var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
 
-    var checkAcct = models.checkForAccount( 'foo@barc.om', function(code, err) { 
+    var checkAcct = checkForAccount( 'foo@barc.om', function(code, err) { 
             htmlDump( res, [code,err] );
             checkForSQLErr( req, res, code, err );
             if( code == models.CODES.RECORD_FOUND )
