@@ -62,8 +62,7 @@ function checkRegBug( req, res )
             }
         });
 
-    htmlDump( res, checkAcct);
-
+    checkAcct.error_output( req, res );    
     checkAcct.perform();
 }
 
