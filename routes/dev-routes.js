@@ -36,21 +36,6 @@ exports.install = function( app )
     
 }
 
-var checkForAccount = function(email,callback)
-{
-    var models = require('../models/index.js');
-    var ModelPerformer = models.ModelPerformer;
-    var CODES = models.CODES;
-
-    var sql = "select acct from acct where email = $1";
-    return new ModelPerformer( { values: [email], 
-                                 callback: callback, 
-                                 performer: function() { 
-                                    htmlDump( this.res, sql );
-                                    this.table.findSingleRecord(sql); 
-                                 } } );
-}
-
 function checkRegBug( req, res )
 {
     var models = require('../models/index.js');
@@ -58,41 +43,11 @@ function checkRegBug( req, res )
 
     var data = {};
     
-    var sql = "select acct from acct where email = $1";
+    var sql = "select acctid from acct where email = $1";
     var query = client.query( sql, ['foo@bar.com'] ); 
     query.on( 'error', function( err ) { data.err = err; } );
     query.on( 'row', function( row ) { data.row = row; } );
     query.on( 'end', function( result ) { data.end = result; htmlDump( res, data ); } );    
-}
-
-function checkRegBugXXX( req, res )
-{
-    var models     = require("../models/reg-models.js");
-    var loginstate = require('../lib/loginstate.js');
-    var errlib     = require('../lib/error.js');
-    var utils      = require('../lib/utils.js');
-    
-    var errout         = errlib.errout();
-    var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
-
-    var checkAcct = checkForAccount( 'foo@barc.om', function(code, err) { 
-            htmlDump( res, [code,err] );
-            checkForSQLErr( req, res, code, err );
-            if( code == models.CODES.RECORD_FOUND )
-            {
-                res.render("profile/login.html",
-                    {
-                        layout:"global.html",
-                        pageTitle:"Account exists",
-                        bodyClass: "login",
-                        'alert-from-create': '<div class="alert alert-info">You already have an account</div>'
-                    });
-                this.stopChain();
-            }
-        });
-
-    checkAcct.error_output( req, res );    
-    checkAcct.perform();
 }
 
 function dumpTables( req, res )
@@ -119,6 +74,7 @@ function dumpTables( req, res )
     
     var printer = new ModelPerformer( { performer: function() { this.table.findSingleRecord('SELECT NOW()'); },
                                         callback: function( c, err ) {
+        //console.log( this.name, c, err );                                        
         errCheck( req, res, c, err );
         
         if( c != model.CODES.OK )
@@ -165,6 +121,5 @@ function dumpTables( req, res )
 function recreateTables(req,res)
 {
     model.recreateTables(res,res);
-    res.write('<!DOCTYPE html PUBLIC \'-//W3C//DTD HTML 4.01//EN\'><html><head><title>waz?</title></head><body>huh!?</body></html>');
-    res.end();
+    htmlDump(res,'Booyah(?)');
 }

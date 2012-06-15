@@ -13,7 +13,7 @@ function getSecureUniquePublicID(){
 }
 
 exports.checkForAccount = function(email,callback){
-    var sql = "select acct from acct where email = $1";
+    var sql = "select acctid from acct where email = $1";
     return new ModelPerformer( { values: [email], callback: callback, performer: function() { this.table.findSingleRecord(sql); } } );
 }
 

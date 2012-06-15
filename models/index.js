@@ -159,6 +159,14 @@ function table(client, bindingObj, defaultCallback, values)
     this.values = values || [ ];
 }
 
+// smooth out differences in 
+// node-postgre lib versions
+function _rcnt(result) {
+    if( result.hasOwnProperty('rowCount') )
+        return result.rowCount;
+    return result.rows.length;
+}
+
 var tablePrototype = {
 
     _getQ: function( sql, a, cb )
@@ -187,10 +195,11 @@ var tablePrototype = {
         var callback = cb || this.defCallback;
         var query = this._getQ(sql,args,callback);        
         query.on( 'end', function(result) {
-            if( result.rowCount < 1 )
+            var len = _rcnt(result);
+            if( len < 1 )
                 callback( [CODES.NO_RECORDS_DELETED, this] );
             else
-                callback( [CODES.SUCCESS, result.rowCount] );
+                callback( [CODES.SUCCESS, len] );
             });
     },
 
@@ -211,7 +220,8 @@ var tablePrototype = {
         var query = this._getQ(sql,args,callback);
         query.on('row', function(row) { value = idName ? row[idName] : row; } );
         query.on( 'end', function(result) {
-            if( result.rowCount < 1 )
+            var len = _rcnt(result);
+            if( len < 1 )
                 callback.apply( me.binder, [CODES.NO_RECORDS_INSERTED] );
             else
                 callback.apply( me.binder,  [CODES.INSERT_SINGLE, value] );
@@ -236,15 +246,14 @@ var tablePrototype = {
         var query = this._getQ(sql,args,callback);
         query.on('row', function(row) {  value = idName ? row[idName] : row; } );
         query.on( 'end', function(result) {
-            if( result.rowCount < 1 )
+            var len = _rcnt(result);
+            if( len < 1 )
                 callback.apply( me.binder, [CODES.NO_RECORDS_UPDATED] );
             else
                 callback.apply( me.binder,  [CODES.SUCCESS, value] );
             });            
     },
 
-
-    
     /*
         callback( table.SUCCESS, row )
         callback( table.SQL_ERROR, err )
@@ -258,9 +267,10 @@ var tablePrototype = {
         var me = this;
         query.on( 'row', function(_row) { row = _row } );
         query.on( 'end', function(result) {
-            if( result.rowCount < 1 ) 
+            var len = _rcnt(result);
+            if( len < 1 ) 
                 callback.apply( me.binder,  [CODES.NO_RECORDS_FOUND] );
-            else if( result.rowCount > 1 )
+            else if( len > 1 )
                 callback.apply( me.binder,  [CODES.MULTIPLE_RECORDS_FOUND, row] );
             else
                 callback.apply( me.binder, [CODES.SUCCESS, row] );
@@ -281,7 +291,9 @@ var tablePrototype = {
         var query = this._getQ(sql,args,callback);
         var me = this;
         query.on( 'row', function(_row) { rows.push(_row); } );
-        query.on( 'end', function(result) { callback.apply( me.binder,  [CODES.QUERY_SUCCESS, rows, result] ); } );    
+        query.on( 'end', function(result) { 
+            callback.apply( me.binder,  [CODES.QUERY_SUCCESS, rows, result] ); 
+            } );    
     },
     
     getCount: function( sql, args, cb ) {

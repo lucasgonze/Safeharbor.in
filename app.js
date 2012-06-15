@@ -67,7 +67,8 @@ app.configure(function() {
 		app.error(function(err, req, res, next) {
 			if( err.statusCode !== undefined )
 				res.statusCode = err.statusCode; 
-			errlib.render( res,err.message,err.statusCode,{});
+			errlib.handleException( err, req, res );
+//			errlib.render( res,err.message,err.statusCode,{});
 		});
 
 	});
@@ -101,7 +102,8 @@ process.on('uncaughtException', function (err) {
     // unhork. 
     // TODO: notify admin when this happens...
   console.log(['******* Caught-uncaught exception: ', err] );
-  console.trace('call stack:');
+  console.log( err.stack );
+//  console.trace('call stack:');
 });
 
 //******************************

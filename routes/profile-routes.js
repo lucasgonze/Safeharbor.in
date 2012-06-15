@@ -186,7 +186,6 @@ function emitSiteEditor(req,res){
 	var uid = loginstate.getID(req);
 
     function success(code, site) {
-        console.log( code, site );
 	    checkForSQLErr(req,res,code,site);
         if( code == models.CODES.OK )
         {
