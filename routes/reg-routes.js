@@ -10,6 +10,7 @@ var utils      = require('../lib/utils.js');
 var Performer  = require('../lib/performer.js').Performer;
 var debug      = require('../lib/debug.js');
 
+var exp            = errlib.err;
 var errout         = errlib.errout();
 var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
 
@@ -22,17 +23,29 @@ exports.install = function( app )
 }
 
 function registerGet( req, res ) {
-    // TODO: we should be checking the regid right here
-    res.render('reg/fromemail.html',
-        { layout: 'global.html', pageTitle:'Verify', bodyClass:'regid', regid: req.params.regid });
+    var regid = req.params.regid;
+    var checker = models.checkForHandshake( regid, function(code,err) {
+        debug.out( 'Check for HS: ', code, err );
+        checkForSQLErr( req, res, code, err );
+        if( code == models.CODES.SUCCESS )
+        {
+            res.render('reg/fromemail.html',
+                { layout: 'global.html', pageTitle:'Verify', bodyClass:'regid', regid: regid });
+        }
+        else 
+        {
+            errout( req, res, exp( 400, 'Invalid handshake token' ) );
+        }
+    });
+    
+    checker.perform();
 }
 
 function registerPost(req,res){
 
-    var regid = req.params['regid'];    
+    var regid = req.params.regid;
     
     var createAcct = models.createAcct( regid, function( code, acctid ) { 
-            debug.out( 'Create Acct: ', code, acctid );
             checkForSQLErr( req, res, code, acctid );
             if( code == models.CODES.INSERT_SINGLE )
             {
@@ -42,15 +55,14 @@ function registerPost(req,res){
             }
         });
     var createSite = models.createSite( req.body , function( code, siteid ) {
-            debug.out( 'Create Site: ', code, siteid );
-        checkForSQLErr( req, res, code, siteid );
-        if( code == models.CODES.INSERT_SINGLE )
-            res.render( "reg/done.html",
-                           { layout:"global.html",
-                             pageTitle:"Setup Done",
-                             bodyClass:"regfinal",
-                             siteid:siteid
-                             } );    
+            checkForSQLErr( req, res, code, siteid );
+            if( code == models.CODES.INSERT_SINGLE )
+                res.render( "reg/done.html",
+                               { layout:"global.html",
+                                 pageTitle:"Setup Done",
+                                 bodyClass:"regfinal",
+                                 siteid:siteid
+                                 } );    
        });
     
     createAcct.chain( createSite ).perform();
@@ -72,7 +84,7 @@ function emailHandshake(req, res, host) {
                                bodyClass:"gocheckemail"} );
                     }   
                     else {
-                        errout( req, res, err( 400, 'Email handshake failed: ' + message)  );
+                        errout( req, res, exp( 400, 'Email handshake failed: ' + message)  );
                         this.stopChain();
                     }
                 },
@@ -95,7 +107,7 @@ function startEmailHandshake(req, res) {
 	// User-friendliness is handled in the browser before submitting the form.
     if( req.body.confirm != req.body.password )	    
     {
-        errout( req, res, err( 400, 'password mismatch' ) );
+        errout( req, res, exp( 400, 'password mismatch' ) );
         return;        
     }
     

@@ -12,6 +12,13 @@ function getSecureUniquePublicID(){
 	return(""+id);
 }
 
+exports.checkForHandshake = function(regid,callback){
+    var sql = "select * from emailHandshake where regid = $1";
+    return new ModelPerformer( { values: [regid],
+                                 callback: callback,
+                                 performer: function() { this.table.findSingleRecord(sql); } } );
+}
+
 exports.checkForAccount = function(email,callback){
     var sql = "select acctid from acct where email = $1";
     return new ModelPerformer( { values: [email], 
