@@ -3,7 +3,7 @@ var ModelPerformer = model.ModelPerformer;
 exports.CODES = model.CODES;
 
 exports.recreateTables = function(){
-	var client = require('./index.js').getClient();
+	var client = model.getClient();
 	client.query('drop table if exists acct');
 	client.query('create table acct (acctid serial,email text not null unique,password text not null,resetSecret text,resetDate timestamp) with oids');
 	client.query('drop table if exists emailHandshake');
@@ -16,6 +16,16 @@ exports.recreateTables = function(){
     client.query('create table audit (auditid serial, siteid integer not null, opname text not null, attachment text not null,creation timestamp DEFAULT current_timestamp)');
 }
 
+exports.cleanTables = function() {
+	var client = model.getClient();
+	client.query('delete from acct');
+	client.query('delete from emailHandshake');
+	client.query('delete from site');
+	client.query('delete from resets');
+    client.query('delete from audit');
+    client.query("insert into acct (acctid,email,password) values (1,'victor.stone@gmail.com','qqqq')")    
+    client.query("insert into site (ownerid,sitename,domain,agentaddress,agentemail) values (1,'Ass Over Tea Kettle','assoverteakettle.org','7 foo Ln., Bar Park, IL','assoverteakettle.org@gmail.com')");
+}
 
 exports.dumpAll = function(cb)
 {

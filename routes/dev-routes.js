@@ -1,6 +1,7 @@
 
 var model          = require('../models/dev-models.js');
-var ModelPerformer = require('../models/index.js').ModelPerformer;
+var models         = require('../models/index.js');
+var ModelPerformer = models.ModelPerformer;
 
 var errlib = require('../lib/error.js');
 var err      = errlib.err;
@@ -31,23 +32,17 @@ exports.install = function( app )
 	app.get('/scaffolding', recreateTables );
 
 	app.get('/underbelly', dumpTables );
-	
-	app.get('/checkreg', checkRegBug );
+	app.get('/overthecounter', cleanTables );
+	app.get('/debugout/:volume([0-9])', flipDebug );
     
 }
 
-function checkRegBug( req, res )
+function flipDebug(req,res)
 {
-    var models = require('../models/index.js');
-    var client = models.getClient();
-
-    var data = {};
-    
-    var sql = "select acctid from acct where email = $1";
-    var query = client.query( sql, ['foo@bar.com'] ); 
-    query.on( 'error', function( err ) { data.err = err; } );
-    query.on( 'row', function( row ) { data.row = row; } );
-    query.on( 'end', function( result ) { data.end = result; htmlDump( res, data ); } );    
+    var debug = require('../lib/debug.js');
+    debug.setVolume( req.params.volume );
+    debug.out('DEBUG IS SOMETHING');
+    htmlDump(res,'debug is something');
 }
 
 function dumpTables( req, res )
@@ -81,7 +76,7 @@ function dumpTables( req, res )
             return;
         
         html = '<!DOCTYPE html PUBLIC \'-//W3C//DTD HTML 4.01//EN\'><html><head><title>dumper</title></head>' +
-               '<body>'; // <pre> ' + require('util').inspect(data,true,null) + '</pre></body></html>';
+               '<body>'; 
             
         for( var i = 0; i < data.length; i++ )
         {
@@ -120,6 +115,12 @@ function dumpTables( req, res )
 
 function recreateTables(req,res)
 {
-    model.recreateTables(res,res);
+    model.recreateTables();
     htmlDump(res,'Booyah(?)');
+}
+
+function cleanTables(req,res)
+{
+    model.cleanTables();
+    dumpTables(req,res);
 }

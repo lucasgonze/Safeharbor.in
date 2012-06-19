@@ -8,6 +8,7 @@ var loginstate = require('../lib/loginstate.js');
 var errlib     = require('../lib/error.js');
 var utils      = require('../lib/utils.js');
 var Performer  = require('../lib/performer.js').Performer;
+var debug      = require('../lib/debug.js');
 
 var errout         = errlib.errout();
 var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
@@ -16,21 +17,22 @@ exports.install = function( app )
 {
 	app.trivialRoute('/reg','acct','reg','Try It'); 
 	app.post('/reg', startEmailHandshake );	
-	app.get('^/reg/:regid([0-9]+)$', getVerifyAcct );
-	app.post('^/reg/:regid([0-9]+)$', saveConfig);
+	app.get('^/reg/:regid([0-9]+)$', registerGet );
+	app.post('^/reg/:regid([0-9]+)$', registerPost);
 }
 
-function getVerifyAcct( req, res ) {
+function registerGet( req, res ) {
     // TODO: we should be checking the regid right here
     res.render('reg/fromemail.html',
         { layout: 'global.html', pageTitle:'Verify', bodyClass:'regid', regid: req.params.regid });
 }
 
-function saveConfig(req,res){
+function registerPost(req,res){
 
     var regid = req.params['regid'];    
     
     var createAcct = models.createAcct( regid, function( code, acctid ) { 
+            debug.out( 'Create Acct: ', code, acctid );
             checkForSQLErr( req, res, code, acctid );
             if( code == models.CODES.INSERT_SINGLE )
             {
@@ -40,6 +42,7 @@ function saveConfig(req,res){
             }
         });
     var createSite = models.createSite( req.body , function( code, siteid ) {
+            debug.out( 'Create Site: ', code, siteid );
         checkForSQLErr( req, res, code, siteid );
         if( code == models.CODES.INSERT_SINGLE )
             res.render( "reg/done.html",
@@ -64,7 +67,9 @@ function emailHandshake(req, res, host) {
                 callback: function(success,message) {
                     if( success ) {
                         res.render("reg/checkyouremail.html",
-                              {layout:"global.html",pageTitle:"Check Your Email",bodyClass:"gocheckemail"} );
+                              {layout:"global.html",
+                               pageTitle:"Check Your Email",
+                               bodyClass:"gocheckemail"} );
                     }   
                     else {
                         errout( req, res, err( 400, 'Email handshake failed: ' + message)  );
@@ -74,9 +79,9 @@ function emailHandshake(req, res, host) {
                 
                 performer: function() {            
                     var to    = req.body.email;
-                    var regid = this.prev.regid;
+                    var regid = this.findValue('regid');
                     var subj  = "New account at Safeharbor.in";
-                    var text  = 'Please confirm your Safeharbor.in account by going to http://safeharbor.in/reg/'+regid;
+                    var text  = 'Please confirm your Safeharbor.in account by going to http://'+req.headers.host+'/reg/'+regid;
                     var path  = "/../views/reg/handshake.html";
                     var vars  = {'regid': regid,'host':host};
                     require('../lib/mail.js').emailFromTemplate(to,subj,text,path,vars,this.bound_callback());

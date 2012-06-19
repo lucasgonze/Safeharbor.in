@@ -6,6 +6,7 @@
 var models     = require("../models/profile-models.js");
 var loginstate = require('../lib/loginstate.js');
 var utils      = require('../lib/utils.js');
+var debug      = require("../lib/debug.js");
 var errlib     = require("../lib/error.js");
 var Performer  = require('../lib/performer.js').Performer;
 
@@ -25,10 +26,10 @@ exports.install = function( app )
 	app.post('/login', saveLogin);
 	
 	app.trivialRoute('/lostpassword','lostpassword','profile','Lost Password');
-	app.post('/lostpassword', recoverPassword);
+	app.post('/lostpassword', lostPasswordStart);
 	
-	app.get('/lostpassword/:resetSecret([0-9a-z]{10})$', verifySecret);
-	app.post('/lostpassword/:resetSecret([0-9a-z]{10})$', postNewPassword);
+	app.get('/lostpassword/:resetSecret([0-9a-z]{10})$', lostPasswordGet);
+	app.post('/lostpassword/:resetSecret([0-9a-z]{10})$', lostPasswordPost);
 	
 	app.trivialRoute('/logout','logout','profile','Log Out');
 	app.post('/logout', clearLogin);
@@ -57,11 +58,16 @@ function clearLogin(req,res) {
 function saveLogin(req,res) {
 	
     var model = models.checkAcct( req.body, function(code,row) { 
+        debug.out( 'Return from checkAcct: ', code, row );
         checkForSQLErr( req, res, code, row );
         if( code == models.CODES.SUCCESS )
         {
             loginstate.enable(req,row.acctid);
             res.redirect("/dash");
+        }
+        else if( code == models.CODES.NO_RECORDS_FOUND )
+        {
+            errout( req, res, err( 400, 'invalid login' ) );
         }
     });
 
@@ -102,7 +108,7 @@ function resetPasswordEmail(req, res, to) {
 
 // save a secret to the DB and email it to the email. note that we always show the "email sent" page, 
 // but we only actually send the email if it was found in the db!
-function recoverPassword(req,res){
+function lostPasswordStart(req,res){
     var email = req.body.email;
     var rpe = resetPasswordEmail( req, res, email );
 	var init = models.initPasswordReset( email, function( c, resetSecret ) { 
@@ -115,7 +121,7 @@ function recoverPassword(req,res){
 
 // given that the user has passed a password recovery token in the URL, send
 // them to the password reset form.
-function verifySecret(req,res){
+function lostPasswordGet(req,res){
 	var vars = { layout:      "global.html",
 	             pageTitle:   "Enter New Password",
 	             bodyClass:   "profile", 
@@ -126,7 +132,7 @@ function verifySecret(req,res){
 
 // given that the user has passed a password recovery token in the URL, check it in 
 // the db and send them on to the password reset page if it checks out.
-function postNewPassword(req,res){ 
+function lostPasswordPost(req,res){ 
 
     var args = { password: req.body.password, 
                  resetsecret: req.params.resetSecret }; 
@@ -140,7 +146,7 @@ function postNewPassword(req,res){
     models.saveNewPassword( args, cb ).perform();
 }
 
-/* Different than postNewPassword in that it's used by a logged-in 
+/* Different than lostPasswordPost in that it's used by a logged-in 
    user rather than one who has lost their password. */
 function savePasswordReset(req,res) {
 
@@ -153,10 +159,16 @@ function savePasswordReset(req,res) {
     else {
         var args = utils.copy( { userid: loginstate.getID() }, req.body );
         
-        models.resetPasswordForLoggedInUser( args, function(code,err) {
+        models.resetPasswordForLoggedInUser( args, function(code,err) {   
                 checkForSQLErr( req, res, code, err );
                 if( code == models.CODES.SUCCESS )
+                {
                     res.render("profile/success.html",{layout:"global.html",pageTitle:"Success"});	
+                }
+                if( code == models.NO_RECORDS_UPDATED )
+                {
+                    errout( req, res, err( 400, 'wrong   password on current account' ) );
+                }
             } ).perform();
     }
 }

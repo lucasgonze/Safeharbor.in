@@ -5,9 +5,10 @@
 
 "use strict";
 
-var models = require('../models/box-models.js');
+var models  = require('../models/box-models.js');
 var helpers = require('./router-helpers.js');
 
+var debug      = require('../lib/debug.js');
 var utils      = require('../lib/utils.js');
 var errlib     = require('../lib/error.js');
 var Performer  = require('../lib/performer.js').Performer;
@@ -40,7 +41,7 @@ function getBox(req,res){
 
 function notifyEmailer(req, res) {	
     return new Performer( 
-            { 
+            {   
                 req: req,
                 
                 res: res,
@@ -58,12 +59,12 @@ function notifyEmailer(req, res) {
                 },
                 
                 performer: function() {            
-                    var site = this.prev.site;
+                    var site = this.findValue('site');
                     var subject = "IMPORTANT: DMCA takedown request received";
                     var path = "../views/box/notificationemail.html";
                     var vars = utils.copy( {}, req.body, site );
                     var mailer = require("../lib/mail.js");
-                    mailer.emailFromTemplate( acct.agentemail,
+                    mailer.emailFromTemplate( site.agentemail,
                                           subject,
                                           'text goes here', // TODO: um, did 'text' ever work here??
                                           path,
@@ -75,11 +76,13 @@ function notifyEmailer(req, res) {
 
 function postBox(req,res){
 
-    var values = checkStringParams( req, 
+    var values = helpers.checkStringParams( req, 
                                     res, 
                                     utils.copy( {}, req.body, req.params ), 
                                     [ 'siteid','page','description','email','phone','postal'] );
 
+    debug.out( 'Values: ', values );
+    
     if( !values )
         return;
         
@@ -91,7 +94,7 @@ function postBox(req,res){
     // look up metadata for the box number
     var verify = models.get( values.siteid, function(code,site) {
         checkForFoundErr( req, res, code, site );
-        if( code == models.CODE.SUCCESS )
+        if( code == models.CODES.SUCCESS )
             this.site = site;        
     });
 

@@ -8,7 +8,7 @@ exports.checkStringParams = function( req, res, onThis, paramMeta  )
     var ret = {};
     var numParams = paramMeta.length;
 
-    for( var n = 0; n < numParams; i++ )
+    for( var n = 0; n < numParams; n++ )
     {
         var name = paramMeta[n];
         if( typeof onThis[name] !== 'string' )

@@ -19,6 +19,14 @@ exports.checkAcct = function(obj,callback){
     }}); 
 }
 
+exports.checkPassword = function(id,password,callback){
+    var sql = "select acctid from acct where acctid = $1 and password = $2";
+    
+    return new ModelPerformer( { values: [id,password], callback: callback, performer: function() {
+        this.table.findSingleRecord( sql );
+    }}); 
+}
+
 exports.initPasswordReset = function(email,callback) {
     var sql = "update acct set resetsecret = substring(md5(random()::text) from 2 for 10), resetDate = now() where email = $1 returning resetsecret";
 
@@ -75,7 +83,7 @@ exports.saveNewPassword = function( values, callback ) {
 exports.resetPasswordForLoggedInUser = function( obj, callback ) {
     var sql = "update acct set password = $1 where acctid = $2 and password = $3 returning acctid";
     
-    return new ModelPerformer({ praseObj: obj, 
+    return new ModelPerformer({ parseObj: obj, 
                                 names: ['newpassword','userid','current'], 
                                 callback: callback, 
                                 performer: function() {this.table.updateSingleRecord( sql ); }
