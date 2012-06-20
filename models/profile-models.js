@@ -118,6 +118,21 @@ exports.getSiteForUser = function(ownerid,callback){
                                  performer:function() { this.table.findSingleRecord(sql); }} );
 }
 
+exports.getFirstSiteIdForUser = function(ownerid,callback) {
+    var sql = "select siteid from site where ownerid = $1 LIMIT 1";
+    
+    function callBackWrap( code, siteid )
+    {
+        if( code == models.CODES.SUCCESS )
+            this.siteid = siteid;
+        callback.apply(this,[code,siteid]);
+    }
+    
+    return new ModelPerformer( { values: [ownerid], 
+                                 callback: callBackWrap,
+                                 performer:function() { this.table.findSingleValue(sql); }});
+}
+
 exports.updateSiteForUser = function( obj, callback ) {
     var sql = 'update site set sitename = $2, domain = $3, agentaddress = $4, agentemail = $5 where ownerid = $1';
     return new ModelPerformer( { parseObj: obj, 

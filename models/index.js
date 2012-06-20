@@ -316,7 +316,27 @@ var tablePrototype = {
         callback( table.MULTIPLE_RECORDS_FOUND, last_row_found );
     */
     findSingleRecord: function(sql,args,cb) 
-    {    
+    {
+        this._findSingleThing(sql,args,cb,false);
+    },
+
+    /*
+        Return a single column from a table
+        
+        callback( table.SUCCESS, value );
+        callback( table.NO_RECORDS_FOUND );                
+        callback( table.MULTIPLE_RECORDS_FOUND, last_value_found );
+        
+        Returns row[0] so whatever your first colum in the
+        select statement will be returned.
+    */
+    findSingleValue: function(sql,args,cb)
+    {
+        this._findSingleThing(sql,args,cb,true);
+    },
+    
+    _findSingleThing: function(sql,args,cb,isValue)
+    {
         var callback = cb || this.defCallback,
             savedRow = null,
             count = 0;
@@ -336,7 +356,16 @@ var tablePrototype = {
             else if( len > 1 )
                 callback.apply( me.binder,  [CODES.MULTIPLE_RECORDS_FOUND, savedRow] );
             else
-                callback.apply( me.binder, [CODES.SUCCESS, savedRow] );
+            {
+                var ret = savedRow;
+                if( isValue )
+                {
+                    var fieldName = null;
+                    for( fieldName in savedRow ) { break; }
+                    ret = ret[fieldName];
+                }
+                callback.apply( me.binder, [CODES.SUCCESS, ret ] );
+            }
             });        
     },
     

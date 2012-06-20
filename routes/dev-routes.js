@@ -4,8 +4,9 @@ var models         = require('../models/index.js');
 var ModelPerformer = models.ModelPerformer;
 
 var errlib = require('../lib/error.js');
-var err      = errlib.err;
+var exp      = errlib.err;
 var errCheck = errlib.errout( [model.CODES.SQL_ERROR] );
+var errout   = errlib.errout();
 
 function htmlDump(res,obj)
 {
@@ -34,7 +35,101 @@ exports.install = function( app )
 	app.get('/underbelly', dumpTables );
 	app.get('/overthecounter', cleanTables );
 	app.get('/debugout/:volume([0-9])', flipDebug );
+	
+	app.get('/test', test );
     
+}
+
+function test(req,res)
+{
+    var models     = require('../models/dash-models.js');
+    var profile    = require('../models/profile-models.js');
+    var loginstate = require('../lib/loginstate.js');
+    var errlib     = require("../lib/error.js");
+    
+    var exp            = errlib.err;
+    var errout         = errlib.errout();
+    var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
+    
+    var uid = 1; // loginstate.getID(req);
+
+    function callback( code, rows ) 
+    {
+//        console.log( 'getLog CB', code, rows );
+        checkForSQLErr( req, res, code, rows );
+        if( code == models.CODES.SUCCESS )
+        {
+            htmlDump(res, rows);
+            /*
+            res.render( '../views/dash/home.html',
+                        {
+                           layout: 'global.html',
+                           pageTitle: 'Safe Harbor Dashboard',
+                           bodyClass: 'dash',
+                           auditItems: rows
+                        } );
+            */
+        }
+    }
+ 
+    dbg(100);
+    
+    var sql = 'SELECT *, ' +
+              "to_char(creation, 'FMMonth FMDD, YYYY' ) as formatted_date " +
+              'FROM audit, site, acct ' +
+              'WHERE audit.siteid = site.siteid ' +
+              '  AND site.ownerid = acct.acctid ' +
+              '  AND acct.acctid = $1 ' +
+              'ORDER BY creation DESC ';
+              
+    var AllRows = new ModelPerformer( { values: [uid],
+                             performer: function() { this.table.findAllRows(sql); },
+                             callback: function( code, rows ) 
+                                 {
+                                    if( code == models.CODES.SUCCESS )
+                                        this.allRows = rows;
+                                    else
+                                        this.callback(code,rows);
+                                 },
+                             });
+
+    var sql2 = 'SELECT * FROM requests WHERE trackingid = $1';                             
+    var subSqlPerformer = new ModelPerformer( { 
+                                    performer: function() 
+                                    {
+                                        var rows = this.findValue('allRows');
+                                        var me = this, len = rows.length;
+                                        
+                                        function indexCallback(index,row) {
+                                            return function(code, trRows) {
+                                                    if( code == models.CODES.SUCCESS )
+                                                    {
+                                                        code = models.CODES.QUERY_ROW;
+                                                        row.takedownRequests = trRows;
+                                                    }
+                                                    me.callback(code,trRows,row);
+                                                    if( index == len - 1 )
+                                                        me.callback(models.CODES.SUCCESS,rows);
+                                                }  
+                                        }
+                                
+                                        for( var i = 0; i < len; i++ )
+                                        {
+                                            this.table.findAllRows(sql2, [rows[i].auditid], indexCallback(i,rows[i]) );
+                                        }
+                                        
+                                    },
+                                    callback: callback
+                                    });
+                                    
+    AllRows.chain( subSqlPerformer ).perform();
+
+}
+
+function dbg(volume)
+{
+    var debug = require('../lib/debug.js');
+    debug.setVolume(volume);
 }
 
 function flipDebug(req,res)
@@ -115,12 +210,25 @@ function dumpTables( req, res )
 
 function recreateTables(req,res)
 {
-    model.recreateTables();
-    htmlDump(res,'Booyah(?)');
+    try {
+        model.recreateTables(function(err) {
+            if( err )
+                throw err;
+            });
+        htmlDump(res,'Booyah(?)');
+        }
+    catch( err ) {
+        errout(req,res,err); 
+    }
 }
 
 function cleanTables(req,res)
 {
-    model.cleanTables();
+    model.cleanTables(function(sql, err, a, b) {
+        //console.log( 'RESULT FOR: ', sql );
+        //console.log( 'Cleaning with : ', err, a ? a : '', b ? b : '' );
+        if( err )
+            errout(req,res,err); 
+        });
     dumpTables(req,res);
 }

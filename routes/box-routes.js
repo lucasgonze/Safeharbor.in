@@ -6,6 +6,8 @@
 "use strict";
 
 var models  = require('../models/box-models.js');
+var audit   = require('../models/dash-models.js');
+
 var helpers = require('./router-helpers.js');
 
 var debug      = require('../lib/debug.js');
@@ -15,6 +17,7 @@ var Performer  = require('../lib/performer.js').Performer;
 
 var errout           = errlib.errout();
 var checkForFoundErr = errlib.errout( [models.CODES.NO_RECORDS_FOUND, models.CODES.SQL_ERROR] );
+var checkSQLErr      = errlib.errout( [models.CODES.SQL_ERROR] );
 
 exports.install = function( app )
 {
@@ -62,13 +65,13 @@ function notifyEmailer(req, res) {
                     var site = this.findValue('site');
                     var subject = "IMPORTANT: DMCA takedown request received";
                     var path = "../views/box/notificationemail.html";
-                    var vars = utils.copy( {}, req.body, site );
+                    this.mailerValues = utils.copy( {}, req.body, site );
                     var mailer = require("../lib/mail.js");
                     mailer.emailFromTemplate( site.agentemail,
                                           subject,
                                           'text goes here', // TODO: um, did 'text' ever work here??
                                           path,
-                                          vars,
+                                          this.mailerValues,
                                           this.bound_callback());
                 }                
             });            
@@ -79,13 +82,16 @@ function postBox(req,res){
     var values = helpers.checkStringParams( req, 
                                     res, 
                                     utils.copy( {}, req.body, req.params ), 
-                                    [ 'siteid','page','description','email','phone','postal'] );
+                                    [ 'siteid','page','anchor','description','email','phone','postal'] );
 
     debug.out( 'Values: ', values );
     
     if( !values )
         return;
         
+    values.opname = 'takedownrequest';
+    values.attachment = '';
+    
     if( req.body.belief !== "on" || req.body.authorized !== "on") {
         errout( req, res, err( 400, 'invalid options to postBox') );
         return;
@@ -100,6 +106,10 @@ function postBox(req,res){
 
     var notifier = notifyEmailer( req, res );
     
-    verify.chain( notifier ).perform();
+    var auditer  = audit.logTakedownRequest( obj, function( code, err ) { 
+            checkForSQLErr( req, res, code, err );
+        });
+    
+    verify.chain( notifier ).chain( auditer ).perform();
 
 };
