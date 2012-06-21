@@ -9,6 +9,17 @@ var exp            = errlib.err;
 var errout         = errlib.errout();
 var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
 
+/* stub to fill in later */
+function getDisputes(req,res)
+{
+    res.render( '../views/disputes/all.html',
+                {
+                   layout: 'signedin.html',
+                   pageTitle: 'Safe Harbor - Disputes',
+                   bodyClass: 'disputes'
+                } );
+}
+
 function getDash( req, res )
 {
     var uid = loginstate.getID(req);
@@ -39,16 +50,10 @@ function getDash( req, res )
     log.perform();
 }
 
-var statusLevels = {
-    important: 'High',
-    warning: 'Medium',
-    info: 'Low',
-    success: 'None'
-};
-
 exports.install = function(app) 
 {
     app.get( '/dash', getDash );
+    app.get( '/disputes', getDisputes );
     /*
 	// Dealing with takedown requests for logged in customers
 	trivialRoute('/dash','home','dash','Todo');

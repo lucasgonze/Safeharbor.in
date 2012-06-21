@@ -33,34 +33,6 @@ exports.install = function( app )
 	
 	app.get('/testboxpost', testboxpost );
 	
-	app.get('/testgetdash', testgetdash );
-}
-
-function testgetdash(req,res)
-{
-    var dash = require('../models/dash-models.js');
-    var uid = 1;
-    
-    var log = dash.getAuditLog(uid,function(code,rows) 
-                    {
-                        checkForSQLErr( req, res, code, rows );
-                        if( code == models.CODES.SUCCESS )
-                        {
-                            htmlDump(res,rows);
-                            /*
-                            res.render( '../views/dash/home.html',
-                                        {
-                                           layout: 'global.html',
-                                           pageTitle: 'Safe Harbor Dashboard',
-                                           bodyClass: 'dash',
-                                           auditItems: rows
-                                        } );
-                            */
-                        }
-                    });
-    
-    log.perform();
-
 }
 
 function testboxpost(req,res)

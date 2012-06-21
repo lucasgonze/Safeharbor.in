@@ -19,40 +19,40 @@
 	<link rel="stylesheet" href="/css/style.css">
 
 	<script src="/js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>
-
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
 	
 	<style type="text/css">
 	</style>
 </head>
 <body {{#if bodyClass}}class="{{bodyClass}}"{{/if}}>
 
-	<div class="navbar navbar-fixed-top {{loggedInStatusClass}}">
-	  <div class="navbar-inner">
-	    <div class="container">
-
-			<div class="btn-group pull-right hideifloggedout notforinbox" style="margin-right: 4em">
-			    <a class="btn" href="#"><i class="icon-user"></i></a>
-			    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-chevron-down"></span></a>
-			    <ul class="dropdown-menu">
-			        <li><a href="/passwordreset"><i class="icon-key"></i> Change Password</a></li>
-			        <li><a href="/dash"><i class="icon-inbox"></i> Inbox</a></li>
-			        <li><a href="/accountdeleter"><i class="icon-trash"></i> Delete Account</a></li>
-			        <li><a href="/siteeditor"><i class="icon-cog"></i> Site Settings</a></li>
-			        <li><a href="/logout"><i class="icon-signout"></i> Sign Out</a></li>
-			    </ul>
+	<div class="navbar navbar-fixed-top" {{loggedInStatusClass}}>
+		<a class="brand" href="#"><img src="img/logo/247x33.png" alt="Safeharbor.in"></a>
+		<div class="btn-group pull-right">
+		    <a class="btn" href="#"><i class="icon-user"></i></a>
+		    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-chevron-down"></span></a>
+		    <ul class="dropdown-menu">
+		        <li><a href="/passwordreset"><i class="icon-key"></i> Change Password</a></li>
+		        <li><a href="/accountdeleter"><i class="icon-trash"></i> Delete Account</a></li>
+		        <li><a href="/logout"><i class="icon-signout"></i> Sign Out</a></li>
+		    </ul>
+		</div>						
+		<div class="navbar-inner">
+			<div class="container">								
+				<ul class="nav pull-right">
+					<li><a href="/disputes" data-toggle="tab">Past Disputes</a></li>
+					<li><a href="/form" data-toggle="tab">Future Disputes</a></li>
+					<li>
+					</li>
+				</ul>		
 			</div>
-
-			<a href="/login" class="btn pull-right hideifloggedin notforinbox"><i class="icon-signin"></i> Sign in</a>
-			<a class="brand" href="/">{{#if sitename}}{{sitename}}{{else}}Safeharbor.in{{/if}}</a>
-	    </div>
 	  </div>
 	</div>
 
-
 	<div id="filling" class="container">{{{body}}}</div>
 	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+
 	<script src="/js/libs/bootstrap/transition.js"></script>
 	<script src="/js/libs/bootstrap/collapse.js"></script>
 	<script src="/js/libs/bootstrap/bootstrap.js"></script>
