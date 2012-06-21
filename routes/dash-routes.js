@@ -3,6 +3,7 @@ var models     = require('../models/dash-models.js');
 var profile    = require('../models/profile-models.js');
 var loginstate = require('../lib/loginstate.js');
 var errlib     = require("../lib/error.js");
+var debug      = require("../lib/debug.js");
 
 var exp            = errlib.err;
 var errout         = errlib.errout();
@@ -22,6 +23,8 @@ function getDash( req, res )
                         checkForSQLErr( req, res, code, rows );
                         if( code == models.CODES.SUCCESS )
                         {
+                            debug.render( res, rows );
+                            /*
                             res.render( '../views/dash/home.html',
                                         {
                                            layout: 'global.html',
@@ -29,6 +32,7 @@ function getDash( req, res )
                                            bodyClass: 'dash',
                                            auditItems: rows
                                         } );
+                            */
                         }
                     });
     
