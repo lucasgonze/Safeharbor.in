@@ -6,6 +6,19 @@
    Fixme: switch to sass/less/compass.
    ========================================================================== */
 
+/*********************** global nav bar */
+/* make room at the top of the viewport for the global nav to have a fixed position */
+body {
+	position: relative;
+	padding-top: 90px;
+}
+div.navbar-fixed-top .brand img { width: 250px }
+div.navbar-fixed-top ul.nav { font-size: 2em }
+/***********************/
+
+
+
+
 body.box .notforinbox {
 	display: none;
 }
