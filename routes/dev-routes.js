@@ -3,18 +3,13 @@ var model          = require('../models/dev-models.js');
 var models         = require('../models/index.js');
 var ModelPerformer = models.ModelPerformer;
 
-var errlib = require('../lib/error.js');
+var debug    = require('../lib/debug.js');
+var htmlDump = debug.render;
+var errlib   = require('../lib/error.js');
 var exp      = errlib.err;
 var errCheck = errlib.errout( [model.CODES.SQL_ERROR] );
 var errout   = errlib.errout();
-
-function htmlDump(res,obj)
-{
-    html = '<!DOCTYPE html PUBLIC \'-//W3C//DTD HTML 4.01//EN\'><html><head><title>dumper</title></head>' +
-           '<body><pre> ' + require('util').inspect(obj,true,null) + '</pre></body></html>';
-    res.write(html);
-    res.end();
-}
+var checkForSQLErr = errCheck;
 
 exports.install = function( app )
 {
@@ -36,105 +31,55 @@ exports.install = function( app )
 	app.get('/overthecounter', cleanTables );
 	app.get('/debugout/:volume([0-9])', flipDebug );
 	
-	app.get('/test', test );
-    
+	app.get('/testboxpost', testboxpost );
+	
+	app.get('/testgetdash', testgetdash );
 }
 
-function test(req,res)
+function testgetdash(req,res)
 {
-    var models     = require('../models/dash-models.js');
-    var profile    = require('../models/profile-models.js');
-    var loginstate = require('../lib/loginstate.js');
-    var errlib     = require("../lib/error.js");
+    var dash = require('../models/dash-models.js');
+    var uid = 1;
     
-    var exp            = errlib.err;
-    var errout         = errlib.errout();
-    var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
-    
-    var uid = 1; // loginstate.getID(req);
-
-    function callback( code, rows ) 
-    {
-//        console.log( 'getLog CB', code, rows );
-        checkForSQLErr( req, res, code, rows );
-        if( code == models.CODES.SUCCESS )
-        {
-            htmlDump(res, rows);
-            /*
-            res.render( '../views/dash/home.html',
+    var log = dash.getAuditLog(uid,function(code,rows) 
+                    {
+                        checkForSQLErr( req, res, code, rows );
+                        if( code == models.CODES.SUCCESS )
                         {
-                           layout: 'global.html',
-                           pageTitle: 'Safe Harbor Dashboard',
-                           bodyClass: 'dash',
-                           auditItems: rows
-                        } );
-            */
-        }
-    }
- 
-    dbg(100);
-    
-    var sql = 'SELECT *, ' +
-              "to_char(creation, 'FMMonth FMDD, YYYY' ) as formatted_date " +
-              'FROM audit, site, acct ' +
-              'WHERE audit.siteid = site.siteid ' +
-              '  AND site.ownerid = acct.acctid ' +
-              '  AND acct.acctid = $1 ' +
-              'ORDER BY creation DESC ';
-              
-    var AllRows = new ModelPerformer( { values: [uid],
-                             performer: function() { this.table.findAllRows(sql); },
-                             callback: function( code, rows ) 
-                                 {
-                                    if( code == models.CODES.SUCCESS )
-                                        this.allRows = rows;
-                                    else
-                                        this.callback(code,rows);
-                                 },
-                             });
-
-    var sql2 = 'SELECT * FROM requests WHERE trackingid = $1';                             
-    var subSqlPerformer = new ModelPerformer( { 
-                                    performer: function() 
-                                    {
-                                        var rows = this.findValue('allRows');
-                                        var me = this, len = rows.length;
-                                        
-                                        function indexCallback(index,row) {
-                                            return function(code, trRows) {
-                                                    if( code == models.CODES.SUCCESS )
-                                                    {
-                                                        code = models.CODES.QUERY_ROW;
-                                                        row.takedownRequests = trRows;
-                                                    }
-                                                    me.callback(code,trRows,row);
-                                                    if( index == len - 1 )
-                                                        me.callback(models.CODES.SUCCESS,rows);
-                                                }  
-                                        }
-                                
-                                        for( var i = 0; i < len; i++ )
+                            htmlDump(res,rows);
+                            /*
+                            res.render( '../views/dash/home.html',
                                         {
-                                            this.table.findAllRows(sql2, [rows[i].auditid], indexCallback(i,rows[i]) );
-                                        }
-                                        
-                                    },
-                                    callback: callback
-                                    });
-                                    
-    AllRows.chain( subSqlPerformer ).perform();
+                                           layout: 'global.html',
+                                           pageTitle: 'Safe Harbor Dashboard',
+                                           bodyClass: 'dash',
+                                           auditItems: rows
+                                        } );
+                            */
+                        }
+                    });
+    
+    log.perform();
 
+}
+
+function testboxpost(req,res)
+{
+    res.render( '../views/dev/fakeAttach2.html',
+                {
+                   layout: 'global.html',
+                   pageTitle: 'Test Box Post',
+                   bodyClass: 'dash'
+                } );
 }
 
 function dbg(volume)
 {
-    var debug = require('../lib/debug.js');
     debug.setVolume(volume);
 }
 
 function flipDebug(req,res)
 {
-    var debug = require('../lib/debug.js');
     debug.setVolume( req.params.volume );
     debug.out('DEBUG IS SOMETHING');
     htmlDump(res,'debug is something');
@@ -150,7 +95,7 @@ function dumpTables( req, res )
             if( rows.length > 0 )
             {
                 var R = rows[0];
-                data.push( { name: this.name, schema: R.keys(), rows: rows } );
+                data.push( { name: this.name, schema: Object.keys(R), rows: rows } );
             }
             else
             {

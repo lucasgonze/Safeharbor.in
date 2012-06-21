@@ -6,9 +6,66 @@
 
 <ol class="takedownlist">
 
+<!--
+
+/*
+    here's what one record looks like:
+    
+ { ownerid: 1,
+    auditid: 1,
+    opname: 'takedownRequest',
+    creation: Wed, 20 Jun 2012 14:58:56 GMT,
+    resetsecret: null,
+    attachment: '',
+    resetdate: null,
+    email: 'victor.stone@gmail.com',
+    domain: 'assoverteakettle.org',
+    acctid: 1,
+    agentaddress: '7 foo Ln., Bar Park, IL',
+    formatted_date: 'June 20, 2012',
+    siteid: 40,
+    password: 'qqqq',
+    agentemail: 'assoverteakettle.org@gmail.com',
+    sitename: 'Ass Over Tea Kettle',
+    takedownRequests: 
+     [ { page: 'http://some.page.com',
+         trackingid: 1,
+         email: 'foo@bar.com',
+         description: 'stairway to heaven',
+         phone: '555-099-9888',
+         postal: '39 PO BOX, Kentucky, WA, 90087',
+         anchor: 'http://some.page.com/foo.mp3' },
+       { page: 'http://some.page.com',
+         trackingid: 1,
+         email: 'foo@bar.com',
+         description: 'all girls go to heaven',
+         phone: '555-099-9888',
+         postal: '39 PO BOX, Kentucky, WA, 90087',
+         anchor: 'http://some.page.com/bar.mp3' }
+  }
+*/-->
     {{#each auditItems}}
 	<li>
-	
+        <p><label>Site</label>{{this.sitename}}</p>
+        <p><label>Submit date</label>{{this.formatted_date}}</p>
+        <p><label></label><b>Media</b></p>
+        <ol>
+        {{#each takedownRequests}}
+            <li>
+                <p><label>page</label><a href="{{this.page}}">{{this.page}}</a></p>
+                <p><label>location</label><a href="{{this.anchor}}">{{this.anchor}}</a></p>
+                <p><label>description</label>{{this.description}}</p>
+                <p><label>email</label><a href="mailto:{{this.email}}">{{this.email}}</a></p>
+                <p><label>contact</label>{{this.postal}} / {{this.phone}}</p>
+            </li>
+        {{/each}}
+        </ol>
+		<p><label></label><a href="synopsis-justfiled" class="viewrequest"><i class="icon-info-sign"></i> Detailed View</a></p>
+		<div class="clearer"></div>
+	</li>
+	{{/each}}
+<!-- 
+
 		<div class="suggestedactions">
 			<p>Suggested Action(s):</p>
 			{{#each suggested}}
@@ -19,11 +76,6 @@
 		<p><label>Work:</label>{{this.name}}</p>
 		<p><label>Urgency:</label> <span class="label label-{{this.level}}">{{this.levelText}}</span></p>
 		<p><label>Status:</label>{{this.caption}}</p>
-		<p><label></label><a href="synopsis-justfiled" class="viewrequest"><i class="icon-info-sign"></i> Detailed View</a></p>
-		<div class="clearer"></div>
-	</li>
-	{{/each}}
-<!-- 
 
     			<p><a href="fixme" class="btn">Not a DMCA takedown request</a></p>
 			<p><a href="fixme" class="btn">Take down content</a></p>

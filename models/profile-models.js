@@ -102,7 +102,7 @@ exports.deleteAccount = function(userid,callback){
 
 	// PT 1: delete any sites owned by this user
 	// (in the future when there are multiple accounts per site this will become more complex)
-	var pt1 = helper("delete from site where ownerid = $1");
+	var pt1 = helper("delete from site where acct = $1");
 	
 	// PT 2: delete the user
 	var pt2 = helper("delete from acct where acctid = $1 returning acctid");
@@ -111,7 +111,7 @@ exports.deleteAccount = function(userid,callback){
 }
 
 exports.getSiteForUser = function(ownerid,callback){
-    var sql = "select * from site where ownerid = $1";
+    var sql = "select * from site where acct = $1";
     
     return new ModelPerformer( { values:[ownerid], 
                                  callback: callback, 
@@ -119,7 +119,7 @@ exports.getSiteForUser = function(ownerid,callback){
 }
 
 exports.getFirstSiteIdForUser = function(ownerid,callback) {
-    var sql = "select siteid from site where ownerid = $1 LIMIT 1";
+    var sql = "select siteid from site where acct = $1 LIMIT 1";
     
     function callBackWrap( code, siteid )
     {
@@ -134,9 +134,9 @@ exports.getFirstSiteIdForUser = function(ownerid,callback) {
 }
 
 exports.updateSiteForUser = function( obj, callback ) {
-    var sql = 'update site set sitename = $2, domain = $3, agentaddress = $4, agentemail = $5 where ownerid = $1';
+    var sql = 'update site set sitename = $2, domain = $3, agentaddress = $4, agentemail = $5 where acct = $1';
     return new ModelPerformer( { parseObj: obj, 
-                                 names: ['ownerid','sitename','domain','agentaddress','agentemail'], 
+                                 names: ['acct','sitename','domain','agentaddress','agentemail'], 
                                  callback: callback, 
                                  performer: function(){ this.table.updateSingleRecord(sql); }} );
 }

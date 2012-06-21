@@ -6,7 +6,7 @@ var data = {
     password: '1111',
     resetsecret: 'f4e0d01077' } ],
 site: 
-  [ { ownerid: 1,
+  [ { acct: 1,
     siteid: 1,
     sitename: 'foohelo',
     domain: 'ssaotk.org',

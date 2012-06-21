@@ -1,60 +1,96 @@
 <style type="text/css">
-
+.hidden {
+    display: none;
+}
+.hazard-warning {
+    color: red;
+}
+.kill_switch {
+    width: 28px;
+    border: 1px solid black;
+    float: right;
+    margin: 10px;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    padding: 1px;
+    font-family: verdana;
+    font-size: 13px;
+}
 </style>
-
+<h1>Report copyright infringement.<h1>
+<h2>Fill out the form below to request help.</h2>
 <form action="/box/{{siteid}}" method="post" class="form-vertical" id="request">
-
+    
   <fieldset>
-    <legend>Where is the problem?</legend>
-
+    <legend>Tell us about yourself:</legend>
     <div class="control-group">
-      <label class="control-label" for="page">Page containing the infringement:</label>
+      <label class="control-label" for="person-type-copyright-owner">I am the copyright owner.</label> 
+          <div class="controls"><input type="radio" class="person-type" name="person-type" id="person-type-copyright-owner" value="co" /></div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="person-type-authorized-rep">I am an authorized representative of the copyright owner.</label>
+          <div class="controls"><input class="person-type" type="radio" name="person-type" id="person-type-authorized-rep" value="ar" /></div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="person-type-none">I am not the copyright owner and I don't officially represent them.</label> 
+          <div class="controls"><input type="radio" name="person-type" id="person-type-none" class="person-type" value="no" /></div>
+    </div>
+    </fieldset>
+    <fieldset>
+    <div id="" class="hazard-warning person-type-toggle no" style="display:none" >
+    {{sitename}} only handles requests that are submitted by the copyright owner or 
+                 an authorized representative of the copyright owner. 
+        {{#if copyright_policy_url}} 
+            Please see our <a href="{{copyright_policy_url}}">Copyright Policy</a> for more information.
+        {{/if}}
+    </div>
+    
+    <div id="" class="person-type-toggle co ar" style="display:none">
+
+    <div class="control-group person-type-toggle ar" style="display:none">
+      <p><label class="control-label" for="owners_full_name">Copyright owner's full name</label>
       <div class="controls">
-        <input tabindex="10" type="text" placeholder="http://example.com/somesong.mp3" required autofocus id="page" name="page">
+		<input tabindex="10" type="text" placeholder="John Doe" id="owners_full_name" name="owners_full_name" required>
       </div>
-	  <div class="help-block"><a href="http://www.copyright.gov/title17/92chap5.html#512" target="_new"><span class="icon-question-sign"></span></a> <em>The link you want taken down.</em> If there is a specific file, the file's URL. If you are alleging infringement by an external site which this site is linking to, give us the link on this site which contains the link to the external site. <a href="http://www.copyright.gov/title17/92chap5.html#512" target="_new">Defined</a> as <q>Information reasonably sufficient to permit the service provider to locate the material. </q></div>
     </div>
 
     <div class="control-group">
-      <label class="control-label" for="where">Where is it in that page?</label>
+      <p><label class="control-label" for="full_name">Your full name</label>
       <div class="controls">
-        <input tabindex="20" type="text" placeholder="Link titled &ldquo;The Beatles&rdquo;" id="anchor" name="anchor">
+		<input tabindex="20" type="text" placeholder="John Doe" id="full_name" name="full_name" required>
       </div>
-	  <div class="help-block"><a href="http://www.copyright.gov/title17/92chap5.html#512" target="_new"><span class="icon-question-sign"></span></a> Point us to the part of the page that you are concerned about. The information you are providing here is defined in DMCA 512(c) as <q>Identification of the material to be removed</q>.</div>
     </div>
 
-  </fieldset>
-
-  <fieldset>
-    <legend>Which work is being infringed?</legend>
     <div class="control-group">
-      <label class="control-label" for="description">Description:</label>
+      <p><label class="control-label" for="job_title">Job title</label>
       <div class="controls">
-		<input tabindex="30" type="text" placeholder="&ldquo;A Hard Day&apos;s Night&rdquo; by The Beatles" id="description" name="description" required>
+		<input tabindex="30" type="text" placeholder="Copyright screener" id="job_title" name="job_title" >
       </div>
-	  <div class="hint help-block"><a href="http://www.copyright.gov/title17/92chap5.html#512"><span class="icon-question-sign"></span></a> Tell us what is the source work that is being infringed. If it's a song, say the artist, album and title. If it's a movie tell us the name, year, or anything else that defines the work. The information is this field is defined in the law as <q>Identification of the copyrighted work claimed to have been infringed</q>.</div>
     </div>
-<!--
-There are bugs in this, and it's a low priority feature. Come back to it after MVP.
-	<p><button tabindex="40"  id="add-another-work" class="btn">+ Add Another Work</button></p>
--->
-  </fieldset>
-
-  <fieldset>
-    <legend>How can we contact you?</legend>
-
+      
     <div class="control-group">
       <label class="control-label" for="email">Email:</label>
       <div class="controls">
-        <input tabindex="50" type="text" placeholder="johndoe@example.com" name="email" id="email" required>
+        <input tabindex="40" type="text" placeholder="johndoe@example.com" name="email" id="email" required>
       </div>
 	  <div class="hint help-block">Email address where you can be reached easily. Use one you check frequently. Make sure the spam filters won't prevent you from getting our messages.</div>
     </div>
 
     <div class="control-group">
+      <label class="control-label" for="fax">Fax:</label>
+      <div class="controls">
+        <input tabindex="50" type="text" placeholder="(800) 555-1212" name="fax" id="fax" >
+      </div>
+	  <div class="hint help-block">A phone number where you can be reached. If the country code is not specified, United States will be assumed.</div>
+    </div>
+    
+    <div class="control-group">
       <label class="control-label" for="phone">Phone:</label>
       <div class="controls">
-        <input tabindex="60" type="text" placeholder="(800) 555-1212" name="phone" id="phone" required>
+        <input tabindex="60" type="text" placeholder="(800) 555-1212" name="phone" id="phone" >
       </div>
 	  <div class="hint help-block">A phone number where you can be reached. If the country code is not specified, United States will be assumed.</div>
     </div>
@@ -67,30 +103,118 @@ There are bugs in this, and it's a low priority feature. Come back to it after M
 	  <div class="hint help-block">Postal address for reaching you. If this is not in the United States, give the country.</div>
     </div>
 
+    </div>
+    </fieldset>
+    
+  <fieldset class="person-type-toggle co ar" style="display:none"  id="clone_this">
+    <legend>About the material on {{sitename}} (<span class="infringement_number">1</span>)</legend>
+
+    <div class="control-group" id="kill_switch_pre">
+      <label class="control-label" for="page">Page containing the infringement:</label>
+      <div class="controls">
+        <input tabindex="100" type="text" placeholder="http://example.com/somesong.mp3" required autofocus id="page" name="page" class="renum" >
+      </div>
+	  <div class="help-block"><a href="http://www.copyright.gov/title17/92chap5.html#512" target="_new"><span class="icon-question-sign"></span></a> <em>The link you want taken down.</em> If there is a specific file, the file's URL. If you are alleging infringement by an external site which this site is linking to, give us the link on this site which contains the link to the external site. <a href="http://www.copyright.gov/title17/92chap5.html#512" target="_new">Defined</a> as <q>Information reasonably sufficient to permit the service provider to locate the material. </q></div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="where">Where is it in that page?</label>
+      <div class="controls">
+        <input tabindex="101" type="text" placeholder="Link titled &ldquo;The Beatles&rdquo;" id="anchor" name="anchor" class="renum" >
+      </div>
+	  <div class="help-block"><a href="http://www.copyright.gov/title17/92chap5.html#512" target="_new"><span class="icon-question-sign"></span></a> Point us to the part of the page that you are concerned about. The information you are providing here is defined in DMCA 512(c) as <q>Identification of the material to be removed</q>.</div>
+    </div>
+
+    <legend>Which work is being infringed?</legend>
+    <div class="control-group">
+      <label class="control-label" for="description">Description:</label>
+      <div class="controls">
+		<input tabindex="102" type="text" placeholder="&ldquo;A Hard Day&apos;s Night&rdquo; by The Beatles" id="description" name="description" required class="renum" >
+      </div>
+	  <div class="hint help-block"><a href="http://www.copyright.gov/title17/92chap5.html#512"><span class="icon-question-sign"></span></a> Tell us what is the source work that is being infringed. If it's a song, say the artist, album and title. If it's a movie tell us the name, year, or anything else that defines the work. The information is this field is defined in the law as <q>Identification of the copyrighted work claimed to have been infringed</q>.</div>
+    </div>
   </fieldset>
 
-  <fieldset>
+  <fieldset class="person-type-toggle co ar" style="display:none" id="insert_before_here">
+  <p class="primary" >
+    <button id="report_another" tabindex = "1000" class="">Report another infringement</button>
+  </p>
+  </fieldset>
+  
+  <fieldset class="person-type-toggle co ar" style="display:none" >
     <legend>Signature</legend>
 	<p>With regard to the material that is claimed to be infringing or to be the subject of infringing activity and that is to be removed or access to which is to be disabled:</p>
 
     <div class="control-group">
-      <label class="control-label checkbox"><input tabindex="80" type="checkbox" name="authorized"> Under penalty of perjury I state that I am authorized to act on behalf of the owner of the exclusive right that is allegedly infringed.</label>
+      <label class="control-label checkbox"><input tabindex="1010" type="checkbox" name="authorized"> Under penalty of perjury I state that I am authorized to act on behalf of the owner of the exclusive right that is allegedly infringed.</label>
       <div class="controls">
       </div>
 	  <div class="hint help-block">This form is for copyright complaints from people affiliated with the copyright. If you are not the owner, you cannot use this form. Lying about this is a criminal act.</div>
     </div>
 
     <div class="control-group">
-      <label class="control-label checkbox"><input tabindex="90" type="checkbox" name="belief"> I have a good faith belief that use of the material in the manner complained of is not authorized by the copyright owner, it's agent, or the law.</label>
+      <label class="control-label checkbox"><input tabindex="1020" type="checkbox" name="belief"> I have a good faith belief that use of the material in the manner complained of is not authorized by the copyright owner, it's agent, or the law.</label>
       <div class="controls">
       </div>
 	  <div class="hint help-block">You are personally asserting this and are legally responsible for being truthful.</div>
     </div>
 
-  </fieldset>
 
 	<p class="primary">
-		<button tabindex="100"  class="btn btn-large btn-primary">Submit</button>
+		<button tabindex="1030"  class="btn btn-large btn-primary">Submit</button>
 	</p>
 
 </form>
+
+<script>
+$(function() {
+    $('.person-type').click( function() { 
+            $('.person-type-toggle').hide(600);
+            $('.' + this.value ).show(400);
+        } );
+        
+    var next_incident = 2;
+    
+    function renumberIncidents()
+    {
+        var count = 1;
+        $('.infringement_number',document).each( function() {
+            $(this).html( count++ );
+            });
+        next_incident = count;
+    }
+    
+    $('#report_another').click( function() {
+        
+        function removeMe( fs ) {
+            return function() {
+                    $('#'+fs).remove();
+                    renumberIncidents();
+                    }
+        }
+        
+        function renumber(base) {
+            return function() {
+                $(this).attr('tabindex', base++);
+            }
+        }
+        var fsName = 'cloned_'+next_incident+'_';
+        var firstTab = 100+(next_incident*20);
+        
+        $('#insert_before_here').before(
+                    $('<fieldset>')
+                         .html($('#clone_this').html())
+                         .addClass( 'person-type-toggle co ar' )
+                         .attr('id', fsName)
+                         .find('.infringement_number').html(next_incident).end()
+                         .find('.renum').each( renumber(firstTab) ).end()
+                         .prepend( $('<div class="kill_switch">')
+                                    .html('X')
+                                    .attr('title',"Remove this item from the infringement report")
+                                    .click( removeMe(fsName) ))
+                    );
+        
+        ++next_incident;
+    });
+});
+</script>

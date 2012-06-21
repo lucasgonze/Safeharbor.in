@@ -102,7 +102,7 @@ process.on('uncaughtException', function (err) {
     // unhork. 
     // TODO: notify admin when this happens...
   console.log(['******* Caught-uncaught exception: ', err] );
-  console.log( err.stack );
+//  console.log( err.stack );
 //  console.trace('call stack:');
 });
 
