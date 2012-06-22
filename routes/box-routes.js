@@ -170,7 +170,7 @@ function extractFields( body, argNames, expectsArray )
             for( var n in argNames )
             {
                 var name = argNames[n];
-                rec[name] = body[name][i];
+                rec[name] = body[name][i] || '';
             }
             ret.push(rec);            
         }
@@ -182,7 +182,7 @@ function extractFields( body, argNames, expectsArray )
         for( n in argNames )
         {
             var name = argNames[n];
-            rec[name] = body[name];
+            rec[name] = body[name] || '';
         }
         return expectsArray ? [ rec ] : rec;
     }
