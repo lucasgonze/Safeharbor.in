@@ -1,5 +1,24 @@
 
-<p>This is the page for open disputes.</p>
-<pre>
-{{body}}
-</pre>
+<h1>Copyright Disputes for {{auditItems.[0].sitename}}</h1>
+<ol class="takedownlist">
+
+    {{#each auditItems}}
+	<li>
+        <p><label>Submit date</label>{{formatted_date}}</p>
+        <p><label>Name:</label>{{full_name}}</p>
+        <p><label>email</label><a href="mailto:{{email}}">{{email}}</a></p>
+        <p><label></label><b>Media</b></p>
+        <ul>
+        {{#each takedownRequests}}
+            <li>
+                <p><label>page</label><a href="{{page}}">{{page}}</a></p>
+                <p><label>location</label><a href="{{anchor}}">{{anchor}}</a></p>
+                <p><label>description</label>{{description}}</p>
+            </li>
+        {{/each}}
+        </ul>
+		<p><label></label><a href="/detail/{{auditid}}" class="viewrequest"><i class="icon-info-sign"></i> Detailed View</a></p>
+		<div class="clearer"></div>
+	</li>
+	{{/each}}
+</ol>

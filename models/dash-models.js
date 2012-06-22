@@ -207,7 +207,7 @@ exports.getAuditLog = function( uid, callback )
                                     if( code == model.CODES.SUCCESS )
                                         this.allRows = rows;
                                     else
-                                        this.callback(code,rows);
+                                        callback.apply(this,[code,rows]);
                                  },
                              });
 
@@ -250,7 +250,7 @@ exports.getAuditDetail = function( auditId, callback )
                             }
                             else
                             {
-                                this.callback(code,row);
+                                callback.apply( this, [code,row] );
                             }
                         },
                     });

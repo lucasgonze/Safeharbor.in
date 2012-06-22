@@ -202,6 +202,11 @@ function postBox(req,res){
         return;
     */
     
+    if( req.body.belief !== "on" || req.body.authorized !== "on") {
+        errout( req, res, err( 400, 'invalid options to postBox') );
+        return;
+	}
+    
     var siteid = req.params.siteid;
     
     var mediaArgNames = ['description','page','media_url','anchor'];
@@ -210,25 +215,9 @@ function postBox(req,res){
     var contactArgNames = [ 'owners_full_name', 'full_name', 'job_title', 'postal', 'email', 'phone', 'fax' ];
     var contactArgs = extractFields(req.body, contactArgNames,false);
     
-    if( req.body.belief !== "on" || req.body.authorized !== "on") {
-        errout( req, res, err( 400, 'invalid options to postBox') );
-        return;
-	}
-
-    // look up metadata for the box number
-    var verify = models.get( siteid, function(code,site) {
-        checkForFoundErr( req, res, code, site );
-        if( code == models.CODES.SUCCESS )
-            this.site = site;        
-    });
-
-    function checkErrs( code, err )
-    {
-        checkForSQLErr( req, res, code, err );
-    }
-    
-    var auditer  = audit.logTakeDownRequest( siteid, contactArgs, mediaArgs, checkErrs );
-    var detail   = audit.getAuditDetail( checkErrs );    
+    var verify   = models.get( siteid, function( code, err ) { checkForFoundErr( req, res, code, err ) } );
+    var auditer  = audit.logTakeDownRequest( siteid, contactArgs, mediaArgs, function( code, err ) { checkForSQLErr( req, res, code, err ) } );
+    var detail   = audit.getAuditDetail( function( code, err ) { checkForSQLErr( req, res, code, err ) } );    
     var notifier = notifyEmailer( req, res );
     
     verify              // verify site record is valid
