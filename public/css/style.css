@@ -29,7 +29,7 @@ body.firstrun div#filling ol li {
 	padding: 1em;
 }
 /* striping */
-body.firstrun div#filling li:nth-of-type(odd) { background-color:#eee }
+body.firstrun div#filling li:nth-of-type(even) { background-color:#eee }
 
 
 
