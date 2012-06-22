@@ -32,7 +32,30 @@ exports.install = function( app )
 	app.get('/debugout/:volume([0-9])', flipDebug );
 	
 	app.get('/testboxpost', testboxpost );
+	app.get('/testdash', testdash );
 	
+}
+
+function testdash( req, res )
+{
+    var models = require('../models/dash-models');
+    var uid = 1;
+    var log = models.getAuditLog(uid,function(code,rows) 
+                    {
+                        checkForSQLErr( req, res, code, rows );
+                        if( code == models.CODES.SUCCESS )
+                        {
+                            res.render( '../views/disputes/all.html',
+                                        {
+                                           layout: 'signedin.html',
+                                           pageTitle: 'Safe Harbor - Disputes',
+                                           bodyClass: 'disputes',
+                                           auditItems: rows
+                                        } );
+                        }
+                    });
+    
+    log.perform();
 }
 
 function testboxpost(req,res)

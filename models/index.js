@@ -81,6 +81,90 @@ util.inherits( InvalidConnect, Error );
 * Chainable performer for psql access
 *************************************/
 
+/*
+    Don't even think about looking at this before understanding
+    the Performer object in lib/performer.js
+    
+    ModelPerformer is a specialization of Performer that
+    exposes a table API wrapper inside your performer 
+    function. The API is accessable via the 'this.table' 
+    method:
+    
+        new ModelPerformer( { callback: function(statusCode, param) { ... },
+                              performer: function() {
+                                 this.table.findSingleRecord( 'SELECT * FROM foo LIMIT 1' );
+                                }
+                            );
+
+    See the 'table' object below for particulars.
+    
+
+    SQL PARAMETERS
+    ----------------
+    If you have parameterized SQL you have 3 ways to deal with those.
+    
+    1. Passing them directly in the table call as an array in the second parameter:
+
+        new ModelPerformer( { callback: function(statusCode, param) { ... },
+                              performer: function() {
+                                 var sql = 'SELECT * FROM foo WHERE id = $1';
+                                 this.table.findSingleRecord( sql, [someId] );
+                                }
+    
+    2: Passing them as 'values' element in the ctor:
+    
+        new ModelPerformer( { values: [someId],
+                              callback: function(statusCode, param) { ... },
+                              performer: function() {
+                                 var sql = 'SELECT * FROM foo WHERE id = $1';
+                                 this.table.findSingleRecord( sql );
+                                }
+                                
+        Note that you do NOT pass the arguments into the findSingleRecord()
+        call. That will be done automagically for you. (Doing it this
+        way gives other Performer objects in your chain to have access
+        to your .values[] property.)
+
+    3. Passing them as 'unparsed' objects in the ctor. This is useful for
+       situations like request.body. Say your POST form yields something
+       like:
+             request.body = { password: '1234', user: 'Jon John' };
+             
+        and your SQL looks like:
+            
+            var SQL = 'INSERT INTO people (user,pw) VALUES ($1,$2)';
+            
+        you can setup a performer to extract the proper values from the
+        request.body object in the right order:
+        
+           new ModelPerformer( { parseObj: request.body,
+                                 names: [ 'user', 'password' ]
+                                 callback: function(statusCode, param) { ... },
+                                 performer: function() {
+                                    this.table.findSingleRecord( SQL );
+                                }
+
+        
+      CALLBACKS and STATUS CODES
+      ---------------------------
+      
+      All callbacks for the ModelPerformer have the same shape:
+      
+            function callback( statusCode, param ) { }
+            
+      The statusCode will one of the CODES found in this module. CODES are
+      exported from here and should be re-exported in every model module
+      to the routes modules. 
+      
+      Theses CODES are emitted from the table API and the safest thing
+      to do BEFORE you use a specific table API method is to look at
+      what CODES it emits.
+      
+      The 'param' value will depend on what the code is. It may be an 
+      javascript Error object if the code is SQL_ERROR or it be a single
+      database record or value or an array of those.
+
+*/
 var ModelPerformer = function ( params ) 
 {
     Performer.call( this, params );
@@ -190,8 +274,15 @@ ModelPerformer.prototype.getAPI = function()
 *
 * Postgres reference: 
 * https://github.com/brianc/node-postgres/wiki/Query
+*
 ***********************************************************/
 
+/*
+    Wrapper for table operations, designed to be Performer
+    friendly with bindable callbacks with standardized,
+    specialized status codes.
+
+*/
 function table(client, bindingObj, defaultCallback, values)
 {
     this.client = client || getClient();
@@ -371,6 +462,9 @@ var tablePrototype = {
             });        
     },
     
+    /*
+        call back for every row
+    */
     findbyRow: function( sql, args, cb ) 
     {
         var callback = cb || this.defCallback;
@@ -387,6 +481,9 @@ var tablePrototype = {
             });
     },
     
+    /*
+        call back once with an array of all the rows
+    */
     findAllRows: function( sql, args, cb )
     {
         var callback = cb || this.defCallback,

@@ -95,7 +95,6 @@ exports.logTakeDownRequest = function( siteid, contactInfo, mediaInfo, callback 
             return function() {
                 var auditId = this.findValue('auditId');
                 values.push(auditId);
-                debug.out('VALUES--------',values);
                 this.table.insertSingleRecord(mediaSQL,values);
             }
         }

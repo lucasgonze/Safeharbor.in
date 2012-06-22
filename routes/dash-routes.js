@@ -11,7 +11,7 @@ var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
 
 function getDash( req, res )
 {
-    var uid = 1; //loginstate.getID(req);
+    var uid = loginstate.getID(req);
     
     if( !uid ) {
 	    errout( req, res, exp( 400, "Only somebody signed in can see site info." ) );
