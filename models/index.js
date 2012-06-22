@@ -352,19 +352,21 @@ var tablePrototype = {
             var len = count;
 
             if( len < 1 ) 
+            {
                 callback.apply( me.binder,  [CODES.NO_RECORDS_FOUND] );
-            else if( len > 1 )
-                callback.apply( me.binder,  [CODES.MULTIPLE_RECORDS_FOUND, savedRow] );
+            }
             else
             {
-                var ret = savedRow;
+                var ret = savedRow,
+                    code = len > 1 ? CODES.MULTIPLE_RECORDS_FOUND : CODES.SUCCESS;
+                    
                 if( isValue )
                 {
                     var fieldName = null;
                     for( fieldName in savedRow ) { break; }
                     ret = ret[fieldName];
                 }
-                callback.apply( me.binder, [CODES.SUCCESS, ret ] );
+                callback.apply( me.binder, [code, ret ] );
             }
             });        
     },

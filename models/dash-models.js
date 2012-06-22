@@ -110,6 +110,39 @@ exports.logTakeDownRequest = function( siteid, contactInfo, mediaInfo, callback 
     return contact;
 }
 
+function getTakedownRequests( callback )
+{
+    var sql2 = 'SELECT * FROM media WHERE audit = $1';                             
+    return new ModelPerformer( { 
+                callback: callback,
+                performer: function() 
+                {
+                    var rows = this.findValue('allRows'),
+                        me = this, 
+                        len = rows.length;
+ 
+                    function indexCallback(index,row) {
+                        return function(code, trRows) {
+                                if( code == model.CODES.SUCCESS )
+                                {
+                                    code = model.CODES.QUERY_ROW;
+                                    row.takedownRequests = trRows;
+                                }
+                                me.callback(code,trRows,row);
+                                // TODO: this should be a counter up to 'len'
+                                if( index == len - 1 )
+                                    me.callback(model.CODES.SUCCESS,rows);
+                            }  
+                    }
+            
+                    for( var i = 0; i < len; i++ )
+                    {
+                        this.table.findAllRows(sql2, [rows[i].auditid], indexCallback(i,rows[i]) );
+                    }
+                    
+                }
+            });
+}
 
 /*
     here's what one record looks like:
@@ -178,35 +211,52 @@ exports.getAuditLog = function( uid, callback )
                                  },
                              });
 
-    var sql2 = 'SELECT * FROM media WHERE audit = $1';                             
-    var subSqlPerformer = new ModelPerformer( { 
-                                    performer: function() 
-                                    {
-                                        var rows = this.findValue('allRows');
-                                        var me = this, len = rows.length;
-                                        function indexCallback(index,row) {
-                                            return function(code, trRows) {
-                                                    if( code == model.CODES.SUCCESS )
-                                                    {
-                                                        code = model.CODES.QUERY_ROW;
-                                                        row.takedownRequests = trRows;
-                                                    }
-                                                    me.callback(code,trRows,row);
-                                                    // TODO: this should be a counter up to 'len'
-                                                    if( index == len - 1 )
-                                                        me.callback(model.CODES.SUCCESS,rows);
-                                                }  
-                                        }
-                                
-                                        for( var i = 0; i < len; i++ )
-                                        {
-                                            this.table.findAllRows(sql2, [rows[i].auditid], indexCallback(i,rows[i]) );
-                                        }
-                                        
-                                    },
-                                    callback: callback
-                                    });
-                                    
+    var subSqlPerformer = getTakedownRequests( callback );
+    
     return AllRows.chain( subSqlPerformer );
+
+}
+
+exports.getAuditDetail = function( auditId, callback )
+{
+    
+    if( typeof(auditId) == 'function' )
+    {
+        callback = auditId;
+        auditId = 0;
+    }
+    
+    var sql = 'SELECT *, ' +
+              "to_char(creation, 'FMMonth FMDD, YYYY' ) as formatted_date " +
+              'FROM audit, site, acct, contact ' +
+              'WHERE site     = siteid ' +
+              '  AND acct     = acctid ' +
+              '  AND contact  = contactid ' + 
+              '  AND auditid  = $1 ' 
+              'ORDER BY audit.creation DESC ';
+              
+    var audit = new ModelPerformer( { 
+                        performer: function() 
+                        {
+                            var id = auditId || this.findValue('auditId');
+                            this.table.findSingleRecord(sql,[id]); 
+                        },
+                        callback: function( code, row ) 
+                        {
+                            if( code == model.CODES.SUCCESS )
+                            {
+                                this.auditDetail = row;
+                                this.allRows = [ row ];
+                            }
+                            else
+                            {
+                                this.callback(code,row);
+                            }
+                        },
+                    });
+
+    var subSqlPerformer = getTakedownRequests( callback );
+    
+    return audit.chain( subSqlPerformer );
 
 }
