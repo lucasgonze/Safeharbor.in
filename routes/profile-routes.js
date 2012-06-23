@@ -11,7 +11,7 @@ var errlib     = require("../lib/error.js");
 var Performer  = require('../lib/performer.js').Performer;
 
 var CODES          = profile.CODES;
-var err            = errlib.err;
+var exp            = errlib.err;
 var errout         = errlib.errout();
 var checkForSQLErr = errlib.errout( [ CODES.SQL_ERROR,  
                                       CODES.INVALID_ARGS, 
@@ -88,7 +88,7 @@ function resetPasswordEmail(req, res, to) {
                             {layout:"global.html", pageTitle:"Password Reset", bodyClass: "profile"});			
                     }   
                     else {
-                        errout( req, res, err( 400, 'Email reset failed: ' + message)  );
+                        errout( req, res, exp( 400, 'Email reset failed: ' + message)  );
                         this.stopChain();
                     }
                 },
@@ -151,23 +151,24 @@ function lostPasswordPost(req,res){
 function savePasswordReset(req,res) {
 
 	if( !loginstate.isLoggedIn() ) {
-	        errout( req, res, err( 400, "Only somebody signed in can reset their password." ) );
+	        errout( req, res, exp( 400, "Only somebody signed in can reset their password." ) );
         }
 	else if( req.body.newpassword !== req.body.confirm ) {
-    	    errout( req, res, err( 400, "Mismatch password." ) );
+    	    errout( req, res, exp( 400, "Mismatch password." ) );
 	    }
     else {
         var args = utils.copy( { userid: loginstate.getID(req) }, req.body );
         
         profile.resetPasswordForLoggedInUser( args, function(code,err) {   
+                console.log( 'RESET CB', code, err );
                 checkForSQLErr( req, res, code, err );
                 if( code == CODES.SUCCESS )
                 {
                     res.render("profile/successNoEmail.html",{layout:"global.html",pageTitle:"Success"});	
                 }
-                if( code == profile.NO_RECORDS_UPDATED )
+                else if( code == CODES.NO_RECORDS_UPDATED )
                 {
-                    errout( req, res, err( 400, 'wrong   password on current account' ) );
+                    errlib.render(res, 'wups, wrong password on current account', 404 );
                 }
             } ).perform();
     }
@@ -177,7 +178,7 @@ function savePasswordReset(req,res) {
 function deleteAccount(req,res){
 
 	if( ! loginstate.isLoggedIn() ){
-    	    errout( req, res, err( 400, "not signed in!." ) );
+    	    errout( req, res, exp( 400, "not signed in!." ) );
     	    return;
 	}
 
@@ -191,7 +192,7 @@ function deleteAccount(req,res){
 function emitSiteEditor(req,res){	
 	
 	if( ! loginstate.isLoggedIn() ){
-	    errout( req, res, err( 400, "Only somebody signed in can edit site info." ) );
+	    errout( req, res, exp( 400, "Only somebody signed in can edit site info." ) );
 	    return;
 	}
 	
@@ -216,7 +217,7 @@ function saveSiteEdit(req,res) {
     var uid = loginstate.getID(req);
     
     if( !uid ) {
-	    errout( req, res, err( 400, "Only somebody signed in can save site info." ) );
+	    errout( req, res, exp( 400, "Only somebody signed in can save site info." ) );
         return(false);
     }
 
