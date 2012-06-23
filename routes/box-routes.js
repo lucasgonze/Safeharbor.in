@@ -8,6 +8,8 @@
 var models  = require('../models/box-models.js');
 var audit   = require('../models/dash-models.js');
 
+var CODES = models.CODES;
+
 var helpers = require('./router-helpers.js');
 
 var util       = require('util');
@@ -17,8 +19,7 @@ var errlib     = require('../lib/error.js');
 var Performer  = require('../lib/performer.js').Performer;
 
 var errout           = errlib.errout();
-var checkForFoundErr = errlib.errout( [models.CODES.NO_RECORDS_FOUND, models.CODES.SQL_ERROR] );
-var checkForSQLErr   = errlib.errout( [models.CODES.SQL_ERROR] );
+var checkForSQLErr   = errlib.errout( [CODES.SQL_ERROR] );
 
 exports.install = function( app )
 {
@@ -30,8 +31,12 @@ exports.install = function( app )
 function getBox(req,res){
 	// look up metadata for the box number
 	var p = models.get( parseInt(req.params.siteid), function (code, site) {
-        checkForFoundErr( req, res, code, site );
-        if( code == models.CODES.SUCCESS ) 
+        checkForSQLErr( req, res, code, site );
+        if( code == CODES.NO_RECORDS_FOUND )
+        {
+            errlib.render( res, 'Invalid account id', 404 );
+        }
+        else if( code == CODES.SUCCESS ) 
         {
             res.render( 'box/top.html', utils.copy( {
                         layout:       'global.html',
