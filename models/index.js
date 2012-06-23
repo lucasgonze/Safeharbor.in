@@ -88,7 +88,7 @@ util.inherits( InvalidConnect, Error );
     ModelPerformer is a specialization of Performer that
     exposes a table API wrapper inside your performer 
     function. The API is accessable via the 'this.table' 
-    method:
+    property:
     
         new ModelPerformer( { callback: function(statusCode, param) { ... },
                               performer: function() {
@@ -107,13 +107,16 @@ util.inherits( InvalidConnect, Error );
 
         new ModelPerformer( { callback: function(statusCode, param) { ... },
                               performer: function() {
-                                 var sql = 'SELECT * FROM foo WHERE id = $1';
+                                 var sql = 'SELECT * FROM foo WHERE id = $1';                                 
                                  this.table.findSingleRecord( sql, [someId] );
+                                 //---------------------------------^^^^^^^--------
+                                 
                                 }
     
     2: Passing them as 'values' element in the ctor:
     
         new ModelPerformer( { values: [someId],
+                            //--------^^^^^^^^------
                               callback: function(statusCode, param) { ... },
                               performer: function() {
                                  var sql = 'SELECT * FROM foo WHERE id = $1';
@@ -139,6 +142,7 @@ util.inherits( InvalidConnect, Error );
         
            new ModelPerformer( { parseObj: request.body,
                                  names: [ 'user', 'password' ]
+
                                  callback: function(statusCode, param) { ... },
                                  performer: function() {
                                     this.table.findSingleRecord( SQL );

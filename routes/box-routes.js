@@ -52,6 +52,7 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
             
                 // N.B. these params are flipped coming from sendgrid
                 callback: function(success,message) {
+                    debug.out('MAILER CB', success, message );
                     // Sendgrid's error flag doesn't use the Node.js convention of having non-null mean success			
                     if( success ) {
                         res.render("box/success.html",
@@ -61,56 +62,13 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                     }   
                     else {
                         errout( req, res, err( 400, 'Email notify failed: ' + message)  );
+                        // hack attempt at fixing double pump bug
                         this.stopChain();
                     }                    
+                    
                 },
                 
                 performer: function() {            
-                /*
-                    Mailer values
-                        acct: 1,
-                        acctid: 1,
-                        agentaddress: '7 foo Ln., Bar Park, IL',
-                        agentemail: 'assoverteakettle.org@gmail.com',
-                        attachment: '',
-                        auditid: 11,
-                        contact: 14,
-                        contactid: 14,
-                        creation: Fri, 22 Jun 2012 05:59:36 GMT,
-                        domain: 'assoverteakettle.org',
-                        email: 'victor.stodne@gmail.com',
-                        fax: '888393993',
-                        formatted_date: 'June 22, 2012',
-                        full_name: 'Joe Doh',
-                        job_title: 'copyright thug',
-                        opname: 'takedownRequest' },
-                        owners_full_name: 'Sally Doh',
-                        password: 'qqqq',
-                        phone: '5107175153',
-                        postal: 'aefewfijw aweifjaew few ',
-                        resetdate: null,
-                        resetsecret: null,
-                        site: 40,
-                        siteid: 40,
-                        sitename: 'Ass Over Tea Kettle',
-                            
-                            takedownRequests: 
-                             [ { anchor: 'ch work is be',
-                                 media_url: 'http://somemedia.mp3',
-                                 audit: 11,
-                                 mediaid: 6,
-                                 page: 'http://localhost.com/box/24738',
-                                 description: 'work is being' },
-                               { anchor: 'page2',
-                                 media_url: 'http://someothermedia.mp3',
-                                 audit: 11,
-                                 mediaid: 7,
-                                 page: 'http://localhost.net/box/24738',
-                                 description: 'desc2' }
-                               ],
-                            
-                        }}
-                */                    
                     var subject = "IMPORTANT: DMCA takedown request received",
                         path = "../views/box/notificationemail.html",
                         mailerValues = this.findValue('auditDetail'),
@@ -119,6 +77,7 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                     mailerValues.dashurl =  'http://'+req.headers.host+'/dash';                    
                     //debug.render( res, ['mailerValues', mailerValues ] );
                     //return;
+                    console.log( 'SENDING EMAIL' );
                     mailer.emailFromTemplate( 
                                           mailerValues.agentemail,
                                           subject,
@@ -219,6 +178,8 @@ function postBox(req,res){
     var auditer  = audit.logTakeDownRequest( siteid, contactArgs, mediaArgs, function( code, err ) { checkForSQLErr( req, res, code, err ) } );
     var detail   = audit.getAuditDetail( function( code, err ) { checkForSQLErr( req, res, code, err ) } );    
     var notifier = notifyEmailer( req, res );
+    
+    debug.setVolume(1);
     
     verify              // verify site record is valid
       .chain( auditer ) // put the TR into our database

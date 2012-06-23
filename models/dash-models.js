@@ -127,10 +127,19 @@ function getTakedownRequests( callback )
                                     code = model.CODES.QUERY_ROW;
                                     row.takedownRequests = trRows;
                                 }
-                                me.callback(code,trRows,row);
+                                // call the user callback directly 
+                                // so we don't trigger a traversal
+                                // of the performer chain
+                                callback.apply(this,[code,trRows,row]);
+                                
                                 // TODO: this should be a counter up to 'len'
                                 if( index == len - 1 )
+                                {
+                                    // now call throw 'this' so we
+                                    // continue down the Performer
+                                    // chain
                                     me.callback(model.CODES.SUCCESS,rows);
+                                }
                             }  
                     }
             
