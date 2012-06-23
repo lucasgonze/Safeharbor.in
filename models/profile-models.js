@@ -106,7 +106,7 @@ exports.deleteAccount = function(userid,callback){
 }
 
 exports.getSiteForUser = function(ownerid,callback){
-    var sql = "select * from site where acct = $1";
+    var sql = "select *, md5(concat('',siteid)) as idhash from site where acct = $1";
     
     return new ModelPerformer( { values:[ownerid], 
                                  callback: callback, 
