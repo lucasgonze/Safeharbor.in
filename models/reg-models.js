@@ -1,4 +1,4 @@
-
+var debug = require('../lib/debug.js');
 var models = require('./index.js');
 var ModelPerformer = models.ModelPerformer;
 var CODES = exports.CODES = models.CODES;
@@ -62,7 +62,8 @@ exports.createAcct = function(regid,callback){
 }
 
 exports.createSite = function(obj,callback){
-    var sql = 'insert into site (acct,sitename,domain,agentaddress,agentemail) values($1,$2,$3,$4,$5) returning siteid';
+    debug.setVolume(1);   
+    var sql = "insert into site (acct,sitename,domain,agentaddress,agentemail) values($1,$2,$3,$4,$5) returning md5(concat('',siteid)) as regid";
     var args = ['acctid', 'sitename','domain','agentaddress','agentemail'];
     return new ModelPerformer( 
         { 
@@ -71,7 +72,6 @@ exports.createSite = function(obj,callback){
                 if( !obj.acctid )
                     obj.acctid = this.findValue('acctid');
                 var vals = this._parseValues(obj,args);
-                console.log('VALS', vals);
                 this.table.insertSingleRecord(sql,vals);
             }
     });

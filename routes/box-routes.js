@@ -23,14 +23,13 @@ var checkForSQLErr   = errlib.errout( [CODES.SQL_ERROR] );
 
 exports.install = function( app )
 {
-	app.get('/box/:siteid([0-9]+)$',  getBox);
-	app.post('/box/:siteid([0-9]+)',  postBox);
-//	app.post('/box/:siteid([0-9]+)$', postBox);
+	app.get ('/box/:siteid([0-9a-f]+)$',  getBox);
+	app.post('/box/:siteid([0-9a-f]+)',   postBox);
 }
 
 function getBox(req,res){
 	// look up metadata for the box number
-	var p = models.get( parseInt(req.params.siteid), function (code, site) {
+	var p = models.get( req.params.siteid, function (code, site) {
         checkForSQLErr( req, res, code, site );
         if( code == CODES.NO_RECORDS_FOUND )
         {
@@ -57,7 +56,6 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
             
                 // N.B. these params are flipped coming from sendgrid
                 callback: function(success,message) {
-                    debug.out('MAILER CB', success, message );
                     // Sendgrid's error flag doesn't use the Node.js convention of having non-null mean success			
                     if( success ) {
                         res.render("box/success.html",
@@ -67,7 +65,6 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                     }   
                     else {
                         errout( req, res, err( 400, 'Email notify failed: ' + message)  );
-                        // hack attempt at fixing double pump bug
                         this.stopChain();
                     }                    
                     
@@ -80,9 +77,6 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                         mailer = require("../lib/mail.js");
                         
                     mailerValues.dashurl =  'http://'+req.headers.host+'/dash';                    
-                    //debug.render( res, ['mailerValues', mailerValues ] );
-                    //return;
-                    console.log( 'SENDING EMAIL' );
                     mailer.emailFromTemplate( 
                                           mailerValues.agentemail,
                                           subject,

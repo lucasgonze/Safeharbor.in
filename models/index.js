@@ -349,18 +349,18 @@ var tablePrototype = {
     insertSingleRecord: function( sql, args, cb ) 
     {
         var callback = cb || this.defCallback,
-            idName = null;
+            hasReturning = sql.match(/returning/);
             
-        try { idName = sql.match(/returning\s+([^\s+]+)/i)[1]; }
-        catch( e ) {}
-        
         var value = null,
             me = this;
             
         var query = this._getQ(sql,args,callback);
 
         query.on('row', function(row) { 
-                value = idName ? row[idName] : row; 
+                if( hasReturning )
+                    for( var name in row ) { value = row[name]; break; }
+                else
+                    value = row;
             });
 
         query.on( 'end', function(result) {
@@ -383,17 +383,17 @@ var tablePrototype = {
     updateSingleRecord: function( sql, args, cb ) 
     {
         var callback = cb || this.defCallback,
-            idName = null;
+            hasReturning = sql.match(/returning/);
             
-        try { idName = sql.match(/returning\s+([^\s+]+)/i)[1]; }
-        catch( e ) {}
-
         var value = null,
             me = this,
             query = this._getQ(sql,args,callback);
 
         query.on('row', function(row) {  
-                value = idName ? row[idName] : row; 
+                if( hasReturning )
+                    for( var name in row ) { value = row[name]; break; }
+                else
+                    value = row;
             });
 
         query.on( 'end', function(result) {
@@ -458,8 +458,9 @@ var tablePrototype = {
                 if( isValue )
                 {
                     var fieldName = null;
-                    for( fieldName in savedRow ) { break; }
-                    ret = ret[fieldName];
+                    for( fieldName in savedRow ) 
+                        { ret = ret[fieldName]; break; }
+                    
                 }
                 callback.apply( me.binder, [code, ret ] );
             }
