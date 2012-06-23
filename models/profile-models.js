@@ -41,15 +41,26 @@ exports.saveNewPassword = function( values, callback ) {
 
     // first... make sure the handshake hasn't expired
 
-    var sqlExpire = "select (current_timestamp - resetdate) > interval '1 hour' as expired from acct;";
+    var sqlExpire = "select (current_timestamp - resetdate) > interval '1 hour' as expired " +
+                    "  from acct" +
+                    "  where resetSecret = $1";
 
 	var expireCheck = new ModelPerformer( 
                             { 
+                                parseObj: values, 
+                                names: ['resetsecret'],                             
                                 callback: function(c, expired) {
                                     if( c == CODES.OK )
                                     {
-                                        c = expired ? CODES.HANDSHAKE_EXPIRED : CODES.HANDSHAKE_VALID;
-                                        this.stopChain();
+                                        if( expired )
+                                        {
+                                            c = CODES.HANDSHAKE_EXPIRED;
+                                            this.stopChain();
+                                        }
+                                        else
+                                        {
+                                            c = CODES.HANDSHAKE_VALID;
+                                        }
                                     }
                                     callback.apply( this, [c, expired] );
                                 }, 
