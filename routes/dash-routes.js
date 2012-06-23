@@ -1,13 +1,14 @@
 var util       = require('util');
-var models     = require('../models/dash-models.js');
+var dash       = require('../models/dash-models.js');
 var profile    = require('../models/profile-models.js');
 var loginstate = require('../lib/loginstate.js');
 var errlib     = require("../lib/error.js");
 var debug      = require("../lib/debug.js");
 
+var CODES          = dash.CODES;
 var exp            = errlib.err;
 var errout         = errlib.errout();
-var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
+var checkForSQLErr = errlib.errout( [ CODES.SQL_ERROR ] );
 
 function getDash( req, res )
 {
@@ -18,18 +19,25 @@ function getDash( req, res )
         return(false);
     }
 
-    var log = models.getAuditLog(uid,function(code,rows) 
+    var log = dash.getAuditLog(uid,function(code,rows) 
                     {
                         checkForSQLErr( req, res, code, rows );
-                        if( code == models.CODES.SUCCESS )
+                        if( code == CODES.SUCCESS )
                         {
-                            res.render( '../views/disputes/all.html',
-                                        {
-                                           layout: 'signedin.html',
-                                           pageTitle: 'Safe Harbor - Disputes',
-                                           bodyClass: 'disputes',
-                                           auditItems: rows
-                                        } );
+                            if( rows && rows.length )
+                            {
+                                res.render( '../views/disputes/all.html',
+                                            {
+                                               layout: 'signedin.html',
+                                               pageTitle: 'Safe Harbor - Disputes',
+                                               bodyClass: 'disputes',
+                                               auditItems: rows
+                                            } );
+                            }
+                            else
+                            {
+                                errlib.render( res, 'Good news! No has compained about your site! Thank you! Drive Safely', 0, 0 );
+                            }
                         }
                     });
     
@@ -39,9 +47,9 @@ function getDash( req, res )
 function getDetail( req, res )
 {
     var auditId = req.params.auditid;
-    var detail = models.getAuditDetail( auditId, function( code, detail ) {
+    var detail = dash.getAuditDetail( auditId, function( code, detail ) {
                 checkForSQLErr( req, res, code, detail );
-                if( code == models.CODES.SUCCESS )
+                if( code == CODES.SUCCESS )
                 {
                     res.render( '../views/disputes/detail.html',
                                 {

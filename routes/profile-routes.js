@@ -1,20 +1,21 @@
 
-/*****************************
+/***********************************************************
  * Login, logout, edit profile, reset password, edit site
- *****************************/
+ ***********************************************************/
 
-var models     = require("../models/profile-models.js");
+var profile    = require("../models/profile-models.js");
 var loginstate = require('../lib/loginstate.js');
 var utils      = require('../lib/utils.js');
 var debug      = require("../lib/debug.js");
 var errlib     = require("../lib/error.js");
 var Performer  = require('../lib/performer.js').Performer;
 
+var CODES          = profile.CODES;
 var err            = errlib.err;
 var errout         = errlib.errout();
-var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR,  
-                                      models.CODES.INVALID_ARGS, 
-                                      models.CODES.HANDSHAKE_EXPIRED ] );
+var checkForSQLErr = errlib.errout( [ CODES.SQL_ERROR,  
+                                      CODES.INVALID_ARGS, 
+                                      CODES.HANDSHAKE_EXPIRED ] );
 
 /*--------------------------
     EXPORTED
@@ -57,17 +58,16 @@ function clearLogin(req,res) {
 
 function saveLogin(req,res) {
 	
-    var model = models.checkAcct( req.body, function(code,row) { 
-        debug.out( 'Return from checkAcct: ', code, row );
+    var model = profile.checkAcct( req.body, function(code,row) { 
         checkForSQLErr( req, res, code, row );
-        if( code == models.CODES.SUCCESS )
+        if( code == CODES.SUCCESS )
         {
             loginstate.enable(req,row.acctid);
             res.redirect("/dash");
         }
-        else if( code == models.CODES.NO_RECORDS_FOUND )
+        else if( code == CODES.NO_RECORDS_FOUND )
         {
-            errout( req, res, err( 400, 'invalid login' ) );
+            errlib.render( res, 'Wups, not a valid user and password combination', 404 );
         }
     });
 
@@ -111,9 +111,9 @@ function resetPasswordEmail(req, res, to) {
 function lostPasswordStart(req,res){
     var email = req.body.email;
     var rpe = resetPasswordEmail( req, res, email );
-	var init = models.initPasswordReset( email, function( c, resetSecret ) { 
+	var init = profile.initPasswordReset( email, function( c, resetSecret ) { 
 	        checkForSQLErr(req,res,c,resetSecret); 
-	        if( c == models.CODES.OK )
+	        if( c == CODES.OK )
 	            this.resetSecret = resetSecret;
 	    } );
 	init.chain( rpe ).perform();
@@ -139,11 +139,11 @@ function lostPasswordPost(req,res){
 
     function cb(code,err) {
         checkForSQLErr( req, res, code, err );
-        if( code == models.CODES.SUCCESS )
+        if( code == CODES.SUCCESS )
             res.render("success.html",{layout:"global.html",pageTitle:"Success"});    
     }
     
-    models.saveNewPassword( args, cb ).perform();
+    profile.saveNewPassword( args, cb ).perform();
 }
 
 /* Different than lostPasswordPost in that it's used by a logged-in 
@@ -157,15 +157,15 @@ function savePasswordReset(req,res) {
     	    errout( req, res, err( 400, "Mismatch password." ) );
 	    }
     else {
-        var args = utils.copy( { userid: loginstate.getID() }, req.body );
+        var args = utils.copy( { userid: loginstate.getID(req) }, req.body );
         
-        models.resetPasswordForLoggedInUser( args, function(code,err) {   
+        profile.resetPasswordForLoggedInUser( args, function(code,err) {   
                 checkForSQLErr( req, res, code, err );
-                if( code == models.CODES.SUCCESS )
+                if( code == CODES.SUCCESS )
                 {
-                    res.render("profile/success.html",{layout:"global.html",pageTitle:"Success"});	
+                    res.render("profile/successNoEmail.html",{layout:"global.html",pageTitle:"Success"});	
                 }
-                if( code == models.NO_RECORDS_UPDATED )
+                if( code == profile.NO_RECORDS_UPDATED )
                 {
                     errout( req, res, err( 400, 'wrong   password on current account' ) );
                 }
@@ -181,7 +181,7 @@ function deleteAccount(req,res){
     	    return;
 	}
 
-	models.deleteAccount(req.session.userid,function(code,err){
+	profile.deleteAccount(req.session.userid,function(code,err){
 	    checkForSQLErr(req,res,code,err);
 		loginstate.disable(req);
 		res.render("success.html",{layout:"global.html",pageTitle:"Success"});	
@@ -199,7 +199,7 @@ function emitSiteEditor(req,res){
 
     function success(code, site) {
 	    checkForSQLErr(req,res,code,site);
-        if( code == models.CODES.OK )
+        if( code == CODES.OK )
         {
             res.render("profile/siteeditor.html", utils.copy({
                                                     layout: "global.html",
@@ -208,7 +208,7 @@ function emitSiteEditor(req,res){
         }
     }
     
-	models.getSiteForUser( uid, success ).perform();
+	profile.getSiteForUser( uid, success ).perform();
 }
 
 function saveSiteEdit(req,res) {
@@ -222,13 +222,13 @@ function saveSiteEdit(req,res) {
 
     function callback( code, err ) {
 	    checkForSQLErr(req,res,code,err);    
-        if( code == models.CODES.OK )
+        if( code == CODES.OK )
             res.render("./success.html",
                 {layout:"global.html", pageTitle:"Edit Site", bodyClass: "profile"});			
     }            
-    var args = utils.copy( {ownerid: uid}, req.body );
+    var args = utils.copy( {acct: uid}, req.body );
 
-    var model = models.updateSiteForUser( args, callback );    
+    var model = profile.updateSiteForUser( args, callback );    
     model.error_output( req, res );
     model.perform();
 }

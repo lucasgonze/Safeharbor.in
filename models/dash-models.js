@@ -1,8 +1,10 @@
 var model      = require( './index.js' );
+var profile    = require('./profile-models.js');
 var debug      = require( '../lib/debug.js' );
 
+
 var ModelPerformer = model.ModelPerformer;
-exports.CODES = model.CODES;
+var CODES = exports.CODES = model.CODES;
 
 /********************
  * public           *
@@ -18,7 +20,7 @@ exports.appendAuditLog = function( obj, callback )
                                 this.table.insertSingleRecord(sql); 
                                 },
                              callback: function( code, auditid ) {
-                                if( code != model.CODES.SUCCESS )
+                                if( code != CODES.SUCCESS )
                                     callback( code, auditid );
                                 else
                                     this.auditid = auditid;
@@ -26,7 +28,7 @@ exports.appendAuditLog = function( obj, callback )
                             });
 }
 
-exports.logTakeDownRequest = function( siteid, contactInfo, mediaInfo, callback )
+exports.logTakeDownRequest = function( siteIdOrHash, contactInfo, mediaInfo, callback )
 {
     function extractValues(body,names)
     {
@@ -51,7 +53,7 @@ exports.logTakeDownRequest = function( siteid, contactInfo, mediaInfo, callback 
     var contactValues = extractValues(contactInfo,contactFieldNames);
     
     var contact = new ModelPerformer( {  callback:  function(code,contactId) {
-                                                if( code == model.CODES.INSERT_SINGLE ) 
+                                                if( code == CODES.INSERT_SINGLE ) 
                                                     this.contactId = contactId;
                                                 else
                                                     callback.apply( this, [code, contactId] );
@@ -61,21 +63,33 @@ exports.logTakeDownRequest = function( siteid, contactInfo, mediaInfo, callback 
                                             } );
 
     /*
+        the 'siteIdOrHash' argument might be a hash of the actual siteid 
+        
+        now... the truth is, the siteId is going to be there in the chain already
+        because of the caller from dash-routes, but we're pretending to ignore that
+        (safety first and all that but costly for sure...)
+    */
+    var eatOK = function(code, err) { if( code != CODES.OK ) callback.apply(this,[code,err]); };
+    var siteId = profile.normalizeSiteId( siteIdOrHash, eatOK );
+    
+    contact.chain( siteId );
+    
+    /*
         Log the audit trail info next to get that ID
     */
     var auditSQL = 'insert into audit (opname,site,contact) values ($1,$2,$3) returning auditid';
-    var auditValues = [ 'takedownRequest', siteid ];
                         
     var audit = new ModelPerformer( {  callback:  function(code,auditId) {
-                                                if( code == model.CODES.INSERT_SINGLE ) 
+                                                if( code == CODES.INSERT_SINGLE ) 
                                                     this.auditId = auditId;
                                                 else
                                                     callback.apply( this, [code, auditId] );
                                             },
                                          performer: function() { 
-                                                var contact = this.findValue('contactId');
-                                                auditValues.push(contact);
-                                                this.table.insertSingleRecord(auditSQL,auditValues);} 
+                                                var siteId  = this.findValue('siteId'),
+                                                    contact = this.findValue('contactId'),
+                                                    values = [ 'takedownRequest', siteId, contact ];
+                                                this.table.insertSingleRecord(auditSQL,values);} 
                                             } 
                                     );
 
@@ -119,12 +133,19 @@ function getTakedownRequests( callback )
                     var rows = this.findValue('allRows'),
                         me = this, 
                         len = rows.length;
- 
+
+                    if( !len )
+                    {
+                        // is this right?
+                        me.callback(CODES.SUCCESS,rows);
+                        return;
+                    }
+                
                     function indexCallback(index,row) {
                         return function(code, trRows) {
-                                if( code == model.CODES.SUCCESS )
+                                if( code == CODES.SUCCESS )
                                 {
-                                    code = model.CODES.QUERY_ROW;
+                                    code = CODES.QUERY_ROW;
                                     row.takedownRequests = trRows;
                                 }
                                 // call the user callback directly 
@@ -135,10 +156,10 @@ function getTakedownRequests( callback )
                                 // TODO: this should be a counter up to 'len'
                                 if( index == len - 1 )
                                 {
-                                    // now call throw 'this' so we
+                                    // now call through 'this' so we
                                     // continue down the Performer
                                     // chain
-                                    me.callback(model.CODES.SUCCESS,rows);
+                                    me.callback(CODES.SUCCESS,rows);
                                 }
                             }  
                     }
@@ -212,7 +233,7 @@ exports.getAuditLog = function( uid, callback )
                              performer: function() { this.table.findAllRows(sql); },
                              callback: function( code, rows ) 
                                  {
-                                    if( code == model.CODES.SUCCESS )
+                                    if( code == CODES.SUCCESS )
                                         this.allRows = rows;
                                     else
                                         callback.apply(this,[code,rows]);
@@ -251,7 +272,7 @@ exports.getAuditDetail = function( auditId, callback )
                         },
                         callback: function( code, row ) 
                         {
-                            if( code == model.CODES.SUCCESS )
+                            if( code == CODES.SUCCESS )
                             {
                                 this.auditDetail = row;
                                 this.allRows = [ row ];

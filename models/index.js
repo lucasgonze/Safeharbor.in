@@ -122,10 +122,11 @@ util.inherits( InvalidConnect, Error );
                                  var sql = 'SELECT * FROM foo WHERE id = $1';
                                  this.table.findSingleRecord( sql );
                                 }
-                                
+                            })
+                            
         Note that you do NOT pass the arguments into the findSingleRecord()
         call. That will be done automagically for you. (Doing it this
-        way gives other Performer objects in your chain to have access
+        way gives other Performer objects in your chain access
         to your .values[] property.)
 
     3. Passing them as 'unparsed' objects in the ctor. This is useful for

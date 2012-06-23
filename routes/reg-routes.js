@@ -3,16 +3,17 @@
  * Account Creation
  *****************************/
 
-var models     = require("../models/reg-models.js");
+var reg        = require("../models/reg-models.js");
 var loginstate = require('../lib/loginstate.js');
 var errlib     = require('../lib/error.js');
 var utils      = require('../lib/utils.js');
 var Performer  = require('../lib/performer.js').Performer;
 var debug      = require('../lib/debug.js');
 
+var CODES          = reg.CODES;
 var exp            = errlib.err;
 var errout         = errlib.errout();
-var checkForSQLErr = errlib.errout( [ models.CODES.SQL_ERROR ] );
+var checkForSQLErr = errlib.errout( [ CODES.SQL_ERROR ] );
 
 exports.install = function( app )
 {
@@ -24,10 +25,9 @@ exports.install = function( app )
 
 function registerGet( req, res ) {
     var regid = req.params.regid;
-    var checker = models.checkForHandshake( regid, function(code,err) {
-        debug.out( 'Check for HS: ', code, err );
+    var checker = reg.checkForHandshake( regid, function(code,err) {
         checkForSQLErr( req, res, code, err );
-        if( code == models.CODES.SUCCESS )
+        if( code == CODES.SUCCESS )
         {
             res.render('reg/fromemail.html',
                 { layout: 'global.html', pageTitle:'Verify', bodyClass:'regid', regid: regid });
@@ -45,18 +45,18 @@ function registerPost(req,res){
 
     var regid = req.params.regid;
     
-    var createAcct = models.createAcct( regid, function( code, acctid ) { 
+    var createAcct = reg.createAcct( regid, function( code, acctid ) { 
             checkForSQLErr( req, res, code, acctid );
-            if( code == models.CODES.INSERT_SINGLE )
+            if( code == CODES.INSERT_SINGLE )
             {
                 loginstate.enable(req,acctid);
                 // setup for chaining this to next step
                 this.acctid = acctid;
             }
         });
-    var createSite = models.createSite( req.body , function( code, siteid ) {
+    var createSite = reg.createSite( req.body , function( code, siteid ) {
             checkForSQLErr( req, res, code, siteid );
-            if( code == models.CODES.INSERT_SINGLE )
+            if( code == CODES.INSERT_SINGLE )
                 res.render( "reg/done.html",
                                { layout:"global.html",
                                  pageTitle:"Setup Done",
@@ -111,9 +111,9 @@ function startEmailHandshake(req, res) {
         return;        
     }
     
-    var checkAcct = models.checkForAccount( req.body.email, function(code, err) { 
+    var checkAcct = reg.checkForAccount( req.body.email, function(code, err) { 
             checkForSQLErr( req, res, code, err );
-            if( code == models.CODES.RECORD_FOUND )
+            if( code == CODES.RECORD_FOUND )
             {
                 res.render("profile/login.html",
                     {
@@ -126,9 +126,9 @@ function startEmailHandshake(req, res) {
             }
         });
         
-    var initEmail = models.initEmailConfirmation( req.body, function( code, regid ) {
+    var initEmail = reg.initEmailConfirmation( req.body, function( code, regid ) {
             checkForSQLErr( req, res, code, regid );
-            if( code == models.CODES.INSERT_SINGLE )
+            if( code == CODES.INSERT_SINGLE )
                 this.regid = regid;
         });
 

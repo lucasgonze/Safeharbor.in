@@ -5,10 +5,10 @@
 
 "use strict";
 
-var models  = require('../models/box-models.js');
-var audit   = require('../models/dash-models.js');
+var box     = require('../models/box-models.js');
+var dash   = require('../models/dash-models.js');
 
-var CODES = models.CODES;
+var CODES = box.CODES;
 
 var helpers = require('./router-helpers.js');
 
@@ -23,24 +23,25 @@ var checkForSQLErr   = errlib.errout( [CODES.SQL_ERROR] );
 
 exports.install = function( app )
 {
-	app.get ('/box/:siteid([0-9a-f]+)$',  getBox);
-	app.post('/box/:siteid([0-9a-f]+)',   postBox);
+	app.get ('/box/:regid([0-9a-f]+)$',  getBox);
+	app.post('/box/:regid([0-9a-f]+)',   postBox);
 }
 
 function getBox(req,res){
 	// look up metadata for the box number
-	var p = models.get( req.params.siteid, function (code, site) {
+	var p = box.get( req.params.regid, function (code, site) {
         checkForSQLErr( req, res, code, site );
         if( code == CODES.NO_RECORDS_FOUND )
         {
-            errlib.render( res, 'Invalid account id', 404 );
+            errlib.render( res, 'That account does not exists!', 404 );
         }
         else if( code == CODES.SUCCESS ) 
         {
             res.render( 'box/top.html', utils.copy( {
                         layout:       'global.html',
                         pageTitle:    'Copyright Inbox',
-                        bodyClass:    'box' }, site ));			
+                        bodyClass:    'box' }, 
+                        site ));			
         }
     } );
 
@@ -56,7 +57,6 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
             
                 // N.B. these params are flipped coming from sendgrid
                 callback: function(success,message) {
-                    // Sendgrid's error flag doesn't use the Node.js convention of having non-null mean success			
                     if( success ) {
                         res.render("box/success.html",
                                     { layout:"global.html",
@@ -148,24 +148,23 @@ function extractFields( body, argNames, expectsArray )
 
 function postBox(req,res){
 
-    /*
-        // obsolete - doesn't work with array'd parameters
-    var values = helpers.checkStringParams( req, 
-                                    res, 
-                                    utils.copy( {}, req.body, req.params ), 
-                                    [ 'siteid','page','anchor','description','email','phone','postal'] );
-    debug.out( 'Values: ', values );
+    // TODO: verify parameters
     
-    if( !values )
-        return;
-    */
+    function verifyCB( code, err )
+    {
+        checkForSQLErr( req, res, code, err );
+        if( code == CODES.NO_RECORDS_FOUND )
+        {
+            errlib.render( res, 'Invalid account id', 404 );
+        }
+    }
     
     if( req.body.belief !== "on" || req.body.authorized !== "on") {
         errout( req, res, err( 400, 'invalid options to postBox') );
         return;
 	}
     
-    var siteid = req.params.siteid;
+    var regid = req.params.regid;
     
     var mediaArgNames = ['description','page','media_url','anchor'];
     var mediaArgs = extractFields(req.body, mediaArgNames,true);
@@ -173,12 +172,10 @@ function postBox(req,res){
     var contactArgNames = [ 'owners_full_name', 'full_name', 'job_title', 'postal', 'email', 'phone', 'fax' ];
     var contactArgs = extractFields(req.body, contactArgNames,false);
     
-    var verify   = models.get( siteid, function( code, err ) { checkForFoundErr( req, res, code, err ) } );
-    var auditer  = audit.logTakeDownRequest( siteid, contactArgs, mediaArgs, function( code, err ) { checkForSQLErr( req, res, code, err ) } );
-    var detail   = audit.getAuditDetail( function( code, err ) { checkForSQLErr( req, res, code, err ) } );    
+    var verify   = box.get( regid, verifyCB );
+    var auditer  = dash.logTakeDownRequest( regid, contactArgs, mediaArgs, function( code, err ) { checkForSQLErr( req, res, code, err ) } );
+    var detail   = dash.getAuditDetail( function( code, err ) { checkForSQLErr( req, res, code, err ) } );    
     var notifier = notifyEmailer( req, res );
-    
-    debug.setVolume(1);
     
     verify              // verify site record is valid
       .chain( auditer ) // put the TR into our database

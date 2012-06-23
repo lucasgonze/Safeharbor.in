@@ -1,13 +1,14 @@
 
-var model          = require('../models/dev-models.js');
+var dev            = require('../models/dev-models.js');
 var models         = require('../models/index.js');
 var ModelPerformer = models.ModelPerformer;
 
+var CODES    = dev.CODES;
 var debug    = require('../lib/debug.js');
 var htmlDump = debug.render;
 var errlib   = require('../lib/error.js');
 var exp      = errlib.err;
-var errCheck = errlib.errout( [model.CODES.SQL_ERROR] );
+var errCheck = errlib.errout( [CODES.SQL_ERROR] );
 var errout   = errlib.errout();
 var checkForSQLErr = errCheck;
 
@@ -84,8 +85,8 @@ function dumpTables( req, res )
 {
     var data = [];
     
-    var coreDumper = model.dumpAll( function(code,rows,result) {
-        if( code == model.CODES.OK )
+    var coreDumper = dev.dumpAll( function(code,rows,result) {
+        if( code == CODES.OK )
         {
             if( rows.length > 0 )
             {
@@ -107,7 +108,7 @@ function dumpTables( req, res )
         //console.log( this.name, c, err );                                        
         errCheck( req, res, c, err );
         
-        if( c != model.CODES.OK )
+        if( c != CODES.OK )
             return;
         
         html = '<!DOCTYPE html PUBLIC \'-//W3C//DTD HTML 4.01//EN\'><html><head><title>dumper</title></head>' +
@@ -151,7 +152,7 @@ function dumpTables( req, res )
 function recreateTables(req,res)
 {
     try {
-        model.recreateTables(function(err) {
+        dev.recreateTables(function(err) {
             if( err )
                 throw err;
             });
@@ -164,7 +165,7 @@ function recreateTables(req,res)
 
 function cleanTables(req,res)
 {
-    model.cleanTables(function(sql, err, a, b) {
+    dev.cleanTables(function(sql, err, a, b) {
         //console.log( 'RESULT FOR: ', sql );
         //console.log( 'Cleaning with : ', err, a ? a : '', b ? b : '' );
         if( err )

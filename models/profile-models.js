@@ -3,9 +3,10 @@ var models = require('./index.js');
 var ModelPerformer = models.ModelPerformer;
 
 // re-export for convinience
-exports.CODES = models.CODES;
+var CODES = exports.CODES = models.CODES;
 
-exports.CODES.HANDSHAKE_EXPIRED = 'hs_expired';
+CODES.HANDSHAKE_EXPIRED = 'hs_expired';
+CODES.HANDSHAKE_VALID   = 'hs_valid';
 
 /*****************************
  * Account management
@@ -40,37 +41,31 @@ exports.saveNewPassword = function( values, callback ) {
 
     // first... make sure the handshake hasn't expired
 
-	function performer() {
-//    	var sql = "select (current_timestamp - creation) > interval '1 hour' as expired from emailHandshake";
-    	var sql = "select (current_timestamp - resetdate) > interval '1 hour' as expired from acct;";
-        var m = this;
-        function performerCallback( c, row )  {
-            if( c == models.CODES.OK )
-            {
-                if( row.expired  )
-                {
-                    m.callback( models.CODES.HANDSHAKE_EXPIRED );
-                    m.stopChain();
-                }
-                c = 'hunky';
-            }
-            
-            m.callback( c, row );
-        }
-        
-        this.table.findSingleRecord( sql, null, performerCallback );
-    }
-        
-	var expireCheck = new ModelPerformer( { callback: callback, performer: performer } );
+    var sqlExpire = "select (current_timestamp - resetdate) > interval '1 hour' as expired from acct;";
+
+	var expireCheck = new ModelPerformer( 
+                            { 
+                                callback: function(c, expired) {
+                                    if( c == CODES.OK )
+                                    {
+                                        c = expired ? CODES.HANDSHAKE_EXPIRED : CODES.HANDSHAKE_VALID;
+                                        this.stopChain();
+                                    }
+                                    callback.apply( this, [c, expired] );
+                                }, 
+                                performer: function() {
+                                    this.table.findSingleValue( sqlExpire );
+                                }
+                            });
     
     //  Update the record with user supplied password
 
-    var sql = "UPDATE acct SET password = $1 WHERE resetSecret = $2 RETURNING email";
+    var sqlUpdate = "UPDATE acct SET password = $1 WHERE resetSecret = $2 RETURNING email";
     
     var savePass = new ModelPerformer( { parseObj: values, 
                                          names: ['password', 'resetsecret'], 
                                          callback: callback, 
-                                         performer: function() { this.table.updateSingleRecord( sql ); }});
+                                         performer: function() { this.table.updateSingleRecord( sqlUpdate ); }});
 
     // Chain the two together...
     
@@ -123,7 +118,7 @@ exports.getFirstSiteIdForUser = function(ownerid,callback) {
     
     function callBackWrap( code, siteid )
     {
-        if( code == models.CODES.SUCCESS )
+        if( code == CODES.SUCCESS )
             this.siteid = siteid;
         callback.apply(this,[code,siteid]);
     }
@@ -139,4 +134,22 @@ exports.updateSiteForUser = function( obj, callback ) {
                                  names: ['acct','sitename','domain','agentaddress','agentemail'], 
                                  callback: callback, 
                                  performer: function(){ this.table.updateSingleRecord(sql); }} );
+}
+
+exports.normalizeSiteId = function(idOrHash,callback){
+    var sql = "select siteid from site where siteid = $1 OR md5(concat('',siteid)) = $2";
+    return new ModelPerformer( 
+        { 
+            values: [ parseInt(idOrHash) || 0, ''+idOrHash ],
+            callback: function( code, siteid ) {
+                if( code == CODES.SUCCESS ) {
+                    this.siteId = siteid;
+                } else {
+                    callback.apply( this, [code,siteid] );
+                }                
+            },
+            performer: function() {
+                this.table.findSingleValue(sql);
+            }
+    });
 }
