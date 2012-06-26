@@ -17,7 +17,7 @@ var errlib     = require('./lib/error.js');
 var debug      = require('./lib/debug.js');
 var sessionStore = require('./lib/sessionStore.js');
 
-debug.setVolume(1);
+//debug.setVolume(1);
 
 var app = module.exports = express.createServer(
 	express.cookieParser(),
@@ -106,8 +106,8 @@ process.on('uncaughtException', function (err) {
     // unhork. 
     // TODO: notify admin when this happens...
   console.log(['******* Caught-uncaught exception: ', err] );
-  console.log( err.stack );
-  console.trace('call stack:');
+//  console.log( err.stack );
+//  console.trace('call stack:');
 });
 
 //******************************
