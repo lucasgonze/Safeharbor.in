@@ -163,9 +163,36 @@ function initInbox(){
 	});
 }
 
+function initAjaxForms(){
+
+	$('#loginform').submit(function() { 
+		
+		$.ajax({
+			type: 'POST',
+			url: '/login',
+			data: $("#loginform").serialize(),
+			success: function success(data){
+				window.location = "/dash";
+			},
+			error: function err(data){
+				$(".hideerroruntilfail").addClass("fail");
+				var clearfail = function clearfail(){
+					$(".hideerroruntilfail").removeClass("fail");
+					$("#loginform input[type=text], #loginform input[type=password]").off('keypress', clearfail);
+				};
+				$("#loginform input[type=text], #loginform input[type=password]").on('keypress', clearfail);
+			}		
+		});
+		
+		return false; 
+	}); 
+
+}
+
 $(document).ready(function() {
 	initValidation();	
 	initInbox();
+	initAjaxForms();
 });
 
 

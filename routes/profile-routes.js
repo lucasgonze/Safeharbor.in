@@ -68,7 +68,7 @@ function saveLogin(req,res) {
         }
         else if( code == CODES.NO_RECORDS_FOUND )
         {
-            errlib.render( res, 'Wups, not a valid user and password combination', 404 );
+            errlib.render( res, 'Wups, not a valid user and password combination', "401 Unauthorized" );
         }
     });
 
