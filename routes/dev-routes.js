@@ -1,62 +1,77 @@
 
 var dev            = require('../models/dev-models.js');
+var routes         = require('../routes/index.js');
 var models         = require('../models/index.js');
 var ModelPerformer = models.ModelPerformer;
 
-var CODES    = dev.CODES;
+var CODES     = dev.CODES;
+var ROLES     = routes.ROLES;
+var checkRole = routes.checkRole;
+
+var util     = require('util');
+var utils    = require('../lib/utils.js');
 var debug    = require('../lib/debug.js');
 var htmlDump = debug.render;
 var errlib   = require('../lib/error.js');
 var exp      = errlib.err;
-var errCheck = errlib.errout( [CODES.SQL_ERROR] );
 var errout   = errlib.errout();
-var checkForSQLErr = errCheck;
+
+var menu = [
+
+	[ 'test logged in state', '/dev/nop', nop],
+	[ 'dump of tables', '/dev/underbelly', dumpTables ],
+	[ 'turn on console debugging', '/dev/debugout/:volume([0-9])', flipDebug, '/dev/debugout/1' ],
+	[ 'turn off console debugging', null, flipDebug, '/dev/debugout/0' ],
+	[ 'hard-wired /box form', '/dev/testboxpost', testboxpost ],
+	[ 'test dashboard for account (1)', '/dev/testdash', testdash ],
+    [ 'some fun docs', '/dev/docs', docs ],
+	[ 'rebuild tables (<b>DESTRUCTIVE</b> - NO UNDO)', '/dev/scaffolding', recreateTables ],
+	[ 'clean and factory install tables (<b>DESTRUCTIVE</b> - NO UNDO)', '/dev/overthecounter', cleanTables ]
+];
+
 
 exports.install = function( app )
 {
-    // helpful for debugging
-    
-	app.get('/nop', function(req, res) {
-        console.log('req.session: ')
-        console.log(req.session);
-        require('../lib/loginstate.js').logstate(req);
-        res.write('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"><html><head><title>NOP</title></head><body>NOP</body></html>');
-        res.end();
-    });
-    
-	// Scaffolding for setting up a fresh install.
-	// This should get moved to a full featured /admin module for us to administer the site and the dev process.
-	app.get('/scaffolding', recreateTables );
+    app.get('/dev', devMenu );	
 
-	app.get('/underbelly', dumpTables );
-	app.get('/overthecounter', cleanTables );
-	app.get('/debugout/:volume([0-9])', flipDebug );
-	
-	app.get('/testboxpost', testboxpost );
-	app.get('/testdash', testdash );
-	
+    for( var i = 0; i < menu.length; i++ )    
+    {
+        var M = menu[i];
+        if( M[1] )
+            app.get( M[1], /* checkRole(ROLES.developer), */ M[2] );
+    }
+}
+
+function devMenu(req,res)
+{
+    var html = '<ul>';
+    for( var i = 0; i < menu.length; i++ )    
+    {
+        var M = menu[i];
+        html += '<li><a href="'+(M[3] || M[1])+ '">'+ M[0] + '</a> ' + (M[3] || M[1]) + '</li>';
+    }
+    html += '</ul>';
+    utils.page( res, html, 'Developer Stuff' );
+}
+
+function docs( req, res )
+{
+    var text = '<p>How Performer class works:</p>' + 
+               '<img src="/img/dev/performer.jpg" />';
+               
+    utils.page( res, text, 'Developer Docs' );
+}
+
+function nop(req, res) {
+    console.log('req.session: ', req.session);
+    require('../lib/loginstate.js').logstate(req);
+    utils.page( res, '<pre>'+util.inspect(req.session)+'</pre>', 'Session');
 }
 
 function testdash( req, res )
 {
-    var models = require('../models/dash-models');
-    var uid = 1;
-    var log = models.getAuditLog(uid,function(code,rows) 
-                    {
-                        checkForSQLErr( req, res, code, rows );
-                        if( code == models.CODES.SUCCESS )
-                        {
-                            res.render( '../views/disputes/all.html',
-                                        {
-                                           layout: 'signedin.html',
-                                           pageTitle: 'Safe Harbor - Disputes',
-                                           bodyClass: 'disputes',
-                                           auditItems: rows
-                                        } );
-                        }
-                    });
-    
-    log.perform();
+    var dashR = require('./dash-routes.js');
+    dashR.renderDashForAccount( req, res, 1 );
 }
 
 function testboxpost(req,res)
@@ -69,16 +84,11 @@ function testboxpost(req,res)
                 } );
 }
 
-function dbg(volume)
-{
-    debug.setVolume(volume);
-}
-
 function flipDebug(req,res)
 {
     debug.setVolume( req.params.volume );
     debug.out('DEBUG IS SOMETHING');
-    htmlDump(res,'debug is something');
+    utils.page(res,'debug is ' + ( req.params.volume ? 'something' : 'meh'),'Debug is Something');
 }
 
 function dumpTables( req, res )
@@ -105,14 +115,10 @@ function dumpTables( req, res )
     
     var printer = new ModelPerformer( { performer: function() { this.table.findSingleRecord('SELECT NOW()'); },
                                         callback: function( c, err ) {
-        //console.log( this.name, c, err );                                        
-        errCheck( req, res, c, err );
-        
         if( c != CODES.OK )
             return;
         
-        html = '<!DOCTYPE html PUBLIC \'-//W3C//DTD HTML 4.01//EN\'><html><head><title>dumper</title></head>' +
-               '<body>'; 
+        html = ''; 
             
         for( var i = 0; i < data.length; i++ )
         {
@@ -140,13 +146,13 @@ function dumpTables( req, res )
             html += '</table></p>';
         }
         
-        html += '</body></html>';
-        res.write(html);
-        res.end();
+        utils.page(res,html,'db dump');
     }});
 
-    coreDumper.last().chain(printer);
-    coreDumper.perform();
+    coreDumper
+       .handleErrors( req, res )
+       .chain(printer)
+       .perform();
 }
 
 function recreateTables(req,res)
@@ -166,8 +172,6 @@ function recreateTables(req,res)
 function cleanTables(req,res)
 {
     dev.cleanTables(function(sql, err, a, b) {
-        //console.log( 'RESULT FOR: ', sql );
-        //console.log( 'Cleaning with : ', err, a ? a : '', b ? b : '' );
         if( err )
             errout(req,res,err); 
         });

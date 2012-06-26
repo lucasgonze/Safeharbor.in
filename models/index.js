@@ -208,7 +208,7 @@ var ModelPerformer = function ( params )
     }
     
     this.validargs = !this.invalidargs;
-        
+    
 }
 
 //utils.extend( ModelPerformer, Performer );
@@ -229,7 +229,7 @@ ModelPerformer.prototype._parseValues = function(onThis,paramNames)
         var name = paramNames[n];
         if( (typeof onThis[name] !== 'string' && 
             typeof onThis[name] !== 'number') ||
-             !onThis[name] )
+            typeof onThis[name] === 'undefined' )
         {
             this.invalidargs = name;
             return false;
@@ -264,11 +264,38 @@ ModelPerformer.prototype.postPerform = function( err )
         // exception that caused the problem in the 
         // first place.
         if( err instanceof NullQueryError )     
-            console.log( ['null query: ', err ] );
+            console.log( 'EXCEPTION in ModelPerformer', err  );
         else if( err instanceof InvalidSQLValues )
             this.callback( CODES.INVALID_ARGS, err );
         else
             Performer.prototype.postPerform.call( this, err );
+            
+        this.stopChain();        
+    }
+}
+
+ModelPerformer.prototype.handleErrors = function( req, res, extraCodes )
+{
+    var errlib = require('../lib/error.js');
+    var func = errlib.errout( [CODES.SQL_ERROR,CODES.INVALID_ARGS].concat(extraCodes || []) );
+    this.errorhandler = function( code, err ) { 
+                            debug.out('return check: ', code, err );
+                            return func( req, res, code, err ); 
+                            }
+    return this;
+}
+
+ModelPerformer.prototype.callback = function( c, result )
+{
+    var eh = this.findValue('errorhandler');
+    if( eh && !eh.apply( this, [c,result] ) )
+    {
+        debug.out('BAILING: Calling stopChain()!');
+        this.stopChain();
+    }
+    else
+    {
+        Performer.prototype.callback.apply( this, [c, result] );
     }
 }
 
@@ -338,7 +365,7 @@ var tablePrototype = {
         var query = this._getQ(sql,args,callback);        
 
         query.on( 'end', function(result) {
-            var len = result.rowCount; // this confirmed viable on Heroku
+            var len = result ? result.rowCount : 0; // this confirmed viable on Heroku
             if( len < 1 )
                 callback.apply( me.binder, [CODES.NO_RECORDS_DELETED, this] );
             else
@@ -371,7 +398,7 @@ var tablePrototype = {
             });
 
         query.on( 'end', function(result) {
-                var len = result.rowCount;
+                var len = result ? result.rowCount : 0;
                 if( len < 1 )
                     callback.apply( me.binder, [CODES.NO_RECORDS_INSERTED] );
                 else
@@ -404,7 +431,7 @@ var tablePrototype = {
             });
 
         query.on( 'end', function(result) {
-                var len = result.rowCount;
+                var len = result ? result.rowCount : 0;
                 if( len < 1 )
                     callback.apply( me.binder, [CODES.NO_RECORDS_UPDATED] );
                 else

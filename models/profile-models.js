@@ -7,18 +7,52 @@ var CODES = exports.CODES = models.CODES;
 
 CODES.HANDSHAKE_EXPIRED = 'hs_expired';
 CODES.HANDSHAKE_VALID   = 'hs_valid';
+CODES.FOUND_SITE_ID     = 'siteidok';
 
 /*****************************
  * Account management
  *****************************/
 
-exports.checkAcct = function(obj,callback){
+exports.acctIdFromEmailPassword = function(obj,callback) {
     var sql = "select acctid from acct where email = $1 and password = $2";
     
-    return new ModelPerformer( {parseObj: obj, names: ['email','password'], callback: callback, performer: function() {
-        this.table.findSingleRecord( sql );
-    }}); 
+    return new ModelPerformer( { parseObj: obj, 
+                                 names: ['email','password'], 
+                                 callback: callback, 
+                                 performer: function() {
+                                    this.table.findSingleValue( sql );
+                                }}); 
 }
+
+exports.acctFromEmailPassword = function(obj,callback) {
+    var sql = "select * from acct where email = $1 and password = $2";
+    
+    return new ModelPerformer( { parseObj: obj, 
+                                 names: ['email','password'], 
+                                 callback: callback, 
+                                 performer: function() {
+                                    this.table.findSingleRecord( sql );
+                                }}); 
+}
+
+exports.acctIdFromEmail = function(email,callback){
+    var sql = "select acctid from acct where email = $1";
+    return new ModelPerformer( { values: [email], 
+                                 callback: callback, 
+                                 performer: function() { 
+                                    this.table.findSingleRecord(sql); 
+                                 }});
+}
+
+exports.acctFromID = function(id,callback){
+    var sql = "select * from acct where acctid = $1";
+    return new ModelPerformer( { values: [id], 
+                                 callback: callback, 
+                                 performer: function() { 
+                                    this.table.findSingleRecord(sql); 
+                                  }});
+}
+
 
 exports.checkPassword = function(id,password,callback){
     var sql = "select acctid from acct where acctid = $1 and password = $2";
@@ -96,6 +130,23 @@ exports.resetPasswordForLoggedInUser = function( obj, callback ) {
                               });    
 }
 
+exports.updateAccount = function( obj, callback ) {
+    var sql = 'update acct set email = $2, autologin = $3 where acctid = $1';
+    var updateAcct = new ModelPerformer( { parseObj: obj, 
+                                 names: ['acct','email','autologin'], 
+                                 callback: callback, 
+                                 performer: function(){ this.table.updateSingleRecord(sql); }} );
+                                 
+    if( obj.newpassword )
+    {
+        var updatePass = exports.resetPasswordForLoggedInUser(obj,callback);
+        updateAcct.chain( updatePass );
+    }
+    
+    return updateAcct;           
+}
+
+
 exports.deleteAccount = function(userid,callback){
 	
 	function helper(sql) {
@@ -147,20 +198,38 @@ exports.updateSiteForUser = function( obj, callback ) {
                                  performer: function(){ this.table.updateSingleRecord(sql); }} );
 }
 
+/*
+    For now this performer is only useful in a chain, it eats the SUCCESS code which
+    makes it useless on it's own.
+*/
 exports.normalizeSiteId = function(idOrHash,callback){
     var sql = "select siteid from site where siteid = $1 OR md5(concat('',siteid)) = $2";
     return new ModelPerformer( 
         { 
-            values: [ parseInt(idOrHash) || 0, ''+idOrHash ],
+            values: [ idOrHash >>> 0, ''+idOrHash ],
             callback: function( code, siteid ) {
                 if( code == CODES.SUCCESS ) {
                     this.siteId = siteid;
-                } else {
+                    // callback.apply( CODES.FOUND_SITE_ID, [code,siteid] );
+                }
+                else {
                     callback.apply( this, [code,siteid] );
-                }                
+                }
             },
             performer: function() {
                 this.table.findSingleValue(sql);
             }
     });
+}
+
+exports.siteFromSiteIdOrHash = function(idOrHash,callback) {
+    var sql = "select * from site where siteid = $1 OR md5(concat('',siteid)) = $2";
+    return new ModelPerformer( 
+        { 
+            values: [ idOrHash >>> 0, ''+idOrHash ],
+            callback: callback,
+            performer: function() {
+                this.table.findSingleRecord(sql);
+            }
+        });
 }

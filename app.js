@@ -9,15 +9,19 @@ global_isUserLoggedIn = false;  // ONLY referenced directly by code in lib/login
 // modules
 //******************************
 
-var express = require('express');
-var routes = require('./routes');
-var models = require("./models");
+var express    = require('express');
+var routes     = require('./routes');
+var models     = require("./models");
 var loginstate = require("./lib/loginstate.js");
-var errlib = require('./lib/error.js');
+var errlib     = require('./lib/error.js');
+var debug      = require('./lib/debug.js');
+var sessionStore = require('./lib/sessionStore.js');
+
+debug.setVolume(1);
 
 var app = module.exports = express.createServer(
 	express.cookieParser(),
-	express.session({ secret: 'I loved KH.', userid: null })
+	express.session({ secret: 'I loved KH.', userid: null, store: new sessionStore })
 	);
 
 //******************************
@@ -25,7 +29,7 @@ var app = module.exports = express.createServer(
 //******************************
 
 // oh, I'm sure there's a prettier way to do this
-errlib.init( express.errorHandler({ dumpExceptions: true, showStack: true }) );
+errlib.init( express.errorHandler({ dumpExceptions: true, showStack: true, showMessage: true }) );
 
 app.configure(function() {
 
@@ -102,8 +106,8 @@ process.on('uncaughtException', function (err) {
     // unhork. 
     // TODO: notify admin when this happens...
   console.log(['******* Caught-uncaught exception: ', err] );
-//  console.log( err.stack );
-//  console.trace('call stack:');
+  console.log( err.stack );
+  console.trace('call stack:');
 });
 
 //******************************

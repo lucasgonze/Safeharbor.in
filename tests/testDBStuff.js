@@ -66,7 +66,7 @@ function t( name, sql )
 {
     function d( n, a, b )
     {
-        console.log( n, a ? a : "", b ? b : "" );
+        console.log( n, a ? a : "(null)", b ? b : "(null)" );
     }
     
     var q = c.query( sql );
@@ -83,6 +83,10 @@ t('insert2', 'insert into shtest (email,resetDate) VALUES (\'oo2@bar\', \'2012-0
 t('insert3', 'insert into shtest (email,resetDate) VALUES (\'foo3@bar\', \'2012-01-03\') returning id');
 t('insert4', 'insert into shtest (email,resetDate) VALUES (\'foo4@bar\', \'2012-01-04\') returning id');
 t('insert5 (fail)', 'insert into shtest (email,resetDate) VALUES (\'foo4@bar\', \'2012-01-04\') returning id');
+t('insert6', 'insert into shtest (id,email,resetDate) VALUES (1000,\'foo4@bar\', \'2012-01-04\') returning id');
+t('update1', 'update shtest set email=\'updated@bar.com\' where id = 1000');
+t('update2 (fail)', 'update shtest set email=\'updated@bar.com\' where id = 4000');
+t('update3 (SQLERR)', 'update shtest xemail=\'updated@bar.com\' where id = 4000');
 t('select1', 'select * from shtest');
 t('select2 (fail)', 'select * from shtest where email = \'nomatch\' ');
 t('select3', 'select * from shtest where email = \'foo1@bar\' ');

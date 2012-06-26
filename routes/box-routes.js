@@ -19,7 +19,6 @@ var errlib     = require('../lib/error.js');
 var Performer  = require('../lib/performer.js').Performer;
 
 var errout           = errlib.errout();
-var checkForSQLErr   = errlib.errout( [CODES.SQL_ERROR] );
 
 exports.install = function( app )
 {
@@ -30,7 +29,6 @@ exports.install = function( app )
 function getBox(req,res){
 	// look up metadata for the box number
 	var p = box.get( req.params.regid, function (code, site) {
-        checkForSQLErr( req, res, code, site );
         if( code == CODES.NO_RECORDS_FOUND )
         {
             errlib.render( res, 'That account does not exists!', 404 );
@@ -45,16 +43,12 @@ function getBox(req,res){
         }
     } );
 
-    p.perform();
+    p.handleErrors(req,res,[CODES.MULTIPLE_RECORDS_FOUND]).perform();
 };
 
 function notifyEmailer(req, res, contactInfo, mediaInfo ) {	
     return new Performer( 
             {   
-                req: req,
-                
-                res: res,
-            
                 // N.B. these params are flipped coming from sendgrid
                 callback: function(success,message) {
                     if( success ) {
@@ -152,12 +146,13 @@ function postBox(req,res){
     
     function verifyCB( code, err )
     {
-        checkForSQLErr( req, res, code, err );
         if( code == CODES.NO_RECORDS_FOUND )
         {
             errlib.render( res, 'Invalid account id', 404 );
         }
     }
+    
+    function nop() { }
     
     if( req.body.belief !== "on" || req.body.authorized !== "on") {
         errout( req, res, err( 400, 'invalid options to postBox') );
@@ -173,11 +168,12 @@ function postBox(req,res){
     var contactArgs = extractFields(req.body, contactArgNames,false);
     
     var verify   = box.get( regid, verifyCB );
-    var auditer  = dash.logTakeDownRequest( regid, contactArgs, mediaArgs, function( code, err ) { checkForSQLErr( req, res, code, err ) } );
-    var detail   = dash.getAuditDetail( function( code, err ) { checkForSQLErr( req, res, code, err ) } );    
+    var auditer  = dash.logTakeDownRequest( regid, contactArgs, mediaArgs, nop );
+    var detail   = dash.getAuditDetail( nop );    
     var notifier = notifyEmailer( req, res );
     
     verify              // verify site record is valid
+      .handleErrors( req, res )
       .chain( auditer ) // put the TR into our database
       .chain( detail )  // get the new record back with SELECT
       .chain( notifier) // send email

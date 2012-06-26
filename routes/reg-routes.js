@@ -4,6 +4,7 @@
  *****************************/
 
 var reg        = require("../models/reg-models.js");
+var profile    = require("../models/profile-models.js");
 var loginstate = require('../lib/loginstate.js');
 var errlib     = require('../lib/error.js');
 var utils      = require('../lib/utils.js');
@@ -13,7 +14,6 @@ var debug      = require('../lib/debug.js');
 var CODES          = reg.CODES;
 var exp            = errlib.err;
 var errout         = errlib.errout();
-var checkForSQLErr = errlib.errout( [ CODES.SQL_ERROR ] );
 
 exports.install = function( app )
 {
@@ -26,7 +26,6 @@ exports.install = function( app )
 function registerGet( req, res ) {
     var regid = req.params.regid;
     var checker = reg.checkForHandshake( regid, function(code,err) {
-        checkForSQLErr( req, res, code, err );
         if( code == CODES.SUCCESS )
         {
             res.render('reg/fromemail.html',
@@ -38,7 +37,7 @@ function registerGet( req, res ) {
         }
     });
     
-    checker.perform();
+    checker.handleError(req,res).perform();
 }
 
 function registerPost(req,res){
@@ -46,7 +45,6 @@ function registerPost(req,res){
     var regid = req.params.regid;
     
     var createAcct = reg.createAcct( regid, function( code, acctid ) { 
-            checkForSQLErr( req, res, code, acctid );
             if( code == CODES.INSERT_SINGLE )
             {
                 loginstate.enable(req,acctid);
@@ -55,7 +53,6 @@ function registerPost(req,res){
             }
         });
     var createSite = reg.createSite( req.body , function( code, siteid ) {
-            checkForSQLErr( req, res, code, siteid );
             if( code == CODES.INSERT_SINGLE )
                 res.render( "reg/done.html",
                                { layout:"global.html",
@@ -65,16 +62,15 @@ function registerPost(req,res){
                                  } );    
        });
     
-    createAcct.chain( createSite ).perform();
+    createAcct
+      .handleError(req,res)
+      .chain( createSite )
+      .perform();
 }
 
 function emailHandshake(req, res, host) {	
     return new Performer( 
             { 
-                req: req,
-                
-                res: res,
-            
                 // N.B. these params are flipped coming from sendgrid
                 callback: function(success,message) {
                     if( success ) {
@@ -111,8 +107,7 @@ function startEmailHandshake(req, res) {
         return;        
     }
     
-    var checkAcct = reg.checkForAccount( req.body.email, function(code, err) { 
-            checkForSQLErr( req, res, code, err );
+    var checkAcct = profile.acctIdFromEmail( req.body.email, function(code, err) { 
             if( code == CODES.RECORD_FOUND )
             {
                 res.render("profile/login.html",
@@ -127,13 +122,16 @@ function startEmailHandshake(req, res) {
         });
         
     var initEmail = reg.initEmailConfirmation( req.body, function( code, regid ) {
-            checkForSQLErr( req, res, code, regid );
             if( code == CODES.INSERT_SINGLE )
                 this.regid = regid;
         });
 
     var handshake = emailHandshake(req, res, req.headers.host);
     
-    checkAcct.chain( initEmail.chain(handshake) ).perform();
+    checkAcct
+        .handleError( req, res )
+        .chain( initEmail )
+        .chain( handshake )
+        .perform();
 };
 

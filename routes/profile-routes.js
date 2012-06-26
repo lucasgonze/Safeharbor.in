@@ -5,6 +5,7 @@
 
 var profile    = require("../models/profile-models.js");
 var loginstate = require('../lib/loginstate.js');
+var util       = require('util');
 var utils      = require('../lib/utils.js');
 var debug      = require("../lib/debug.js");
 var errlib     = require("../lib/error.js");
@@ -13,9 +14,6 @@ var Performer  = require('../lib/performer.js').Performer;
 var CODES          = profile.CODES;
 var exp            = errlib.err;
 var errout         = errlib.errout();
-var checkForSQLErr = errlib.errout( [ CODES.SQL_ERROR,  
-                                      CODES.INVALID_ARGS, 
-                                      CODES.HANDSHAKE_EXPIRED ] );
 
 /*--------------------------
     EXPORTED
@@ -43,6 +41,10 @@ exports.install = function( app )
 
 	app.get('/siteeditor', emitSiteEditor);
 	app.post('/siteeditor', saveSiteEdit);
+	
+	app.get('/accteditor', emitAcctEditor);
+	app.post('/accteditor', saveAcctEditor);
+	
 }
 
 
@@ -58,11 +60,10 @@ function clearLogin(req,res) {
 
 function saveLogin(req,res) {
 	
-    var model = profile.checkAcct( req.body, function(code,row) { 
-        checkForSQLErr( req, res, code, row );
+    var model = profile.acctFromEmailPassword( req.body, function(code,acct) { 
         if( code == CODES.SUCCESS )
         {
-            loginstate.enable(req,row.acctid);
+            loginstate.enable(req,acct);
             res.redirect("/dash");
         }
         else if( code == CODES.NO_RECORDS_FOUND )
@@ -71,16 +72,12 @@ function saveLogin(req,res) {
         }
     });
 
-    model.perform();
+    model.handleErrors( req, res ).perform();
 }
 
 function resetPasswordEmail(req, res, to) {	
     return new Performer( 
             { 
-                req: req,
-                
-                res: res,
-            
                 // N.B. these params are flipped coming from sendgrid
                 callback: function(success,message) {
                     if( success ) {
@@ -112,11 +109,13 @@ function lostPasswordStart(req,res){
     var email = req.body.email;
     var rpe = resetPasswordEmail( req, res, email );
 	var init = profile.initPasswordReset( email, function( c, resetSecret ) { 
-	        checkForSQLErr(req,res,c,resetSecret); 
 	        if( c == CODES.OK )
 	            this.resetSecret = resetSecret;
 	    } );
-	init.chain( rpe ).perform();
+	init
+	  .handleErrors(req,res)
+	  .chain( rpe )
+	  .perform();
 }
 
 // given that the user has passed a password recovery token in the URL, send
@@ -138,12 +137,14 @@ function lostPasswordPost(req,res){
                  resetsecret: req.params.resetSecret }; 
 
     function cb(code,err) {
-        checkForSQLErr( req, res, code, err );
         if( code == CODES.SUCCESS )
             res.render("success.html",{layout:"global.html",pageTitle:"Success"});    
     }
     
-    profile.saveNewPassword( args, cb ).perform();
+    profile
+      .saveNewPassword( args, cb )
+      .handleErrors( req, res )
+      .perform();
 }
 
 /* Different than lostPasswordPost in that it's used by a logged-in 
@@ -159,9 +160,7 @@ function savePasswordReset(req,res) {
     else {
         var args = utils.copy( { userid: loginstate.getID(req) }, req.body );
         
-        profile.resetPasswordForLoggedInUser( args, function(code,err) {   
-                console.log( 'RESET CB', code, err );
-                checkForSQLErr( req, res, code, err );
+        var resetPW = profile.resetPasswordForLoggedInUser( args, function(code,err) {   
                 if( code == CODES.SUCCESS )
                 {
                     res.render("profile/successNoEmail.html",{layout:"global.html",pageTitle:"Success"});	
@@ -170,7 +169,9 @@ function savePasswordReset(req,res) {
                 {
                     errlib.render(res, 'wups, wrong password on current account', 404 );
                 }
-            } ).perform();
+            } );
+            
+        resetPW.handleErrors( req, res ).perform();
     }
 }
 
@@ -183,10 +184,9 @@ function deleteAccount(req,res){
 	}
 
 	profile.deleteAccount(req.session.userid,function(code,err){
-	    checkForSQLErr(req,res,code,err);
 		loginstate.disable(req);
 		res.render("success.html",{layout:"global.html",pageTitle:"Success"});	
-	}).perform();
+	}).handleErrors(req,res).perform();
 }
 
 function emitSiteEditor(req,res){	
@@ -199,7 +199,6 @@ function emitSiteEditor(req,res){
 	var uid = loginstate.getID(req);
 
     function success(code, site) {
-	    checkForSQLErr(req,res,code,site);
         if( code == CODES.OK )
         {
             res.render("profile/siteeditor.html", utils.copy({
@@ -209,7 +208,10 @@ function emitSiteEditor(req,res){
         }
     }
     
-	profile.getSiteForUser( uid, success ).perform();
+	profile
+	    .getSiteForUser( uid, success )
+	    .handleErrors( req, res )
+	    .perform();
 }
 
 function saveSiteEdit(req,res) {
@@ -222,15 +224,65 @@ function saveSiteEdit(req,res) {
     }
 
     function callback( code, err ) {
-	    checkForSQLErr(req,res,code,err);    
         if( code == CODES.OK )
             res.render("./success.html",
                 {layout:"global.html", pageTitle:"Edit Site", bodyClass: "profile"});			
     }            
     var args = utils.copy( {acct: uid}, req.body );
 
-    var model = profile.updateSiteForUser( args, callback );    
-    model.error_output( req, res );
-    model.perform();
+    profile
+        .updateSiteForUser( args, callback )
+        .handleErrors( req, res )
+        .perform();
 }
 
+
+function emitAcctEditor(req,res){	
+
+    var uid = loginstate.getID(req);
+
+	if( ! uid ) { // loginstate.isLoggedIn() ){
+	    errout( req, res, exp( 400, "Only somebody signed in can edit acct info." ) );
+	    return;
+	}
+	
+    function showEditor( code, acct ) {
+	    if( code == CODES.OK )
+	    {
+            var vars = utils.copy({ layout: "global.html",
+                         pagetitle: "Edit Your Account",
+                         bodyClass: "siteeditor" }, acct);
+        
+            res.render("profile/accteditor.html", vars );
+        }
+    }	
+    
+	profile
+	  .acctFromID( uid, showEditor )
+	  .handleErrors( req, res )
+	  .perform();
+}
+
+function saveAcctEditor(req,res) {
+
+    var uid = loginstate.getID(req);
+    
+    if( !uid ) {
+	    errout( req, res, exp( 400, "Only somebody signed in can save acct info." ) );
+        return(false);
+    }
+    
+    var args = utils.copy( {acct: uid, autologin: '0'}, req.body )
+        setSessionUser = function(code,acct) { if( code==CODES.OK ) { loginstate.enable(req,acct); loginstate.logstate(req); } },
+        renderArgs = { layout:"global.html", pageTitle:"Edit Account", bodyClass: "profile" },
+        displaySuccess = function(code) { if( code==CODES.OK ) res.render('./success.html',renderArgs); }
+
+    args.autologin = args.autologin.replace(/on/,'1') >>> 0;
+
+    loginstate.logstate(req);
+    profile
+       .updateAccount( args, displaySuccess )
+       .handleErrors(  req, res )
+       .chain( profile.acctFromID( uid, setSessionUser )  )
+       .perform();
+}

@@ -8,20 +8,23 @@ var debug      = require("../lib/debug.js");
 var CODES          = dash.CODES;
 var exp            = errlib.err;
 var errout         = errlib.errout();
-var checkForSQLErr = errlib.errout( [ CODES.SQL_ERROR ] );
 
-function getDash( req, res )
+function getDash( req, res  )
 {
     var uid = loginstate.getID(req);
-    
+    loginstate.logstate(req);
     if( !uid ) {
 	    errout( req, res, exp( 400, "Only somebody signed in can see site info." ) );
         return(false);
     }
 
+    renderDashForAccount( req, res, uid );
+}
+
+var renderDashForAccount = exports.renderDashForAccount = function( req, res, uid )
+{
     var log = dash.getAuditLog(uid,function(code,rows) 
                     {
-                        checkForSQLErr( req, res, code, rows );
                         if( code == CODES.SUCCESS )
                         {
                             if( rows && rows.length )
@@ -41,14 +44,13 @@ function getDash( req, res )
                         }
                     });
     
-    log.perform();
+    log.handleErrors( req, res ).perform();
 }
 
 function getDetail( req, res )
 {
     var auditId = req.params.auditid;
     var detail = dash.getAuditDetail( auditId, function( code, detail ) {
-                checkForSQLErr( req, res, code, detail );
                 if( code == CODES.SUCCESS )
                 {
                     res.render( '../views/disputes/detail.html',
@@ -61,7 +63,7 @@ function getDetail( req, res )
                 }
     });
     
-    detail.perform();
+    detail.handleErrors(req,res).perform();
 }
 
 exports.install = function(app) 
@@ -69,10 +71,4 @@ exports.install = function(app)
     app.get( '/dash', getDash );
     app.get( '/disputes', getDash );
     app.get( '/detail/:auditid([0-9]+)$', getDetail );
-    /*
-	// Dealing with takedown requests for logged in customers
-	trivialRoute('/dash','home','dash','Todo');
-	trivialRoute('/dash/list','list','dash','List');
-	trivialRoute('/dash/stats','stats','dash','Stats');
-	*/    
 }
