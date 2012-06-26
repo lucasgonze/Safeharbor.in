@@ -273,13 +273,12 @@ function saveAcctEditor(req,res) {
     }
     
     var args = utils.copy( {acct: uid, autologin: '0'}, req.body )
-        setSessionUser = function(code,acct) { if( code==CODES.OK ) { loginstate.enable(req,acct); loginstate.logstate(req); } },
+        setSessionUser = function(code,acct) { if( code==CODES.OK ) loginstate.enable(req,acct); },
         renderArgs = { layout:"global.html", pageTitle:"Edit Account", bodyClass: "profile" },
-        displaySuccess = function(code) { if( code==CODES.OK ) res.render('./success.html',renderArgs); }
+        displaySuccess = function(code) { if( code==CODES.OK ) res.render('./success.html',renderArgs); };
 
     args.autologin = args.autologin.replace(/on/,'1') >>> 0;
 
-    loginstate.logstate(req);
     profile
        .updateAccount( args, displaySuccess )
        .handleErrors(  req, res )

@@ -168,7 +168,7 @@ exports.deleteAccount = function(userid,callback){
 }
 
 exports.getSiteForUser = function(ownerid,callback){
-    var sql = "select *, md5(concat('',siteid)) as idhash from site where acct = $1";
+    var sql = "select *, md5(''||siteid) as idhash from site where acct = $1";
     
     return new ModelPerformer( { values:[ownerid], 
                                  callback: callback, 
@@ -203,7 +203,7 @@ exports.updateSiteForUser = function( obj, callback ) {
     makes it useless on it's own.
 */
 exports.normalizeSiteId = function(idOrHash,callback){
-    var sql = "select siteid from site where siteid = $1 OR md5(concat('',siteid)) = $2";
+    var sql = "select siteid from site where siteid = $1 OR md5(''||siteid) = $2";
     return new ModelPerformer( 
         { 
             values: [ idOrHash >>> 0, ''+idOrHash ],
@@ -223,7 +223,7 @@ exports.normalizeSiteId = function(idOrHash,callback){
 }
 
 exports.siteFromSiteIdOrHash = function(idOrHash,callback) {
-    var sql = "select * from site where siteid = $1 OR md5(concat('',siteid)) = $2";
+    var sql = "select * from site where siteid = $1 OR md5(''||siteid) = $2";
     return new ModelPerformer( 
         { 
             values: [ idOrHash >>> 0, ''+idOrHash ],

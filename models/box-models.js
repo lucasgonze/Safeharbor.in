@@ -6,9 +6,9 @@ var ModelPerformer = models.ModelPerformer;
 var CODES = exports.CODES = models.CODES;
 
 exports.get = function(siteid,callback) {
-    var sql = "select *, md5(concat('',siteid)) as idhash " + 
+    var sql = "select *, md5(''||siteid) as idhash " + 
               "  from site, acct " + 
-              "  where acct = acctid AND (siteid = $1 OR md5(concat('',siteid)) = $2)";
+              "  where acct = acctid AND (siteid = $1 OR md5(''||siteid) = $2)";
               
     return new ModelPerformer( 
                 { 
