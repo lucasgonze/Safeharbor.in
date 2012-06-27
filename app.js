@@ -19,9 +19,18 @@ var sessionStore = require('./lib/sessionStore.js');
 
 //debug.setVolume(1);
 
+var ONE_MINUTE = 60000;
+
 var app = module.exports = express.createServer(
 	express.cookieParser(),
-	express.session({ secret: 'I loved KH.', userid: null, store: new sessionStore })
+	express.session( { secret: 'I loved KH.', 
+	                   userid: null, 
+	                   store: new sessionStore,
+                       cookie: {
+                              maxAge: (ONE_MINUTE * 60) * 24 * 30
+                           }
+	                  }
+	                )
 	);
 
 //******************************
