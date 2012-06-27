@@ -5,19 +5,20 @@ var loginstate = require('../lib/loginstate.js');
 var errlib     = require("../lib/error.js");
 var debug      = require("../lib/debug.js");
 
-var CODES          = dash.CODES;
-var exp            = errlib.err;
-var errout         = errlib.errout();
+var CODES      = dash.CODES;
+
+exports.install = function(app) 
+{
+    var logged_in = app.checkRole(app.ROLES.logged_in);
+    
+    app.get( '/dash', logged_in, getDash );
+    app.get( '/disputes', logged_in, getDash );
+    app.get( '/detail/:auditid([0-9]+)$', logged_in, getDetail );
+}
 
 function getDash( req, res  )
 {
-    var uid = loginstate.getID(req);
-    if( !uid ) {
-	    errout( req, res, exp( 400, "Only somebody signed in can see site info." ) );
-        return(false);
-    }
-
-    renderDashForAccount( req, res, uid );
+    renderDashForAccount( req, res, loginstate.getID(req) );
 }
 
 var renderDashForAccount = exports.renderDashForAccount = function( req, res, uid )
@@ -49,6 +50,8 @@ var renderDashForAccount = exports.renderDashForAccount = function( req, res, ui
 function getDetail( req, res )
 {
     var auditId = req.params.auditid;
+    
+    var verify = dash.verifyAuditDetailOwner( auditId, loginstate.getID(req), function(){} );
     var detail = dash.getAuditDetail( auditId, function( code, detail ) {
                 if( code == CODES.SUCCESS )
                 {
@@ -60,14 +63,12 @@ function getDetail( req, res )
                                    detail: detail[0]
                                 } );
                 }
-    });
+                else
+                {
+                        errlib.render( res, 'wups, trouble with this audit detail', 0, 0 );
+                }
+        });
     
-    detail.handleErrors(req,res).perform();
+    verify.chain(detail).handleErrors(req,res).perform();
 }
 
-exports.install = function(app) 
-{
-    app.get( '/dash', getDash );
-    app.get( '/disputes', getDash );
-    app.get( '/detail/:auditid([0-9]+)$', getDetail );
-}

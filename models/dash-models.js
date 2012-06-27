@@ -176,45 +176,53 @@ function getTakedownRequests( callback )
 /*
     here's what one record looks like:
     
-{ acctid: 1,
-    phone: '5107175153',
-    opname: 'takedownRequest',
-    agentaddress: '7 foo Ln., Bar Park, IL',
-    owners_full_name: 'fullNaming',
-    email: 'victor.stodne@gmail.com',
-    full_name: 'Victor Stone',
+{  
     acct: 1,
-    resetdate: null,
-    sitename: 'Ass Over Tea Kettle',
-    fax: '888393993',
-    creation: Thu, 21 Jun 2012 17:34:59 GMT,
-    postal: 'aefewfijw aweifjaew few ',
-    takedownRequests: 
-     [ { anchor: 'ch work is be',
-         description: 'work is being',
-         audit: 9,
-         media_url: 'http://somemedia.mp3',
-         page: 'http://localhost.com/box/24738',
-         mediaid: 2 },
-       { anchor: 'page2',
-         description: 'desc2',
-         audit: 9,
-         media_url: 'http://someothermedia.mp3',
-         page: 'http://localhost.net/box/24738',
-         mediaid: 3 },
-       [length]: 2 ],
-    siteid: 40,
-    password: 'qqqq',
-    attachment: '',
-    resetsecret: null,
-    contact: 12,
-    formatted_date: 'June 21, 2012',
-    domain: 'assoverteakettle.org',
-    auditid: 9,
-    contactid: 12,
-    site: 40,
+    acctid: 1,
+    agentaddress: '7 foo Ln., Bar Park, IL',
     agentemail: 'assoverteakettle.org@gmail.com',
-    job_title: 'copy thug' },
+    attachment: '',
+    auditid: 9,
+    contact: 12,
+    contactid: 12,
+    creation: Thu, 21 Jun 2012 17:34:59 GMT,
+    domain: 'assoverteakettle.org',
+    email: 'victor.stodne@gmail.com',
+    fax: '888393993',
+    formatted_date: 'June 21, 2012',
+    full_name: 'Victor Stone',
+    job_title: 'copy thug' 
+    opname: 'takedownRequest',
+    owners_full_name: 'fullNaming',
+    password: 'qqqq',
+    phone: '5107175153',
+    postal: 'aefewfijw aweifjaew few ',
+    resetdate: null,
+    resetsecret: null,
+    site: 40,
+    siteid: 40,
+    sitename: 'Ass Over Tea Kettle',
+
+    takedownRequests: 
+     [ { 
+         anchor: 'ch work is be',
+         audit: 9,
+         description: 'work is being',
+         media_url: 'http://somemedia.mp3',
+         mediaid: 2,
+         page: 'http://localhost.com/box/24738',
+        }, 
+       { 
+         anchor: 'page2',
+         audit: 9,
+         description: 'desc2',
+         media_url: 'http://someothermedia.mp3',
+         mediaid: 3,
+         page: 'http://localhost.net/box/24738'
+        }
+      ],
+    
+    },
 */
 exports.getAuditLog = function( uid, callback )
 {
@@ -244,6 +252,27 @@ exports.getAuditLog = function( uid, callback )
     
     return AllRows.chain( subSqlPerformer );
 
+}
+
+exports.verifyAuditDetailOwner = function( auditId, owner, callback )
+{
+    var sql = 'SELECT acct FROM site, audit ' +
+               'WHERE site = siteid ' +
+               'AND   acct = $1 ' +
+               'AND   auditid = $2 ';
+               
+    return new ModelPerformer( {
+                           values: [ owner, auditId ],
+                           callback: function( code, result ) {
+                                // eat OK so performers later in the
+                                // chain won't think we're done with
+                                // the whole chain
+                                if( code != CODES.SUCCESS ) 
+                                    callback(code,result)   
+                                },
+                            performer: function() {
+                                this.table.findSingleRecord( sql );
+                            } } );
 }
 
 exports.getAuditDetail = function( auditId, callback )

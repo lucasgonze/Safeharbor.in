@@ -21,29 +21,32 @@ var errout         = errlib.errout();
 
 exports.install = function( app )
 {
-	app.trivialRoute('/login','login','profile','Log In');
-	app.post('/login', saveLogin);
+    var not_logged_in = app.checkRole(app.ROLES.not_logged_in),
+        logged_in = app.checkRole(app.ROLES.logged_in);
+    
+	app.trivialRoute('/login','login','profile','Log In',not_logged_in);
+	app.post('/login', not_logged_in, saveLogin);
 	
-	app.trivialRoute('/lostpassword','lostpassword','profile','Lost Password');
-	app.post('/lostpassword', lostPasswordStart);
+	app.trivialRoute('/lostpassword','lostpassword','profile','Lost Password',not_logged_in);
+	app.post('/lostpassword', not_logged_in, lostPasswordStart);
 	
-	app.get('/lostpassword/:resetSecret([0-9a-z]{10})$', lostPasswordGet);
-	app.post('/lostpassword/:resetSecret([0-9a-z]{10})$', lostPasswordPost);
+	app.get('/lostpassword/:resetSecret([0-9a-z]{10})$', not_logged_in, lostPasswordGet );
+	app.post('/lostpassword/:resetSecret([0-9a-z]{10})$', not_logged_in, lostPasswordPost);
 	
-	app.trivialRoute('/logout','logout','profile','Log Out');
-	app.post('/logout', clearLogin);
+	app.trivialRoute('/logout','logout','profile','Log Out',logged_in);
+	app.post('/logout', logged_in, clearLogin);
 	
-	app.trivialRoute('/passwordreset','passwordreset','profile','Reset Password');
-	app.post('/passwordreset', savePasswordReset);
+	app.trivialRoute('/passwordreset','passwordreset','profile','Reset Password',logged_in);
+	app.post('/passwordreset', logged_in, savePasswordReset);
 	
-	app.trivialRoute('/accountdeleter','delete','profile','Delete Account');
-	app.post('/accountdeleter', deleteAccount);
+	app.trivialRoute('/accountdeleter','delete','profile','Delete Account',logged_in);
+	app.post('/accountdeleter', logged_in, deleteAccount);
 
-	app.get('/siteeditor', emitSiteEditor);
-	app.post('/siteeditor', saveSiteEdit);
+	app.get('/siteeditor', emitSiteEditor,logged_in);
+	app.post('/siteeditor', logged_in, saveSiteEdit);
 	
-	app.get('/accteditor', emitAcctEditor);
-	app.post('/accteditor', saveAcctEditor);
+	app.get('/accteditor', emitAcctEditor,logged_in);
+	app.post('/accteditor', logged_in, saveAcctEditor);
 	
 }
 
@@ -151,10 +154,7 @@ function lostPasswordPost(req,res){
    user rather than one who has lost their password. */
 function savePasswordReset(req,res) {
 
-	if( !loginstate.isLoggedIn() ) {
-	        errout( req, res, exp( 400, "Only somebody signed in can reset their password." ) );
-        }
-	else if( req.body.newpassword !== req.body.confirm ) {
+	if( req.body.newpassword !== req.body.confirm ) {
     	    errout( req, res, exp( 400, "Mismatch password." ) );
 	    }
     else {
@@ -178,11 +178,6 @@ function savePasswordReset(req,res) {
 
 function deleteAccount(req,res){
 
-	if( ! loginstate.isLoggedIn() ){
-    	    errout( req, res, exp( 400, "not signed in!." ) );
-    	    return;
-	}
-
 	profile.deleteAccount(req.session.userid,function(code,err){
 		loginstate.disable(req);
 		res.render("success.html",{layout:"global.html",pageTitle:"Success"});	
@@ -190,11 +185,6 @@ function deleteAccount(req,res){
 }
 
 function emitSiteEditor(req,res){	
-	
-	if( ! loginstate.isLoggedIn() ){
-	    errout( req, res, exp( 400, "Only somebody signed in can edit site info." ) );
-	    return;
-	}
 	
 	var uid = loginstate.getID(req);
 
@@ -218,11 +208,6 @@ function saveSiteEdit(req,res) {
 
     var uid = loginstate.getID(req);
     
-    if( !uid ) {
-	    errout( req, res, exp( 400, "Only somebody signed in can save site info." ) );
-        return(false);
-    }
-
     function callback( code, err ) {
         if( code == CODES.OK )
             res.render("./success.html",
@@ -241,11 +226,6 @@ function emitAcctEditor(req,res){
 
     var uid = loginstate.getID(req);
 
-	if( ! uid ) { // loginstate.isLoggedIn() ){
-	    errout( req, res, exp( 400, "Only somebody signed in can edit acct info." ) );
-	    return;
-	}
-	
     function showEditor( code, acct ) {
 	    if( code == CODES.OK )
 	    {
@@ -266,11 +246,6 @@ function emitAcctEditor(req,res){
 function saveAcctEditor(req,res) {
 
     var uid = loginstate.getID(req);
-    
-    if( !uid ) {
-	    errout( req, res, exp( 400, "Only somebody signed in can save acct info." ) );
-        return(false);
-    }
     
     var args = utils.copy( {acct: uid, autologin: '0'}, req.body )
         setSessionUser = function(code,acct) { if( code==CODES.OK ) loginstate.enable(req,acct); },

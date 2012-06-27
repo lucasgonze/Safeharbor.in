@@ -17,10 +17,12 @@ var errout         = errlib.errout();
 
 exports.install = function( app )
 {
-	app.trivialRoute('/reg','acct','reg','Try It'); 
-	app.post('/reg', startEmailHandshake );	
-	app.get('^/reg/:regid([0-9]+)$', registerGet );
-	app.post('^/reg/:regid([0-9]+)$', registerPost);
+    var not_logged_in = app.checkRole(app.ROLES.not_logged_in);
+    
+	app.trivialRoute('/reg','acct','reg','Try It',not_logged_in); 
+	app.post('/reg', not_logged_in, startEmailHandshake );	
+	app.get('^/reg/:regid([0-9]+)$', not_logged_in, registerGet );
+	app.post('^/reg/:regid([0-9]+)$', not_logged_in, registerPost);
 }
 
 function registerGet( req, res ) {

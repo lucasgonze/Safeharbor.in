@@ -10,8 +10,6 @@ var dash   = require('../models/dash-models.js');
 
 var CODES = box.CODES;
 
-var helpers = require('./router-helpers.js');
-
 var util       = require('util');
 var debug      = require('../lib/debug.js');
 var utils      = require('../lib/utils.js');

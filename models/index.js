@@ -102,9 +102,8 @@ util.inherits( InvalidConnect, Error );
                                 }
                             );
 
-    See the 'table' object below for particulars.
+    See the 'table' object below for particulars of the table API.
     
-
     SQL PARAMETERS
     ----------------
     If you have parameterized SQL you have 3 ways to deal with those.
@@ -171,10 +170,52 @@ util.inherits( InvalidConnect, Error );
       to do BEFORE you use a specific table API method is to look at
       what CODES it emits.
       
-      The 'param' value will depend on what the code is. It may be an 
-      javascript Error object if the code is SQL_ERROR or it be a single
-      database record or value or an array of those.
-
+      The 'param' value will depend on what the code is. 
+      
+      ERROR HANDLING
+      ----------------
+      
+      It is very easy to get into a race condition when the errors start
+      cascading. The trick is to catch the first fatal error and stop
+      the chain, report the error as quickly as possible before other,
+      later errors obscure the root cause error.
+      
+      The best way to handle this is to call handlerErrors() method between
+      instantiation and calls to Perform():
+      
+         var performer = new ModelPerformer( ... );
+         
+         performer.handlerErrors( req, res );
+         
+         performer.Perform();
+         
+      This will setup a default error handler for fatal errors that happen at
+      the SQL level. Once a fatal error is hit: no more callbacks will be called,
+      the chain will be stopped and an exception will be displayed in the browser
+      killing the current request. 
+      
+      There are two errors that are currently being checked for: errors that 
+      come back the database and coding errors (missing parameters, etc.) from
+      this instance of ModelPeformer. 
+      
+      If you want addition errors to be checked for and treated as fatal errors
+      add them as a third parameter:
+      
+         performer.handlerErrors( req, res );
+        
+      Be warned: there is no soft error here, this will be treated like a fatal
+      system crash-worthy event.
+      
+      If you want to land softer (like an unsucceful search) then handle that
+      in your callback.
+      
+            new Performer( { callback: function( code, result ) {
+                                if( code == CODES.NO_RECORDS_FOUND )
+                                   ....
+                                else if( code == CODES.SUCCESS )
+                                    ....                        
+                            }
+      
 */
 var ModelPerformer = function ( params ) 
 {

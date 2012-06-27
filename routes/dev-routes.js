@@ -5,8 +5,6 @@ var models         = require('../models/index.js');
 var ModelPerformer = models.ModelPerformer;
 
 var CODES     = dev.CODES;
-var ROLES     = routes.ROLES;
-var checkRole = routes.checkRole;
 
 var util     = require('util');
 var utils    = require('../lib/utils.js');
@@ -32,13 +30,15 @@ var menu = [
 
 exports.install = function( app )
 {
-    app.get('/dev', devMenu );	
+    var check = app.checkRole(app.ROLES.developer);
+    
+    app.get('/dev', check, devMenu );	
 
     for( var i = 0; i < menu.length; i++ )    
     {
         var M = menu[i];
         if( M[1] )
-            app.get( M[1], /* checkRole(ROLES.developer), */ M[2] );
+            app.get( M[1], check, M[2] );
     }
 }
 

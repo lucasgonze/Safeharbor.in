@@ -1,11 +1,11 @@
 
-var util  = require('util');
-var login = require('../lib/loginstate.js');
 var ROLES = require('../lib/roles.js').ROLES;
 
     
 var checkRole = exports.checkRole = function(acceptableRole)
 {
+    var login = require('../lib/loginstate.js');
+    
     return function (req, res, next) 
     {
         var ok = false;
@@ -51,51 +51,22 @@ var checkRole = exports.checkRole = function(acceptableRole)
 
 exports.setup = function(app){
             
-    function cbn( req, res, next, id ) 
-    {
-        function cb0( code, user ) 
-        {
-            if( code == profile.CODES.SUCCESS ) {
-                req.session.seekingAccountId = user.acctid;
-                next();
-            }
-            else {
-                next( new Error('invalid id' ) );
-            }
-        }
-        
-        var profile = require('../models/profile-model.js');
-        var idLookup = profile.acctFromId( id, cb0 );
-        idLookup.perform();
-    }
+    app.checkRole = checkRole;
+    app.ROLES = ROLES;
     
-    app.param( 'userid', cbn);
-
-    function cb2( req, res, next, id ) 
-    {
-        function cb1( code, err ) 
-        {
-            if( code == profile.CODES.SUCCESS ) 
-            {
-                req.session.seekingAccountId = user.acct;
-                next( new Error('invalid site id') )
-            }    
-        }
-        
-        var profile = require('../models/profile-model.js');
-        var forreal = profile.siteFromSiteIdOrHash( id, cb1 );
-        forreal.perform()
-    }
-    
-    app.param( 'siteid', cb2 );
-
-	app.trivialRoute = function(name,partial,pathOffsetFromViews,pageTitle){
-		app.get(name,function(req, res) {
+	app.trivialRoute = function(name,partial,pathOffsetFromViews,pageTitle,check){
+	    function handler(req, res) {
 		    res.render(
 				pathOffsetFromViews+'/'+partial+'.html',			
-				{ layout:'global.html', pageTitle:pageTitle, bodyClass: pathOffsetFromViews }
+	  			 { layout:'global.html', 
+	  			    pageTitle:pageTitle, 
+	  			    bodyClass: pathOffsetFromViews }
 			);
-		});
+		}
+		if( check )
+		    app.get(name,check,handler);
+		else
+    		app.get(name,handler);
 	}
 
 	app.trivialRoute('/','home','firstrun');
