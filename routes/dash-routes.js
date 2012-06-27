@@ -12,7 +12,6 @@ var errout         = errlib.errout();
 function getDash( req, res  )
 {
     var uid = loginstate.getID(req);
-    loginstate.logstate(req);
     if( !uid ) {
 	    errout( req, res, exp( 400, "Only somebody signed in can see site info." ) );
         return(false);

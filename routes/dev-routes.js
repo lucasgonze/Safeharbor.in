@@ -63,7 +63,6 @@ function docs( req, res )
 }
 
 function nop(req, res) {
-    console.log('req.session: ', req.session);
     require('../lib/loginstate.js').logstate(req);
     utils.page( res, '<pre>'+util.inspect(req.session)+'</pre>', 'Session');
 }

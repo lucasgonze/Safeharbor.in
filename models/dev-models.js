@@ -4,10 +4,11 @@ var ModelPerformer = model.ModelPerformer;
 exports.CODES = model.CODES;
 
 exports.recreateTables = function(callback){
-    console.log('RECREATE TABLES---------------');
 	var client = model.getClient();
 	debug.save();
 	debug.setVolume(1);
+    debug.out('RECREATE TABLES---------------');
+    
 
 	function q( sql )
 	{
