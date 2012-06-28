@@ -39,7 +39,7 @@ function registerGet( req, res ) {
         }
     });
     
-    checker.handleError(req,res).perform();
+    checker.handleErrors(req,res).perform();
 }
 
 function registerPost(req,res){
@@ -49,7 +49,6 @@ function registerPost(req,res){
     var createAcct = reg.createAcct( regid, function( code, acctid ) { 
             if( code == CODES.INSERT_SINGLE )
             {
-                loginstate.enable(req,acctid);
                 // setup for chaining this to next step
                 this.acctid = acctid;
             }
@@ -63,9 +62,16 @@ function registerPost(req,res){
                                  siteid:siteid
                                  } );    
        });
+    var logEmIn = profile.acctFromID( null, function( code, acct ) {
+            if( code == CODES.SUCCESS )
+            {
+                loginstate.enable(req,acct);
+            }
+        });
     
     createAcct
-      .handleError(req,res)
+      .handleErrors(req,res)
+      .chain( logEmIn )
       .chain( createSite )
       .perform();
 }
@@ -131,7 +137,7 @@ function startEmailHandshake(req, res) {
     var handshake = emailHandshake(req, res, req.headers.host);
     
     checkAcct
-        .handleError( req, res )
+        .handleErrors( req, res )
         .chain( initEmail )
         .chain( handshake )
         .perform();

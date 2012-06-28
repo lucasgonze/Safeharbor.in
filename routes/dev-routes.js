@@ -1,21 +1,24 @@
 
-var dev            = require('../models/dev-models.js');
-var routes         = require('../routes/index.js');
-var models         = require('../models/index.js');
+var safeharbor     = require('../lib/safeharbor.js');
+var utils          = safeharbor.utils;
+var debug          = safeharbor.debug;
+var errlib         = safeharbor.errors;
+var routes         = safeharbor.routes;
+var models         = safeharbor.models;
 var ModelPerformer = models.ModelPerformer;
 
+var dev       = require('../models/dev-models.js');
 var CODES     = dev.CODES;
 
 var util     = require('util');
-var utils    = require('../lib/utils.js');
-var debug    = require('../lib/debug.js');
 var htmlDump = debug.render;
-var errlib   = require('../lib/error.js');
 var exp      = errlib.err;
 var errout   = errlib.errout();
 
 var menu = [
 
+	[ 'UPDATE: perform system upgrade', '/update', update ],
+	[ 'test page context', '/dev/page', page],
 	[ 'test logged in state', '/dev/nop', nop],
 	[ 'dump of tables', '/dev/underbelly', dumpTables ],
 	[ 'turn on console debugging', '/dev/debugout/:volume([0-9])', flipDebug, '/dev/debugout/1' ],
@@ -23,8 +26,7 @@ var menu = [
 	[ 'hard-wired /box form', '/dev/testboxpost', testboxpost ],
 	[ 'test dashboard for account (1)', '/dev/testdash', testdash ],
     [ 'some fun docs', '/dev/docs', docs ],
-	[ 'rebuild tables (<b>DESTRUCTIVE</b> - NO UNDO)', '/dev/scaffolding', recreateTables ],
-	[ 'clean and factory install tables (<b>DESTRUCTIVE</b> - NO UNDO)', '/dev/overthecounter', cleanTables ]
+	[ 'rebuild tables/factory install (<b style="color:red">DESTRUCTIVE</b> - NO UNDO)', '/dev/scaffolding', recreateTables ]
 ];
 
 
@@ -40,6 +42,49 @@ exports.install = function( app )
         if( M[1] )
             app.get( M[1], check, M[2] );
     }
+}
+
+//
+//  00        <-- major VERSION
+//    .00     <-- minor VERSION, still upgrade worthy
+//       .00  <-- minor revision, does not deserve upgrade event
+//
+var VERSION = exports.APP_VERSION = '00.01.00';
+
+function update(req,res)
+{
+    var  fs = require('fs'),
+         fname = process.cwd() + '/version.info';
+        
+    var versionOnDisk;
+    
+    try {
+        var text = fs.readFileSync( fname, 'utf8' );
+        versionOnDisk = JSON.parse(text);
+    }
+    catch(e) {
+        versionOnDisk = { version: '00.00.00' }
+    }
+    
+    var app_version  = VERSION.split('.'),
+        disk_version = versionOnDisk.version.split('.');
+        
+    var out = '';
+    
+    if( (app_version[0] != disk_version[0]) || 
+        (app_version[1] != disk_version[1]) )
+    {
+        process.emit( safeharbor.UPDATE_EVENT_NAME, app_version );
+        versionOnDisk.version = VERSION;
+        fs.writeFileSync( fname, JSON.stringify(versionOnDisk), 'utf8' );
+        out = 'Update performed (!) now at: ' + VERSION;    
+    }
+    else
+    {
+        out = 'System was already up to date';
+    }
+    
+    utils.page( res, '<h3>'+out+'</h3>', 'Upgrade result' );
 }
 
 function devMenu(req,res)
@@ -71,6 +116,16 @@ function testdash( req, res )
 {
     var dashR = require('./dash-routes.js');
     dashR.renderDashForAccount( req, res, 1 );
+}
+
+function page(req,res) 
+{
+    var msg = require('../lib/page.js').MESSAGE_LEVELS;
+    res.outputMessage( msg.info, "Hey just fyi" ).
+        outputMessage( msg.warning, "No, really, be careful out there" ).
+        outputMessage( msg.error, "That's what I'm talking about" );
+        
+    res.render( 'dev/pageargs.html', { layout: 'global.html' } );
 }
 
 function testboxpost(req,res)
@@ -161,7 +216,8 @@ function recreateTables(req,res)
             if( err )
                 throw err;
             });
-        htmlDump(res,'Booyah(?)');
+        // htmlDump(res,'Booyah(?)');
+        cleanTables( req, res );
         }
     catch( err ) {
         errout(req,res,err); 

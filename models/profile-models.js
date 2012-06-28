@@ -46,10 +46,10 @@ exports.acctIdFromEmail = function(email,callback){
 
 exports.acctFromID = function(id,callback){
     var sql = "select * from acct where acctid = $1";
-    return new ModelPerformer( { values: [id], 
-                                 callback: callback, 
+    return new ModelPerformer( { callback: callback, 
                                  performer: function() { 
-                                    this.table.findSingleRecord(sql); 
+                                    var args = [ id || this.findValue('acctid') ];
+                                    this.table.findSingleRecord(sql,args); 
                                   }});
 }
 

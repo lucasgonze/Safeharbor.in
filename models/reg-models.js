@@ -59,7 +59,6 @@ exports.createAcct = function(regid,callback){
 }
 
 exports.createSite = function(obj,callback){
-    debug.setVolume(1);   
     var sql = "insert into site (acct,sitename,domain,agentaddress,agentemail) values($1,$2,$3,$4,$5) returning md5(''||siteid) as regid";
     var args = ['acctid', 'sitename','domain','agentaddress','agentemail'];
     return new ModelPerformer( 

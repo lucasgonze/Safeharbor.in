@@ -1,7 +1,14 @@
-var model = require('./index.js');
+var safeharbor = require('../lib/safeharbor.js');
+
+var model = safeharbor.models;
+
 var debug = require('../lib/debug.js');
 var ModelPerformer = model.ModelPerformer;
 exports.CODES = model.CODES;
+
+process.on( safeharbor.UPDATE_EVENT_NAME, function(major,minor,revision) {
+    console.log( major, minor, revision );
+});
 
 exports.recreateTables = function(callback){
 	var client = model.getClient();
@@ -17,7 +24,7 @@ exports.recreateTables = function(callback){
 	}
 	
 	q('drop table if exists acct');
-	q('create table acct (  acctid serial, ' +
+	q('create table acct (  acctid serial unique, ' +
 	                      ' email text not null unique, ' +
 	                      ' password text not null, ' +
 	                      ' resetSecret text, ' +
@@ -28,7 +35,7 @@ exports.recreateTables = function(callback){
 
 	q('drop table if exists site');
 	q('create table site (  acct integer not null, ' +
-	                      ' siteid serial, ' +
+	                      ' siteid serial unique, ' +
 	                      ' sitename text not null, ' +
 	                      ' domain text not null unique, ' +
 	                      ' agentaddress text not null, ' +
@@ -36,7 +43,7 @@ exports.recreateTables = function(callback){
 	                      ') with oids');
 
     q('drop table if exists contact');
-    q("create table contact ( contactid serial, " +
+    q("create table contact ( contactid serial unique, " +
                             " owners_full_name text not null, " +
                             " full_name text not null, " +
                             " job_title text not null, " +
@@ -47,7 +54,7 @@ exports.recreateTables = function(callback){
                             ")");
 
     q('drop table if exists audit');
-    q("create table audit (  auditid serial, " +
+    q("create table audit (  auditid serial unique, " +
                            " site integer not null, " +
                            " contact integer not null default 0, " + 
                            " opname text not null, " +
@@ -56,7 +63,7 @@ exports.recreateTables = function(callback){
                            ")");
 
     q('drop table if exists media');
-    q("create table media (  mediaid serial, " +
+    q("create table media (  mediaid serial unique, " +
                            " audit integer not null, " +
                            " page text not null, " +
                            " media_url text not null, " +
@@ -93,10 +100,10 @@ exports.cleanTables = function(callback) {
     q('delete from contact');
     q('delete from media');
 
-    q("insert into acct (acctid,role,email,password) values (1,'1','victor@safeharbor.in',  'qqqq')");
-    q("insert into acct (acctid,role,email,password) values (2,'1','lucas@safeharbor.in',   'qqqq')");
-    q("insert into acct (acctid,role,email,password) values (3,'1','jim@safeharbor.in',     'qqqq')");
-    q("insert into acct (acctid,role,email,password) values (4,'3','nicole@safeharbor.in',  'qqqq')");
+    q("insert into acct (role,email,password) values ('1','victor@safeharbor.in',  'qqqq')");
+    q("insert into acct (role,email,password) values ('1','lucas@safeharbor.in',   'qqqq')");
+    q("insert into acct (role,email,password) values ('1','jim@safeharbor.in',     'qqqq')");
+    q("insert into acct (role,email,password) values ('3','nicole@safeharbor.in',  'qqqq')");
 
     q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail) values " +
            "(40,1,'Safe Harbor.in','1.safeharbor.in','7 foo Ln., Bar Park, IL'," +
@@ -110,8 +117,6 @@ exports.cleanTables = function(callback) {
     q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail) values " +
            "(43,4,'Safe Harbor.in','4.safeharbor.in','7 foo Ln., Bar Park, IL'," +
              "'admin@safeharbor.in')");
-
-
 }
 
 exports.dumpAll = function(cb)
