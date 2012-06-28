@@ -60,12 +60,8 @@ function getDetail( req, res )
                                    layout: 'signedin.html',
                                    pageTitle: 'Safe Harbor - Disputes',
                                    bodyClass: 'disputes',
-                                   detail: detail[0]
+                                   detail: detail[0] || detail
                                 } );
-                }
-                else
-                {
-                        errlib.render( res, 'wups, trouble with this audit detail', 0, 0 );
                 }
         });
     

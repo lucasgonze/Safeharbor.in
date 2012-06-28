@@ -1,11 +1,10 @@
 
+var login = require('../lib/loginstate.js');    
 var ROLES = require('../lib/roles.js').ROLES;
 
     
 var checkRole = exports.checkRole = function(acceptableRole)
 {
-    var login = require('../lib/loginstate.js');
-    
     return function (req, res, next) 
     {
         var ok = false;
@@ -49,27 +48,39 @@ var checkRole = exports.checkRole = function(acceptableRole)
     }
 }
 
-exports.setup = function(app){
-            
-    app.checkRole = checkRole;
-    app.ROLES = ROLES;
-    
-	app.trivialRoute = function(name,partial,pathOffsetFromViews,pageTitle,check){
-	    function handler(req, res) {
-		    res.render(
-				pathOffsetFromViews+'/'+partial+'.html',			
-	  			 { layout:'global.html', 
-	  			    pageTitle:pageTitle, 
-	  			    bodyClass: pathOffsetFromViews }
-			);
-		}
-		if( check )
-		    app.get(name,check,handler);
-		else
-    		app.get(name,handler);
-	}
+function trivialRoute(app) {
 
-	app.trivialRoute('/','home','firstrun');
+    return function(name,partial,pathOffsetFromViews,pageTitle,check) {
+        function handler(req, res) {
+            res.render(
+                pathOffsetFromViews+'/'+partial+'.html',			
+                 { layout:'global.html', 
+                    pageTitle:pageTitle, 
+                    bodyClass: pathOffsetFromViews }
+            );
+        }
+        if( check )
+            app.get(name,check,handler);
+        else
+            app.get(name,handler);
+    }
+}
+
+function home( req, res )
+{
+    if( login.isLoggedIn() )
+        res.redirect('/dash');
+    else
+        res.render( 'firstrun/home.html', { layout:'global.html',bodyClass:'firstrun' } );
+}
+
+exports.setup = function(app) {
+            
+    app.checkRole    = checkRole;
+    app.ROLES        = ROLES;
+	app.trivialRoute = trivialRoute(app);
+
+    app.get('/',home);
 
     require('./profile-routes.js').install(app);
     require('./reg-routes.js').install(app);
@@ -78,5 +89,4 @@ exports.setup = function(app){
 
     require('./admin-routes.js').install(app);
     require('./dev-routes.js').install(app);
-
 }
