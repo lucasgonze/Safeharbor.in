@@ -33,9 +33,9 @@
 		    <a class="btn" href="#"><i class="icon-user"></i></a>
 		    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-chevron-down"></span></a>
 		    <ul class="dropdown-menu">
-		        <li><a href="/passwordreset"><i class="icon-key"></i> Change Password</a></li>
-		        <li><a href="/accountdeleter"><i class="icon-trash"></i> Delete Account</a></li>
-		        <li><a href="/logout"><i class="icon-signout"></i> Sign Out</a></li>
+		       {{#each menu.user.items}}
+		        <li><a href="{{url}}" title="{{help}}"><i class="icon-key"></i>{{link}}</a></li>
+		       {{/each}}
 		    </ul>
 		</div>						
 		<div class="navbar-inner">

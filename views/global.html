@@ -36,11 +36,19 @@
 			    <a class="btn" href="#"><i class="icon-user"></i></a>
 			    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-chevron-down"></span></a>
 			    <ul class="dropdown-menu">
+		       {{#each menu.user.items}}
+		        <li><a href="{{url}}" title="{{help}}"><i class="icon-key"></i>{{link}}</a></li>
+		       {{/each}}
+		       {{#each menu.site.items}}
+		        <li><a href="{{url}}" title="{{help}}"><i class="icon-key"></i>{{link}}</a></li>
+		       {{/each}}
+<!--			    
 			        <li><a href="/passwordreset"><i class="icon-key"></i> Change Password</a></li>
 			        <li><a href="/dash"><i class="icon-inbox"></i> Inbox</a></li>
 			        <li><a href="/accountdeleter"><i class="icon-trash"></i> Delete Account</a></li>
 			        <li><a href="/siteeditor"><i class="icon-cog"></i> Site Settings</a></li>
 			        <li><a href="/logout"><i class="icon-signout"></i> Sign Out</a></li>
+-->
 			    </ul>
 			</div>
 

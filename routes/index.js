@@ -1,6 +1,6 @@
 
 var login = require('../lib/loginstate.js');    
-var ROLES = require('../lib/roles.js').ROLES;
+var ROLES = require('../lib/roles.js'); // .ROLES;
 
     
 var checkRole = exports.checkRole = function(acceptableRole)
@@ -75,7 +75,7 @@ function home( req, res )
 }
 
 exports.setup = function(app) {
-            
+
     app.checkRole    = checkRole;
     app.ROLES        = ROLES;
 	app.trivialRoute = trivialRoute(app);

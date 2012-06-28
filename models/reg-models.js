@@ -1,6 +1,6 @@
 var debug = require('../lib/debug.js');
 var models = require('./index.js');
-var ROLES = require('../lib/roles.js').ROLES;
+var ROLES = require('../lib/roles.js'); // .ROLES;
 var ModelPerformer = models.ModelPerformer;
 var CODES = exports.CODES = models.CODES;
 

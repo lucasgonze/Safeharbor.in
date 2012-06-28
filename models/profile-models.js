@@ -123,8 +123,10 @@ exports.saveNewPassword = function( values, callback ) {
 exports.resetPasswordForLoggedInUser = function( obj, callback ) {
     var sql = "update acct set password = $1 where acctid = $2 and password = $3 returning acctid";
     
+    console.log('pw:',obj);
+    
     return new ModelPerformer({ parseObj: obj, 
-                                names: ['newpassword','userid','current'], 
+                                names: ['newpassword','acct','current'], 
                                 callback: callback, 
                                 performer: function() {this.table.updateSingleRecord( sql ); }
                               });    

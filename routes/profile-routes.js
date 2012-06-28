@@ -200,7 +200,7 @@ function emitSiteEditor(req,res){
     
 	profile
 	    .getSiteForUser( uid, success )
-	    .handleErrors( req, res )
+	    .handleErrors( req, res, [CODES.NO_RECORDS_FOUND] )
 	    .perform();
 }
 
@@ -227,6 +227,7 @@ function emitAcctEditor(req,res){
     var uid = loginstate.getID(req);
 
     function showEditor( code, acct ) {
+        debug.out('Show editor: ', code, acct );
 	    if( code == CODES.OK )
 	    {
             var vars = utils.copy({ layout: "global.html",
@@ -235,11 +236,12 @@ function emitAcctEditor(req,res){
         
             res.render("profile/accteditor.html", vars );
         }
+            
     }	
     
 	profile
 	  .acctFromID( uid, showEditor )
-	  .handleErrors( req, res )
+	  .handleErrors( req, res, [CODES.NO_RECORDS_FOUND] )
 	  .perform();
 }
 
@@ -248,14 +250,17 @@ function saveAcctEditor(req,res) {
     var uid = loginstate.getID(req);
     
     var args = utils.copy( {acct: uid, autologin: '0'}, req.body )
-        setSessionUser = function(code,acct) { if( code==CODES.OK ) loginstate.enable(req,acct); },
         renderArgs = { layout:"global.html", pageTitle:"Edit Account", bodyClass: "profile" },
-        displaySuccess = function(code) { if( code==CODES.OK ) res.render('./success.html',renderArgs); };
+        setSessionUser = function(code,acct) { if( code==CODES.OK ) {
+                                                    loginstate.enable(req,acct); 
+                                                    res.render('./success.html',renderArgs);
+                                                    }
+                                                };
 
     args.autologin = args.autologin.replace(/on/,'1') >>> 0;
 
     profile
-       .updateAccount( args, displaySuccess )
+       .updateAccount( args, function(){} )
        .handleErrors(  req, res )
        .chain( profile.acctFromID( uid, setSessionUser )  )
        .perform();
