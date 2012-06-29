@@ -34,8 +34,9 @@ function getBox(req,res){
         else if( code == CODES.SUCCESS ) 
         {
             res.render( 'box/top.html', utils.copy( {
-                        layout:       'global.html',
-                        pageTitle:    'Copyright Inbox',
+                        layout:       'box/box_main.html',
+                        skipMenu:     true,
+                        pageTitle:    'Copyright Dispute Form',
                         bodyClass:    'box' }, 
                         site ));			
         }
@@ -51,9 +52,12 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                 callback: function(success,message) {
                     if( success ) {
                         res.render("box/success.html",
-                                    { layout:"global.html",
+                                    {  layout:"global.html",
                                        pageTitle:"Success",
-                                       bodyClass:"box" } );
+                                       bodyClass:"box",
+                                       success_title: "Your request has been received.",
+                                       suscess_message: "Please expect a response via the contact information you provided."
+                                     } );
                     }   
                     else {
                         errout( req, res, err( 400, 'Email notify failed: ' + message)  );

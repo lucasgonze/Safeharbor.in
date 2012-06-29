@@ -85,7 +85,7 @@ function resetPasswordEmail(req, res, to) {
                 callback: function(success,message) {
                     if( success ) {
                         res.render("profile/success.html",
-                            {layout:"global.html", pageTitle:"Password Reset", bodyClass: "profile"});			
+                            {layout:"shared/main.html", pageTitle:"Password Reset", bodyClass: "profile"});			
                     }   
                     else {
                         errout( req, res, exp( 400, 'Email reset failed: ' + message)  );
@@ -124,7 +124,7 @@ function lostPasswordStart(req,res){
 // given that the user has passed a password recovery token in the URL, send
 // them to the password reset form.
 function lostPasswordGet(req,res){
-	var vars = { layout:      "global.html",
+	var vars = { layout:      "shared/main.html",
 	             pageTitle:   "Enter New Password",
 	             bodyClass:   "profile", 
 	             resetSecret: req.params.resetSecret
@@ -141,7 +141,7 @@ function lostPasswordPost(req,res){
 
     function cb(code,err) {
         if( code == CODES.SUCCESS )
-            res.render("success.html",{layout:"global.html",pageTitle:"Success"});    
+            res.render("success.html",{layout:"shared/main.html",pageTitle:"Success"});    
     }
     
     profile
@@ -163,7 +163,7 @@ function savePasswordReset(req,res) {
         var resetPW = profile.resetPasswordForLoggedInUser( args, function(code,err) {   
                 if( code == CODES.SUCCESS )
                 {
-                    res.render("profile/successNoEmail.html",{layout:"global.html",pageTitle:"Success"});	
+                    res.render("profile/successNoEmail.html",{layout:"shared/main.html",pageTitle:"Success"});	
                 }
                 else if( code == CODES.NO_RECORDS_UPDATED )
                 {
@@ -180,7 +180,7 @@ function deleteAccount(req,res){
 
 	profile.deleteAccount(req.session.userid,function(code,err){
 		loginstate.disable(req);
-		res.render("success.html",{layout:"global.html",pageTitle:"Success"});	
+		res.render("success.html",{layout:"shared/main.html",pageTitle:"Success"});	
 	}).handleErrors(req,res).perform();
 }
 
@@ -192,7 +192,7 @@ function emitSiteEditor(req,res){
         if( code == CODES.OK )
         {
             res.render("profile/siteeditor.html", utils.copy({
-                                                    layout: "global.html",
+                                                    layout: "shared/main.html",
                                                     pagetitle: "Edit Site",
                                                     bodyClass: "siteeditor" }, site) );
         }
@@ -211,7 +211,7 @@ function saveSiteEdit(req,res) {
     function callback( code, err ) {
         if( code == CODES.OK )
             res.render("./success.html",
-                {layout:"global.html", pageTitle:"Edit Site", bodyClass: "profile"});			
+                {layout:"shared/main.html", pageTitle:"Edit Site", bodyClass: "profile"});			
     }            
     var args = utils.copy( {acct: uid}, req.body );
 
@@ -230,7 +230,7 @@ function emitAcctEditor(req,res){
         debug.out('Show editor: ', code, acct );
 	    if( code == CODES.OK )
 	    {
-            var vars = utils.copy({ layout: "global.html",
+            var vars = utils.copy({ layout: "shared/main.html",
                          pagetitle: "Edit Your Account",
                          bodyClass: "siteeditor" }, acct);
         
@@ -250,7 +250,7 @@ function saveAcctEditor(req,res) {
     var uid = loginstate.getID(req);
     
     var args = utils.copy( {acct: uid, autologin: '0'}, req.body )
-        renderArgs = { layout:"global.html", pageTitle:"Edit Account", bodyClass: "profile" },
+        renderArgs = { layout:"shared/main.html", pageTitle:"Edit Account", bodyClass: "profile" },
         setSessionUser = function(code,acct) { if( code==CODES.OK ) {
                                                     loginstate.enable(req,acct); 
                                                     res.render('./success.html',renderArgs);

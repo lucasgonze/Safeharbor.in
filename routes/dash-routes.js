@@ -31,7 +31,7 @@ var renderDashForAccount = exports.renderDashForAccount = function( req, res, ui
                             {
                                 res.render( '../views/disputes/all.html',
                                             {
-                                               layout: 'signedin.html',
+                                               layout: 'shared/main.html',
                                                pageTitle: 'Safe Harbor - Disputes',
                                                bodyClass: 'disputes',
                                                auditItems: rows
@@ -57,7 +57,7 @@ function getDetail( req, res )
                 {
                     res.render( '../views/disputes/detail.html',
                                 {
-                                   layout: 'signedin.html',
+                                   layout: 'shared/main.html',
                                    pageTitle: 'Safe Harbor - Disputes',
                                    bodyClass: 'disputes',
                                    detail: detail[0] || detail

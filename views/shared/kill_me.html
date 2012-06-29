@@ -27,11 +27,12 @@
 	</style>
 </head>
 <body {{#if bodyClass}}class="{{bodyClass}}"{{/if}}>
-
 	<div class="navbar navbar-fixed-top {{loggedInStatusClass}}">
 	  <div class="navbar-inner">
 	    <div class="container">
 
+        {{#if skipMenu}}
+        {{#else}}
 			<div class="btn-group pull-right hideifloggedout notforinbox" style="margin-right: 4em">
 			    <a class="btn" href="#"><i class="icon-user"></i></a>
 			    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-chevron-down"></span></a>
@@ -42,16 +43,9 @@
 		       {{#each menu.site.items}}
 		        <li><a href="{{url}}" title="{{help}}"><i class="icon-key"></i>{{link}}</a></li>
 		       {{/each}}
-<!--			    
-			        <li><a href="/passwordreset"><i class="icon-key"></i> Change Password</a></li>
-			        <li><a href="/dash"><i class="icon-inbox"></i> Inbox</a></li>
-			        <li><a href="/accountdeleter"><i class="icon-trash"></i> Delete Account</a></li>
-			        <li><a href="/siteeditor"><i class="icon-cog"></i> Site Settings</a></li>
-			        <li><a href="/logout"><i class="icon-signout"></i> Sign Out</a></li>
--->
 			    </ul>
 			</div>
-
+        {{/if}}
 			<a href="/login" class="btn pull-right hideifloggedin notforinbox"><i class="icon-signin"></i> Sign in</a>
 			<a class="brand" href="/">{{#if sitename}}{{sitename}}{{else}}Safeharbor.in{{/if}}</a>
 	    </div>
