@@ -96,7 +96,7 @@ function devMenu(req,res)
         html += '<li><a href="'+(M[3] || M[1])+ '">'+ M[0] + '</a> ' + (M[3] || M[1]) + '</li>';
     }
     html += '</ul>';
-    utils.page( res, html, 'Developer Stuff' );
+    res.render( { body_text: html, pageTitle: 'Developer Stuff' } );
 }
 
 function docs( req, res )
@@ -125,16 +125,14 @@ function page(req,res)
         outputMessage( msg.warning, "No, really, be careful out there" ).
         outputMessage( msg.error, "That's what I'm talking about" );
         
-    res.render( 'dev/pageargs.html', { layout: 'global.html' } );
+    res.render( 'dev/pageargs.html', { } );
 }
 
 function testboxpost(req,res)
 {
     res.render( '../views/dev/fakeAttach2.html',
                 {
-                   layout: 'global.html',
-                   pageTitle: 'Test Box Post',
-                   bodyClass: 'dash'
+                   pageTitle: 'Test Box Post'
                 } );
 }
 

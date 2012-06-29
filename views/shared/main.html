@@ -25,13 +25,14 @@
 
 	<style type="text/css">
 	</style>
+	
+	
+	
 </head>
 <body {{#if bodyClass}}class="{{bodyClass}}"{{/if}}>
 
 	<div class="navbar navbar-fixed-top" {{loggedInStatusClass}}>
 		<a class="brand" href="#"><img src="/img/logo/247x33.png" alt="Safeharbor.in"></a>
-		{{#if skipMenu}}		
-		{{else}}
 		<div class="btn-group pull-right">
 		    <a class="btn" href="#"><i class="icon-user"></i></a>
 		    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-chevron-down"></span></a>
@@ -47,15 +48,35 @@
 		<div class="navbar-inner">
 			<div class="container">								
 				<ul class="nav pull-right">
-					<li><a href="/disputes" data-toggle="tab">Past Disputes</a></li>
-					<li><a href="/form" data-toggle="tab">Future Disputes</a></li>
-					<li>
-					</li>
+                   {{#each menu.tablinks.items}}
+                    <li><a href="{{url}}" title="{{help}}">{{link}}</a></li>
+                   {{/each}}
 				</ul>		
 			</div>
 	  </div>
-	  {{/if}}
 	</div>
+    <ul style="float:right; margin-right:20px;">
+       {{#each menu.safeharbor.items}}
+        <li><a href="{{url}}" title="{{help}}">{{link}}</a></li>
+       {{/each}}
+       {{#each menu.admin.items}}
+        <li><a href="{{url}}" title="{{help}}">{{link}}</a></li>
+       {{/each}}
+       {{#each menu.developer.items}}
+        <li><a href="{{url}}" title="{{help}}">{{link}}</a></li>
+       {{/each}}
+    </ul>		
+
+
+    {{#each messages}}
+    <div {{#if class}}class="{{class}}"{{/if}}>
+        <div class="alert alert-{{level}} notsonarrowblock" style="text-align:center">
+            <p><i class="icon-{{status}}"></i> {{title}}</p>
+            <p>{{text}}</p>            
+        </div>
+        {{#if quicktip}}<p class="quicktip"><small><i class="icon-info-sign"></i>{{quicktip}}</small></p>{{/if}}
+    </div>
+    {{/each}}
 
 	<div id="filling" class="container">{{{body}}}</div>
 	

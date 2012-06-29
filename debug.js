@@ -61,7 +61,7 @@ app.configure(function() {
 		app.use(function(err, req, res, next) {
 			if( err.statusCode !== undefined )
 				res.statusCode = err.statusCode; 
-			res.render("error/error.html",{layout:"global.html",pageTitle:"Error","bodyClass":"error",message:err.message});
+			res.render("error/error.html",{layout:"shared/main.html",pageTitle:"Error","bodyClass":"error",message:err.message});
 		});
 
 	});

@@ -5,18 +5,21 @@
 
 "use strict";
 
+var safeharbor = require('../lib/safeharbor.js');
+var debug      = safeharbor.debug;
+var utils      = safeharbor.utils;
+var errlib     = safeharbor.errors;
+var page       = safeharbor.page;
+var Performer  = safeharbor.Performer;
+
+var util = require('util');
+var errout = errlib.errout();
+
 var box     = require('../models/box-models.js');
-var dash   = require('../models/dash-models.js');
+var dash    = require('../models/dash-models.js');
 
 var CODES = box.CODES;
 
-var util       = require('util');
-var debug      = require('../lib/debug.js');
-var utils      = require('../lib/utils.js');
-var errlib     = require('../lib/error.js');
-var Performer  = require('../lib/performer.js').Performer;
-
-var errout           = errlib.errout();
 
 exports.install = function( app )
 {
@@ -33,7 +36,7 @@ function getBox(req,res){
         }
         else if( code == CODES.SUCCESS ) 
         {
-            res.render( 'box/top.html', utils.copy( {
+            res.render( 'box/form.html', utils.copy( {
                         layout:       'box/box_main.html',
                         skipMenu:     true,
                         pageTitle:    'Copyright Dispute Form',
@@ -51,12 +54,14 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                 // N.B. these params are flipped coming from sendgrid
                 callback: function(success,message) {
                     if( success ) {
-                        res.render("box/success.html",
-                                    {  layout:"global.html",
+                        res.outputMessage( 
+                                        page.MESSAGE_LEVELS.success,
+                                        "Your request has been received.",
+                                        "Please expect a response via the contact information you provided."
+                                        );
+                        res.render({   layout:"box/box_main.html",
                                        pageTitle:"Success",
-                                       bodyClass:"box",
-                                       success_title: "Your request has been received.",
-                                       suscess_message: "Please expect a response via the contact information you provided."
+                                       sitename: this.sitename,
                                      } );
                     }   
                     else {
@@ -72,6 +77,8 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                         mailerValues = this.findValue('auditDetail'),
                         mailer = require("../lib/mail.js");
                         
+                    this.sitename = mailerValues.sitename;
+                    
                     mailerValues.dashurl =  'http://'+req.headers.host+'/dash';                    
                     mailer.emailFromTemplate( 
                                           mailerValues.agentemail,

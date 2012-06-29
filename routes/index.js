@@ -54,8 +54,7 @@ function trivialRoute(app) {
         function handler(req, res) {
             res.render(
                 pathOffsetFromViews+'/'+partial+'.html',			
-                 { layout:'global.html', 
-                    pageTitle:pageTitle, 
+                 {  pageTitle:pageTitle, 
                     bodyClass: pathOffsetFromViews }
             );
         }
@@ -71,7 +70,7 @@ function home( req, res )
     if( login.isLoggedIn() )
         res.redirect('/dash');
     else
-        res.render( 'firstrun/home.html', { layout:'global.html',bodyClass:'firstrun' } );
+        res.render( 'firstrun/home.html', { } );
 }
 
 exports.setup = function(app) {

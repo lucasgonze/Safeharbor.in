@@ -31,7 +31,7 @@ function registerGet( req, res ) {
         if( code == CODES.SUCCESS )
         {
             res.render('reg/fromemail.html',
-                { layout: 'global.html', pageTitle:'Verify', bodyClass:'regid', regid: regid });
+                { layout: 'shared/main.html', pageTitle:'Verify', bodyClass:'regid', regid: regid });
         }
         else 
         {
@@ -56,7 +56,7 @@ function registerPost(req,res){
     var createSite = reg.createSite( req.body , function( code, siteid ) {
             if( code == CODES.INSERT_SINGLE )
                 res.render( "reg/done.html",
-                               { layout:"global.html",
+                               { layout:"shared/main.html",
                                  pageTitle:"Setup Done",
                                  bodyClass:"regfinal",
                                  siteid:siteid
@@ -83,7 +83,7 @@ function emailHandshake(req, res, host) {
                 callback: function(success,message) {
                     if( success ) {
                         res.render("reg/checkyouremail.html",
-                              {layout:"global.html",
+                              {layout:"shared/main.html",
                                pageTitle:"Check Your Email",
                                bodyClass:"gocheckemail"} );
                     }   
@@ -120,7 +120,7 @@ function startEmailHandshake(req, res) {
             {
                 res.render("profile/login.html",
                     {
-                        layout:"global.html",
+                        layout:"shared/main.html",
                         pageTitle:"Account exists",
                         bodyClass: "login",
                         'alert-from-create': '<div class="alert alert-info">You already have an account</div>'

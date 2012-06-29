@@ -1,9 +1,16 @@
-var util       = require('util');
+var safeharbor = require('../lib/safeharbor.js');
+var debug      = safeharbor.debug;
+var utils      = safeharbor.utils;
+var errlib     = safeharbor.errors;
+var page       = safeharbor.page;
+var loginstate = safeharbor.loginstate;
+
+var util = require('util');
+var errout = errlib.errout();
+
 var dash       = require('../models/dash-models.js');
 var profile    = require('../models/profile-models.js');
-var loginstate = require('../lib/loginstate.js');
-var errlib     = require("../lib/error.js");
-var debug      = require("../lib/debug.js");
+
 
 var CODES      = dash.CODES;
 
@@ -23,24 +30,32 @@ function getDash( req, res  )
 
 var renderDashForAccount = exports.renderDashForAccount = function( req, res, uid )
 {
-    var log = dash.getAuditLog(uid,function(code,rows) 
+    var log = dash.getAuditLog(uid,
+              function(code,rows) 
                     {
-                        if( code == CODES.SUCCESS )
+                        if( code != CODES.SUCCESS )
+                            return;
+
+                        if( rows && rows.length )
                         {
-                            if( rows && rows.length )
-                            {
-                                res.render( '../views/disputes/all.html',
-                                            {
-                                               layout: 'shared/main.html',
-                                               pageTitle: 'Safe Harbor - Disputes',
-                                               bodyClass: 'disputes',
-                                               auditItems: rows
-                                            } );
-                            }
-                            else
-                            {
-                                errlib.render( res, 'Good news! No has compained about your site! Thank you! Drive Safely', 0, 0 );
-                            }
+                            res.render( 'disputes/all.html',
+                                        {
+                                           pageTitle: 'Safe Harbor - Disputes',
+                                           bodyClass: 'disputes',
+                                           auditItems: rows
+                                        } );
+                        }
+                        else
+                        {
+                            res.outputMessage( 
+                                            page.MESSAGE_LEVELS.success,
+                                            "Good news!",
+                                            "No has compained about your site! Thank you! Drive Safely."
+                                            );
+                            res.render( page.MESSAGE_VIEW,
+                                        {  pageTitle:"Safe Harbor - Disputes",
+                                           bodyClass:"disputes"
+                                         } );                            
                         }
                     });
     
@@ -55,10 +70,9 @@ function getDetail( req, res )
     var detail = dash.getAuditDetail( auditId, function( code, detail ) {
                 if( code == CODES.SUCCESS )
                 {
-                    res.render( '../views/disputes/detail.html',
+                    res.render( 'disputes/detail.html',
                                 {
-                                   layout: 'shared/main.html',
-                                   pageTitle: 'Safe Harbor - Disputes',
+                                   pageTitle: 'Safe Harbor - Dispute Detail',
                                    bodyClass: 'disputes',
                                    detail: detail[0] || detail
                                 } );

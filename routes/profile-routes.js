@@ -3,13 +3,17 @@
  * Login, logout, edit profile, reset password, edit site
  ***********************************************************/
 
-var profile    = require("../models/profile-models.js");
-var loginstate = require('../lib/loginstate.js');
-var util       = require('util');
-var utils      = require('../lib/utils.js');
-var debug      = require("../lib/debug.js");
-var errlib     = require("../lib/error.js");
-var Performer  = require('../lib/performer.js').Performer;
+var safeharbor = require('../lib/safeharbor.js');
+var debug      = safeharbor.debug;
+var utils      = safeharbor.utils;
+var errlib     = safeharbor.errors;
+var page       = safeharbor.page;
+var loginstate = safeharbor.loginstate;
+var Performer  = safeharbor.Performer;
+
+var util    = require('util');
+var errout  = errlib.errout();
+var profile = require("../models/profile-models.js");
 
 var CODES          = profile.CODES;
 var exp            = errlib.err;
@@ -28,9 +32,8 @@ exports.install = function( app )
 	app.post('/login', not_logged_in, saveLogin);
 	
 	app.trivialRoute('/lostpassword','lostpassword','profile','Lost Password',not_logged_in);
-	app.post('/lostpassword', not_logged_in, lostPasswordStart);
-	
-	app.get('/lostpassword/:resetSecret([0-9a-z]{10})$', not_logged_in, lostPasswordGet );
+	app.post('/lostpassword',                             not_logged_in, lostPasswordStart);	
+	app.get ('/lostpassword/:resetSecret([0-9a-z]{10})$', not_logged_in, lostPasswordGet );
 	app.post('/lostpassword/:resetSecret([0-9a-z]{10})$', not_logged_in, lostPasswordPost);
 	
 	app.trivialRoute('/logout','logout','profile','Log Out',logged_in);
@@ -84,8 +87,16 @@ function resetPasswordEmail(req, res, to) {
                 // N.B. these params are flipped coming from sendgrid
                 callback: function(success,message) {
                     if( success ) {
-                        res.render("profile/success.html",
-                            {layout:"shared/main.html", pageTitle:"Password Reset", bodyClass: "profile"});			
+                        res.outputMessage( 
+                            page.MESSAGE_LEVELS.success,
+                            "Password reset in progress!",
+                            "Check your email for a link to reset your password.",
+                            { quicktip: "If you do not get a message in your inbox, either there is no account for this email or your spam filter is deleting our mail." }
+                        );
+                    
+                        res.render( page.MESSAGE_VIEW,
+                                    { pageTitle:"Password Reset", 
+                                      bodyClass: "profile"});			
                     }   
                     else {
                         errout( req, res, exp( 400, 'Email reset failed: ' + message)  );
@@ -115,6 +126,7 @@ function lostPasswordStart(req,res){
 	        if( c == CODES.OK )
 	            this.resetSecret = resetSecret;
 	    } );
+
 	init
 	  .handleErrors(req,res)
 	  .chain( rpe )
@@ -124,8 +136,7 @@ function lostPasswordStart(req,res){
 // given that the user has passed a password recovery token in the URL, send
 // them to the password reset form.
 function lostPasswordGet(req,res){
-	var vars = { layout:      "shared/main.html",
-	             pageTitle:   "Enter New Password",
+	var vars = { pageTitle:   "Enter New Password",
 	             bodyClass:   "profile", 
 	             resetSecret: req.params.resetSecret
 	             };
@@ -136,17 +147,26 @@ function lostPasswordGet(req,res){
 // the db and send them on to the password reset page if it checks out.
 function lostPasswordPost(req,res){ 
 
-    var args = { password: req.body.password, 
+    var args = { password:    req.body.password, 
                  resetsecret: req.params.resetSecret }; 
 
     function cb(code,err) {
         if( code == CODES.SUCCESS )
-            res.render("success.html",{layout:"shared/main.html",pageTitle:"Success"});    
+        {
+            var title = "Password Recovered";
+            res.outputMessage( 
+                page.MESSAGE_LEVELS.success,
+                title,
+                "Once you were lost, but now it's found"
+            );
+        
+            res.render( page.MESSAGE_VIEW, {pageTitle:title} );
+        }
     }
     
     profile
-      .saveNewPassword( args, cb )
-      .handleErrors( req, res )
+      .saveNewPassword( args, cb)
+      .handleErrors( req, res, [CODES.NO_RECORDS_FOUND]  )
       .perform();
 }
 
@@ -154,33 +174,48 @@ function lostPasswordPost(req,res){
    user rather than one who has lost their password. */
 function savePasswordReset(req,res) {
 
-	if( req.body.newpassword !== req.body.confirm ) {
-    	    errout( req, res, exp( 400, "Mismatch password." ) );
-	    }
-    else {
-        var args = utils.copy( { userid: loginstate.getID(req) }, req.body );
-        
-        var resetPW = profile.resetPasswordForLoggedInUser( args, function(code,err) {   
-                if( code == CODES.SUCCESS )
-                {
-                    res.render("profile/successNoEmail.html",{layout:"shared/main.html",pageTitle:"Success"});	
-                }
-                else if( code == CODES.NO_RECORDS_UPDATED )
-                {
-                    errlib.render(res, 'wups, wrong password on current account', 404 );
-                }
-            } );
+    var args = utils.copy( { acct: loginstate.getID(req) }, req.body );
+    
+    var resetPW = profile.resetPasswordForLoggedInUser( args, function(code,err) {   
+            if( code == CODES.SUCCESS )
+            {
+                var title = "Password Reset";
+                res.outputMessage( 
+                    page.MESSAGE_LEVELS.success,
+                    title,
+                    "Password successfully reset."
+                );
             
-        resetPW.handleErrors( req, res ).perform();
-    }
+                res.render( page.MESSAGE_VIEW, {pageTitle:title} );
+            }
+            else if( code == CODES.NO_RECORDS_UPDATED )
+            {
+                errlib.render(res, 'wups, wrong password on current account', 404 );
+            }
+        } );
+        
+    resetPW.handleErrors( req, res ).perform();
 }
 
-
-function deleteAccount(req,res){
-
+function deleteAccount(req,res)
+{
 	profile.deleteAccount(req.session.userid,function(code,err){
-		loginstate.disable(req);
-		res.render("success.html",{layout:"shared/main.html",pageTitle:"Success"});	
+	    if( code == CODES.SUCCESS )
+	    {
+            loginstate.disable(req);
+            var title = "Account Deleted";
+            res.outputMessage( 
+                page.MESSAGE_LEVELS.success,
+                title,
+                "Your account is gone. Thanks for hanging out with us."
+            );    
+            res.render( page.MESSAGE_VIEW, {pageTitle:title} );
+        }
+        else
+        {
+            // TODO: account missing
+        }
+        
 	}).handleErrors(req,res).perform();
 }
 
@@ -192,7 +227,6 @@ function emitSiteEditor(req,res){
         if( code == CODES.OK )
         {
             res.render("profile/siteeditor.html", utils.copy({
-                                                    layout: "shared/main.html",
                                                     pagetitle: "Edit Site",
                                                     bodyClass: "siteeditor" }, site) );
         }
@@ -210,8 +244,15 @@ function saveSiteEdit(req,res) {
     
     function callback( code, err ) {
         if( code == CODES.OK )
-            res.render("./success.html",
-                {layout:"shared/main.html", pageTitle:"Edit Site", bodyClass: "profile"});			
+        {
+            var title = "Site Properties";
+            res.outputMessage( 
+                page.MESSAGE_LEVELS.success,
+                title,
+                "Changes to site saved."
+            );    
+            res.render( page.MESSAGE_VIEW, {pageTitle:title} );
+        }
     }            
     var args = utils.copy( {acct: uid}, req.body );
 
@@ -230,7 +271,7 @@ function emitAcctEditor(req,res){
         debug.out('Show editor: ', code, acct );
 	    if( code == CODES.OK )
 	    {
-            var vars = utils.copy({ layout: "shared/main.html",
+            var vars = utils.copy({ 
                          pagetitle: "Edit Your Account",
                          bodyClass: "siteeditor" }, acct);
         
@@ -247,15 +288,24 @@ function emitAcctEditor(req,res){
 
 function saveAcctEditor(req,res) {
 
-    var uid = loginstate.getID(req);
+    function setSessionUser(code,acct) 
+    { 
+        if( code=!CODES.OK )
+            return;
+            
+        loginstate.enable(req,acct); 
+
+        var title = "Account changes saved.";
+        res.outputMessage( 
+                page.MESSAGE_LEVELS.success,
+                title,
+                "Changes to your account have been saved."
+            );    
+        res.render( page.MESSAGE_VIEW, {pageTitle:title} );
+    };
     
+    var uid = loginstate.getID(req);
     var args = utils.copy( {acct: uid, autologin: '0'}, req.body )
-        renderArgs = { layout:"shared/main.html", pageTitle:"Edit Account", bodyClass: "profile" },
-        setSessionUser = function(code,acct) { if( code==CODES.OK ) {
-                                                    loginstate.enable(req,acct); 
-                                                    res.render('./success.html',renderArgs);
-                                                    }
-                                                };
 
     args.autologin = args.autologin.replace(/on/,'1') >>> 0;
 
