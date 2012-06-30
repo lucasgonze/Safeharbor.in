@@ -123,7 +123,20 @@ function lostPasswordStart(req,res){
     var rpe = resetPasswordEmail( req, res, email );
 	var init = profile.initPasswordReset( email, function( c, resetSecret ) { 
 	        if( c == CODES.OK )
+	        {
 	            this.resetSecret = resetSecret;
+	        }
+	        else if( c == CODES.NO_RECORDS_UPDATED )
+	        {
+                var title = "Uknown email";
+                res.outputMessage( 
+                    page.MESSAGE_LEVELS.error,
+                    title,
+                    "Sorry, don't know that email address"
+                );
+            
+                res.render( 'profile/lostpassword.html', {pageTitle:title} );
+	        }
 	    } );
 
 	init

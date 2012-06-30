@@ -1,0 +1,831 @@
+{
+    "project": {
+        "name": "Safe Harbor",
+        "description": "Safe Harbor.in doccy docs",
+        "version": "0.1.0",
+        "url": "http://latest.safeharbor.in",
+        "logo": "http://latest.safeharbor.in/img/logo/247x33.png"
+    },
+    "files": {
+        "lib/page.js": {
+            "name": "lib/page.js",
+            "modules": {
+                "page": 1
+            },
+            "classes": {},
+            "fors": {
+                "Response": 1
+            },
+            "namespaces": {}
+        },
+        "lib/performer.js": {
+            "name": "lib/performer.js",
+            "modules": {},
+            "classes": {
+                "Performer": 1
+            },
+            "fors": {
+                "Performer": 1
+            },
+            "namespaces": {}
+        },
+        "lib/safeharbor.js": {
+            "name": "lib/safeharbor.js",
+            "modules": {
+                "lib": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "models/dash-models.js": {
+            "name": "models/dash-models.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "models/index.js": {
+            "name": "models/index.js",
+            "modules": {},
+            "classes": {
+                "ModelPerformer": 1,
+                "table": 1
+            },
+            "fors": {
+                "CODES": 1,
+                "ModelPerformer": 1
+            },
+            "namespaces": {}
+        },
+        "models/profile-models.js": {
+            "name": "models/profile-models.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "models/reg-models.js": {
+            "name": "models/reg-models.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "lib": {
+            "name": "lib",
+            "submodules": {
+                "page": 1
+            },
+            "classes": {
+                "Response": 1,
+                "Performer": 1,
+                "CODES": 1,
+                "ModelPerformer": 1,
+                "table": 1
+            },
+            "fors": {
+                "Response": 1,
+                "Performer": 1,
+                "CODES": 1,
+                "ModelPerformer": 1
+            },
+            "namespaces": {},
+            "tag": "module",
+            "file": "models/index.js",
+            "line": 471,
+            "description": "The core classes and utilities used by the application"
+        },
+        "page": {
+            "name": "page",
+            "submodules": {},
+            "classes": {
+                "Response": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "lib",
+            "namespace": "",
+            "file": "lib/page.js",
+            "line": 1,
+            "description": "Rendering Pages\n================\nSIMPLE TEXT\n--------------\nTo put simple text or HTML to a screen:\n  \n        res.render( { body_text: 'Hello <b>world</b>' } );\n    \n    \nTEMPLATE\n---------\nTo put a specific template (like a form) with variables:\n  \n        res.render( 'box/form.html', { username: name, phone: phone } );\n    \nSTATUS MESSAGES\n-----------------\nTo ouput specific status messages:\n    \n        var page = safeharbor.page;\n        \n        res.outputMessage( page.MESSAGE_LEVELS.warning,\n                           'Warning Title',\n                           'Some warning text goes here' );\n                           \nYou can have multiple of these output message on the same page. Later,\nyou can then call res.render() as above. This allows for the following\nscenario:\n     \n            if( onSubmit && (some_error == true) ) \n            {\n                // on submit there was some error\n                res.outputMessage( page.MESSAGE_LEVELS.error,\n                                   'Try again',\n                                   'Some error text goes here' );\n            }\n            \n            // on first time render OR error re-submit:\n            \n            res.render( 'box/form.html', postargs );\nSTATUS (ONLY) PAGES\n---------------------\nIf all you want to output is the message (no template):\n      \n            res.outputMessage( page.MESSAGE_LEVELS.success,\n                               'Wonderful',\n                               'Some happy text goes here' );\n                               \n            res.render( page.MESSAGE_VIEW, { pageTitle: 'Happy Joy' } );\n        \nAJAX-STYLE HTML SNIPPETS\n--------------------------\nTo return a snippet of HTML (either as 'body_text', message or template) use \nthe same techniques as above but the layout option:\n    \n            res.render( { layout: page.SNIPPET, \n                          body_text: 'This text is for embedding' } );\n        \nAlso works for templates:\n        \n            res.render( 'profile/acct_email.html', // <-- template for embedded editing\n                         { layout: page.SNIPPET } )"
+        }
+    },
+    "classes": {
+        "Response": {
+            "name": "Response",
+            "shortname": "Response",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "lib",
+            "submodule": "page",
+            "namespace": ""
+        },
+        "Performer": {
+            "name": "Performer",
+            "shortname": "Performer",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "lib",
+            "namespace": "",
+            "file": "lib/performer.js",
+            "line": 5,
+            "description": "Performer class exists to serialize a \"performance\" of several tasks\nin an asynchronous environment. Each Performer wraps a single \"performance\" \nof a task such as sending an email or updating a record in a database.\n\nYou chain multiple Performer object together to perform a string of \nrelated tasks that have to happen in a certain order. The typical\ncoding pattern is:\n           \n           var a = new Performer(...)\n           var b = new Performer(...)\n           \n           a.chain(b).perform();\n\n           \nIf the code above, the ``b`` performer will not happen until ``a`` is \ncompleted (from the callback for ``a`` actually)\n           \nCONTEXT\n=======\n    \nYou instantiate a Performer with a __performer__ function and a \n__callback__ function. Your performer function and your callback \nfunction will be called with 'this' context set to the \nPerformer attached to it.\n\nIf you need to hand out the callback function to an 3rd party (like\nsendGrid) then call the .bound_callback() method to get a version\nof the callback bound to this Performer object. For example:\n    \n            performer: function() {            \n                someApiThatRequiresACallback( this.bound_callback() );\n            }\n    \n__NOTE__ Do NOT, as in NOT call ``this.callback()`` from inside the \nyour callback function, just your performer function. So...\n\n        new Performer( { callback: function() {\n                              this.callback(); // BAD\n                            },\n                         performer: function() {\n                              this.callback(); // GOOD\n                         } );\n\n__NOTE__ If you plan to chain Performer objects then make sure to\ncall this.callback() exactly ONCE - not more, not less. \n\n\nPERFORMING\n==========\n\nCall the ``.perform()`` method to start the performance.\n\nCall the ``.chain()`` method to append one Performer to others to form a chain. \nThe ``chain()`` method always appends to the end of the chain.\n\n__NOTE__ the perform() method is dumb, in that it doesn't know \nthe beginning of the chain so always make sure you call it on the \nfirst Performer in the chain.\n    \n    \nSHARING RESULTS\n---------------\n\nYou can pass data along to Performers later in the chain by attaching \nvalues to your 'this' context and retrieve it using .findValue()\nmethod. \n\n        var p1 = new Performer( { callback: function(someValue) { \n                                        this.myValue = someValue;\n                                    },\n                                    performer: function() {\n                                        var generatedValue = generateSomeValue();\n                                        this.callback( generatedValue );\n                                    } );\n\nThen we can dig it out later, in another performer:\n    \n            var p2 = new Performer({ callback: function() {\n                                            // ....\n                                     },\n                                    performer: function() {\n                                        var gotIT = this.findValue('myValue');\n                                        \n                                        //....\n                                    } );\n                                    \nNow you chain them together and perform:\n    \n           p1.chain( p2 ).perform();\n        \nSee {{#crossLink \"ModelPerformer\"}}{{/crossLink}} for specialized version for dealing with postgresql",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "params",
+                    "description": "Your functions this instance will wrap",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "performer",
+                            "description": "A function to call when it's turn comes up in the chain",
+                            "type": "Function"
+                        },
+                        {
+                            "name": "callback",
+                            "description": "A function that will be called at the completion of the \n             ``performer`` function.",
+                            "type": "Function"
+                        }
+                    ]
+                }
+            ]
+        },
+        "CODES": {
+            "name": "CODES",
+            "shortname": "CODES",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "lib",
+            "namespace": ""
+        },
+        "ModelPerformer": {
+            "name": "ModelPerformer",
+            "shortname": "ModelPerformer",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "lib",
+            "namespace": "",
+            "file": "models/index.js",
+            "line": 164,
+            "description": "Don't even think about looking at this before understanding\nthe {{#crossLink \"Performer\"}}{{/crossLink}} object.\nModelPerformer is a specialization of Performer that\nexposes a table API wrapper inside your performer \nfunction. The API is accessable via the 'this.table' \nproperty:\n    \n        new ModelPerformer( { callback: function(statusCode, param) { ... },\n                              performer: function() {\n                                 this.table.findSingleRecord( 'SELECT * FROM foo LIMIT 1' );\n                                }\n                            );\nSee the {{#crossLink \"table\"}}{{/crossLink}} object below for particulars of the table API.\nSQL PARAMETERS\n==============\nIf you have parameterized SQL you have 3 ways to deal with those.\n1. Direct\n---------\nPassing them directly in the table call as an array in the second parameter:\n        \n        new ModelPerformer( { callback: function(statusCode, param) { ... },\n                              performer: function() {\n                                 var sql = 'SELECT * FROM foo WHERE id = $1';                                 \n                                 this.table.findSingleRecord( sql, [someId] );\n                                                               //   ^^^^^^                                 \n                                }})\n2. Values in ctor\n------------------\nPassing them as 'values' element in the ctor:\n        \n        new ModelPerformer( { values: [someId],\n                   //         ^^^^^^\n                             callback: function(statusCode, param) { ... },\n                             performer: function() {\n                                var sql = 'SELECT * FROM foo WHERE id = $1';\n                                this.table.findSingleRecord( sql );\n                            }})\n                                \nNote that you do NOT pass the arguments into the findSingleRecord()\ncall. That will be done automagically for you. (Doing it this\nway gives other Performer objects in your chain access\nto your .values[] property.)\n3. Dynamically Parsed\n----------------------\nPassing them as 'unparsed' objects in the ctor. This is useful for\nsituations like request.body. Say your POST form yields something\nlike:        \n             \n             request.body = { password: '1234', user: 'Jon John' };\n             \nand your SQL looks like:\n            \n            var SQL = 'INSERT INTO people (user,pw) VALUES ($1,$2)';\n            \nyou can setup a performer to extract the proper values from the\nrequest.body object in the right order:\n           \n           new ModelPerformer( { parseObj: request.body,\n                                 names: [ 'user', 'password' ]\n                                 callback: function(statusCode, param) { ... },\n                                 performer: function() {\n                                    this.table.findSingleRecord( SQL );\n                                }\n        \nCALLBACKS and STATUS CODES\n---------------------------\nAll callbacks for the ModelPerformer have the same shape:\n      \n            function callback( statusCode, param ) { }\n            \nThe statusCode will one of the {{#crossLink \"CODES\"}}{{/crossLink}} found in this module. {{#crossLink \"CODES\"}}{{/crossLink}} are\nexported from here and should be re-exported in every model module\nto the routes modules. \n      \nTheses {{#crossLink \"CODES\"}}{{/crossLink}} are emitted from the table API and the safest thing\nto do __before__ you use a specific table API method is to look at\nwhat {{#crossLink \"CODES\"}}{{/crossLink}} it emits.\nThe 'param' value will depend on what the code is. \nERROR HANDLING\n----------------\nIt is very easy to get into a race condition when the errors start\ncascading. The trick is to catch the first fatal error and stop\nthe chain, report the error as quickly as possible before other,\nlater errors obscure the root cause error.\nThe best way to handle this is to call handlerErrors() method between\ninstantiation and calls to Perform():\n      \n         var performer = new ModelPerformer( ... );\n         \n         performer.handlerErrors( req, res ).perform();\n         \nThis will setup a default error handler for fatal errors that happen at\nthe SQL level. Once a fatal error is hit: no more callbacks will be called,\nthe chain will be stopped and an exception will be displayed in the browser\nkilling the current request. \n      \nThere are two errors that are currently being checked for: errors that \ncome back the database and coding errors (missing parameters, etc.) from\nthis instance of ModelPeformer. \nIf you want addition errors to be checked for and treated as fatal errors\nadd them as a third parameter:\n      \n         performer.handlerErrors( req, res, [ CODES.NO_RECORDS_FOUND ] );\n        \nBe warned: there is no soft error here, this will be treated like a fatal\nsystem crash-worthy event.\nIf you want to land softer (like an unsucceful search) then handle that\nin your callback.\n           \n            new Performer( { callback: function( code, result ) {\n                                if( code == CODES.NO_RECORDS_FOUND )\n                                   ....\n                                else if( code == CODES.SUCCESS )\n                                    ....                        \n                            }",
+            "extends": "Performer",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "params",
+                    "description": "Your functions this instance will wrap",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "performer",
+                            "description": "A function to call when it's turn comes up in the chain",
+                            "type": "Function"
+                        },
+                        {
+                            "name": "callback",
+                            "description": "A function that will be called at the completion of the \n             ``performer`` function. The signature is: ``callback( {{#crossLink \"CODES\"}}{{/crossLink}}, data )``\n             where ``data`` depends on which {{#crossLink \"table\"}}{{/crossLink}} method you called in \n             your ``performer`` function.",
+                            "type": "Function"
+                        },
+                        {
+                            "name": "values",
+                            "description": "Array of values to pass along with {{#crossLink \"table\"}}{{/crossLink}} in \n             your ``performer`` function.",
+                            "type": "Array",
+                            "optional": true
+                        },
+                        {
+                            "name": "parseObj",
+                            "description": "Hash object of values to pass along with {{#crossLink \"table\"}}{{/crossLink}} in \n             your ``performer`` function. You can not have this parameter __and__ a ``values`` parameters. This\n             parameter requires a ``names`` parameter.",
+                            "type": "Object",
+                            "optional": true
+                        },
+                        {
+                            "name": "names",
+                            "description": "Required for the ``parseObj`` An array of names in the order to extact them from\n             the ``parseObj`` parameter.",
+                            "type": "Array",
+                            "optional": true
+                        }
+                    ]
+                }
+            ]
+        },
+        "table": {
+            "name": "table",
+            "shortname": "table",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "lib",
+            "namespace": "",
+            "file": "models/index.js",
+            "line": 471,
+            "description": "Wrapper for table operations with friendly bindable callbacks with standardized,\nspecialized status codes. Designed to be used from inside your\n{{#crossLink \"ModelPerformer\"}}{{/crossLink}} performer method."
+        }
+    },
+    "classitems": [
+        {
+            "file": "lib/page.js",
+            "line": 216,
+            "description": "Override of the express.response.render method\nin order put our application specific standard\ntemplates into the call stream.",
+            "itemtype": "method",
+            "name": "render",
+            "params": [
+                {
+                    "name": "view",
+                    "description": "Path to template file (relative to './view')",
+                    "type": "String"
+                },
+                {
+                    "name": "opts",
+                    "description": "Can include things like body_text, pageTitle",
+                    "type": "Object"
+                }
+            ],
+            "class": "Response",
+            "module": "lib",
+            "submodule": "page"
+        },
+        {
+            "file": "lib/page.js",
+            "line": 257,
+            "description": "Call this to setup a message to be ouput during the\nres.render() call.",
+            "itemtype": "method",
+            "name": "outputMessage",
+            "params": [
+                {
+                    "name": "msgLevel",
+                    "description": "",
+                    "type": "MESSAGE_LEVELS"
+                },
+                {
+                    "name": "msgTitle",
+                    "description": "",
+                    "type": "STRING"
+                },
+                {
+                    "name": "text",
+                    "description": "",
+                    "type": "STRING"
+                },
+                {
+                    "name": "opts",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "class": "Response",
+            "module": "lib",
+            "submodule": "page"
+        },
+        {
+            "file": "lib/performer.js",
+            "line": 117,
+            "description": "For use with 3rd party APIs that require a callback. Using\nthis will gaurantee that this performer will remain the\ncontext for all callbacks on any thread.\n__NOTE__ really only make sense from inside your performer()\ncall.",
+            "itemtype": "method",
+            "name": "bound_callback",
+            "return": {
+                "description": "",
+                "type": "Function"
+            },
+            "class": "Performer",
+            "module": "lib"
+        },
+        {
+            "file": "lib/performer.js",
+            "line": 170,
+            "description": "Start the performer chain. \n        \n__NOTE__ This should only called directly on the first \nPerformer object in a chain.",
+            "itemtype": "method",
+            "name": "perform",
+            "class": "Performer",
+            "module": "lib"
+        },
+        {
+            "file": "lib/performer.js",
+            "line": 197,
+            "description": "Chains Performer objects together.\n\n__NOTE__ The parameter Performer object will be chained to \nthe last Performer in this chain which may or may not be\nthe Performer object you are calling.",
+            "itemtype": "method",
+            "name": "chain",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "node",
+                    "description": "A Performer object to append to this chain",
+                    "type": "Object"
+                }
+            ],
+            "class": "Performer",
+            "module": "lib"
+        },
+        {
+            "file": "lib/performer.js",
+            "line": 220,
+            "description": "Return the last Performer object in this chain.",
+            "itemtype": "method",
+            "name": "last",
+            "return": {
+                "description": "the last Performer",
+                "type": "Object"
+            },
+            "class": "Performer",
+            "module": "lib"
+        },
+        {
+            "file": "lib/performer.js",
+            "line": 235,
+            "description": "Return the first Performer object in this chain. You\nshould use this if you want to call perform() and you're not\n100% sure if you at the head of the chain.",
+            "itemtype": "method",
+            "name": "first",
+            "return": {
+                "description": "the first Performer.",
+                "type": "Object"
+            },
+            "class": "Performer",
+            "module": "lib"
+        },
+        {
+            "file": "lib/performer.js",
+            "line": 277,
+            "description": "Find a value that's anywhere in this chain. \n\nUse this method to find a random property of any Performer in this \nchain.",
+            "itemtype": "method",
+            "name": "findValue",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Name of the value's property name to search for",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Value of 'name' property or null if not found"
+            },
+            "class": "Performer",
+            "module": "lib"
+        },
+        {
+            "file": "models/dash-models.js",
+            "line": 9,
+            "description": "public           *",
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 36,
+            "itemtype": "property",
+            "name": "SUCCESS",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 42,
+            "itemtype": "property",
+            "name": "SQL_ERROR",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 48,
+            "itemtype": "property",
+            "name": "INVALID_ARGS",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 55,
+            "itemtype": "property",
+            "name": "NO_RECORDS_DELETED",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 61,
+            "itemtype": "property",
+            "name": "NO_RECORDS_INSERTED",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 67,
+            "itemtype": "property",
+            "name": "NO_RECORDS_FOUND",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 73,
+            "itemtype": "property",
+            "name": "NO_RECORDS_UPDATED",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 79,
+            "itemtype": "property",
+            "name": "MULTIPLE_RECORDS_FOUND",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 85,
+            "itemtype": "property",
+            "name": "QUERY_NO_MORE_ROWS",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 91,
+            "itemtype": "property",
+            "name": "QUERY_ROW",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 97,
+            "itemtype": "property",
+            "name": "QUERY_COUNT",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 103,
+            "itemtype": "property",
+            "name": "INSERT_SINGLE",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 111,
+            "description": "Alias for SUCCESS",
+            "itemtype": "property",
+            "name": "OK",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 118,
+            "description": "Alias for SUCCESS",
+            "itemtype": "property",
+            "name": "QUERY_SUCCESS",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 125,
+            "description": "Alias for SUCCESS",
+            "itemtype": "property",
+            "name": "RECORD_FOUND",
+            "type": "String",
+            "static": 1,
+            "class": "CODES",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 413,
+            "description": "Setup a default Error handler to catch 'em as they \nfly out of psql. \n\nThis method will setup a watch for ``SQL_ERROR`` and ``INVALID_ARGS``\nand kill the performance of the chain and try to return error\nto the callback at the current position in the train.\n\nYou can engage more fatal errors pass them in an array\nin the third parameters.",
+            "itemtype": "method",
+            "name": "handlerErrors",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "HTTP request object from express",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "HTTP response object form express",
+                    "type": "Object"
+                },
+                {
+                    "name": "extraCodes",
+                    "description": "Array of {{#crossLink \"CODES\"}}{{/crossLink}} to treat as fatal.",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "class": "ModelPerformer",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 513,
+            "itemtype": "method",
+            "name": "deleteSingleRecord",
+            "params": [
+                {
+                    "name": "sql",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "args",
+                    "description": "These can be passed in several ways. See {{#crossLink \"ModelPerformer\"}}{{/crossLink}} for details.",
+                    "type": "Array",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "You can override this with your own callback, but that will break any {{#crossLink \"Performer\"}}{{/crossLink}} chain",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Emits ``NO_RECORDS_DELETED`` or ``SUCCESS`` codes.",
+                "type": "CODES"
+            },
+            "class": "table",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 536,
+            "description": "If you have any 'returning' section of your sql statement, it will \nbe returned as a the second parameter in callback on SUCCESS.",
+            "itemtype": "method",
+            "name": "insertSingleRecord",
+            "params": [
+                {
+                    "name": "sql",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "args",
+                    "description": "These can be passed in several ways. See {{#crossLink \"ModelPerformer\"}}{{/crossLink}} for details.",
+                    "type": "Array",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "You can override this with your own callback, but that will break any {{#crossLink \"Performer\"}}{{/crossLink}} chain",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Emits ``NO_RECORDS_INSERTED`` or ``INSERT_SINGLE`` codes."
+            },
+            "class": "table",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 573,
+            "description": "If you have any 'returning' section of your sql statement, it will \nbe returned as a the second parameter in callback on SUCCESS.",
+            "itemtype": "method",
+            "name": "updateSingleRecord",
+            "params": [
+                {
+                    "name": "sql",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "args",
+                    "description": "These can be passed in several ways. See {{#crossLink \"ModelPerformer\"}}{{/crossLink}} for details.",
+                    "type": "Array",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "You can override this with your own callback, but that will break any {{#crossLink \"Performer\"}}{{/crossLink}} chain",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Emits ``NO_RECORDS_UPDATED`` or ``SUCCESS`` codes."
+            },
+            "class": "table",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 608,
+            "itemtype": "method",
+            "name": "findSingleRecord",
+            "params": [
+                {
+                    "name": "sql",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "args",
+                    "description": "These can be passed in several ways. See {{#crossLink \"ModelPerformer\"}}{{/crossLink}} for details.",
+                    "type": "Array",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "You can override this with your own callback, but that will break any {{#crossLink \"Performer\"}}{{/crossLink}} chain",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Emits  ``MULTIPLE_RECORDS_FOUND``,``NO_RECORDS_FOUND`` or ``SUCCESS`` codes."
+            },
+            "class": "table",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 620,
+            "description": "Returns whatever your first colum in the\nselect statement.",
+            "itemtype": "method",
+            "name": "findSingleValue",
+            "params": [
+                {
+                    "name": "sql",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "args",
+                    "description": "These can be passed in several ways. See {{#crossLink \"ModelPerformer\"}}{{/crossLink}} for details.",
+                    "type": "Array",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "You can override this with your own callback, but that will break any {{#crossLink \"Performer\"}}{{/crossLink}} chain",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Emits  ``MULTIPLE_RECORDS_FOUND``,``NO_RECORDS_FOUND`` or ``SUCCESS`` codes."
+            },
+            "class": "table",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 672,
+            "description": "Call back for every row.",
+            "itemtype": "method",
+            "name": "findbyRow",
+            "params": [
+                {
+                    "name": "sql",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "args",
+                    "description": "These can be passed in several ways. See {{#crossLink \"ModelPerformer\"}}{{/crossLink}} for details.",
+                    "type": "Array",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "You can override this with your own callback, but that will break any {{#crossLink \"Performer\"}}{{/crossLink}} chain",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Emits  ``QUERY_ROW`` or ``QUERY_NO_MORE_ROWS`` codes."
+            },
+            "class": "table",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 697,
+            "description": "call back once with an array of all the rows",
+            "itemtype": "method",
+            "name": "findAllRow",
+            "params": [
+                {
+                    "name": "sql",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "args",
+                    "description": "These can be passed in several ways. See {{#crossLink \"ModelPerformer\"}}{{/crossLink}} for details.",
+                    "type": "Array",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "You can override this with your own callback, but that will break any {{#crossLink \"Performer\"}}{{/crossLink}} chain",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Emits  ``QUERY_SUCCESS`` code."
+            },
+            "class": "table",
+            "module": "lib"
+        },
+        {
+            "file": "models/index.js",
+            "line": 724,
+            "itemtype": "method",
+            "name": "getCount",
+            "params": [
+                {
+                    "name": "sql",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "args",
+                    "description": "These can be passed in several ways. See {{#crossLink \"ModelPerformer\"}}{{/crossLink}} for details.",
+                    "type": "Array",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "You can override this with your own callback, but that will break any {{#crossLink \"Performer\"}}{{/crossLink}} chain",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Emits  ``QUERY_COUNT`` or ``QUERY_NO_MORE_ROWS`` code."
+            },
+            "class": "table",
+            "module": "lib"
+        },
+        {
+            "file": "models/profile-models.js",
+            "line": 12,
+            "description": "Account management",
+            "class": "",
+            "module": "lib"
+        },
+        {
+            "file": "models/reg-models.js",
+            "line": 8,
+            "description": "Account Creation",
+            "class": "",
+            "module": "lib"
+        }
+    ]
+}

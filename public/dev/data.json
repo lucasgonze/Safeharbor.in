@@ -1,0 +1,223 @@
+{
+    "project": {
+        "name": "Safe Harbor",
+        "description": "Safe Harbor.in doccy docs",
+        "version": "0.1.0",
+        "url": "http://latest.safeharbor.in",
+        "logo": "http://latest.safeharbor.in/img/logo/247x33.png"
+    },
+    "files": {
+        "lib/page.js": {
+            "name": "lib/page.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/session.js": {
+            "name": "lib/session.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "models/dash-models.js": {
+            "name": "models/dash-models.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "models/index.js": {
+            "name": "models/index.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "models/profile-models.js": {
+            "name": "models/profile-models.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "models/reg-models.js": {
+            "name": "models/reg-models.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {},
+    "classitems": [
+        {
+            "file": "lib/page.js",
+            "line": 1,
+            "description": "Rendering Pages\n    ================\n    \n    SIMPLE TEXT\n    --------------\n    To put simple text or HTML to a screen:\n    \n        res.render( { body_text: 'Hello <b>world</b>' } );\n        \n        \n    TEMPLATE\n    ---------\n    To put a specific template (like a form) with variables:\n    \n        res.render( 'box/form.html', { username: name, phone: phone } );\n        \n    STATUS MESSAGES\n    -----------------\n    To ouput specific status messages:\n    \n        var page = safeharbor.page;\n        \n        res.outputMessage( page.MESSAGE_LEVELS.warning,\n                           'Warning Title',\n                           'Some warning text goes here' );\n                           \n     You can have multiple of these output message on the same page. Later,\n     you can then call res.render() as above. This allows for the following\n     scenario:\n     \n            if( onSubmit && (some_error == true) ) \n            {\n                // on submit there was some error\n                res.outputMessage( page.MESSAGE_LEVELS.error,\n                                   'Try again',\n                                   'Some error text goes here' );\n            }\n            \n            // on first time render OR error re-submit:\n            \n            res.render( 'box/form.html', postargs );\n\nSTATUS (ONLY) PAGES\n    ---------------------\n    If all you want to output is the message (no template):\n      \n            res.outputMessage( page.MESSAGE_LEVELS.success,\n                               'Wonderful',\n                               'Some happy text goes here' );\n                               \n            res.render( page.MESSAGE_VIEW, { pageTitle: 'Happy Joy' } );\n    \n    AJAX-STYLE HTML SNIPPETS\n    --------------------------\n    To return a snippet of HTML (either as 'body_text', message or template) use \n    the same techniques as above but the layout option:\n    \n            res.render( { layout: page.SNIPPET, \n                          body_text: 'This text is for embedding' } );\n        \n    Also works for templates:\n        \n            res.render( 'profile/acct_email.html', // <-- template for embedded editing\n                         { layout: page.SNIPPET } )",
+            "class": ""
+        },
+        {
+            "file": "lib/session.js",
+            "line": 12,
+            "description": "Initialize a new `SessionStore`.",
+            "api": "public",
+            "class": ""
+        },
+        {
+            "file": "lib/session.js",
+            "line": 22,
+            "description": "Inherit from `Store.prototype`.",
+            "class": ""
+        },
+        {
+            "file": "lib/session.js",
+            "line": 53,
+            "description": "Attempt to fetch session by the given `sid`.",
+            "params": [
+                {
+                    "name": "sid",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "fn",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "api": "public",
+            "class": ""
+        },
+        {
+            "file": "lib/session.js",
+            "line": 84,
+            "description": "Commit the given `sess` object associated with the given `sid`.",
+            "params": [
+                {
+                    "name": "sid",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "sess",
+                    "description": "",
+                    "type": "Session"
+                },
+                {
+                    "name": "fn",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "api": "public",
+            "class": ""
+        },
+        {
+            "file": "lib/session.js",
+            "line": 102,
+            "description": "Destroy the session associated with the given `sid`.",
+            "params": [
+                {
+                    "name": "sid",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "api": "public",
+            "class": ""
+        },
+        {
+            "file": "lib/session.js",
+            "line": 118,
+            "description": "Invoke the given callback `fn` with all active sessions.",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "api": "public",
+            "class": ""
+        },
+        {
+            "file": "lib/session.js",
+            "line": 134,
+            "description": "Clear all sessions.",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "api": "public",
+            "class": ""
+        },
+        {
+            "file": "lib/session.js",
+            "line": 146,
+            "description": "Fetch number of sessions.",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "api": "public",
+            "class": ""
+        },
+        {
+            "file": "models/dash-models.js",
+            "line": 9,
+            "description": "public           *",
+            "class": ""
+        },
+        {
+            "file": "models/index.js",
+            "line": 9,
+            "description": "Static function",
+            "class": ""
+        },
+        {
+            "file": "models/index.js",
+            "line": 30,
+            "description": "Generic status codes",
+            "class": ""
+        },
+        {
+            "file": "models/index.js",
+            "line": 55,
+            "description": "Exceptions",
+            "class": ""
+        },
+        {
+            "file": "models/index.js",
+            "line": 86,
+            "description": "Chainable performer for psql access",
+            "class": ""
+        },
+        {
+            "file": "models/index.js",
+            "line": 350,
+            "description": "psql table ops wrapper\n\n\nPostgres reference: \nhttps://github.com/brianc/node-postgres/wiki/Query",
+            "class": ""
+        },
+        {
+            "file": "models/profile-models.js",
+            "line": 12,
+            "description": "Account management",
+            "class": ""
+        },
+        {
+            "file": "models/reg-models.js",
+            "line": 8,
+            "description": "Account Creation",
+            "class": ""
+        }
+    ]
+}

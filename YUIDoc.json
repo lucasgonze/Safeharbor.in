@@ -1,0 +1,17 @@
+{
+  "name": "Safe Harbor",
+  "description": "Safe Harbor.in doccy docs",
+  "version": "0.1.0",
+  "url": "http://latest.safeharbor.in",
+  "logo": "http://latest.safeharbor.in/img/logo/247x33.png",
+  "options": {
+    "linkNatives": "true",
+    "attributesEmit": "true",
+    "paths": [
+      "./lib",
+      "./models",
+      "./views"
+    ],
+    "outdir": "./public/developer"
+  }
+}
