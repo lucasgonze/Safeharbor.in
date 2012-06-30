@@ -3,17 +3,20 @@
  * Account Creation
  *****************************/
 
-var reg        = require("../models/reg-models.js");
-var profile    = require("../models/profile-models.js");
-var loginstate = require('../lib/loginstate.js');
-var errlib     = require('../lib/error.js');
-var utils      = require('../lib/utils.js');
-var Performer  = require('../lib/performer.js').Performer;
-var debug      = require('../lib/debug.js');
+var safeharbor = require('../lib/safeharbor.js');
+var debug      = safeharbor.debug;
+var utils      = safeharbor.utils;
+var errlib     = safeharbor.errors;
+var page       = safeharbor.page;
+var loginstate = safeharbor.loginstate;
+var Performer  = safeharbor.Performer;
 
-var CODES          = reg.CODES;
-var exp            = errlib.err;
-var errout         = errlib.errout();
+var util    = require('util');
+var errout  = errlib.errout();
+var profile = require("../models/profile-models.js");
+var reg     = require("../models/reg-models.js");
+var CODES   = reg.CODES;
+var exp     = errlib.err;
 
 exports.install = function( app )
 {
@@ -31,7 +34,7 @@ function registerGet( req, res ) {
         if( code == CODES.SUCCESS )
         {
             res.render('reg/fromemail.html',
-                { layout: 'shared/main.html', pageTitle:'Verify', bodyClass:'regid', regid: regid });
+                { pageTitle:'Verify', bodyClass:'regid', regid: regid });
         }
         else 
         {
@@ -55,12 +58,13 @@ function registerPost(req,res){
         });
     var createSite = reg.createSite( req.body , function( code, siteid ) {
             if( code == CODES.INSERT_SINGLE )
+            {            
                 res.render( "reg/done.html",
-                               { layout:"shared/main.html",
-                                 pageTitle:"Setup Done",
+                               { pageTitle:"Setup Done",
                                  bodyClass:"regfinal",
                                  siteid:siteid
                                  } );    
+            }
        });
     var logEmIn = profile.acctFromID( null, function( code, acct ) {
             if( code == CODES.SUCCESS )
@@ -82,10 +86,15 @@ function emailHandshake(req, res, host) {
                 // N.B. these params are flipped coming from sendgrid
                 callback: function(success,message) {
                     if( success ) {
-                        res.render("reg/checkyouremail.html",
-                              {layout:"shared/main.html",
-                               pageTitle:"Check Your Email",
-                               bodyClass:"gocheckemail"} );
+                        res.outputMessage(
+                                page.MESSAGE_LEVELS.success,
+                                "Registration",
+                                "Go to your email and open the message from Safeharbor.in.",
+                                { class: 'bigass', status: 'envelope' }
+                            );
+                                
+                        res.render( { pageTitle:"Check Your Email",
+                                      bodyClass:"gocheckemail" } );
                     }   
                     else {
                         errout( req, res, exp( 400, 'Email handshake failed: ' + message)  );
@@ -118,12 +127,15 @@ function startEmailHandshake(req, res) {
     var checkAcct = profile.acctIdFromEmail( req.body.email, function(code, err) { 
             if( code == CODES.RECORD_FOUND )
             {
+                res.outputMessage( page.MESSAGE_LEVELS.warning,
+                                    "Account Exists",
+                                    "You already have an account" );
+                                    
                 res.render("profile/login.html",
                     {
                         layout:"shared/main.html",
                         pageTitle:"Account exists",
                         bodyClass: "login",
-                        'alert-from-create': '<div class="alert alert-info">You already have an account</div>'
                     });
                 this.stopChain();
             }

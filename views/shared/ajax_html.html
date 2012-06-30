@@ -1,0 +1,13 @@
+<!doctype html>
+{{{snippet_head}}}
+{{#each messages}}
+<div {{#if class}}class="{{class}}"{{/if}}>
+    <div class="alert alert-{{level}} notsonarrowblock" style="text-align:center">
+        <p><i class="icon-{{status}}"></i> {{{title}}}</p>
+        <p>{{{text}}}</p>            
+    </div>
+    {{#if quicktip}}<p class="quicktip"><small><i class="icon-info-sign"></i>{{quicktip}}</small></p>{{/if}}
+</div>
+{{/each}}
+{{{body}}}
+{{{foot}}}

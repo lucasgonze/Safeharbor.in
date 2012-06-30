@@ -12,7 +12,6 @@ var loginstate = safeharbor.loginstate;
 var Performer  = safeharbor.Performer;
 
 var util    = require('util');
-var errout  = errlib.errout();
 var profile = require("../models/profile-models.js");
 
 var CODES          = profile.CODES;
@@ -30,14 +29,14 @@ exports.install = function( app )
     
 	app.trivialRoute('/login','login','profile','Log In',not_logged_in);
 	app.post('/login', not_logged_in, saveLogin);
-	
+
+	app.trivialRoute('/logout','logout','profile','Log Out',logged_in);
+	app.post('/logout', logged_in, clearLogin);
+		
 	app.trivialRoute('/lostpassword','lostpassword','profile','Lost Password',not_logged_in);
 	app.post('/lostpassword',                             not_logged_in, lostPasswordStart);	
 	app.get ('/lostpassword/:resetSecret([0-9a-z]{10})$', not_logged_in, lostPasswordGet );
 	app.post('/lostpassword/:resetSecret([0-9a-z]{10})$', not_logged_in, lostPasswordPost);
-	
-	app.trivialRoute('/logout','logout','profile','Log Out',logged_in);
-	app.post('/logout', logged_in, clearLogin);
 	
 	app.trivialRoute('/passwordreset','passwordreset','profile','Reset Password',logged_in);
 	app.post('/passwordreset', logged_in, savePasswordReset);
@@ -74,7 +73,7 @@ function saveLogin(req,res) {
         }
         else if( code == CODES.NO_RECORDS_FOUND )
         {
-            errlib.render( res, 'Wups, not a valid user and password combination', "401 Unauthorized" );
+            errout( req, res, exp( 400, 'Unauthorized')  );
         }
     });
 
@@ -177,21 +176,26 @@ function savePasswordReset(req,res) {
     var args = utils.copy( { acct: loginstate.getID(req) }, req.body );
     
     var resetPW = profile.resetPasswordForLoggedInUser( args, function(code,err) {   
+            var title = "Password";
             if( code == CODES.SUCCESS )
             {
-                var title = "Password Reset";
                 res.outputMessage( 
                     page.MESSAGE_LEVELS.success,
                     title,
                     "Password successfully reset."
-                );
-            
-                res.render( page.MESSAGE_VIEW, {pageTitle:title} );
+                );            
             }
             else if( code == CODES.NO_RECORDS_UPDATED )
             {
-                errlib.render(res, 'wups, wrong password on current account', 404 );
+                res.outputMessage( 
+                    page.MESSAGE_LEVELS.error,
+                    title,
+                    "Invalid current password for account. Passord not reset."
+                );            
             }
+          
+            res.render( page.MESSAGE_VIEW, {pageTitle:title} );
+            
         } );
         
     resetPW.handleErrors( req, res ).perform();

@@ -83,8 +83,8 @@ function update(req,res)
     {
         out = 'System was already up to date';
     }
-    
-    utils.page( res, '<h3>'+out+'</h3>', 'Upgrade result' );
+
+    res.render( { body_text: '<h3>'+out+'</h3>',  pageTitle: 'Upgrade result' } );
 }
 
 function devMenu(req,res)
@@ -104,12 +104,12 @@ function docs( req, res )
     var text = '<p>How Performer class works:</p>' + 
                '<img src="/img/dev/performer.jpg" />';
                
-    utils.page( res, text, 'Developer Docs' );
+    res.render( { body_text: text, pageTitle: 'Developer Docs' } );
 }
 
 function nop(req, res) {
     require('../lib/loginstate.js').logstate(req);
-    utils.page( res, '<pre>'+util.inspect(req.session)+'</pre>', 'Session');
+    res.render( { body_text: '<pre>'+util.inspect(req.session)+'</pre>', pageTitle: 'Session' } );
 }
 
 function testdash( req, res )
@@ -130,7 +130,7 @@ function page(req,res)
 
 function testboxpost(req,res)
 {
-    res.render( '../views/dev/fakeAttach2.html',
+    res.render( 'dev/fakeAttach2.html',
                 {
                    pageTitle: 'Test Box Post'
                 } );
@@ -140,7 +140,7 @@ function flipDebug(req,res)
 {
     debug.setVolume( req.params.volume );
     debug.out('DEBUG IS SOMETHING');
-    utils.page(res,'debug is ' + ( req.params.volume ? 'something' : 'meh'),'Debug is Something');
+    res.render( { body_text: 'debug is ' + ( req.params.volume ? 'something' : 'meh'), pageTitle: 'Debug is Something' } );
 }
 
 function dumpTables( req, res )
@@ -198,7 +198,7 @@ function dumpTables( req, res )
             html += '</table></p>';
         }
         
-        utils.page(res,html,'db dump');
+        res.render( { body_text: html, pageTitle: 'db dump' } );
     }});
 
     coreDumper

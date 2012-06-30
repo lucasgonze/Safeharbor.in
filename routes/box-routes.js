@@ -30,22 +30,18 @@ exports.install = function( app )
 function getBox(req,res){
 	// look up metadata for the box number
 	var p = box.get( req.params.regid, function (code, site) {
-        if( code == CODES.NO_RECORDS_FOUND )
-        {
-            errlib.render( res, 'That account does not exists!', 404 );
-        }
-        else if( code == CODES.SUCCESS ) 
-        {
-            res.render( 'box/form.html', utils.copy( {
-                        layout:       'box/box_main.html',
-                        skipMenu:     true,
-                        pageTitle:    'Copyright Dispute Form',
-                        bodyClass:    'box' }, 
-                        site ));			
-        }
+        if( code != CODES.SUCCESS ) 
+            return;
+
+        res.render( 'box/form.html', utils.copy( {
+                    layout:       'box/box_main.html',
+                    skipMenu:     true,
+                    pageTitle:    'Copyright Dispute Form',
+                    bodyClass:    'box' }, 
+                    site ));			
     } );
 
-    p.handleErrors(req,res,[CODES.MULTIPLE_RECORDS_FOUND]).perform();
+    p.handleErrors(req,res,[CODES.MULTIPLE_RECORDS_FOUND,CODES.NO_RECORDS_FOUND]).perform();
 };
 
 function notifyEmailer(req, res, contactInfo, mediaInfo ) {	
@@ -153,14 +149,6 @@ function postBox(req,res){
 
     // TODO: verify parameters
     
-    function verifyCB( code, err )
-    {
-        if( code == CODES.NO_RECORDS_FOUND )
-        {
-            errlib.render( res, 'Invalid account id', 404 );
-        }
-    }
-    
     function nop() { }
     
     if( req.body.belief !== "on" || req.body.authorized !== "on") {
@@ -176,13 +164,13 @@ function postBox(req,res){
     var contactArgNames = [ 'owners_full_name', 'full_name', 'job_title', 'postal', 'email', 'phone', 'fax' ];
     var contactArgs = extractFields(req.body, contactArgNames,false);
     
-    var verify   = box.get( regid, verifyCB );
+    var verify   = box.get( regid, nop );
     var auditer  = dash.logTakeDownRequest( regid, contactArgs, mediaArgs, nop );
     var detail   = dash.getAuditDetail( nop );    
     var notifier = notifyEmailer( req, res );
     
     verify              // verify site record is valid
-      .handleErrors( req, res )
+      .handleErrors( req, res, [CODES.NO_RECORDS_FOUND] )
       .chain( auditer ) // put the TR into our database
       .chain( detail )  // get the new record back with SELECT
       .chain( notifier) // send email

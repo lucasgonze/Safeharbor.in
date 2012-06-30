@@ -9,40 +9,32 @@ var checkRole = exports.checkRole = function(acceptableRole)
     {
         var ok = false;
         
-        if( !acceptableRole ) {
-            // then why did you call this?
-            // assert here?
+        var user = login.getUser(req);
+
+        if( !user )
+        {
+            ok = acceptableRole == ROLES.not_logged_in;
+        }
+        else if( user.role == ROLES.admin )
+        {
             ok = true;
         }
-        else 
+        else
         {
-            var user = login.getUser(req);
-
-            if( !user )
+            if( acceptableRole <= ROLES.logged_in )
             {
-                ok = acceptableRole == ROLES.not_logged_in;
+                ok = user.role <= acceptableRole;
             }
-            else if( user.role == ROLES.admin )
+            else  // 'owner'
             {
-                ok = true;
-            }
-            else
-            {
-                if( acceptableRole <= ROLES.logged_in )
-                {
-                    ok = user.role <= acceptableRole;
-                }
-                else  // 'owner'
-                {
-                    ok = req.session.seekingAccountId == user.acctid;
-                }
+                ok = req.session.seekingAccountId == user.acctid;
             }
         }
-        
+
         if( ok ) {
             next();
         }
-        else {
+        else {            
             next( new Error('Wrong permission for this operation') );
         }
     }

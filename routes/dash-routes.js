@@ -38,7 +38,7 @@ var renderDashForAccount = exports.renderDashForAccount = function( req, res, ui
 
                         if( rows && rows.length )
                         {
-                            res.render( 'disputes/all.html',
+                            res.render( 'dash/list.html',
                                         {
                                            pageTitle: 'Safe Harbor - Disputes',
                                            bodyClass: 'disputes',
@@ -70,7 +70,7 @@ function getDetail( req, res )
     var detail = dash.getAuditDetail( auditId, function( code, detail ) {
                 if( code == CODES.SUCCESS )
                 {
-                    res.render( 'disputes/detail.html',
+                    res.render( 'dash/detail.html',
                                 {
                                    pageTitle: 'Safe Harbor - Dispute Detail',
                                    bodyClass: 'disputes',
