@@ -23,9 +23,63 @@ var CODES = box.CODES;
 
 exports.install = function( app )
 {
-	app.get ('/box/:regid([0-9a-f]+)$',  getBox);
-	app.post('/box/:regid([0-9a-f]+)',   postBox);
+	app.get ('/box/bymail/:regid([0-9a-f]+)$',  getByMail);
+	app.get ('/box/form/:regid([0-9a-f]+)$',  	getForm);
+	app.get ('/box/help/learn$',  				getLearn);
+	app.get ('/box/help/role$',  				getRoleHelp);
+	app.get ('/box/role/:regid([0-9a-f]+)$',  	getRole);
+	app.get ('/box/splash/:regid([0-9a-f]+)$',  getSplash);
+	app.get ('/box/:regid([0-9a-f]+)$',  		getBox);
+	app.post('/box/:regid([0-9a-f]+)',   		postBox);
 }
+
+function getByMail(req,res){
+       res.render( 'box/bymail.html', {
+                   layout:       'box/box_main.html',
+                   skipMenu:     true,
+                   pageTitle:    'Copyright - Submit Dispute',
+                   bodyClass:    'box' } );		
+};
+
+function getForm(req,res){
+       res.render( 'box/form-v2.html', {
+                   layout:       'box/box_main.html',
+                   skipMenu:     true,
+                   pageTitle:    'Copyright - Submit Dispute',
+                   bodyClass:    'box' } );		
+};
+
+function getRoleHelp(req,res){
+       res.render( 'box/rolehelp.html', {
+                   layout:       'box/box_main.html',
+                   skipMenu:     true,
+                   pageTitle:    'Copyright Help - Role',
+                   bodyClass:    'box' } );		
+};
+
+function getLearn(req,res){
+       res.render( 'box/learn.html', {
+                   layout:       'box/box_main.html',
+                   skipMenu:     true,
+                   pageTitle:    'Copyright Help - Learn',
+                   bodyClass:    'box' } );		
+};
+
+function getRole(req,res){
+       res.render( 'box/role.html', {
+                   layout:       'box/box_main.html',
+                   skipMenu:     true,
+                   pageTitle:    'Copyright Dispute - Select Role',
+                   bodyClass:    'box' });			
+};
+
+function getSplash(req,res){
+       res.render( 'box/splash.html', utils.copy( {
+                   layout:       'box/box_main.html',
+                   skipMenu:     true,
+                   pageTitle:    'Copyright Dispute',
+                   bodyClass:    'box' }));			
+};
 
 function getBox(req,res){
 	// look up metadata for the box number
@@ -58,6 +112,7 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                         res.render({   layout:"box/box_main.html",
                                        pageTitle:"Success",
                                        sitename: this.sitename,
+									   domain: this.domain
                                      } );
                     }   
                     else {
