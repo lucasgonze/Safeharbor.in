@@ -16,6 +16,41 @@ div.navbar-fixed-top .brand img { width: 250px }
 div.navbar-fixed-top ul.nav { font-size: 2em }
 /***********************/
 
+/********
+ * /box
+ ********/
+
+body.box.splash div.main {
+	margin-left: auto;
+	margin-right: auto;	
+	max-width: 50em;
+}
+
+.box.splash p, .box.splash li {
+    font-size: 1.5em;
+    line-height: 1.7em;	
+     max-width: 32em;	
+}
+
+p.legalese {
+	border: 1px solid #ccc;
+	font-size: 1em !important;
+	line-height: 1.2em;
+	font-style: italic;
+	padding: 1em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.box.splash div.hitpoints p {
+	text-align: center;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+.box.splash div.hitpoints {
+	padding-bottom: 4em;
+}
+
 /*********************** competitive differentiation list */
 body.firstrun div#filling ol {
 	/* center it*/
