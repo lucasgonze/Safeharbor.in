@@ -38,7 +38,7 @@ function getByMail(req,res){
                    layout:       'box/box_main.html',
                    skipMenu:     true,
                    pageTitle:    'Copyright - Submit Dispute',
-                   bodyClass:    'box' } );		
+                   bodyClass:    'bymail' } );		
 };
 
 function getForm(req,res){
@@ -46,7 +46,7 @@ function getForm(req,res){
                    layout:       'box/box_main.html',
                    skipMenu:     true,
                    pageTitle:    'Copyright - Submit Dispute',
-                   bodyClass:    'box' } );		
+                   bodyClass:    'dmcaform' } );		
 };
 
 function getRoleHelp(req,res){
@@ -54,7 +54,7 @@ function getRoleHelp(req,res){
                    layout:       'box/box_main.html',
                    skipMenu:     true,
                    pageTitle:    'Copyright Help - Role',
-                   bodyClass:    'box' } );		
+                   bodyClass:    'rolehelp' } );		
 };
 
 function getLearn(req,res){
@@ -62,7 +62,7 @@ function getLearn(req,res){
                    layout:       'box/box_main.html',
                    skipMenu:     true,
                    pageTitle:    'Copyright Help - Learn',
-                   bodyClass:    'box' } );		
+                   bodyClass:    'learn' } );		
 };
 
 function getRole(req,res){
@@ -70,15 +70,16 @@ function getRole(req,res){
                    layout:       'box/box_main.html',
                    skipMenu:     true,
                    pageTitle:    'Copyright Dispute - Select Role',
-                   bodyClass:    'box' });			
+                   bodyClass:    'role' });			
 };
 
 function getSplash(req,res){
+
        res.render( 'box/splash.html', utils.copy( {
                    layout:       'box/box_main.html',
                    skipMenu:     true,
                    pageTitle:    'Copyright Dispute',
-                   bodyClass:    'box' }));			
+                   bodyClass:    'splash' }));			
 };
 
 function getBox(req,res){

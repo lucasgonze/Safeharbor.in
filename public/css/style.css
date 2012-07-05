@@ -26,13 +26,13 @@ body.box.splash div.main {
 	max-width: 50em;
 }
 
-.box.splash p, .box.splash li {
-    font-size: 1.5em;
+.box.splash p {
     line-height: 1.7em;	
-     max-width: 32em;	
+    max-width: 32em;	
+    font-size: 1.5em;
 }
 
-p.legalese {
+.box.splash p.legalese {
 	border: 1px solid #ccc;
 	font-size: 1em !important;
 	line-height: 1.2em;
