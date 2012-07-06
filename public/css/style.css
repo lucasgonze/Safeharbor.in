@@ -10,7 +10,12 @@
  * override Bootstrap settings
  ********/
 
-
+fieldset {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 15px;
+}
+    
 
 /*********************** global nav bar */
 /* make room at the top of the viewport for the global nav to have a fixed position */
@@ -26,9 +31,9 @@ div.navbar-fixed-top ul.nav { font-size: 2em }
  * /siteeditor
  ********/
 
-/* Needing to preface with .siteeditor is a hack. Otherwise the size 
-   isn't picked up. Don't know why. */
-.siteeditor p.tip, .fromeemail p.tip {
+/* Needing to preface with .siteeditor or .regid is a hack, but otherwise the size 
+   isn't picked up. Haven't figured out why just yet. */
+.siteeditor p.tip, body.regid p.tip {
     border: 1px dotted #ccc;
     text-align: center;
     font-size: 12px !important;

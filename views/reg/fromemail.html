@@ -5,21 +5,26 @@
 
 	<form action="/reg/{{{regid}}}" method="post" id="newsite">
 
-		<div class="borderme">
+		<fieldset>
 			<p class="upper">Title of your site:</p>
-			<p><input type="text" placeholder="My Awesome Site" name="sitename" id="sitename" autofocus></p>
+			<p><input type="text" value="{{{sitename}}}" name="sitename" id="sitename"></p>
 			<p class="upper">Domain name of your site:</p>
-			<p><input type="text" placeholder="example.com" name="domain" id="domain"></p>
-		</div>
-
-		<div class="borderme">
-			<p class="upper">Mailing address of your <a href="http://www.copyright.gov/onlinesp/" target="safeharbor.in-newwin">designated agent to receive notifications of claimed infringement</a>:</p>
-			<textarea required name="agentaddress" id="mailing"></textarea>
-			<p class="upper">Email address of your designated agent:</p>
-			<p><input type="text" placeholder="username@example.com" name="agentemail"></p>
-		</div>
-
-		<p><input class="btn btn-primary btn-large" type="submit" value="Save"></p>
-
+			<p><input type="text" value="{{{domain}}}" name="domain" id="domain"></p>
+		</fieldset>
+		
+		<fieldset>
+			<p class="upper">Street address for mailed DMCA notifications:</p>
+			<textarea required name="agentaddress" id="mailing">{{{agentaddress}}}</textarea>
+			<p class="upper">Email address for DMCA notifications:</p>
+			<p><input type="text" value="{{{agentemail}}}" name="agentemail"></p>
+			<p class="upper">Name of designated agent:</p>
+			<p><input type="text" value="{{{agentname}}}" name="agentname" id="agentname"></p>
+			<p class="upper">Phone number of designated agent:</p>
+			<p><input type="text" value="{{{agentphone}}}" name="agentphone" id="agentphone"></p>
+			<p class="tip"><i class="icon-info-sign"></i> If you have a <a href="http://www.copyright.gov/onlinesp/" target="safeharbor.in-newwin">designated agent</a>, the postal address and email address MUST be their information.</p>
+		</fieldset>		
+		
+		<p style="margin-top: 2em"><input class="btn btn-primary btn-large"" type="submit" value="Save"></p>
 	</form>
 </div>
+
