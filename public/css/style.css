@@ -6,6 +6,12 @@
    Fixme: switch to sass/less/compass.
    ========================================================================== */
 
+/********
+ * override Bootstrap settings
+ ********/
+
+
+
 /*********************** global nav bar */
 /* make room at the top of the viewport for the global nav to have a fixed position */
 body {
@@ -15,6 +21,19 @@ body {
 div.navbar-fixed-top .brand img { width: 250px }
 div.navbar-fixed-top ul.nav { font-size: 2em }
 /***********************/
+
+/********
+ * /siteeditor
+ ********/
+
+/* Needing to preface with .siteeditor is a hack. Otherwise the size 
+   isn't picked up. Don't know why. */
+.siteeditor p.tip, .fromeemail p.tip {
+    border: 1px dotted #ccc;
+    text-align: center;
+    font-size: 12px !important;
+    padding: 5px;
+}
 
 /********
  * /box
