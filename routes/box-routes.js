@@ -34,11 +34,21 @@ exports.install = function( app )
 }
 
 function getByMail(req,res){
-       res.render( 'box/bymail.html', {
-                   layout:       'box/box_main.html',
-                   skipMenu:     true,
-                   pageTitle:    'Copyright - Submit Dispute',
-                   bodyClass:    'bymail' } );		
+	
+	// look up metadata for the box number
+	var p = box.get( req.params.regid, function (code, site) {
+        if( code != CODES.SUCCESS ) 
+            return;
+
+        res.render( 'box/bymail.html', utils.copy( {
+                    layout:       'box/box_main.html',
+                    skipMenu:     true,
+                    pageTitle:    'Copyright - Submit By Mail',
+                    bodyClass:    'bymail' }, 
+                    site ));			
+    } );
+
+    p.handleErrors(req,res,[CODES.MULTIPLE_RECORDS_FOUND,CODES.NO_RECORDS_FOUND]).perform();
 };
 
 function getForm(req,res){
@@ -46,7 +56,9 @@ function getForm(req,res){
                    layout:       'box/box_main.html',
                    skipMenu:     true,
                    pageTitle:    'Copyright - Submit Dispute',
-                   bodyClass:    'dmcaform' } );		
+                   bodyClass:    'dmcaform',
+ 				   regid:        req.params.regid
+		} );		
 };
 
 function getRoleHelp(req,res){
@@ -70,16 +82,20 @@ function getRole(req,res){
                    layout:       'box/box_main.html',
                    skipMenu:     true,
                    pageTitle:    'Copyright Dispute - Select Role',
-                   bodyClass:    'role' });			
+                   bodyClass:    'role',
+ 				   regid: 	     req.params.regid
+			});			
 };
 
 function getSplash(req,res){
+	res.render( 'box/splash.html', utils.copy( {
+		layout:       'box/box_main.html',
+		skipMenu:     true,
+		pageTitle:    'Copyright Dispute',
+		bodyClass:    'splash',
+		regid: 		  req.params.regid
+	}));			
 
-       res.render( 'box/splash.html', utils.copy( {
-                   layout:       'box/box_main.html',
-                   skipMenu:     true,
-                   pageTitle:    'Copyright Dispute',
-                   bodyClass:    'splash' }));			
 };
 
 function getBox(req,res){
@@ -92,7 +108,8 @@ function getBox(req,res){
                     layout:       'box/box_main.html',
                     skipMenu:     true,
                     pageTitle:    'Copyright Dispute Form',
-                    bodyClass:    'box' }, 
+                    bodyClass:    'box',
+ 					regid:        req.params.regid}, 
                     site ));			
     } );
 
