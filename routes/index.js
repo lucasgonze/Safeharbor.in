@@ -15,7 +15,7 @@ var checkRole = exports.checkRole = function(acceptableRole)
         {
             ok = acceptableRole == ROLES.not_logged_in;
         }
-        else if( user.role == ROLES.admin )
+        else if( user.role == ROLES.admin || user.role == ROLES.developer)
         {
             ok = true;
         }
@@ -34,7 +34,7 @@ var checkRole = exports.checkRole = function(acceptableRole)
         if( ok ) {
             next();
         }
-        else {            
+        else {    
             next( new Error('Wrong permission for this operation') );
         }
     }
