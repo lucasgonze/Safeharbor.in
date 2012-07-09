@@ -247,8 +247,8 @@ body.dash form.search span {
 }
 
 /* context-sensitive help for input fields */
-#request .help-block { display: none; }
-#request .show-block .help-block, .help-block:active { display: inline }
+#request .help-block { visibility: hidden }
+#request .show-block .help-block, .help-block:active { visibility: visible }
 
 #request input[type="text"], 
 #request input[type="password"], 
