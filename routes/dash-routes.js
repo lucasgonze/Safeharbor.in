@@ -49,8 +49,8 @@ var renderDashForAccount = exports.renderDashForAccount = function( req, res, ui
                         {
                             res.outputMessage( 
                                             page.MESSAGE_LEVELS.success,
-                                            "Good news!",
-                                            "No has compained about your site! Thank you! Drive Safely."
+                                            "No disputes",
+                                            "You have no open DMCA requests."
                                             );
                             res.render( page.MESSAGE_VIEW,
                                         {  pageTitle:"Safe Harbor - Disputes",
