@@ -75,6 +75,17 @@ body.box.splash div.main {
 	padding-bottom: 4em;
 }
 
+/* /box/role/ */
+
+body.role div.role {
+	border-bottom: 1px solid black;
+	padding: 1em;
+	margin: 1em;
+}
+body.role p { font-size: 1.5em }
+body.role p.tip { font-size: 1em }
+
+
 /*********************** competitive differentiation list */
 body.firstrun div#filling ol {
 	/* center it*/
