@@ -78,10 +78,10 @@ body.box.splash div.main {
 /* /box/role/ */
 
 body.role div.role {
-	border-bottom: 1px solid black;
-	padding: 1em;
 	margin: 1em;
+	padding: 1.5em
 }
+div.role:nth-child(odd){ background-color: lightgray }
 body.role p { font-size: 1.5em }
 body.role p.tip { font-size: 1em }
 
