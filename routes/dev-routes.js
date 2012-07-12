@@ -21,6 +21,7 @@ var menu = [
 	[ 'test page context', '/dev/page', page],
 	[ 'test logged in state', '/dev/nop', nop],
 	[ 'dump of tables', '/dev/underbelly', dumpTables ],
+	[ 'permanent Google+ Hangout', '/hangout', hangout],
 	[ 'turn on console debugging', '/dev/debugout/:volume([0-9])', flipDebug, '/dev/debugout/1' ],
 	[ 'turn off console debugging', null, flipDebug, '/dev/debugout/0' ],
 	[ 'hard-wired /box form', '/dev/testboxpost', testboxpost ],
@@ -29,7 +30,9 @@ var menu = [
 	[ 'rebuild tables/factory install (<b style="color:red">DESTRUCTIVE</b> - NO UNDO)', '/dev/scaffolding', recreateTables ]
 ];
 
-
+function hangout(req,res){
+	res.redirect('https://plus.google.com/hangouts/_/e8402e9cd589061e6bad0ffe62e501b91e86dd3c?authuser=0&hl=en');	
+}
 exports.install = function( app )
 {
     var check = app.checkRole(app.ROLES.developer);
