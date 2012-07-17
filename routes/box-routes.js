@@ -52,13 +52,23 @@ function getByMail(req,res){
 };
 
 function getForm(req,res){
-       res.render( 'box/form-v2.html', {
-                   layout:       'box/box_main.html',
-                   skipMenu:     true,
-                   pageTitle:    'Copyright - Submit Dispute',
-                   bodyClass:    'dmcaform',
- 				   regid:        req.params.regid
-		} );		
+	// look up metadata for the box number
+	var p = box.get( req.params.regid, function (code, site) {
+        if( code != CODES.SUCCESS ) 
+            return;
+
+	       res.render( 'box/form-v2.html', 
+			utils.copy( {
+	                   layout:       'box/box_main.html',
+	                   skipMenu:     true,
+	                   pageTitle:    'Copyright - Submit Dispute',
+	                   bodyClass:    'dmcaform',
+	 				   regid:        req.params.regid
+					   }, site )
+			 );		
+    } );
+
+    p.handleErrors(req,res,[CODES.MULTIPLE_RECORDS_FOUND,CODES.NO_RECORDS_FOUND]).perform();
 };
 
 function getRoleHelp(req,res){
