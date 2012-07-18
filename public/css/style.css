@@ -44,6 +44,8 @@ div.navbar-fixed-top ul.nav { font-size: 2em }
  * /box
  ********/
 
+body.box { padding-top: 55px }
+
 body.box.bymail div.designatedagent { margin-left: 4em }
 body.box.bymail .designatedagent pre {
     font-family: monospace;
