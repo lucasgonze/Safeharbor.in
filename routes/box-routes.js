@@ -23,107 +23,79 @@ var CODES = box.CODES;
 
 exports.install = function( app )
 {
-	app.get ('/box/bymail/:regid([0-9a-f]+)$',  getByMail);
-	app.get ('/box/form/:regid([0-9a-f]+)$',  	getForm);
-	app.get ('/box/help/learn$',  				getLearn);
-	app.get ('/box/help/role$',  				getRoleHelp);
-	app.get ('/box/role/:regid([0-9a-f]+)$',  	getRole);
-	app.get ('/box/splash/:regid([0-9a-f]+)$',  getSplash);
-	app.get ('/box/:regid([0-9a-f]+)$',  		getBox);
-	app.post('/box/:regid([0-9a-f]+)',   		postBox);
+	app.get ('/box/bymail/:regid([0-9a-f]+)$',  	getByMail);
+	app.get ('/box/form/:regid([0-9a-f]+)$',  		getForm);
+	app.get ('/box/help/learn/:regid([0-9a-f]+)$',	getLearn);
+	app.get ('/box/help/role/:regid([0-9a-f]+)$',  	getRoleHelp);
+	app.get ('/box/role/:regid([0-9a-f]+)$',  		getRole);
+	app.get ('/box/:regid([0-9a-f]+)$',  			getSplash);
+	app.post('/box/:regid([0-9a-f]+)',   			postBox);
+}
+
+// convenience function for reuse only in this file
+function wrapBox(req,res,viewPath,pageTitle,bodyClass,extraVars){
+
+	var p = box.get( req.params.regid, function (code, site) {
+        if( code != CODES.SUCCESS ) 
+            return;
+
+		var pageVars = 	{
+		                    layout:     'box/box_main.html',
+		                    skipMenu:   true,
+		                    pageTitle:  pageTitle,
+		                    bodyClass:  bodyClass,
+							regid: 		req.params.regid
+	 					};
+		pageVars = utils.copy(pageVars,site);
+		if( typeof extraVars !== "undefined")
+			pageVars = utils.copy(pageVars,extraVars);
+			
+		// console.log("passing vars to wrapBox")
+		// console.log(pageVars)
+        res.render( viewPath, pageVars);			
+    } );
+
+    p.handleErrors(req,res,[CODES.MULTIPLE_RECORDS_FOUND,CODES.NO_RECORDS_FOUND]).perform();	
 }
 
 function getByMail(req,res){
-	
-	// look up metadata for the box number
-	var p = box.get( req.params.regid, function (code, site) {
-        if( code != CODES.SUCCESS ) 
-            return;
-
-        res.render( 'box/bymail.html', utils.copy( {
-                    layout:       'box/box_main.html',
-                    skipMenu:     true,
-                    pageTitle:    'Copyright - Submit By Mail',
-                    bodyClass:    'bymail' }, 
-                    site ));			
-    } );
-
-    p.handleErrors(req,res,[CODES.MULTIPLE_RECORDS_FOUND,CODES.NO_RECORDS_FOUND]).perform();
+	wrapBox(req,res,'box/bymail.html','Copyright - Submit By Mail','bymail');
 };
 
 function getForm(req,res){
-	// look up metadata for the box number
-	var p = box.get( req.params.regid, function (code, site) {
-        if( code != CODES.SUCCESS ) 
-            return;
 
-	       res.render( 'box/form-v2.html', 
-			utils.copy( {
-	                   layout:       'box/box_main.html',
-	                   skipMenu:     true,
-	                   pageTitle:    'Copyright - Submit Dispute',
-	                   bodyClass:    'dmcaform',
-	 				   regid:        req.params.regid
-					   }, site )
-			 );		
-    } );
+	var roleCopyrightOwnerChecked;
+	var roleAuthorizedRepresentativeChecked;
+	var roleOtherChecked;
 
-    p.handleErrors(req,res,[CODES.MULTIPLE_RECORDS_FOUND,CODES.NO_RECORDS_FOUND]).perform();
+	if( req.query["person-type"] === "co" ) // copyright owner
+		roleCopyrightOwnerChecked = "checked";
+	else if( req.query["person-type"] === "ar" ) // authorized representative
+		roleAuthorizedRepresentativeChecked = "checked";
+	else
+		roleOtherChecked = "checked";
+			
+	wrapBox(req,res,'box/form.html','Copyright - Submit Dispute','dmcaform',{
+		roleCopyrightOwnerChecked: roleCopyrightOwnerChecked,
+		roleAuthorizedRepresentativeChecked: roleAuthorizedRepresentativeChecked,
+		roleOtherChecked: roleOtherChecked
+	});
 };
 
 function getRoleHelp(req,res){
-       res.render( 'box/rolehelp.html', {
-                   layout:       'box/box_main.html',
-                   skipMenu:     true,
-                   pageTitle:    'Copyright Help - Role',
-                   bodyClass:    'rolehelp' } );		
+	wrapBox(req,res,'box/rolehelp.html','Copyright Help - Role','rolehelp');
 };
 
 function getLearn(req,res){
-       res.render( 'box/learn.html', {
-                   layout:       'box/box_main.html',
-                   skipMenu:     true,
-                   pageTitle:    'Copyright Help - Learn',
-                   bodyClass:    'learn' } );		
+	wrapBox(req,res,'box/learn.html','Copyright Help - Learn','learn');
 };
 
 function getRole(req,res){
-       res.render( 'box/role.html', {
-                   layout:       'box/box_main.html',
-                   skipMenu:     true,
-                   pageTitle:    'Copyright Dispute - Select Role',
-                   bodyClass:    'role',
- 				   regid: 	     req.params.regid
-			});			
+	wrapBox(req,res,'box/role.html','Copyright - Select Role','role');
 };
 
 function getSplash(req,res){
-	res.render( 'box/splash.html', utils.copy( {
-		layout:       'box/box_main.html',
-		skipMenu:     true,
-		pageTitle:    'Copyright Dispute',
-		bodyClass:    'splash',
-		regid: 		  req.params.regid
-	}));			
-
-};
-
-function getBox(req,res){
-	// look up metadata for the box number
-	var p = box.get( req.params.regid, function (code, site) {
-        if( code != CODES.SUCCESS ) 
-            return;
-
-        res.render( 'box/form.html', utils.copy( {
-                    layout:       'box/box_main.html',
-                    skipMenu:     true,
-                    pageTitle:    'Copyright Dispute Form',
-                    bodyClass:    'box',
- 					regid:        req.params.regid}, 
-                    site ));			
-    } );
-
-    p.handleErrors(req,res,[CODES.MULTIPLE_RECORDS_FOUND,CODES.NO_RECORDS_FOUND]).perform();
+	wrapBox(req,res,'box/splash.html','Copyright','splash');
 };
 
 function notifyEmailer(req, res, contactInfo, mediaInfo ) {	
@@ -144,7 +116,7 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                                      } );
                     }   
                     else {
-                        errout( req, res, err( 400, 'Email notify failed: ' + message)  );
+                        errout( req, res, errlib.err( 400, 'Email notify failed: ' + message)  );
                         this.stopChain();
                     }                    
                     
@@ -158,7 +130,9 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                         
                     this.sitename = mailerValues.sitename;
                     
-                    mailerValues.dashurl =  'http://'+req.headers.host+'/dash';                    
+                    mailerValues.dashurl =  'http://'+req.headers.host+'/dash';   
+                 	console.log("Sending notification mail to")
+					console.log(mailerValues.agentemail)
                     mailer.emailFromTemplate( 
                                           mailerValues.agentemail,
                                           subject,
@@ -233,9 +207,52 @@ function postBox(req,res){
     // TODO: verify parameters
     
     function nop() { }
-    
-    if( req.body.belief !== "on" || req.body.authorized !== "on") {
-        errout( req, res, err( 400, 'invalid options to postBox') );
+
+	function checkArray(name){
+		console.log("sanitizing array "+name);
+		console.log(typeof(req.body[name]) )
+		if( typeof(req.body[name]) !== "object") return false;
+		console.log(req.body[name].length);
+		if( req.body[name].length < 1 ) return false; 
+		if( req.body[name].length > 255) return false;
+		return(true);		
+	}
+	
+	function checkString(name){
+		console.log("sanitizing string "+name);
+		if( typeof(req.body[name]) !== "string") return false;
+		// console.log(req.body[name].length);
+		if( req.body[name].length < 1 ) return false; 
+		if( req.body[name].length > 255) return false;
+		return(true);
+	}
+
+	// some form fields may have identical IDs. When that happens the different fields with the same ID are sent as arrays.
+	function checkStringOrArray(name){
+		console.log("checkStringOrArray")
+		if( typeof(req.body[name]) === "string") 
+			return(checkString(name));
+		if( typeof(req.body[name]) === "object") 
+			return(checkArray(name));
+		console.log("returning false for name "+name)
+		return(false);
+	}
+	/* these fields are optional, so we don't validate them:
+		owners_full_name, job_title, fax
+	*/
+
+	// console.log(req.body);
+    if( 
+		(req.body.belief !== "on" && req.body.authorized !== "on") ||
+		!checkString('full_name') ||
+		!checkString('email') ||
+		!checkString('phone') ||
+		!checkString('postal') ||
+		!checkStringOrArray('page') ||
+		!checkStringOrArray('anchor') ||
+		!checkStringOrArray('description')
+		) {
+        errout( req, res, errlib.err( 400, 'invalid options to postBox') );
         return;
 	}
     

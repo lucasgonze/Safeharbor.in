@@ -44,6 +44,31 @@ div.navbar-fixed-top ul.nav { font-size: 2em }
  * /box
  ********/
 
+body.box.bymail div.designatedagent { margin-left: 4em }
+body.box.bymail .designatedagent pre {
+    font-family: monospace;
+	background-color: white;
+	width: 30em
+}
+body.box.bymail p {
+    font-size: 1.2em;
+    line-height: 1.5em;
+    max-width: 40em;
+    margin-top: 1em;
+}
+body.box.bymail div.well {
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+
+body.box.dmcaform label, .dmcaform p {
+    font-size: 1.2em;
+    line-height: 1.4em;
+    max-width: 40em;
+}
+body.box.dmcaform a.debug { float: right }
+body.box.dmcaform .vestigial { display: none }
+
 body.box.splash div.main {
 	margin-left: auto;
 	margin-right: auto;	
@@ -267,10 +292,4 @@ body.dash form.search span {
 	font-weight: bold;
 }
 
-div.designatedagent {
-    margin-left: 4em;
-}
-.designatedagent, .designatedagent p {
-    font-family: monospace;
-}
 

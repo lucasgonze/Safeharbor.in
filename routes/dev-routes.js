@@ -172,9 +172,10 @@ function dumpTables( req, res )
                                         callback: function( c, err ) {
         if( c != CODES.OK )
             return;
-        
+   
         html = ''; 
             
+		console.log("bp xi")
         for( var i = 0; i < data.length; i++ )
         {
             var D = data[i];

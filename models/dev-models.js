@@ -39,7 +39,9 @@ exports.recreateTables = function(callback){
 	                      ' sitename text not null, ' +
 	                      ' domain text not null unique, ' +
 	                      ' agentaddress text not null, ' +
-	                      ' agentemail text not null' +
+	                      ' agentemail text not null,' +
+						  ' agentname text not null,' +
+						  ' agentphone text not null' +
 	                      ') with oids');
 
     q('drop table if exists contact');
@@ -101,22 +103,24 @@ exports.cleanTables = function(callback) {
     q('delete from media');
 
     q("insert into acct (role,email,password) values ('1','victor@safeharbor.in',  'qqqq')");
-    q("insert into acct (role,email,password) values ('1','lucas@safeharbor.in',   'qqqq')");
+    q("insert into acct (role,email,password) values ('1','lucasgonze@safeharbor.in', 'qqqq')");
     q("insert into acct (role,email,password) values ('1','jim@safeharbor.in',     'qqqq')");
     q("insert into acct (role,email,password) values ('3','nicole@safeharbor.in',  'qqqq')");
 
-    q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail) values " +
+
+    q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone) values " +
            "(40,1,'Safe Harbor.in','1.safeharbor.in','7 foo Ln., Bar Park, IL'," +
-             "'admin@safeharbor.in')");
-    q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail) values " +
+             "'victor@safeharbor.in','Jane Doe Esquire','(800) 555-1212')");
+    q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone) values " +
            "(41,2,'Safe Harbor.in','2.safeharbor.in','7 foo Ln., Bar Park, IL'," +
-             "'admin@safeharbor.in')");
-    q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail) values " +
+             "'lucas.gonze@gmail.com','Jane Doe Esquire','(800) 555-1212')");
+    q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone) values " +
            "(42,3,'Safe Harbor.in','3.safeharbor.in','7 foo Ln., Bar Park, IL'," +
-             "'admin@safeharbor.in')");
-    q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail) values " +
+             "'jim@safeharbor.in','Jane Doe Esquire','(800) 555-1212')");
+    q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone) values " +
            "(43,4,'Safe Harbor.in','4.safeharbor.in','7 foo Ln., Bar Park, IL'," +
-             "'admin@safeharbor.in')");
+             "'nicole@safeharbor.in','Jane Doe Esquire','(800) 555-1212')");
+
 }
 
 exports.dumpAll = function(cb)
