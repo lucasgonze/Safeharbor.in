@@ -115,8 +115,7 @@ body.role p.tip { font-size: 1em }
 /* /box/learn */
 
 body.box.learn li.question h4 {
-    margin-top: 1em;
-    margin-bottom: 1em;
+	padding-top: 2.5em; /* offset from top to make enough space for nav bar */
 }
 
 body.box.learn li.question p, body.box.learn li.question li, body.box.learn li.question h4 {
