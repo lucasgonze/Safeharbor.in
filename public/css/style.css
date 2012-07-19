@@ -112,6 +112,21 @@ div.role:nth-child(odd){ background-color: lightgray }
 body.role p { font-size: 1.5em }
 body.role p.tip { font-size: 1em }
 
+/* /box/learn */
+
+body.box.learn li.question h4 {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+body.box.learn li.question p, body.box.learn li.question li, body.box.learn li.question h4 {
+    line-height: 1.7;	
+    max-width: 32em;	
+    font-size: 1.5em;
+}
+
+body.box.learn li.question pre { max-width: 32em }
+
 
 /*********************** competitive differentiation list */
 body.firstrun div#filling ol {

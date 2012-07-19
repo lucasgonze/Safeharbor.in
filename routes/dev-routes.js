@@ -175,7 +175,6 @@ function dumpTables( req, res )
    
         html = ''; 
             
-		console.log("bp xi")
         for( var i = 0; i < data.length; i++ )
         {
             var D = data[i];
