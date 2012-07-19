@@ -78,7 +78,7 @@ body.box.splash div.main {
 }
 
 .box.splash p {
-    line-height: 1.2;	
+    line-height: 1.5;	
     max-width: 32em;	
     font-size: 1.5em;
 }
@@ -119,7 +119,7 @@ body.box.learn li.question h4 {
 }
 
 body.box.learn li.question p, body.box.learn li.question li, body.box.learn li.question h4 {
-    line-height: 1.7;	
+    line-height: 1.5;	
     max-width: 32em;	
     font-size: 1.5em;
 }
