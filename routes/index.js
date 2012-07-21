@@ -62,7 +62,7 @@ function home( req, res )
     if( login.isLoggedIn() )
         res.redirect('/dash');
     else
-        res.render( 'firstrun/home.html', { } );
+        res.render( 'firstrun/home.html', { layout:'firstrun/nop.html' } );
 }
 
 exports.setup = function(app) {
