@@ -5,8 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title>{{sitename}} - {{pageTitle}}</title>
+	<title>{{#if sitename}}{{sitename}}{{else}}Safeharbor.in{{/if}}{{#if pageTitle}} - {{pageTitle}}{{/if}}</title>
 	<meta name="description" content="">
 	<meta name="author" content="">
 
@@ -15,7 +16,10 @@
 	<link rel="stylesheet" href="/css/bootstrap.css">
 	<link rel="stylesheet" href="/css/font-awesome.css">
 	<link rel="stylesheet" href="/css/bootstrap-responsive.css">
-	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/box.css">
+
+	<script type="text/javascript" src="//use.typekit.net/olc2iqd.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
 	<script src="/js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>
 	
@@ -23,42 +27,29 @@
     <script>window.jQuery || document.write('<script src="/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
 
 	<style type="text/css">
+
 	</style>
-
-	{{#if custom_css}}<link rel="stylesheet" href="{{custom_css}}">{{/if}}
-
 </head>
-<body class="box {{bodyClass}}">
+<body>
 
-	<div class="navbar navbar-fixed-top" >
-			<a class="brand" href="http://{{domain}}">{{sitename}}</a>
-		<div class="navbar-inner">
-			<div class="container">								
+	<header id="globalnav">
+		<div id="globalnavhighlight">
+			<a href="/{{sitelink}}" class="pull-left"><img src="{{sitelogo}}" class="sitelogo" alt="{{sitename}}"></a>
+			<div id="haslowerborder">
+				<div class="foo">Notification of Claimed Infringement per 17 USC § 512</div>	
 			</div>
-	  </div>
-	</div>
+		</div>
+	</header>
 
-    {{#each messages}}
-    <div class="bigass">
-        <div class="alert alert-{{level}} notsonarrowblock" style="text-align:center">
-            <p><i class="icon-{{status}}"></i> {{title}}</p>
-            <p>{{text}}</p>
-        </div>
-    </div>
-    {{/each}}
-
-	<div id="filling" class="container">
-    {{{body}}}
-	</div>
+	<div>{{{body}}}</div>
 	
-	<script src="/js/libs/bootstrap/transition.js"></script>
-	<script src="/js/libs/bootstrap/collapse.js"></script>
-	<script src="/js/libs/bootstrap/bootstrap.js"></script>
-	<script src="/js/libs/bootstrap/tab.js"></script>
+	<footer>
+		<div class="span4 about">This tool for reporting copyright infringement is provided for Etsy by SafeHarbor.in. SafeHarbor.in provides services for DMCA compliance. Our mission is to reduce risk, expense, and stress for web sites while being effective and efficient for copyright owners. </div>
+		<div class="span4 copyright">Copyright &copy; 2012 <a href="http://safeharbor.in">SafeHarbor.in</a></div>
+		<div class="span4 legalese"><small>{{sitename}} has adopted and reasonably implemented, and informs subscribers and account holders of the service provider’s system or network of, a policy that provides for the termination in appropriate circumstances of subscribers and account holders of the service provider’s system or network who are repeat infringers.</small></div>
+	</footer>
+
 	<script src="/js/libs/jquery-validation-x/jquery.validate.min.js"></script>
 	<script src="/js/script.js"></script>
-	{{#if custom_js}}<script src="{{custom_js}}"></script>{{/if}}
-
-	{{#if custom_script_block}}<script>{{custom_script_block}}</script>{{/if}}
 	
 </body>

@@ -37,6 +37,7 @@ exports.recreateTables = function(callback){
 	q('create table site (  acct integer not null, ' +
 	                      ' siteid serial unique, ' +
 	                      ' sitename text not null, ' +
+						  ' sitelogo text, ' +
 	                      ' domain text not null unique, ' +
 	                      ' agentaddress text not null, ' +
 	                      ' agentemail text not null,' +
@@ -103,22 +104,22 @@ exports.cleanTables = function(callback) {
     q('delete from media');
 
     q("insert into acct (role,email,password) values ('1','victor@safeharbor.in',  'qqqq')");
-    q("insert into acct (role,email,password) values ('1','lucasgonze@safeharbor.in', 'qqqq')");
+    q("insert into acct (role,email,password) values ('1','lucas@gonze.com', 'abcd')");
     q("insert into acct (role,email,password) values ('1','jim@safeharbor.in',     'qqqq')");
     q("insert into acct (role,email,password) values ('3','nicole@safeharbor.in',  'qqqq')");
 
 
-    q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone) values " +
-           "(40,1,'Safe Harbor.in','1.safeharbor.in','7 foo Ln., Bar Park, IL'," +
+    q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
+           "(40,1,'Etsy','1.etsy.com','/img/samplesitelogo.png','7 foo Ln., Bar Park, IL'," +
              "'victor@safeharbor.in','Jane Doe Esquire','(800) 555-1212')");
-    q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone) values " +
-           "(41,2,'Safe Harbor.in','2.safeharbor.in','7 foo Ln., Bar Park, IL'," +
+    q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
+           "(41,2,'Etsy','2.etsy.com','/img/samplesitelogo.png','7 foo Ln., Bar Park, IL'," +
              "'lucas.gonze@gmail.com','Jane Doe Esquire','(800) 555-1212')");
-    q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone) values " +
-           "(42,3,'Safe Harbor.in','3.safeharbor.in','7 foo Ln., Bar Park, IL'," +
+    q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
+           "(42,3,'Etsy','3.etsy.com','/img/samplesitelogo.png','7 foo Ln., Bar Park, IL'," +
              "'jim@safeharbor.in','Jane Doe Esquire','(800) 555-1212')");
-    q("insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone) values " +
-           "(43,4,'Safe Harbor.in','4.safeharbor.in','7 foo Ln., Bar Park, IL'," +
+    q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
+           "(43,4,'Etsy','4.etsy.com','/img/samplesitelogo.png','7 foo Ln., Bar Park, IL'," +
              "'nicole@safeharbor.in','Jane Doe Esquire','(800) 555-1212')");
 
 }

@@ -80,4 +80,7 @@ exports.setup = function(app) {
 
     require('./admin-routes.js').install(app);
     require('./dev-routes.js').install(app);
+
+    require('./redesign-routes.js').install(app);
+
 }

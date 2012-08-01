@@ -1,0 +1,221 @@
+
+@font-face {
+	font-family: MyHoefler;
+	src: url('/fonts/HoeflerText-Regular.eot?') format('eot'), url('/fonts/HoeflerText-Regular.woff') format('woff'), url('/fonts/HoeflerText-Regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: MyHNCB;
+	src: url('HelveticaNeue-CondensedBold.eot?') format('eot'), url('HelveticaNeue-CondensedBold.woff') format('woff'), url('/fonts/HelveticaNeue-CondensedBold.ttf') format('truetype');
+}
+
+/* background image */
+
+body, html, div.body {
+     background-color: transparent; 
+ }
+html {
+    background: url("/img/lighthouse_half_01.png") no-repeat right 110px fixed;
+    }
+
+.container, .body {
+   background-color: transparent;
+}
+
+/* some global styles */
+h1, h2, h3, h4 {
+	font-family: MyHoefler;
+}
+
+a {
+	color: #333; /* or #000 depending  */
+	font-family: "proxima-nova",sans-serif;
+	font-style: normal;
+	font-weight: 400;
+/*	font-size: 1.4em; */
+}
+
+a.underline {
+	text-decoration: underline;
+}
+
+.centered { text-align: center }
+
+/******* Top nav bar *****/
+body {
+	border-top: 3px solid #000;
+	margin-top: 2px;
+}
+div#globalnavhighlight {
+    margin-top: 40px;
+    height: 80px;
+    background-color: #ddd; /* or #ccc depending */
+    padding-top: 10px;
+	font-family: MyHNCB;
+    font-size: 2.4em; 
+}
+div#haslowerborder {
+    margin-top: 35px;
+    height: 30px;
+    border-bottom: 6px solid #000;
+    text-align: right;
+}
+div#haslowerborder div.foo {
+    margin-right: 10px;
+}
+div#globalnavhighlight img.sitelogo {
+    margin-left: 2em; /* needs to align with the left margin of content and footer as well. */
+}
+
+/******* global footer *****/
+
+footer {
+	margin-top: 30em;
+	font-family: MyHNCB, helvetica;
+	border-top: 1px solid #ddd;
+	padding-top: 2em;
+}
+footer div.about {
+}
+footer div.copyright {
+	text-align: center;
+}
+footer div.legalese {
+	border: 1px solid #000;
+	padding: 5px;
+	margin: 1em;
+}
+
+/******* splash page *****/
+
+#splash {
+	text-align: center;
+}
+#splash div.callout {
+    font-family: MyHoefler, serif;
+    padding: 2em;
+    margin: 4em;
+    text-align: center;
+}
+#splash div.callout span.youarehere {
+    background-color: #ddd;
+    font-size: 2.4em;
+    border:  5px solid #666;
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+#splash p.donot {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 45em;
+}
+
+#splash div.cta {
+	margin: 4em;
+}
+#splash div.cta a.sub {
+	color: #000;
+	text-decoration: underline;
+	margin-left: 2em;	
+}
+
+/******* role page *****/
+
+
+div#rolepage h2 {
+	margin-top: 2em
+	margin-bottom: 1em
+}
+
+div#rolepage a {
+	color: #000;
+}
+
+div#rolepage {
+    margin-top: 4em;
+    margin-bottom: 4em;
+}
+
+div#rolepage footer {
+    position: fixed;
+    bottom: 0;
+}
+
+/* FAQ */
+
+div#faq div#toc {
+	border-bottom: 3px solid #777;
+	margin-bottom: 3em;
+	padding-bottom: 3em;
+	margin-top: 2em;
+}
+
+div#faq div#toc h3 {
+	margin-top: 1.3em;
+	margin-bottom: 1em;
+}
+
+div#faq li.question { margin-bottom: 2em }
+
+/* DMCA form */
+
+a#prefill {
+	position: absolute; 
+	top: 10px;
+	right: 10px;
+}
+div#dmcaform {
+    margin-top: 4em;
+}
+
+
+/******* Big Copyright CTA *****/
+
+/*
+Big Copyright CTA
+background-color: either #ccc or #ddd depending
+border: #666
+font-size: 3.2em
+font-family: Hoefler Text
+
+p, li, form labels: 
+color: #333
+font-family: "proxima nova", helvetica
+font-size: 1.4em
+
+.button: 
+background-color: #000
+font-family: helvetica
+font-weight: bold
+font-size: 1.4em
+width: 128px
+
+a:
+color: #333 or #000 depending 
+font-family: proxima nova
+font-size: 1.4em
+
+#footer:
+font-family: Helvetica Neue Condensed Bold
+font-size: 1.3em or 1.4em depending
+
+H1, H2
+font-family: Hoefler Text
+
+Sidebar p
+font-family: "proxima nova", helvetica
+font-size: 1.4em
+line-height: twitter default
+left justify
+width: 240px
+color: #666 (?) have to fiddle with this one
+
+
+Legalese thing in the footer:
+340px
+
+Education page h2 margin-bottom: 10px?
+*/
