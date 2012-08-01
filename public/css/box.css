@@ -48,6 +48,16 @@ p, li, label {
 	*/
 }
 
+div.sidebar {
+	margin-top: 6em; /* push the content way down below the start of the main content */
+}
+div.sidebar h3 {
+	margin-top: 3em; /* to separate sections in the sidebars */
+}
+
+
+
+
 /******* Top nav bar *****/
 body {
 	border-top: 3px solid #000;
@@ -67,8 +77,9 @@ div#haslowerborder {
     border-bottom: 6px solid #000;
     text-align: right;
 }
-div#haslowerborder div.foo {
+div#haslowerborder a.subtitle {
     margin-right: 10px;
+	font-family: MyHNCB;
 }
 div#globalnavhighlight img.sitelogo {
     margin-left: 2em; /* needs to align with the left margin of content and footer as well. */
@@ -161,7 +172,7 @@ div#rolepage .yourrole a i { text-decoration: none }
 /* FAQ */
 
 div#faq div#toc {
-	border-bottom: 3px solid #777;
+	border-bottom: 3px solid #000;
 	margin-bottom: 3em;
 	padding-bottom: 3em;
 	margin-top: 2em;
@@ -194,10 +205,6 @@ div#dmcaform h2 {
 	margin-bottom: .5em;
 }
 
-div#dmcaform div.sidebar {
-	margin-top: 6em; /* push the content way down below the "About you" h2 */
-}
-
 /* context-sensitive help for input fields */
 div#dmcaform #request .help-block { 
 	-moz-opacity: 0.50;
@@ -211,6 +218,27 @@ div#dmcaform #request .show-block .help-block, .help-block:active {
 }
 
 div#dmcaform div.bottom {
+	margin-top: 2em;
+}
+
+div#dmcaform a.learnmore {
+	text-decoration: underline;
+	font-family: MyHoefler;
+}
+
+/* bymail = direct address info, for bypassing the form */
+
+#bymail {
+    margin-top: 4em;
+}
+#bymail pre {
+	border: 0;
+	width: 35em;
+	margin-left: 3em;
+	font-family: MyHNCB;
+}
+#bymail .yournotificationmust {
+	font-weight: bold;
 	margin-top: 2em;
 }
 
