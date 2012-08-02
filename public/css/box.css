@@ -38,9 +38,10 @@ font-size: 24px;
 line-height: 27px;
 }
 
-h4 {margin-bottom: 10px;
-border-bottom: 1px solid #eee;
+h4 {
+margin-bottom: 20px;
 }
+
 a {
 	color: #333; /* or #000 depending  */
 	font-family: "proxima-nova",helvetica,sans-serif;
@@ -71,11 +72,20 @@ p, li, label {
 }
 
 p.toc {
-font-size: 1.6em }
+font-size: 1.6em 
+}
+
+p.toc, .answer p, .answer li {
+color: #666;
+}
 
 .answer p, .answer li {
 font-size: 1.1em;
 line-height: 1.7em;
+}
+
+.answer p {
+margin: 0px 0px 0px 23px;
 }
 
 li {
