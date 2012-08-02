@@ -17,7 +17,13 @@ body, html, div.body {
      background-color: transparent; 
  }
 html {
-    background: url("/img/lighthouse_half_01.png") no-repeat left 110px fixed ;
+    background: url("/img/lighthouse_half_01.png");
+    -khtml-opacity:.50; 
+ -moz-opacity:.50; 
+ -ms-filter:"alpha(opacity=50)";
+  filter:alpha(opacity=50);
+  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.5);
+  opacity:.50; 
     }
 
 .container, .body {
@@ -159,7 +165,7 @@ footer div.legalese {
 #splash div.callout {
     font-family: MyHoefler, serif;
     padding: 2em;
-    margin: 7em 3em 3em;
+    margin: 9em 3em 3em;
     text-align: center;
 }
 #splash div.callout span.youarehere {
