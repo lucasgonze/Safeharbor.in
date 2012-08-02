@@ -237,24 +237,18 @@ div#rolepage .yourrole a i { text-decoration: none }
 
 /* FAQ */
 
-div#faq h2 {
+ul#faq h2 {
 	margin-top: 2em;
 	margin-bottom: 1em;
 }
 
-div#faq div#toc {
+ul#faq ul#toc {
 	margin-bottom: 3em;
 	padding-bottom: 3em;
 	margin-top: 2em;
 }
 
-div#faq div#toc h3 {
-	margin-top: 1.3em;
-	margin-bottom: 1em;
-
-}
-
-div#faq li.question { margin-bottom: 2em }
+ul#faq li.question { margin-bottom: 2em }
 
 /* DMCA form */
 
