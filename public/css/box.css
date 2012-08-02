@@ -248,6 +248,11 @@ div#faq div#toc {
 	margin-top: 2em;
 }
 
+div#faq div#toc h3 {
+	margin-top: 1.3em;
+	margin-bottom: 1em;
+
+}
 
 div#faq li.question { margin-bottom: 2em }
 
