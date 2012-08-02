@@ -17,7 +17,8 @@ body, html, div.body {
      background-color: transparent; 
  }
 html {
-    background: url("/img/lighthouse_halfhalf_01.png");
+    background: url("/img/noise.png");
+    background: url("/img/lighthouse_halfhalfhalf_01.png");
  
     }
 
