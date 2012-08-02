@@ -38,6 +38,9 @@ font-size: 24px;
 line-height: 27px;
 }
 
+h4 {margin-bottom: 10px;
+border-bottom: 1px solid #eee;
+}
 a {
 	color: #333; /* or #000 depending  */
 	font-family: "proxima-nova",helvetica,sans-serif;
