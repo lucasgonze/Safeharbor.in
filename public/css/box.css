@@ -75,7 +75,7 @@ li.toc {
 font-size: 1.6em;
 }
 
-li.toc, .answer p, .answer li {
+li.toc a, .answer p, .answer li {
 color: #666;
 }
 
@@ -129,7 +129,7 @@ body:before {
 }
 
 div#globalnavhighlight {
-    margin-top: 40px;
+    margin-top: -1px;
     height: 80px;
     background-color: #ddd; /* or #ccc depending */
     padding-top: 10px;
