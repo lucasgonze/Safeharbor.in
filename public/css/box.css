@@ -184,6 +184,10 @@ footer div.legalese {
 	font-size: 1.4em;	
 }
 
+div#splash.container div.cta a.btn {
+margin-right: 20px;
+}
+
 /* role page */
 
 
