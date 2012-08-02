@@ -104,23 +104,23 @@ exports.cleanTables = function(callback) {
     q('delete from media');
 
     q("insert into acct (role,email,password) values ('1','victor@safeharbor.in',  'qqqq')");
-    q("insert into acct (role,email,password) values ('1','lucas@gonze.com', 'abcd')");
+    q("insert into acct (role,email,password) values ('1','lucas@gonze.com', 	   'abcd')");
     q("insert into acct (role,email,password) values ('1','jim@safeharbor.in',     'qqqq')");
     q("insert into acct (role,email,password) values ('3','nicole@safeharbor.in',  'qqqq')");
 
 
     q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
-           "(40,1,'Etsy','1.etsy.com','/img/samplesitelogo.png','7 foo Ln., Bar Park, IL'," +
-             "'victor@safeharbor.in','Jane Doe Esquire','(800) 555-1212')");
+           "(40,1,'ExampleCompany','1.etsy.com','/img/samplesitelogo.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
+             "'agentaddress@example.com','Jane Doe Esquire','(800) 555-1212')");
     q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
-           "(41,2,'Etsy','2.etsy.com','/img/samplesitelogo.png','7 foo Ln., Bar Park, IL'," +
-             "'lucas.gonze@gmail.com','Jane Doe Esquire','(800) 555-1212')");
+           "(41,2,'ExampleCompany','company.com','/img/samplesitelogo.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
+             "'agentaddress@example.com','Jane Doe Esquire','(800) 555-1212')");
     q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
-           "(42,3,'Etsy','3.etsy.com','/img/samplesitelogo.png','7 foo Ln., Bar Park, IL'," +
-             "'jim@safeharbor.in','Jane Doe Esquire','(800) 555-1212')");
+           "(42,3,'ExampleCompany','3.etsy.com','/img/samplesitelogo.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
+             "'agentaddress@example.com','Jane Doe Esquire','(800) 555-1212')");
     q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
-           "(43,4,'Etsy','4.etsy.com','/img/samplesitelogo.png','7 foo Ln., Bar Park, IL'," +
-             "'nicole@safeharbor.in','Jane Doe Esquire','(800) 555-1212')");
+           "(43,4,'ExampleCompany','4.etsy.com','/img/samplesitelogo.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
+             "'agentaddress@example.com','Jane Doe Esquire','(800) 555-1212')");
 
 }
 

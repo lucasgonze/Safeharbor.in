@@ -1,4 +1,5 @@
 <div class="container" id="dmcaform">
+	<a id="prefill" class="btn btn-small">Prefill</a>
 	<form action="/box/{{idhash}}" method="post" id="request">
 
 		<!-- this first row contains everything before the "submit" button. We need a separate dedicated 
@@ -11,17 +12,18 @@
 			    <h2 class="kludge">About you</h2>
 			    <div class="co ar">
 
-				    <div class="control-group ar vestigial" >
-				      <p><label class="control-label" for="owners_full_name">Copyright owner's full name</label>
-				      <div class="controls">
-						<input tabindex="10" type="text" placeholder="John Doe" id="owners_full_name" name="owners_full_name">
-				      </div>
-				    </div>
-
 				    <div class="control-group">
 				      <p><label class="control-label" for="full_name">Your full name</label>
 				      <div class="controls">
-						<input tabindex="20" type="text" placeholder="John Doe" id="full_name" name="full_name" required>
+						<input tabindex="10" type="text" placeholder="John Doe" id="full_name" name="full_name" required>
+						 <sup>* required</sup>
+				      </div>
+				    </div>
+
+				    <div class="control-group ar vestigial" >
+				      <p><label class="control-label" for="owners_full_name">Copyright owner's full name</label>
+				      <div class="controls">
+						<input tabindex="20" type="text" placeholder="John Doe" id="owners_full_name" name="owners_full_name">
 				      </div>
 				    </div>
 
@@ -36,6 +38,7 @@
 				      <label class="control-label" for="email">Email:</label>
 				      <div class="controls">
 				        <input tabindex="40" type="text" placeholder="johndoe@example.com" name="email" id="email" required>
+					    <sup>* required</sup>
 				      </div>
 					  <div class="hint help-block">Email address where you can be reached easily. Use one you check frequently. Make sure the spam filters won't prevent you from getting our messages.</div>
 				    </div>
@@ -60,6 +63,7 @@
 				      <label class="control-label" for="postal">Mailing address:</label>
 				      <div class="controls">
 				        <textarea tabindex="70" cols="30" rows="5" name="postal" id="postal" required></textarea>
+						 <sup class="textarea-adjust">* required</sup>
 				      </div>
 					  <div class="hint help-block">Postal address for reaching you. If this is not in the United States, give the country.</div>
 				    </div>
@@ -73,6 +77,7 @@
 				      <label class="control-label" for="page">Page containing the infringement:</label>
 				      <div class="controls">
 				        <input tabindex="100" type="text" placeholder="http://example.com/somesong.mp3" required autofocus id="page" name="page" class="renum" >
+						 <sup>* required</sup>
 				      </div>
 					  <div class="help-block"><a href="http://www.copyright.gov/title17/92chap5.html#512" target="new-window"><span class="icon-question-sign"></span></a> <em>The link you want taken down.</em> If there is a specific file, the file's URL. If you are alleging infringement by an external site which this site is linking to, give us the link on this site which contains the link to the external site. <a href="http://www.copyright.gov/title17/92chap5.html#512" target="new-window">Defined</a> as <q>Information reasonably sufficient to permit the service provider to locate the material. </q></div>
 				    </div>
@@ -89,6 +94,7 @@
 				      <label class="control-label" for="description">Which work is being infringed?</label>
 				      <div class="controls">
 						<input tabindex="102" type="text" placeholder="&ldquo;A Hard Day&apos;s Night&rdquo; by The Beatles" id="description" name="description" required class="renum" >
+						 <sup>* required</sup>
 				      </div>
 					  <div class="hint help-block"><a href="http://www.copyright.gov/title17/92chap5.html#512"><span class="icon-question-sign"></span></a> Tell us what is the source work that is being infringed. If it's a song, say the artist, album and title. If it's a movie tell us the name, year, or anything else that defines the work. The information is this field is defined in the law as <q>Identification of the copyrighted work claimed to have been infringed</q>.</div>
 				    </div>
