@@ -93,6 +93,10 @@ line-height: 1.7em;
 margin: 0px 0px 0px 23px;
 }
 
+.answer ul {
+margin-left: 20px;
+}
+
 li {
 list-style-type: none;
 }
