@@ -1,3 +1,6 @@
+/* TODO: Paige go back through and convert all your pixels to em's for your fonts..you mix and match */
+
+
 
 @font-face {
 	font-family: MyHoefler;
@@ -27,7 +30,12 @@ h1, h2, h3, h4 {
 	font-weight: normal;
 }
 
-h2 {
+ul#toc {
+margin-bottom: 20px;
+}
+
+
+ul#toc h2 {
 font-size: 30px;
 line-height: 36px;
 }
