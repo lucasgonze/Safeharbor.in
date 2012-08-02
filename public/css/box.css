@@ -36,9 +36,8 @@ line-height: 36px;
 h3, h4 {
 font-size: 24px;
 line-height: 27px;
-margin-bottom: 20px;
+margin-bottom: 32px 0px 30px 0px;
 }
-
 
 a {
 	color: #333; /* or #000 depending  */
@@ -249,11 +248,6 @@ div#faq div#toc {
 	margin-top: 2em;
 }
 
-div#faq div#toc h3 {
-	margin-top: 1.3em;
-	margin-bottom: 1em;
-	border-bottom: 1px solid #eee;
-}
 
 div#faq li.question { margin-bottom: 2em }
 
