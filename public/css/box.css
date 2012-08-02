@@ -71,11 +71,11 @@ p, li, label {
 	*/
 }
 
-p.toc {
+li.toc {
 font-size: 1.6em;
 }
 
-p.toc, .answer p, .answer li {
+li.toc, .answer p, .answer li {
 color: #666;
 }
 
