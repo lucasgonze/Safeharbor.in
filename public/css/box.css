@@ -15,7 +15,7 @@
 
 body, html, div.body {
 background-image: url("/img/lighthouse.png"), url("/img/noise.png");
-background-repeat: repeat, repeat-x;
+background-repeat: no-repeat, repeat;
  }
 
 
