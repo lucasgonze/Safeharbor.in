@@ -73,8 +73,8 @@ p, li, label {
 p.toc {
 font-size: 1.6em }
 
-.answer p {
-font-size: 1em;
+.answer p, .answer li {
+font-size: 1.1em;
 line-height: 1.7em;
 }
 
