@@ -71,7 +71,8 @@ p.toc {
 font-size: 1.6em }
 
 .answer p {
-font-size: 1.6em;
+font-size: 1em;
+line-height: 1.7em;
 }
 
 li {
