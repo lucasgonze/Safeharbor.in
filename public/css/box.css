@@ -17,7 +17,7 @@ body, html, div.body {
      background-color: transparent; 
  }
 html {
-    background: url("/img/lighthouse_half_01.png") left 110px fixed  no-repeat 0 50%;
+    background: url("/img/lighthouse_half_01.png") no-repeat left 110px fixed ;
     }
 
 .container, .body {
@@ -210,8 +210,9 @@ div#rolepage .yourrole li {
     margin: 2em;
     }
 
-div#rolepage .yourrole a { text-decoration: underline }
-div#rolepage .yourrole a i { text-decoration: none }
+div#rolepage .yourrole a { }
+div#rolepage .yourrole a:hover { text-decoration: underline; }
+div#rolepage .yourrole a i { text-decoration: none; }
 
 
 /* FAQ */
