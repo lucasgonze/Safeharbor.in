@@ -42,7 +42,9 @@ a.underline {
 
 p, li, label {
 	color: #333;
-	font-family: "proxima-nova", helvetica,sans-serif;
+	font-family: "proxima-nova", helvetica, sans-serif;
+	font-size: 1.4em;
+	line-height: 1.3em;
 	/* font size recommendations from Paige need to to be revisited
 	font-size: 1.4em;
 	*/
