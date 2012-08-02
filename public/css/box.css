@@ -43,8 +43,10 @@ a {
 	font-family: "proxima-nova",helvetica,sans-serif;
 	font-style: normal;
 	font-weight: 400;
-	font-size: 0.9em;
-			
+	font-size: 0.9em;			
+}
+
+a.notification {color: red;
 }
 
 a.underline {
@@ -162,7 +164,8 @@ footer div.legalese {
 #splash div.cta a.sub {
 	color: #000;
 	text-decoration: underline;
-	margin-left: 2em;	
+	margin-left: 2em;
+	font-size: 1.4em;	
 }
 
 /* role page */
