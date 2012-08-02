@@ -36,11 +36,9 @@ line-height: 36px;
 h3, h4 {
 font-size: 24px;
 line-height: 27px;
-}
-
-h4 {
 margin-bottom: 20px;
 }
+
 
 a {
 	color: #333; /* or #000 depending  */
@@ -73,7 +71,7 @@ p, li, label {
 
 li.toc {
 font-size: 1.6em;
-}
+line-height: 1.7em;}
 
 li.toc a, .answer p, .answer li {
 color: #666;
