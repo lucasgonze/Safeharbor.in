@@ -43,7 +43,8 @@ a {
 	font-family: "proxima-nova",helvetica,sans-serif;
 	font-style: normal;
 	font-weight: 400;
-	font-size: 1.4em;			
+	font-size: 0.9em;
+			
 }
 
 a.underline {
@@ -172,7 +173,7 @@ div#rolepage h2 {
 	margin-bottom: 1em
 }
 
-div#rolepage a { color: #000 }
+div#rolepage a { color: grey }
 
 div#rolepage {
     margin-top: 4em;
