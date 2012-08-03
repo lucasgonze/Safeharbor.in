@@ -90,7 +90,7 @@ a.underline {
 text-align: center 
 }
 
-p, li, {
+p, li, label {
 	color: #333;
 	font-family: "proxima-nova", helvetica, sans-serif;
 	font-size: 1.4em;
@@ -98,12 +98,6 @@ p, li, {
 
 }
 
-label {
-	color: #333;
-	font-family: "proxima-nova", helvetica, sans-serif;
-	font-size: 1.4em;
-	line-height: 1.3em;
-}
 
 div.sidebar {
 	margin-top: 6em; /* push the content way down below the start of the main content */
