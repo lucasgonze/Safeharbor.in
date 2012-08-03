@@ -53,7 +53,7 @@ a:active {
 sub,
 sup {
   position: relative;
-  font-size: 75%;
+  font-size: 100%;
   line-height: 0;
   vertical-align: baseline;
 }
@@ -690,15 +690,15 @@ code {
 
 pre {
   display: block;
-  padding: 8.5px;
+  padding: 10.5px;
   margin: 0 0 9px;
-  font-size: 12.025px;
-  line-height: 18px;
+  font-size: 19.025px;
+  line-height: 24px;
   word-break: break-all;
   word-wrap: break-word;
   white-space: pre;
   white-space: pre-wrap;
-  background-color: #f5f5f5;
+  background-color: #EAE8E8;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-border-radius: 4px;

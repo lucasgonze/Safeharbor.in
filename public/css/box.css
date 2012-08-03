@@ -62,7 +62,7 @@ margin: 40px 0 10px 0px;
 }
 
 
-div#rolepage h2, div#faq h2, #dmcaform h2 {
+div#rolepage h2, div#faq h2, div#dmcaform h2 div#bymail h2 {
 	margin-top: 2em;
 	margin-bottom: 1em;
 	font-size: 2.4em;
@@ -335,12 +335,14 @@ margin: 0px 0px 0px 23px;
 #bymail {
     margin-top: 4em;
 }
+
 #bymail pre {
 	border: 0;
-	width: 35em;
+	width: 22em;
 	margin-left: 3em;
 	font-family: MyHNCB;
 }
+
 #bymail .yournotificationmust {
 	font-weight: bold;
 	margin-top: 2em;
