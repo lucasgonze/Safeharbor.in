@@ -6,7 +6,7 @@
 
 @font-face {
 	font-family:MyHNCB;
-	src:url(HelveticaNeue-CondensedBold.eot?) format(eot), url(HelveticaNeue-CondensedBold.woff) format(woff), url(/fonts/HelveticaNeue-CondensedBold.ttf) format(truetype);
+	src:url(/fonts/HelveticaNeue-CondensedBold.eot?) format(eot), url(/fonts/HelveticaNeue-CondensedBold.woff) format(woff), url(/fonts/HelveticaNeue-CondensedBold.ttf) format(truetype);
 }
 
 
