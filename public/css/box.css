@@ -342,14 +342,11 @@ margin: 0px 0px 0px 23px;
 #bymail pre {
 	border: 0;
 	width: 22em;
-	margin-left: 3em;
+	margin: 0 0 2em 3em;
 	font-family: MyHNCB;
 }
 
-#bymail .yournotificationmust {
-	font-weight: bold;
-	margin-top: 2em;
-}
+
 
 /******* Big Copyright CTA *****/
 
