@@ -109,6 +109,8 @@ div.sidebar h3 {
 	margin-top: 3em; /* to separate sections in the sidebars */
 }
 
+div.sidebar p {
+color: red;}
 
 /******* Top nav bar *****/
 
