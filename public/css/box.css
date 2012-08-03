@@ -14,9 +14,9 @@
 /* background image */
 
 body, html, div.body {
-background-image: url("/img/lighthouse_copycopy.png"), url("/img/noise.png");
+/* background-image: url("/img/lighthouse_copycopy.png"), url("/img/noise.png"); */
 background-repeat: no-repeat, repeat;
-position: 
+
  }
 
 /* fullscale background image */
