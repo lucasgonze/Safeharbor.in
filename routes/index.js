@@ -77,10 +77,7 @@ exports.setup = function(app) {
     require('./reg-routes.js').install(app);
     require('./box-routes.js').install(app);
     require('./dash-routes.js').install(app);
-
     require('./admin-routes.js').install(app);
     require('./dev-routes.js').install(app);
-
-    require('./redesign-routes.js').install(app);
-
+    require('./demo-routes.js').install(app);
 }
