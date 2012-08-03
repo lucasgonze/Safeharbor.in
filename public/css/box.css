@@ -318,6 +318,7 @@ margin: 0px 0px 0px 23px;
 #dmcaform a.learnmore {
 	text-decoration: underline;
 	font-family: MyHoefler;
+	font-size: 1em;
 }
 
 #dmcaform sup {
