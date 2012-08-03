@@ -103,7 +103,7 @@ p, li, label {
 
 
 div.sidebar {
-	margin-top: 6em; /* push the content way down below the start of the main content */
+	margin-top: 3em; /* push the content way down below the start of the main content */
 }
 div.sidebar h3 {
 	margin-top: 3em; /* to separate sections in the sidebars */
@@ -201,7 +201,7 @@ footer div.legalese {
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
-	width: 45em;
+	width: 44em;
 }
 
 #splash div.cta {
