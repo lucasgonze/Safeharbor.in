@@ -16,7 +16,32 @@
 body, html, div.body {
 background-image: url("/img/lighthouse_copycopy.png"), url("/img/noise.png");
 background-repeat: no-repeat, repeat;
+position: 
  }
+
+/* fullscale background image */
+
+
+	img.bg {
+			/* Set rules to fill background */
+			min-height: 100%;
+			min-width: 1024px;
+			
+			/* Set up proportionate scaling */
+			width: 100%;
+			height: auto;
+			
+			/* Set up positioning */
+			position: fixed;
+			top: 0;
+			left: 0;
+		}
+		
+		@media screen and (max-width: 1024px){
+			img.bg {
+				left: 50%;
+				margin-left: -512px; }
+		}
 
 
 /* some global styles */
@@ -66,6 +91,7 @@ p, li, label {
 	font-family: "proxima-nova", helvetica, sans-serif;
 	font-size: 1.4em;
 	line-height: 1.3em;
+	text-shadow: rgba(0,0,0,0.5) -1px 0, rgba(0,0,0,0.3) 0 -1px, rgba(255,255,255,0.5) 0 1px, rgba(0,0,0,0.3) -1px -2px;
 	/* font size recommendations from Paige need to to be revisited
 	font-size: 1.4em;
 	*/
