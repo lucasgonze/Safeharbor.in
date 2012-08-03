@@ -21,6 +21,7 @@ background-repeat: no-repeat, repeat;
 
 /* fullscale background image */
 
+/*
 
 	img.bg {
 			/* Set rules to fill background */
@@ -42,6 +43,7 @@ background-repeat: no-repeat, repeat;
 				left: 50%;
 				margin-left: -512px; }
 		}
+*/
 
 
 /* some global styles */
