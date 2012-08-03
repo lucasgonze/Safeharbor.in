@@ -789,10 +789,10 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   display: inline-block;
-  height: 18px;
-  padding: 4px;
+  height: 24px;
+  padding: 5px;
   margin-bottom: 9px;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 18px;
   color: #555555;
 }
