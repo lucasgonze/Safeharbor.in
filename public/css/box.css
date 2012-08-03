@@ -36,7 +36,10 @@ background-repeat: no-repeat, repeat;
 			position: fixed;
 			top: 0;
 			left: 0;
-		}
+			
+		    /* Push to the background */
+			z-index: -1;
+			}
 		
 		@media screen and (max-width: 1024px){
 			img.bg {
@@ -93,10 +96,7 @@ p, li, label {
 	font-family: "proxima-nova", helvetica, sans-serif;
 	font-size: 1.4em;
 	line-height: 1.3em;
-	text-shadow: rgba(0,0,0,0.5) -1px 0, rgba(0,0,0,0.3) 0 -1px, rgba(255,255,255,0.5) 0 1px, rgba(0,0,0,0.3) -1px -2px;
-	/* font size recommendations from Paige need to to be revisited
-	font-size: 1.4em;
-	*/
+
 }
 
 
