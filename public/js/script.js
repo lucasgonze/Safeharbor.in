@@ -230,24 +230,26 @@ Fix the bug transitioning to a new URL
 		html: "Our product replaces the legalese.",
 		expose: true,
 		element: "div#demo50",
-		position: 'n'
+		position: 'n',
+		goTo: null
 	}
 	, {
-		goTo: "http://localhost:5000/box/3416a75f4cea9109507cacd8e2f2aefc?tour",
+		goTo: "/box/3416a75f4cea9109507cacd8e2f2aefc?tour",
+		html: "And raises the bar",
 		overlayOpacity: false,
 		live: 10000
 	}
 	, {
-		html: "Clear navigation",
+		html: "Understandable navigation",
 		expose: true,
-		goTo: "/box/3416a75f4cea9109507cacd8e2f2aefc?tour",
 		element: "div#splash",
-		position: "n"
+		position: "n",
+		goTo: null
 	}
 	, {
 		html: "Education by default",
 		expose: true,
-		element: "#learnmorebutton"
+		element: "a#learnmorebutton"
 	}
 	, {
 		goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?tour",
