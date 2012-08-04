@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<title>jQuery Tour - the flexible Tour plugin - Example 3</title>
+<link rel="stylesheet" href="css/example.css">
+<link rel="stylesheet" id="themestyle" href="../css/theme1/style.css">
+<script src="../js/jquery-1.7.1.min.js"></script>
+<script src="../js/jTour.min.js"></script>
+</head>
+<body>
+	<a class="button" href="example4.html">next example</a>
+	<a class="button" href="example2.html">previous example</a>
+	<a class="button primary" id="starttour">Start this Tour</a>
+	<h1>Example 3</h1>
+	<p>
+		This is a an example of the jTour plugin with target elements and different positions.<br>Keep in mind that <a href="http://www.tutorialchip.com/tutorials/html5-block-level-elements-complete-list/">block elements</a> have a width of 100%
+	</p>
+	<p class="info">
+		Always wrap your Tour with the <code>$(document).ready(function(){ [YOUR TOUR] });</code> to execute it when the DOM is fully loaded!
+	</p>
+	<h3>Code</h3>
+	<pre>
+$(document).ready(function() { //The DOM must be ready!
+
+	var tourdata = [
+	   {
+		  html: "Hello World"
+	   },{
+		  html: "Follow this rule - it's very important!",
+		  element: $('p.info'),
+		  overlayOpacity: 0.5,
+		  expose: true,
+		  position: 'n'
+	   },{
+		  html: "This is a codeblock which shows the example code",
+		  element: $('pre'),
+		  position: 'n'
+	   },{
+		  html: "This is a paragraph",
+		  element: 'p.target', //use the first p tag with a class "target" as target element
+		  position: 's'
+	   },{
+		  html: "This is the second list entry",
+		  element: $('li > a').eq(1), //use the second (starting with 0) a tag within a li tag as target element
+		  position: 'e' //display the box right to the target element (east) 
+	  }
+	];
+	
+	var myTour = jTour(tourdata,{
+		scrollBack: true //scrolls back to the beginning position
+	});
+	//myTour.start();
+
+});</pre>
+	<hr>
+	<h2>H2 Heading</h2>
+	<p class="target">
+		Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
+	</p>
+	<h3>Unordered List</h3>
+	<ul>
+		<li><a href="#">Unordered List Item</a></li>
+		<li><a href="#">Unordered List Item</a></li>
+		<li><a href="#">Unordered List Item</a>
+		<ul>
+			<li>Submenu</li>
+			<li>Submenu</li>
+		</ul>
+		</li>
+	</ul>
+	<footer>
+		<p>This is part of the jTour Plugin available at <a href="http://rxa.li/tour">CodeCanyon</a> &copy; revaxarts 2011</p>
+	</footer>
+<script>
+$(document).ready(function() {
+
+	var tourdata = [
+	   {
+		  html: "Hello World"
+	   },{
+		  html: "Follow this rule - it's very important!",
+		  element: $('p.info'),
+          overlayOpacity: 0.5,
+		  expose: true,
+		  position: 'n'
+	   },{
+		  html: "This is a codeblock which shows the example code",
+		  element: $('pre'),
+		  position: 'n'
+	   },{
+		  html: "This is a paragraph",
+		  element: 'p.target', //use the first p tag with a class "target" as target element
+		  position: 's'
+	   },{
+		  html: "This is the second list entry",
+		  element: $('li > a').eq(1), //use the second (starting with 0) a tag within a li tag as target element
+		  position: 'e' //display the box right to the target element (east) 
+	  }
+	];
+	
+	var myTour = jTour(tourdata,{
+		axis:'y',  // use only one axis prevent flickring on iOS devices
+		scrollBack: true //scrolls back to the beginning position
+	});
+	
+	//myTour.start();
+	
+	//the Button
+	$('#starttour').click(function(){
+		myTour.restart();							   
+	});
+	
+});
+</script>
+</body>
+</html>

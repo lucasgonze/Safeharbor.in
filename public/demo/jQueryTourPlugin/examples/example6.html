@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<title>jQuery Tour - the flexible Tour plugin - Example 6</title>
+<link rel="stylesheet" href="css/example.css">
+<link rel="stylesheet" id="themestyle" href="../css/theme1/style.css">
+<script src="../js/jquery-1.7.1.min.js"></script>
+<script src="../js/jquery.easing.js"></script>
+<script src="../js/jTour.min.js"></script>
+</head>
+<body>
+	<a class="button" href="example5.html">previous example</a>
+	<a class="button primary" id="starttour">Start this Tour</a>
+	<h1>Example 6</h1>
+	<p>
+		This is an example of the jTour plugin which uses several methos of the plugin in one tour.
+	</p>
+	<h1>H1 Heading</h1>
+	<p>
+		<img src="http://random.revaxarts.com/200x150.jpg" width="200" height="150" alt="" class="align_right">
+		Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
+	</p>
+	<h2>H2 Heading</h2>
+	<p>
+		Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
+	</p>
+	<h3>H3 heading</h3>
+	<p>
+		<img src="http://random.revaxarts.com/200x150.jpg" width="200" height="150" alt="" class="align_left">
+		Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
+	</p>
+	<h4>H4 heading</h4>
+	<p>
+		Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
+	</p>
+	<h5>H5 heading</h5>
+	<p>
+		Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
+	</p>
+	<h6>H6 heading</h6>
+	<p>
+		Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
+	</p>
+	
+	<h3>Blockquote</h3>
+	<div id="blockquote">
+		<p>
+			Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
+		</p>
+	</div>
+	<h3>Code</h3>
+	<pre> 
+$(document).ready(function() {
+
+	
+	var myTour = jTour([
+		{
+			html: "&lt;h1&gt;Welcome to the Tour&lt;/h1&gt;&lt;hr&gt;This example shows you many different possibilities how to use it"
+		},{
+			html: "This tour uses a different scrolling method..."
+		},{
+			html: "...this requires the jquery.easing plugin",
+			offset: 1500
+		},{
+			html: "start the Tour with this button",
+			element: $('a.button.primary'),
+			position: 'sw'
+		},{
+			html: "This is a Heading",
+			element: $('h1').eq(1),
+			position: 'nw'
+		},{
+			html: "remember this is a block element which is 100% width",
+			element: $('h1').eq(1),
+			onShow: function(e){ e.css({'background':'#fdd'});},
+			onHide: function(e){ e.css({'background':'none'});},
+			position: 'n'
+		},{
+			html: "Let's change this text...",
+			element: $('p').eq(2),
+			position: 'n',
+			live: 8000,
+			onStep: function(e, p) {
+				var l = myText.length;
+				e.html(myText.substr(0, Math.round(l/100*p)));
+			}
+		},{
+			html: "Move this to an absolute position (x: 50px, y: 50px)",
+			element: $('img').eq(0),
+			position: 'se',
+			steps:{
+				40:function(element){
+					this.moveTo(50,50,600);
+				}
+			}
+		},{
+			html: "Move this to an relative position (x: +100px, y: +100px)",
+			element: $('img').eq(0),
+			position: 'ne',
+			steps:{
+				40:function(element){
+					this.offset(100,100,600);
+				}
+			}
+		},{
+			html: "This box will display only if you're on a webkit browser",
+			element: ($.browser.webkit) ? $('h1').eq(0) : null
+		},{
+			html: "This box will not display if you're on a webkit browser",
+			element: (!$.browser.webkit) ? $('h1').eq(0) : null
+		},{
+			html: "This is an Image - but it's to big!",
+			element: $('img').eq(0),
+			steps:{
+				50:function(element){
+					element.animate({
+						width: 80,
+						height: 60
+					});
+				}
+			},
+			position: 'ne'
+		},{
+			html: "This image is on the wrong side!",
+			element: $('img').eq(1),
+			steps:{
+				90:function(element){
+					element.removeClass('align_left').addClass('align_right');
+				}
+			},
+			position: 'nw'
+		},{
+			html: "Like to see the exposure feature?"
+		},{
+			html: "&lt;h1&gt;Does this image has your attention now?&lt;/h1&gt;",
+			live:5000,
+			overlayOpacity:0.9,
+			expose: true,
+			element: $('img').eq(1),
+			position: 'ne'
+		},{
+			html: "this works with all elements. But sometimes we need to add additional CSS",
+			element: $('p').eq(5)
+		},{
+			html: "so we just apply some basic CSS to this element",
+			live:7000,
+			overlayOpacity:0.7,
+			expose: {
+				'background-color': '#fff',
+				'font-size': 20,
+				'color': '#000'
+			},
+			element: $('p').eq(5),
+			position: 'n'
+		},{
+			html: "You can change the background opacity..."
+		},{
+			html: "...on every step...",
+			overlayOpacity:1
+		},{
+			html: "...or over time",
+			live:5000,
+			onStep: function(e, p) {
+				this.overlay.css({'opacity':(100-p)/100+0.2});
+			},
+			overlayOpacity:1
+		},{
+			html: "Now we use the Multi Page Feature.",
+			wait: 1000
+		},{
+			html: "&lt;h1&gt;5&lt;/h1&gt;",
+			onStep: function(e, p) {
+				this.content.find('h1').html(Math.ceil((100-p)/20));
+			},
+			live:5000,
+			goTo: 'example6.html?nocache='+new Date().getTime()
+		},{
+			html: "Normaly this is a different page but in this example we use the same. Be sure that the next page has the same tour setup!"
+		},{
+			html: "This should be a blockquote",
+			element: $('#blockquote'),
+			position: 'n'
+		},{
+			html: "Now it's a blockquote",
+			element: $('#blockquote'),
+			position: 'n',
+			onBeforeShow: function(element){
+				$('&lt;blockquote/&gt;').html(element.html()).insertAfter(element);
+				element.remove();
+			}
+		},{
+			html: "Here you can see how this tour is made",
+			element: $('pre'),
+			overlayOpacity:0.7,
+			expose: {
+				'background-color': '#fff'
+			},
+			onBeforeShow: function(element){
+				this.scroll(0,800);
+			},
+			position: 'nw'
+		}
+	],{
+		axis:'y',  // use only one axis prevent flickring on iOS devices
+		animationIn: 'slideDown',
+		animationOut: 'hide',
+		easing: 'easeInOutExpo', //requires the jquery.easing plugin
+		scrollDuration: 600
+	});
+	
+	//used in this example
+	var myText = "Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores.";
+	
+});</pre>
+	<footer>
+		<p>This is part of the jTour Plugin available at <a href="http://rxa.li/tour">CodeCanyon</a> &copy; revaxarts 2011</p>
+	</footer>
+<script>
+$(document).ready(function() {
+
+	
+	var myTour = jTour([
+		{
+			html: "<h1>Welcome to the Tour</h1><hr>This example shows you many different possibilities how to use it"
+		},{
+			html: "This tour uses a different scrolling method..."
+		},{
+			html: "...this requires the jquery.easing plugin",
+			offset: 1500
+		},{
+			html: "start the Tour with this button",
+			element: $('a.button.primary'),
+			position: 'sw'
+		},{
+			html: "This is a Heading",
+			element: $('h1').eq(1),
+			position: 'nw'
+		},{
+			html: "remember this is a block element which is 100% width",
+			element: $('h1').eq(1),
+			onShow: function(e){ e.css({'background':'#fdd'});},
+			onHide: function(e){ e.css({'background':'none'});},
+			position: 'n'
+		},{
+			html: "Let's change this text...",
+			element: $('p').eq(2),
+			position: 'n',
+			live: 8000,
+			onStep: function(e, p) {
+				var l = myText.length;
+				e.html(myText.substr(0, Math.round(l/100*p)));
+			}
+		},{
+			html: "Move this to an absolute position (x: 50px, y: 50px)",
+			element: $('img').eq(0),
+			position: 'se',
+			steps:{
+				40:function(element){
+					this.moveTo(50,50,600);
+				}
+			}
+		},{
+			html: "Move this to an relative position (x: +100px, y: +100px)",
+			element: $('img').eq(0),
+			position: 'ne',
+			steps:{
+				40:function(element){
+					this.offset(100,100,600);
+				}
+			}
+		},{
+			html: "This box will display only if you're on a webkit browser",
+			element: ($.browser.webkit) ? $('h1').eq(0) : null
+		},{
+			html: "This box will not display if you're on a webkit browser",
+			element: (!$.browser.webkit) ? $('h1').eq(0) : null
+		},{
+			html: "This is an Image - but it's to big!",
+			element: $('img').eq(0),
+			steps:{
+				50:function(element){
+					element.animate({
+						width: 80,
+						height: 60
+					});
+				}
+			},
+			position: 'ne'
+		},{
+			html: "This image is on the wrong side!",
+			element: $('img').eq(1),
+			steps:{
+				90:function(element){
+					element.removeClass('align_left').addClass('align_right');
+				}
+			},
+			position: 'nw'
+		},{
+			html: "Like to see the exposure feature?"
+		},{
+			html: "<h1>Does this image has your attention now?</h1>",
+			live:5000,
+			overlayOpacity:0.9,
+			expose: true,
+			element: $('img').eq(1),
+			position: 'ne'
+		},{
+			html: "this works with all elements. But sometimes we need to add additional CSS",
+			element: $('p').eq(5)
+		},{
+			html: "so we just apply some basic CSS to this element",
+			live:7000,
+			overlayOpacity:0.7,
+			expose: {
+				'background-color': '#fff',
+				'font-size': 20,
+				'color': '#000'
+			},
+			element: $('p').eq(5),
+			position: 'n'
+		},{
+			html: "You can change the background opacity..."
+		},{
+			html: "...on every step...",
+			overlayOpacity:1
+		},{
+			html: "...or over time",
+			live:5000,
+			onStep: function(e, p) {
+				this.overlay.css({'opacity':(100-p)/100+0.2});
+			},
+			overlayOpacity:1
+		},{
+			html: "Now we use the Multi Page Feature.",
+			wait: 1000
+		},{
+			html: "<h1>5</h1>",
+			onStep: function(e, p) {
+				this.content.find('h1').html(Math.ceil((100-p)/20));
+			},
+			live:5000,
+			goTo: 'example6.html?nocache='+new Date().getTime()
+		},{
+			html: "Normaly this is a different page but in this example we use the same. Be sure that the next page has the same tour setup!"
+		},{
+			html: "This should be a blockquote",
+			element: $('#blockquote'),
+			position: 'n'
+		},{
+			html: "Now it's a blockquote",
+			element: $('#blockquote'),
+			position: 'n',
+			onBeforeShow: function(element){
+				$('<blockquote/>').html(element.html()).insertAfter(element);
+				element.remove();
+			}
+		},{
+			html: "Here you can see how this tour is made",
+			element: $('pre'),
+			overlayOpacity:0.7,
+			expose: {
+				'background-color': '#fff'
+			},
+			onBeforeShow: function(element){
+				this.scroll(0,800);
+			},
+			position: 'nw'
+		}
+	],{
+		axis:'y',  // use only one axis prevent flickring on iOS devices
+		animationIn: 'slideDown',
+		animationOut: 'hide',
+		easing: 'easeInOutExpo', //requires the jquery.easing plugin
+		scrollDuration: 600
+	});
+	
+	//the Button
+	$('#starttour').click(function(){
+		myTour.start();							   
+	});
+	
+	//used in this example
+	var myText = "Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores.";
+	
+});
+</script>
+</body>
+</html>

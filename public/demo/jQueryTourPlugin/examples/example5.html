@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<title>jQuery Tour - the flexible Tour plugin - Example 5</title>
+<link rel="stylesheet" href="css/example.css">
+<link rel="stylesheet" id="themestyle" href="../css/theme1/style.css">
+<script src="../js/jquery-1.7.1.min.js"></script>
+<script src="../js/jTour.min.js"></script>
+</head>
+<body>
+	<a class="button" href="example6.html">next example</a>
+	<a class="button" href="example4.html">previous example</a>
+	<a class="button primary" id="starttour">Start this Tour</a>
+	
+	<div id="apibuttons">
+		<a class="button" href="javascript:alert('Use these buttons to control the tour from outside');">API Buttons:</a>
+		<a class="button" href="javascript:myTour.start();" title="javascript:myTour.start();">start</a>
+		<a class="button" href="javascript:myTour.stop();" title="javascript:myTour.stop();">stop</a>
+		<a class="button" href="javascript:myTour.pause();" title="javascript:myTour.pause();">pause</a>
+		<a class="button" href="javascript:myTour.play();" title="javascript:myTour.play();">play</a>
+		<a class="button" href="javascript:myTour.pause(true);" title="javascript:myTour.pause(true);">toogle play/pause</a>
+		<a class="button" href="javascript:myTour.prev();" title="javascript:myTour.prev();">previous</a>
+		<a class="button" href="javascript:myTour.next();" title="javascript:myTour.next();">next</a>
+		<a class="button" href="javascript:myTour.offset(20,0);" title="javascript:myTour.offset(20,0);">offset x+20</a>
+		<a class="button" href="javascript:myTour.moveTo(20,20);" title="javascript:myTour.moveTo(20,20);">move to position X:20, Y:20</a>
+	</div>
+	<h1>Example 5</h1>
+	<p>
+		This is an example of the jTour plugin which uses the different callback methods.
+	</p>
+	<p class="info">
+		Always wrap your Tour with the <code>$(document).ready(function(){ [YOUR TOUR] });</code> to execute it when the DOM is fully loaded!
+	</p>
+	<h3>Code</h3>
+	<pre>
+$(document).ready(function() {
+
+//attach it to the window so we can interact with it from outside
+window.myTour = jTour([
+	{
+		html: "The next step uses steps callbacks to change content and has a lifetime of 10 seconds."
+	},{
+		html: "This step is very &lt;span&gt;nice&lt;/span&gt;",
+		live: 10000,
+		steps: {
+			20: function(){this.content.find('span').html('amazing');},
+			30: function(){this.content.find('span').html('imposing');},
+			40: function(){this.content.find('span').html('impressive');},
+			50: function(){this.content.find('span').html('wonderful');},
+			60: function(){this.content.find('span').html('stunning');},
+			70: function(){this.content.find('span').html('breathtaking');},
+			80: function(){this.content.find('span').html('awesome');}
+		}
+	},{
+		html: "The next step uses steps callbacks to change its position at 25% and 65% of its lifetime"
+	},{
+		html: "Positions changes at 25% and 65%",
+		steps: {
+			25: function(){this.offset(0, 200);},
+			65: function(){this.offset(0, -200);}
+		}
+	},{ 
+		html: "The next step uses onStep callback to change its content on every single step"
+	},{
+		html: "Current position is &lt;span&gt;0&lt;/span&gt;%",
+		onStep: function(element, percentage) {
+			this.content.find('span').html(Math.round(percentage));
+		}
+	},{ 
+		html: "the &lt;code&gt;this&lt;/code&gt; keyword is your interface to the API"
+	},{
+		html: "&lt;code&gt;this.box&lt;/code&gt; is the jQuery DOM element for the box"
+	},{
+		html: "&lt;code&gt;this.content&lt;/code&gt; is the jQuery DOM element for the content"
+	}
+],{
+	axis:'y', // use only one axis prevent flickring on iOS devices
+	onStart: function(){alert('Tour Start callback');},
+	onFinish: function(){alert('Tour Finished callback');}
+});
+
+myTour.start();
+
+});</pre>
+	<footer>
+		<p>This is part of the jTour Plugin available at <a href="http://rxa.li/tour">CodeCanyon</a> &copy; revaxarts 2011</p>
+	</footer>
+<script>
+$(document).ready(function() {
+
+	
+	//attach it to the window so we can interact with it from outside
+	window.myTour = jTour([
+		{
+			html: "The next step uses steps callbacks to change content and has a lifetime of 10 seconds."
+		},{
+			html: "This step is very <span>nice</span>",
+			live: 10000,
+			steps: {
+				20: function(){this.content.find('span').html('amazing');},
+				30: function(){this.content.find('span').html('imposing');},
+				40: function(){this.content.find('span').html('impressive');},
+				50: function(){this.content.find('span').html('wonderful');},
+				60: function(){this.content.find('span').html('stunning');},
+				70: function(){this.content.find('span').html('breathtaking');},
+				80: function(){this.content.find('span').html('awesome');}
+			}
+		},{
+			html: "The next step uses steps callbacks to change its position at 25% and 65% of its lifetime"
+		},{
+			html: "Positions changes at 25% and 65%",
+			steps: {
+				25: function(){this.offset(0, 200);},
+				65: function(){this.offset(0, -200);}
+			}
+		},{ 
+			html: "The next step uses onStep callback to change its content on every single step"
+		},{
+			html: "Current position is <span>0</span>%",
+			onStep: function(element, percentage) {
+				this.content.find('span').html(Math.round(percentage));
+			}
+		},{ 
+			html: "the <code>this</code> keyword is your interface to the API"
+		},{
+			html: "<code>this.box</code> is the jQuery DOM element for the box"
+		},{
+			html: "<code>this.content</code> is the jQuery DOM element for the content"
+		}
+	],{
+		axis:'y',  // use only one axis prevent flickring on iOS devices
+		onFinish:function(current){alert('Tour Finished callback');},
+		onStart: function(){alert('Tour Start callback');}
+	});
+	
+	//myTour.start();
+	
+	//the Button
+	$('#starttour').click(function(){
+		myTour.restart();							   
+	});
+	
+});
+</script>
+</body>
+</html>

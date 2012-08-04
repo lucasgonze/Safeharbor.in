@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<title>jQuery Tour - the flexible Tour plugin - Example 4</title>
+<link rel="stylesheet" href="css/example.css">
+<link rel="stylesheet" id="themestyle" href="../css/theme1/style.css">
+<script src="../js/jquery-1.7.1.min.js"></script>
+<script src="../js/jTour.min.js"></script>
+</head>
+<body>
+	<a class="button" href="example5.html">next example</a>
+	<a class="button" href="example3.html">previous example</a>
+	<a class="button primary" id="starttour">Start this Tour</a>
+	<h1>Example 4</h1>
+	<p>
+		This is a an example of the jTour plugin which uses an imagemap for the steps
+	</p>
+	<h3>Markup</h3>
+	<pre>&lt;img src="img/image.jpg" width="875" height="656" usemap="#image" alt=""&gt;
+&lt;map name="image"&gt;
+	&lt;area shape="rect" coords="81,264,111,295" href="#" alt="Bernice Hibbert" &gt;
+	...
+&lt;/map&gt;</pre>
+	<p class="info">
+		Use only rectangular shapes <code>shape="rect"</code>
+	</p>
+	<h2>Do you know them?</h2>
+<img src="img/image.jpg" width="875" height="656" usemap="#image" alt="">
+<map name="image">
+	<area shape="rect" coords="81,264,111,295" href="#" alt="Bernice Hibbert" >
+	<area shape="rect" coords="471,142,502,173" href="#" alt="Mrs. Glick" >
+	<area shape="rect" coords="103,442,133,473" href="#" alt="Nahasapeemapetilon Manjula" >
+	<area shape="rect" coords="234,238,264,268" href="#" alt="John Popovich" >
+	<area shape="rect" coords="646,200,676,230" href="#" alt="Legs" >
+	<area shape="rect" coords="18,504,48,535" href="#" alt="Rainier Luftwaffe Wolfcastle" >
+	<area shape="rect" coords="241,159,271,190" href="#" alt="Kearney Zzyzwicz" >
+	<area shape="rect" coords="455,358,485,388" href="#" alt="Blue-Haired Lawyer" >
+</map>
+	<footer>
+			<p>This is part of the jTour Plugin available at <a href="http://rxa.li/tour">CodeCanyon</a> &copy; revaxarts 2011</p>
+	</footer>
+<script>
+$(document).ready(function() {
+
+	var tourdata = [
+		 {
+		overlayOpacity: 0.1,
+		  html: "<h1>Do you know them all?</h1>",
+		  element: $('img')
+	   },{
+		  element: $('area').eq(0),
+		  html: "Bernice Hibbert",
+		  position: 'n'
+	   },{
+		  element: $('area').eq(1),
+		  html: "Mrs. Glick",
+		  position: 'n'
+	   },{
+		  element: $('area').eq(2),
+		  html: "Manjula Nahasapeemapetilon",
+		  position: 'n'
+	   },{
+		  element: $('area').eq(3),
+		  html: "John Popovich",
+		  position: 'n'
+	   },{
+		  element: $('area').eq(4),
+		  html: "Legs",
+		  position: 'n'
+	   },{
+		  element: $('area').eq(5),
+		  html: "Rainier Luftwaffe Wolfcastle",
+		  position: 'e'
+	   },{
+		  element: $('area').eq(6),
+		  html: "Kearney Zzyzwicz",
+		  position: 'n'
+	   },{
+		  element: $('area').eq(7),
+		  html: "Blue-Haired Lawyer",
+		  position: 'n'
+	   },{
+		  html: "<h1>You can achieve this by useing an imagemap on your image</h1>",
+		  element: $('img'),
+		  steps: {
+		 	 50: function(img){
+				$('area').each(function(i,e){
+					var _this = $(this),
+					coords = this.coords.split(',');
+					$b = $('<div class="imagemapoverlay">').css({
+						width: 30,
+						height: 30,
+						background: '#0f0',
+						zIndex:20001,
+						position:'absolute',
+						left:img.offset().left+parseInt(coords[0],10)+6,
+						top:img.offset().top+parseInt(coords[1],10)+6
+					})
+					.appendTo('body');
+				}); 
+			 }
+		  },
+		  onHide: function(img){
+			setTimeout(function(){
+				$('.imagemapoverlay').remove();
+				img.css({'opacity':1});
+			},3000);
+		  }
+	   }
+	];
+	
+	var myTour = jTour(tourdata,{
+		axis:'y',  // use only one axis prevent flickring on iOS devices
+		overlayOpacity: 0.8,
+		expose: true
+	});
+	
+	//myTour.start();
+	
+	//the Button
+	$('#starttour').click(function(){
+		myTour.start();							   
+	});
+	
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<title>jQuery Tour - the flexible Tour plugin - Example 2</title>
+<link rel="stylesheet" href="css/example.css">
+<link rel="stylesheet" id="themestyle" href="../css/theme1/style.css">
+<script src="../js/jquery-1.7.1.min.js"></script>
+<script src="../js/jTour.min.js"></script>
+</head>
+<body>
+	<a class="button" href="example3.html">next example</a>
+	<a class="button" href="example1.html">previous example</a>
+	<a class="button primary" id="starttour">Start this Tour</a>
+	<h1>Example 2</h1>
+	<p>
+		This is a an example of the jTour plugin with two steps and some options
+	</p>
+	<h3>Code</h3>
+	<pre>
+$(document).ready(function() {
+
+	var tourdata = [
+	   {
+		  html: "Hello World"
+	   },{
+		  html: "Welcome to the Tour",
+		  live: 5000,
+		  delayIn: 500
+	   }
+	];
+	
+	var myTour = jTour(tourdata);
+	myTour.start();
+
+});</pre>
+	<footer>
+		<p>This is part of the jTour Plugin available at <a href="http://rxa.li/tour">CodeCanyon</a> &copy; revaxarts 2011</p>
+	</footer>
+<script>
+$(document).ready(function() {
+
+	var tourdata = [
+	   {
+		  html: "Hello World"
+	   },{
+		  html: "Welcome to the Tour",
+		  live: 5000,
+		  delayIn: 500
+	   }
+	];
+	
+	var myTour = jTour(tourdata,{
+		axis:'y'  // use only one axis prevent flickring on iOS devices
+	});
+	
+	//myTour.start();
+	
+	//the Button
+	$('#starttour').click(function(){
+		myTour.restart();							   
+	});
+	
+});
+</script>
+</body>
+</html>

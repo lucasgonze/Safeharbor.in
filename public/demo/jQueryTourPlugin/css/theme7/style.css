@@ -1,0 +1,305 @@
+/*----------------------------------------------------------------------*/
+/* Theme 7
+/*----------------------------------------------------------------------*/
+
+
+/*----------------------------------------------------------------------*/
+/* Reset to overwrite site specific styles
+/*----------------------------------------------------------------------*/
+
+.jTour_box div,.jTour_box span,.jTour_box h1,.jTour_box h2,.jTour_box h3,.jTour_box h4,.jTour_box h5,.jTour_box h6,.jTour_box p,.jTour_box blockquote,.jTour_box pre,.jTour_box a,.jTour_box abbr,.jTour_box acronym,.jTour_box address,.jTour_box big,.jTour_box cite,.jTour_box code,.jTour_box del,.jTour_box dfn,.jTour_box em,.jTour_box font,.jTour_box img,.jTour_box ins,.jTour_box kbd,.jTour_box q,.jTour_box s,.jTour_box samp,.jTour_box small,.jTour_box strike,.jTour_box strong,.jTour_box sub,.jTour_box sup,.jTour_box tt,.jTour_box var,.jTour_box dl,.jTour_box dt,.jTour_box dd,.jTour_box ol,.jTour_box ul,.jTour_box li,.jTour_box fieldset,.jTour_box form,.jTour_box label,.jTour_box legend,.jTour_box table,.jTour_box caption,.jTour_box tbody,.jTour_box tfoot,.jTour_box thead,.jTour_box tr,.jTour_box th,.jTour_box td{
+	margin:0;
+	padding:0;
+	border:0;
+	outline:0;
+	text-shadow:none;
+	font-weight:inherit;
+	font-style:inherit;
+	font-size:100%;
+	font-family:inherit;
+	vertical-align:baseline;
+	width:auto;
+	height:auto;
+	letter-spacing:normal;
+	line-height:1em;
+	background:none;
+}
+
+/*----------------------------------------------------------------------*/
+/* Structure Styles (required)
+/*----------------------------------------------------------------------*/
+
+div.jTour_overlay{
+	position:fixed;
+	top:0;
+	left:0;
+	right:0;
+	height:100%;
+	min-height:100%;
+	z-index:20000;
+}
+div.jTour_box{
+	font-family:sans-serif;
+	font-size:14px;
+	position:absolute;
+	max-width:450px;
+	text-align:left !important;
+	padding:8px;
+	z-index:20002;
+}
+div.jTour_box.has-controls:hover{
+	padding-bottom:0px;
+}
+div.jTour_arrow{
+	position:absolute;
+	background-repeat:no-repeat;
+	background-position:0% 0%;
+	background-image:url(img/tour_triangle.png);
+	z-index:1;
+}
+div.jTour_box.c, div.jTour_box.center { background-image:none; }
+
+div.jTour_arrow.nw, div.jTour_arrow.n, div.jTour_arrow.ne, div.jTour_arrow.se, div.jTour_arrow.s, div.jTour_arrow.sw {height:8px; left:15px; right:15px;}
+div.jTour_arrow.w, div.jTour_arrow.e { width:8px; top:15px; bottom:15px; }
+
+div.jTour_arrow.nw, div.jTour_arrow.n, div.jTour_arrow.ne { bottom:1px; }
+div.jTour_arrow.sw, div.jTour_arrow.s, div.jTour_arrow.se { top:1px; }
+
+div.jTour_arrow.n{ background-position:50% 100%; }
+div.jTour_arrow.ne{ background-position:100% 100%; }
+div.jTour_arrow.nw{ background-position:0% 100%; }
+
+div.jTour_arrow.s{ background-position:50% 0%; }
+div.jTour_arrow.se{ background-position:100% 0%; }
+div.jTour_arrow.sw{ background-position:0% 0%; }
+
+div.jTour_arrow.e { background-position:0% 50%; left:1px; }
+div.jTour_arrow.w { background-position:100% 50%; right:1px; }
+
+div.jTour_content{
+	position:relative;
+	padding:12px;
+	overflow:hidden;
+	line-height:1.4em;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+div.jTour_box.has-controls:hover div.jTour_content{
+	-webkit-border-bottom-right-radius: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	-moz-border-radius-bottomright: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+div.jTour_box.has-controls:hover div.jTour_arrow{
+	background:none;
+}
+div.jTour_progress{
+	position:absolute;
+	background:none;
+	bottom:11px;
+	left:12px;
+	right:12px;
+	margin:0;
+	padding:0;
+	height:1px;
+	min-height:1px;
+	line-height:1px;
+}
+div.jTour_box.has-controls:hover div.jTour_progress{
+	bottom:35px;
+}
+div.jTour_progress_bar{
+	position:relative;
+	height:1px;
+	line-height:1px;
+	margin:0;
+	padding:0;
+	width:50%;
+}
+ul.jTour_nav{
+	height:28px;
+	margin:0;
+	padding:4px 4px 0;
+	display:none;
+	-webkit-border-bottom-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	min-width:168px;
+}
+div.jTour_box.has-controls:hover ul.jTour_nav{
+	display:block;
+}
+ul.jTour_nav li{
+	opacity:0.3;
+	filter:Alpha(30);
+	float:left;
+	list-style:none;
+	margin:0;
+	margin-right:4px;
+	padding:0;
+}
+ul.jTour_nav:hover li{
+	opacity:0.9;
+	filter:Alpha(90);
+}
+jTour_nav li:first-child{
+	margin-left:8px;
+}
+ul.jTour_nav li a{
+	text-indent:-9999px !important;
+	display:block;
+	width:24px;
+	height:24px;
+	cursor:pointer;
+	padding:0;
+	margin:0;
+	line-height:1;
+	background-image:url(img/buttons.png);
+}
+ul.jTour_nav li a:hover{
+}
+ul.jTour_nav li a.play{
+	background-position:0px 0px;
+}
+ul.jTour_nav li a.stop{
+	background-position:-29px 0px;
+}
+ul.jTour_nav li a.pause{
+	background-position:-58px 0px;
+}
+ul.jTour_nav li a.faster{
+	background-position:0px -29px;
+}
+ul.jTour_nav li a.slower{
+	background-position:-29px -29px;
+}
+ul.jTour_nav li a.next{
+	background-position:-58px -29px;
+}
+ul.jTour_nav li a.prev{
+	background-position:-87px -29px;
+}
+div.jTour_content h1{
+	font-size:22px;
+}
+div.jTour_content h2{
+	font-size:18px;
+}
+div.jTour_content h3{
+	font-size:16px;
+}
+div.jTour_content p{
+	font-size:14px;
+	line-height:1.5em;
+}
+div.jTour_content hr{
+	height:0;
+	line-height:0;
+	border:0;
+	border-top-width:1px;
+	border-top-style:solid;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	margin:9px 0;
+	padding:0;
+	clear:both;
+	display:block;
+}
+div.jTour_content code, div.jTour_content pre{
+	font-family:"Courier New", Courier, monospace;
+}
+div.jTour_content a,div.jTour_content a:link,div.jTour_content a:visited{
+	text-decoration:none;
+}
+div.jTour_content a:hover{
+	text-decoration:underline !important;
+}
+div.jTour_content a,div.jTour_content a:link,div.jTour_content a:visited{
+	text-decoration:none;
+}
+
+/*----------------------------------------------------------------------*/
+/* Theme specific styles
+/*----------------------------------------------------------------------*/
+div.jTour_box{
+	padding:11px;
+}
+div.jTour_overlay{
+	background:#333;
+}
+div.jTour_arrow.nw, div.jTour_arrow.n, div.jTour_arrow.ne, div.jTour_arrow.se, div.jTour_arrow.s, div.jTour_arrow.sw { height:11px; }
+div.jTour_arrow.w, div.jTour_arrow.e { width:11px; }
+
+div.jTour_arrow.nw, div.jTour_arrow.n, div.jTour_arrow.ne { bottom:4px; }
+div.jTour_arrow.sw, div.jTour_arrow.s, div.jTour_arrow.se { top:4px; }
+
+div.jTour_arrow.e { left:4px; }
+div.jTour_arrow.w { right:4px; }
+div.jTour_content{
+	background:#F1F1F1;
+	border:1px solid #BBB;
+	text-shadow:0 1px 0 #fff;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	color:#585858;
+	-webkit-box-shadow:0 2px 4px 0 rgba(0,0,0,0.2), inset 0 0 0 3px #dfdfdf;
+	-moz-box-shadow:0 2px 4px 0 rgba(0,0,0,0.2), inset 0 0 0 3px #dfdfdf;
+	box-shadow:0 2px 4px 0 rgba(0,0,0,0.2), inset 0 0 0 3px #dfdfdf;
+}
+div.jTour_box.has-controls:hover div.jTour_content{
+	border-bottom:0;
+}
+div.jTour_progress{
+    bottom:16px;
+    left:16px;
+    right:16px;
+}
+div.jTour_box.has-controls:hover div.jTour_progress{
+	bottom:37px;
+}
+div.jTour_progress_bar{
+	background:#FFFFFF;
+}
+ul.jTour_nav{
+	background:#F1F1F1;
+	-webkit-border-bottom-right-radius: 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	-moz-border-radius-bottomright: 6px;
+	-moz-border-radius-bottomleft: 6px;
+	border-bottom-right-radius: 6px;
+	border-bottom-left-radius: 6px;
+	-webkit-box-shadow:inset 3px 0 0 0 #dfdfdf, inset -3px 0 0 0 #dfdfdf, inset 0 -3px 0 0 #dfdfdf;
+	-moz-box-shadow:inset 3px 0 0 0 #dfdfdf, inset -3px 0 0 0 #dfdfdf, inset 0 -3px 0 0 #dfdfdf;
+	box-shadow:inset 3px 0 0 0 #dfdfdf, inset -3px 0 0 0 #dfdfdf, inset 0 -3px 0 0 #dfdfdf;
+	border:1px solid #BBB;
+	border-top:0;
+}
+ul.jTour_nav li a{
+}
+ul.jTour_nav li a:hover{
+	background-color:#fff !important;
+}
+div.jTour_content h1, div.jTour_content h2, div.jTour_content h3{
+	color:#585858;
+	text-shadow:0 1px 0 rgba(255,255,255,1);
+}
+div.jTour_content hr{
+	border-top-color:#ddd;
+	border-bottom-color:#fff;
+}
+div.jTour_content a,div.jTour_content a:link,div.jTour_content a:visited{
+	color:#000;
+}
+div.jTour_content a:hover{
+	color:#000;
+}
+div.jTour_content a,div.jTour_content a:link,div.jTour_content a:visited{
+	color:#000;
+}

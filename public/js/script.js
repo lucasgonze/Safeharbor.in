@@ -189,10 +189,90 @@ function initAjaxForms(){
 
 }
 
+function initTour(){
+	
+	if( window.location.search !== "?tour" )
+		return;
+
+/* Fixme: 
+
+Get [showControls:true] working
+Fix the bug transitioning to a new URL
+
+*/
+
+
+	var tourdata = [
+	{
+		html: "Please set your browser to full-screen mode.",
+		expose: true,
+		element: "div#demo10",
+		goTo: null,
+		showControls:true
+	}
+	, {
+		html: 'Imagine a web site that hosts content uploaded by its user community. As an example we will use <a href="http://etsy.com">Etsy</a>.',
+		expose: true,
+		element: "div#demo20",
+		goTo: null
+	}
+	, {
+		html: "The site has posted a link for copyright complaints.",
+		expose: true,
+		element: "div#demo30"
+	}
+	, {
+		html: "When the link is activated, it goes to a page of legalese.",
+		expose: true,
+		element: "div#demo40"
+	}
+	, {
+		html: "Our product replaces the legalese.",
+		expose: true,
+		element: "div#demo50",
+		position: 'n'
+	}
+	, {
+		goTo: "http://localhost:5000/box/3416a75f4cea9109507cacd8e2f2aefc?tour",
+		overlayOpacity: false,
+		live: 10000
+	}
+	, {
+		html: "Clear navigation",
+		expose: true,
+		goTo: "/box/3416a75f4cea9109507cacd8e2f2aefc?tour",
+		element: "div#splash",
+		position: "n"
+	}
+	, {
+		html: "Education by default",
+		expose: true,
+		element: "#learnmorebutton"
+	}
+	, {
+		goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?tour",
+		overlayOpacity: false
+	}
+	, {
+		html: "Save our customers time answering bogus complaints",
+		expose: true,
+		element: "li#Q7"
+	}
+	
+	
+	];
+	var myTour = jTour(tourdata,{
+			showControls: true
+		});
+	myTour.start();
+}
+
 $(document).ready(function() {
-	initValidation();	
-	initInbox();
-	initAjaxForms();
+        initValidation();       
+        initInbox();
+        initAjaxForms();
+        initTour();
 });
+
 
 

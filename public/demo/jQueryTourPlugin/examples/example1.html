@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<title>jQuery Tour - the flexible Tour plugin - Example 1</title>
+<link rel="stylesheet" href="css/example.css">
+<link rel="stylesheet" id="themestyle" href="../css/theme1/style.css">
+<script src="../js/jquery-1.7.1.min.js"></script>
+<script src="../js/jTour.min.js"></script>
+</head>
+<body>
+	<a class="button" href="example2.html">next example</a>
+	<a class="button primary" id="starttour">Start this Tour</a>
+	<h1>Example 1</h1>
+	<p>
+		This is a simple example of the jTour plugin with one step
+	</p>
+	<p class="info">
+		Always wrap your Tour with the <code>$(document).ready(function(){ [YOUR TOUR] });</code> to execute it when the DOM is fully loaded!
+	</p>
+	<h3>Code</h3>
+	<pre>
+$(document).ready(function() {
+
+	var tourdata = [];
+	
+	var mystep = {
+		html: "Hello World"
+	};
+	
+	tourdata.push(mystep);	
+	
+	var myTour = jTour(tourdata);
+	myTour.start();
+
+});</pre>
+	<h3>Shorter version</h3>
+	<pre>
+$(document).ready(function() {
+
+	var myTour = jTour([{
+		html: "Hello World"
+	}]);
+	myTour.start();
+
+});</pre>
+	<footer>
+		<p>This is part of the jTour Plugin available at <a href="http://rxa.li/tour">CodeCanyon</a> &copy; revaxarts 2011</p>
+	</footer>
+<script>
+$(document).ready(function() {
+
+	var tourdata = [];
+	
+	var mystep = {
+		html: "Hello World"
+	};
+	
+	tourdata.push(mystep);	
+	
+	var myTour = jTour(tourdata,{
+		axis:'y'  // use only one axis prevent flickring on iOS devices
+	} 
+	);
+	
+	//myTour.start();
+	
+	
+	//the Button
+	$('#starttour').click(function(){
+		myTour.restart();							   
+	});
+	
+});
+</script>
+</body>
+</html>
