@@ -191,7 +191,7 @@ function initAjaxForms(){
 
 function initTour(){
 	
-	if( window.location.search !== "?tour" )
+	if( window.location.pathname !== "/demo" && window.location.search !== "?tour" )
 		return;
 
 /* Fixme: 
@@ -201,14 +201,12 @@ Fix the bug transitioning to a new URL
 
 */
 
-
 	var tourdata = [
 	{
 		html: "Please set your browser to full-screen mode.",
 		expose: true,
 		element: "div#demo10",
-		goTo: null,
-		showControls:true
+		goTo: null
 	}
 	, {
 		html: 'Imagine a web site that hosts content uploaded by its user community. As an example we will use <a href="http://etsy.com">Etsy</a>.',
@@ -230,41 +228,66 @@ Fix the bug transitioning to a new URL
 		html: "Our product replaces the legalese.",
 		expose: true,
 		element: "div#demo50",
-		position: 'n',
-		goTo: null
-	}
-	, {
 		goTo: "/box/3416a75f4cea9109507cacd8e2f2aefc?tour",
-		html: "And raises the bar",
-		overlayOpacity: false,
-		live: 10000
 	}
 	, {
-		html: "Understandable navigation",
+		html: "Human-friendly navigation",
 		expose: true,
 		element: "div#splash",
+		position: "n"
+	}
+	, {
+		html: "Education",
+		expose: true,
+		element: "a#learnmorebutton",
 		position: "n",
-		goTo: null
+		goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?tour"
 	}
-	, {
-		html: "Education by default",
+	, {	
+		overlayOpacity: false,
+		element: "li#Q7 h4",
+		position: "e",
 		expose: true,
-		element: "a#learnmorebutton"
+		html: "Prevent complaints that aren't about copyright."
 	}
-	, {
-		goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?tour",
-		overlayOpacity: false
-	}
-	, {
-		html: "Save our customers time answering bogus complaints",
+	, {		
+		element: "li#Q5 h4",
+		overlayOpacity: false,
+		html: "Pre-written answers to standard questions",
 		expose: true,
-		element: "li#Q7"
+		position: "e",
+		goTo: "/box/3416a75f4cea9109507cacd8e2f2aefc?tour"
+	}, {
+		element: "img.sitelogo",
+		expose: true,
+		position: "e",
+		html: "Easy customization: just set logo."
+	}, {
+		element: "#haslowerborder a",
+		expose: true,
+		position: "s",
+		html: "Prevent frivolous complaints by setting serious tone."
+	}, {
+		"html": "And all this is BEFORE the main act",
+		element: "a#submitbutton",
+		position: "n",
+		goTo: "/box/role/3416a75f4cea9109507cacd8e2f2aefc?tour"
+	}, {
+		html: "Focus newbies attention when necessary",
+		live: 100000,
+		element: "#Q4",
+		goTo: "/box/form/3416a75f4cea9109507cacd8e2f2aefc?tour&person-type=co"
+	}, {
+		expose: true,
+		html: "Usability instead of legalese"
 	}
-	
+		
 	
 	];
 	var myTour = jTour(tourdata,{
-			showControls: true
+			showControls: true,
+			showProgress: true,
+			autostart: true
 		});
 	myTour.start();
 }
