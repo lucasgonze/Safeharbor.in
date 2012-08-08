@@ -191,6 +191,8 @@ function initAjaxForms(){
 
 function initTour(){
 	
+	if(  window.location.search.match("autopilot=off") !== null ) 
+		return; // to allow opening /demo without running the script
 	if( window.location.pathname !== "/demo" && window.location.search.match("autopilot=on") === null )
 		return;
 
@@ -198,7 +200,7 @@ function initTour(){
 		{
 			element: "div#demo0",
 			live: 5000,
-			html: "Welcome",
+			html: "Demo",
 			animationIn: 'fadeIn',
 			animationOut: 'fadeOut',
 			position: "n"
@@ -209,7 +211,7 @@ function initTour(){
 			position: "n"
 		}, 
 		{
-			html: "Please set your browser to full-screen mode.",
+			html: "Please make your browser window big.",
 			element: "div#demo10 img.tgt",
 			position: "nw",
 			live: 10000,
@@ -217,7 +219,8 @@ function initTour(){
 		}
 		, {
 			html: 'Imagine a web site that hosts content uploaded by its user community. As an example we will use <a href="http://etsy.com">Etsy</a>.',
-			element: "div#demo20",
+			element: "div#demo20 img.tgt",
+			position: "e",
 			goTo: null
 		}
 		, {
@@ -225,12 +228,12 @@ function initTour(){
 			element: "div#demo30"
 		}
 		, {
-			html: "When the site's link is activated, it goes to a page of static legal text.",
+			html: "When the &ldquo;Copyright&rdquo; link is activated, it goes to a page of static legal text.",
 			position: "w",
 			element: "div#demo40 img"
 		}
 		, {
-			html: "Our web app replaces the text.",
+			html: "Our hosted app replaces that page of static text.",
 			element: "div#demo50 div.show",
 			position: "w",
 			goTo: "/box/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on",
@@ -259,8 +262,9 @@ function initTour(){
 			position: "e",
 			goTo: "/box/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
 		}, {
-			element: "img.sitelogo",
+			element: "#globalnavhighlight a",
 			position: "e",
+			offset: 20,
 			html: "Easy customization: just set logo."
 		}, {
 			element: "#haslowerborder a",
@@ -276,7 +280,10 @@ function initTour(){
 			element: "a#authorizedagent",
 			goTo: "/box/form/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on&person-type=co"
 		}, {
-			html: "Usability instead of legalese"
+			html: "Copyright owners instead of web sites do the data entry for each request.",
+			element: "#demo-tgt-1",
+			position: "s",
+			expose: true
 		}, {
 			element: "input#anchor",
 			position: "e",
@@ -294,35 +301,50 @@ function initTour(){
 			position: "n",
 			html: "A copyright owner must be able to bypass the form, but bypassing the form is more work for the web site. We channel copyright owners into the form by putting the bypass link after the form.",
 			goTo: "/box/bymail/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
+		} , {
+			html: "Sites often leave one of these pieces of contact information out, and they are all required by law.",
+			element: "div#demo-tgt-20",
+			position: "e"
 		}, {
-			html: "Sites often leave one of these pieces of contact information out, and they are all required by law."
+			html: "Help copyright owners file a correct notification.",
+			element: "p.demo-highlight",
+			position: "w",
+			goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
+		}, {
+			html: "Pervasive help on legal issues.",
+			element: "li#Q9-1 h4",
+			position: "e",
+			goTo: "/demo"
+		}, {
+			html: "Demo complete",
+			element: "div#demo60 h2"
 		}
 	];
 	
 	var debugdata = null;
 	debugdata = [		
 		{
-			html: "debug step 1",
+			html: "debug step 1.c",
 			live: 1,
-			goTo: "/box/bymail/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
-		} 
-		, {
-			html: "Sites often leave one of these pieces of contact information out, and they are all required by law."
-		}		
+			goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
+		}, {
+			html: "There's a FAQ for that.",
+			element: "li#Q9-1 h4",
+			position: "e",
+			goTo: "/demo"
+		}, {
+			html: "Demo complete",
+			element: "div#demo60 h2",
+			position: "n"
+		}
 	];
-	
-//	tourdata = debugdata;
+	// tourdata = debugdata;
 
-/*	
-	background opacity down
-	screenshots bigger
-	money shot much more clear, bigger, 
-	*/
-	
 	var myTour = jTour(tourdata,{
 			showControls: true,
 			showProgress: true,
-			autostart: true,
+			autostart: false,
+			keyboardNav: true,
 			overlayOpacity: .25,
 			expose: true
 		});

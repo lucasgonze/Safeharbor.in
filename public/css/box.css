@@ -444,9 +444,19 @@ Education page h2 margin-bottom: 10px?
 */
 
 /* /demo */
+/* fixme: pass by Paige */
 
 div.jTour_box .jTour_content { 
 	font-size: 175% !important;	
-/*	background-color: #336699; */
 }
 
+#demosplash img.safeharborlogo {
+	max-width: 700px;
+}
+
+#demosplash #demo60 li {
+	line-height: 28px;
+}
+#demosplash #demo60 .show, #demosplash #demo60 .tell  {
+	text-align: left;
+}
