@@ -1,4 +1,6 @@
 /* TODO: Paige go back through and convert all your pixels to em's for your fonts..you mix and match */
+
+
 @font-face {
 	font-family:MyHoefler;
 	src:url(/fonts/HoeflerText-Regular.eot?) format(eot), url(/fonts/HoeflerText-Regular.woff) format(woff), url(/fonts/HoeflerText-Regular.ttf) format(truetype);
@@ -65,20 +67,17 @@ h1,h2,h3,h4 {
 }
 
 h3,h4 {
-	font-size:24px;
+	font-size:28px;
 	line-height:30px;
 	margin:40px 0 10px;
 }
 
-div#rolepage h2,div#faq h2,div#dmcaform h2,div#bymail.container div.row div.span7 h2 {
+div#rolepage h2,div#faq h2,div#dmcaform h2,div#bymail div.row div.span7 h2 {
 	margin-top:2em;
 	margin-bottom:1em;
 	font-size:2.4em;
 }
 
-li {
-	list-style-type:none;
-}
 
 a {
 	color:#333;
@@ -91,6 +90,10 @@ a.underline {
 	text-decoration:underline;
 }
 
+a.inline {
+	text-decoration:underline;
+}
+
 .centered {
 	text-align:center;
 }
@@ -100,6 +103,10 @@ p,li,label {
 	font-family:proxima-nova, helvetica, sans-serif;
 	font-size:1.4em;
 	line-height:1.3em;
+	text-shadow: 0px 1px 1px rgba(255, 255, 255, 1);
+	
+
+
 }
 
 div.sidebar {
@@ -143,6 +150,7 @@ div#globalnavhighlight {
 	padding-top:10px;
 	font-family:MyHNCB;
 	font-size:2.4em;
+border-bottom: 1px solid #333;
 }
 
 div#haslowerborder {
@@ -175,8 +183,11 @@ footer {
 	padding-top:2em;
 }
 
-footer div.about {
+/* add space to the bottom of the whole footer so it doesn't fall off the page */
+footer.row div.about {
+margin-bottom: 70px;
 }
+
 
 footer div.copyright {
 	text-align:center;
@@ -230,7 +241,7 @@ footer div.legalese {
 	font-size:1.4em;
 }
 
-div#splash.container div.cta a.btn {
+div#splash div.cta a.btn {
 	margin-right:20px;
 }
 
@@ -268,7 +279,8 @@ div#rolepage .yourrole a i {
 
 
 	
-/* FAQ */
+/* FAQ Learn.html */
+
 div#faq div#toc {
 	margin-bottom:3em;
 	padding-bottom:3em;
@@ -277,7 +289,7 @@ div#faq div#toc {
 
 div#faq li.question {
 	margin-bottom:2em;
-}
+list-style: none;}
 
 ul#toc {
 	margin-bottom:60px;
@@ -292,6 +304,7 @@ li.toc {
 	font-size:1.6em;
 	line-height:1.7em;
 	text-decoration:underline;
+	list-style: none;
 }
 
 li.toc a,.answer p,.answer li {
@@ -303,10 +316,17 @@ li.toc a,.answer p,.answer li {
 	line-height:1.7em;
 }
 
-div.answer p,div.answer ul {
-	margin:0 0 0 23px;
+div.answer p  {
+	margin:0 0 12px 23px;
 }
 
+div.answer ul{
+	margin:0 0 0 50px;
+}
+
+div.answer ol li {
+margin-left: 41px;
+}
 
 	
 /* DMCA form */
@@ -422,3 +442,11 @@ Legalese thing in the footer:
 
 Education page h2 margin-bottom: 10px?
 */
+
+/* /demo */
+
+div.jTour_box .jTour_content { 
+	font-size: 175% !important;	
+/*	background-color: #336699; */
+}
+
