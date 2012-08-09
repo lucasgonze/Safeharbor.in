@@ -450,6 +450,17 @@ div.jTour_box .jTour_content {
 	font-size: 175% !important;	
 }
 
+#demosplash div.demostep {
+	margin-top: 150em;
+	margin-bottom: 150em;
+}
+#demosplash .show { text-align: center }
+#demosplash .show a { font-size: 75% }
+#demosplash .show em { 
+	font-size: 200%;
+}
+#demosplash #demo50 span {width: 10em; text-align: right}
+
 #demosplash img.safeharborlogo {
 	max-width: 700px;
 }
@@ -459,4 +470,7 @@ div.jTour_box .jTour_content {
 }
 #demosplash #demo60 .show, #demosplash #demo60 .tell  {
 	text-align: left;
+}
+#demosplash div#summary {
+	padding-top: 2em;
 }

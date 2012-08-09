@@ -190,7 +190,7 @@ function initAjaxForms(){
 }
 
 function initTour(){
-	
+
 	if(  window.location.search.match("autopilot=off") !== null ) 
 		return; // to allow opening /demo without running the script
 	if( window.location.pathname !== "/demo" && window.location.search.match("autopilot=on") === null )
@@ -295,11 +295,11 @@ function initTour(){
 		}, {
 			element: "div#legalrequiredfields",
 			position: "n",
-			html: "Big type makes copyright owners relaxed instead of mad."
+			html: "Readable typography makes copyright owners relaxed instead of mad."
 		}, {
 			element: "div.row.bottom",
 			position: "n",
-			html: "A copyright owner must be able to bypass the form, but bypassing the form is more work for the web site. We channel copyright owners into the form by putting the bypass link after the form.",
+			html: "Guide copyright owners away from emailing notifications by showing this <em>Bypass</em> link after the form.",
 			goTo: "/box/bymail/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
 		} , {
 			html: "Sites often leave one of these pieces of contact information out, and they are all required by law.",
@@ -311,31 +311,18 @@ function initTour(){
 			position: "w",
 			goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
 		}, {
-			html: "Pervasive help on legal issues.",
+			html: "There's a FAQ for that, of course.",
 			element: "li#Q9-1 h4",
-			position: "e",
-			goTo: "/demo"
+			position: "e"
 		}, {
-			html: "Demo complete",
-			element: "div#demo60 h2"
+			html: "Demo complete."
 		}
 	];
-	
+
 	var debugdata = null;
 	debugdata = [		
 		{
-			html: "debug step 1.c",
-			live: 1,
-			goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
-		}, {
-			html: "There's a FAQ for that.",
-			element: "li#Q9-1 h4",
-			position: "e",
-			goTo: "/demo"
-		}, {
-			html: "Demo complete",
-			element: "div#demo60 h2",
-			position: "n"
+			html: "debug step 1.c"
 		}
 	];
 	// tourdata = debugdata;
@@ -346,7 +333,8 @@ function initTour(){
 			autostart: false,
 			keyboardNav: true,
 			overlayOpacity: .25,
-			expose: true
+			expose: true,
+			onFinish: function(current){window.location = "/demo?autopilot=off#summary"}			
 		});
 	myTour.start();
 }
