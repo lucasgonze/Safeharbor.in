@@ -450,6 +450,9 @@ div.jTour_box .jTour_content {
 	font-size: 175% !important;	
 }
 
+/* no scroll bar - this makes it look more like an app. */
+body#demo-main { overflow: hidden }
+
 #demosplash div.demostep {
 	margin-top: 150em;
 	margin-bottom: 150em;

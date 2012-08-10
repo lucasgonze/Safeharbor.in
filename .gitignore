@@ -4,3 +4,4 @@ node_modules
 n
 lib/sh_session.txt
 version.info
+public/debug

@@ -199,7 +199,7 @@ function initTour(){
 	var tourdata = [	
 		{
 			element: "div#demo0",
-			live: 5000,
+			live: 1000,
 			html: "Demo",
 			animationIn: 'fadeIn',
 			animationOut: 'fadeOut',
@@ -319,24 +319,25 @@ function initTour(){
 		}
 	];
 
-	var debugdata = null;
-	debugdata = [		
+	/* For debugging 
+	tourdata = [		
 		{
-			html: "debug step 1.c"
+			html: "hello debug world"
 		}
 	];
-	// tourdata = debugdata;
-
+	*/
 	var myTour = jTour(tourdata,{
-			showControls: true,
-			showProgress: true,
-			autostart: false,
 			keyboardNav: true,
 			overlayOpacity: .25,
 			expose: true,
+			onChange: function(current){console.log("Changing step "+current)},
 			onFinish: function(current){window.location = "/demo?autopilot=off#summary"}			
 		});
-	myTour.start();
+
+	$("a#start-demo").click(function(){		
+		myTour.start();
+		return(false);
+	});
 }
 
 $(document).ready(function() {
