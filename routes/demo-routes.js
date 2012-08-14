@@ -17,12 +17,18 @@ var util = require('util');
 exports.install = function( app )
 {
 	app.get ('/demo$', getSplash);
+	app.get ('/demo/blank$', getBlank);
 }
 
 // convenience function for reuse only in this file
 function getSplash(req,res){
       res.render( 'demo/demo_splash.html', 
 		{ layout:'demo/demo_main.html', pageTitle:  "Demo" }
+	);
+}
+
+function getBlank(req,res){
+      res.render( 'demo/demo_blank.html', { layout:'demo/demo_main.html', pageTitle:  "Demo" }
 	);
 }
 

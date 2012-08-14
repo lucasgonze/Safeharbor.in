@@ -446,16 +446,35 @@ Education page h2 margin-bottom: 10px?
 /* /demo */
 /* fixme: pass by Paige */
 
-div.jTour_box .jTour_content { 
-	font-size: 175% !important;	
+div.jTour_box .jTour_content {
+	font-size: 24px !important;	
+}
+div.jTour_box .jTour_content p  { 
+	font-size: 24px !important;	
+	line-height: 38px;
+}
+
+div.jTour_box .jTour_content div.goal h2 {
+	margin-bottom: 10px;
+	font-weight: bold;
 }
 
 /* no scroll bar - this makes it look more like an app. */
 body#demo-main { overflow: hidden }
 
-#demosplash div.demostep {
+div#big-blank-demo-prompt {
 	margin-top: 150em;
+	margin-bottom: 150em;	
+}
+
+#demosplash div.minitop {
+	margin-top: 140em;
 	margin-bottom: 150em;
+	text-align: centered;	
+}
+#demosplash div.demostep {
+	margin-top: 250em;
+	margin-bottom: 250em;
 }
 #demosplash .show { text-align: center }
 #demosplash .show a { font-size: 75% }
@@ -468,12 +487,18 @@ body#demo-main { overflow: hidden }
 	max-width: 700px;
 }
 
-#demosplash #demo60 li {
+#demosplash #summary li {
 	line-height: 28px;
 }
-#demosplash #demo60 .show, #demosplash #demo60 .tell  {
+#demosplash #summary .show, #demosplash #summary .tell  {
 	text-align: left;
 }
 #demosplash div#summary {
 	padding-top: 2em;
+}
+
+#demosplash #summary li {
+	font-size: 90%;
+	line-height: 1.4em;
+	margin-left: 4em;
 }

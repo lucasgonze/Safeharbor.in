@@ -1,5 +1,10 @@
 /* Author:
 Lucas Gonze <lucas@gonze.com>
+
+FIXME ON MONDAY:
+
+you are in the process of rewriting the basic script. you're taking the goals from the summary and using them as themes for groups of slides. right now you are on the first goal. however there is some error, probably in the JSON, and the demo JS won't run at all.
+
 */
 
 var initValidation = function(){
@@ -203,7 +208,7 @@ function initTour(){
 			html: "Demo",
 			animationIn: 'fadeIn',
 			animationOut: 'fadeOut',
-			position: "n"
+			position: "s"
 		}, 
 		{
 			html: "Click the caption block to pause, stop, or skip.",
@@ -211,127 +216,195 @@ function initTour(){
 			position: "n"
 		}, 
 		{
-			html: "Please make your browser window big.",
+			html: "Please set your browser window to fill the screen.",
 			element: "div#demo10 img.tgt",
 			position: "nw",
-			live: 10000,
-			goTo: null
+			overlayOpacity: 0.25,
+			live: 10000
 		}
 		, {
-			html: 'Imagine a web site that hosts content uploaded by its user community. As an example we will use <a href="http://etsy.com">Etsy</a>.',
+			overlayOpacity: .25,
+			html: 'Imagine a web site that hosts content uploaded by its user community. We&apos;ll use <a href="http://etsy.com"><em style="font-weight: bold">Etsy</em></a> as an example.',
 			element: "div#demo20 img.tgt",
-			position: "e",
-			goTo: null
+			position: "e"
 		}
 		, {
+			overlayOpacity: .25,
 			html: "The site has posted a link for copyright complaints.",
-			element: "div#demo30"
+			element: "div#demo30 img.demo-tgt",
+			position: "e"
 		}
 		, {
+			overlayOpacity: .25,
 			html: "When the &ldquo;Copyright&rdquo; link is activated, it goes to a page of static legal text.",
 			position: "w",
-			element: "div#demo40 img"
+			element: "div#demo40 div.show"
 		}
 		, {
-			html: "Our hosted app replaces that page of static text.",
+			overlayOpacity: .25,
+			html: "Our hosted web form replaces that page of static text.",
 			element: "div#demo50 div.show",
 			position: "w",
-			goTo: "/box/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on",
-		}
-		, {
-			html: "Human-friendly navigation",
-			element: "div#splash",
-			position: "n"
-		}
-		, {
-			html: "Education",
+			expose: true,
+			goTo: "/demo/blank?autopilot=on"
+		}, 
+		
+		{
+			html: "<div class='goal'><h2>Customer Goal</h2> Minimize custom development by using off-the-shelf software.</div>",
+			position: "c",
+			goTo: "/box/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
+		}, 
+		{
+			html: "<div class='goal'><h2>Solution</h2> Our hosted app is the only off-the-shelf package on the market.</div> ",
+			position: "c"
+		}, 
+		{
+			html: "Help for users.",
 			element: "a#learnmorebutton",
-			position: "n",
-			goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
-		}
-		, {	
+			position: "n"
+		}, 
+		{
+			html: "A tool for editing DMCA requests.",
+			stubbedout_element: "demo-tgt-1",
+			element: "a#submitbutton",
+			position: "n"			
+		},
+		{
+			element: "#globalnavhighlight a",
+			position: "e",
+			offset: 20,
+			html: "Branding (just set logo image)."
+		}, 
+		{
+			html: "Attractive design conveys quality and makes the customer's site look good",
+			element: "span.youarehere",
+			position: "n", 
+			goTo: "/demo/blank?autopilot=on"
+		},
+		
+
+		{
+			html: "<div class='goal'><h2>Customer Goal</h2> Help sites save time by preventing invalid complaints and streamlining business processes.</div>",
+			position: "c",
+			goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"		
+		}, 
+		{	
 			overlayOpacity: false,
 			element: "li#Q7 h4",
 			position: "e",
 			html: "Prevent complaints that aren't about copyright."
-		}
-		, {		
+		},
+		{		
 			element: "li#Q5 h4",
 			overlayOpacity: false,
-			html: "Pre-written answers to standard questions.",
-			position: "e",
-			goTo: "/box/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
-		}, {
-			element: "#globalnavhighlight a",
-			position: "e",
-			offset: 20,
-			html: "Easy customization: just set logo."
-		}, {
-			element: "#haslowerborder a",
-			position: "s",
-			html: "Prevent frivolous complaints by setting serious tone."
-		}, {
-			html: "And all this is BEFORE the main act.",
-			element: "a#submitbutton",
+			html: "Pre-written answers to standard questions. Web sites can paste them into emails or just send a link.",
 			position: "n",
 			goTo: "/box/role/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
-		}, {
-			html: "Prevent common causes of bogus complaints.",
-			element: "a#authorizedagent",
-			goTo: "/box/form/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on&person-type=co"
-		}, {
-			html: "Copyright owners instead of web sites do the data entry for each request.",
-			element: "#demo-tgt-1",
-			position: "s",
+		}, 
+		{
+			html: "Discourage posters who don't have legal standing.",
+			element: "div.yourrole",
+			position: "e",
+			goTo: "/box/form/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"		
+		},
+		{
+			html: "Copyright owners do the data entry for each request, rather than sending an email or paper mail and having the web site copy details into a form.",
+			element: "#demo-tgt-1 input[type=text]",
+			position: "e",
 			expose: true
-		}, {
+		},		
+		{
+			element: "#globalnav a.subtitle",
+			position: "s",
+			html: "Minimize frivolous complaints by using design to convey the seriousness of the act."
+		},
+		{
 			element: "input#anchor",
 			position: "e",
-			html: "Make it easy to figure out what the notification is in regard to."
-		}, {
-			element: "button#report_another",
-			position: "e",
-			html: "Multiple notifications per submission: less work and fewer mistakes."
-		}, {
-			element: "div#legalrequiredfields",
+			html: "Help copyright owners describe the problem clearly, so that web sites can understand what they're asking for."
+		},
+		{
+			element: "div#demo-tgt-bypass",
 			position: "n",
-			html: "Readable typography makes copyright owners relaxed instead of mad."
-		}, {
-			element: "div.row.bottom",
-			position: "n",
-			html: "Guide copyright owners away from emailing notifications by showing this <em>Bypass</em> link after the form.",
-			goTo: "/box/bymail/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
-		} , {
-			html: "Sites often leave one of these pieces of contact information out, and they are all required by law.",
-			element: "div#demo-tgt-20",
-			position: "e"
-		}, {
-			html: "Help copyright owners file a correct notification.",
+			html: "Guide copyright owners away from email (and into the form) by showing this <em>Bypass</em> link after the form.",
+			goTo: "/box/bymail/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"			
+		},
+		 {
+			html: "When copyright owners do use email instead of the form, help them get it right, so that the web site doesn't have to go back and forth with them.",
 			element: "p.demo-highlight",
 			position: "w",
-			goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
-		}, {
-			html: "There's a FAQ for that, of course.",
-			element: "li#Q9-1 h4",
-			position: "e"
-		}, {
-			html: "Demo complete."
-		}
-	];
+			goTo: "/demo/blank?autopilot=on"
+		},
 
-	/* For debugging 
-	tourdata = [		
+
 		{
-			html: "hello debug world"
+			html: "<div class='goal'><h2>Customer Goal</h2> Make our customers hard targets for lawsuits.</div>",
+			position: "c",
+			goTo: "/box/bymail/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
+		}, 
+		{
+			html: "Sites often leave one of these pieces of contact information out, and they are all required by law.",
+			element: "div#demo-tgt-20",
+			position: "e",
+			goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on",
+		},
+		{
+			html: "The sophisticated look and thorough feature set of our software says that the web site takes the law seriously.",
+			element: "h3#demo-tgt-200",
+			position: "n",
+			goTo: "/demo/blank?autopilot=on"
+		},
+
+
+		{
+			html: "<div class='goal'><h2>Customer Goal</h2> Avoid starting a conflict with copyright owners by providing an efficient notification process.</div>",
+			position: "c",
+			goTo: "/box/form/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"		
+		}, 
+		{
+			element: "button#report_another",
+			position: "e",
+			html: "Allow multiple notifications per submission, which means less work and fewer mistakes."
+		}, {
+			element: "div#legalrequiredfields",
+			position: "e",
+			html: "Readable typography makes it easier to fill in the form correctly.",
+			goTo: "/demo/blank?autopilot=on"
+		},
+		
+		{
+			html: "Demo complete",
+			imageOpacity: "0.25"
 		}
+		
+				
+		]; 
+		
+	/* For debugging */
+	nottourdata = [	
+		{
+			html: "nop",
+			goTo: "/demo"
+		},
+
 	];
-	*/
+	
 	var myTour = jTour(tourdata,{
 			keyboardNav: true,
-			overlayOpacity: .25,
+			overlayOpacity: 0,
 			expose: true,
-			onChange: function(current){console.log("Changing step "+current)},
-			onFinish: function(current){window.location = "/demo?autopilot=off#summary"}			
+			onStart: function(current){console.log("onStart step "+current)},
+			onPause: function(current){console.log("onPause step "+current)},
+			onPlay: function(current){console.log("onPlay step "+current)},
+			onChange: function(current){console.log("onChange step "+current)},
+			onStop: function(current){
+				console.log("onStop step "+current);
+				window.location = "/demo";
+			},	
+			onFinish: function(current){
+				console.log("onFinish step "+current);
+				window.location = "/demo?autopilot=off#summary";
+			}			
 		});
 
 	$("a#start-demo").click(function(){		
