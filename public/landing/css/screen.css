@@ -49,16 +49,16 @@ em { font-style: italic; }
 #newsletter .pitch span { width: 780px; height: 19px; display: block; background: #fff url("../img/idontneedtothinkabout.png") no-repeat; line-height: 0.85; text-indent: -9999em; overflow: hidden; }
 #newsletter form { width: auto; height: 72px; margin: 0; padding-top: 21px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; border: 1px solid #3B863B; }
 #newsletter form {
-  background-color: #5bb75b;
-  background-image: -moz-linear-gradient(top, #62c462, #51a351);
-  background-image: -ms-linear-gradient(top, #62c462, #51a351);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62c462), to(#51a351));
-  background-image: -webkit-linear-gradient(top, #62c462, #51a351);
-  background-image: -o-linear-gradient(top, #62c462, #51a351);
-  background-image: linear-gradient(top, #62c462, #51a351);
+  background-color: #35a2c3;
+  background-image: -moz-linear-gradient(top, #35a2c3, #2f8fac);
+  background-image: -ms-linear-gradient(top, #35a2c3, #2f8fac);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#35a2c3), to(#51a351));
+  background-image: -webkit-linear-gradient(top, #35a2c3, #2f8fac);
+  background-image: -o-linear-gradient(top, #35a2c3, #2f8fac);
+  background-image: linear-gradient(top, #35a2c3, #2f8fac);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#62c462', endColorstr='#51a351', GradientType=0);
-  border-color: #51a351 #51a351 #387038;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#35a2c3', endColorstr='#2f8fac', GradientType=0);
+  border-color: #2f8fac #2f8fac #2f8fac;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
