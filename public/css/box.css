@@ -458,12 +458,16 @@ div.jTour_box .jTour_content {
 }
 div.jTour_box .jTour_content p  { 
 	font-size: 24px !important;	
-	line-height: 38px;
+	line-height: 1.4em;
 }
 
 div.jTour_box .jTour_content div.goal h2 {
 	margin-bottom: 10px;
 	font-weight: bold;
+}
+
+div.jTour_box .jTour_content div.goal {
+	line-height: 1.4em;
 }
 
 /* no scroll bar - this makes it look more like an app. */

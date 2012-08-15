@@ -203,20 +203,12 @@ function initTour(){
 
 	var tourdata = [	
 		{
-			element: "div#demo0",
-			live: 1000,
-			html: "Demo",
-			animationIn: 'fadeIn',
-			animationOut: 'fadeOut',
-			position: "s"
-		}, 
-		{
-			html: "Click the caption block to pause, stop, or skip.",
+			html: "Click the caption block to pause, stop, or skip",
 			element: "div#demo0",
 			position: "n"
 		}, 
 		{
-			html: "Please set your browser window to fill the screen.",
+			html: "Please set your browser window to fill the screen",
 			element: "div#demo10 img.tgt",
 			position: "nw",
 			overlayOpacity: 0.25,
@@ -230,19 +222,19 @@ function initTour(){
 		}
 		, {
 			overlayOpacity: .25,
-			html: "The site has posted a link for copyright complaints.",
+			html: "Etsy has posted a link for copyright complaints",
 			element: "div#demo30 img.demo-tgt",
 			position: "e"
 		}
 		, {
 			overlayOpacity: .25,
-			html: "When the &ldquo;Copyright&rdquo; link is activated, it goes to a page of static legal text.",
+			html: "When the &ldquo;Copyright&rdquo; link is activated by a copyright owner, they arrive at a page of static legal text",
 			position: "w",
 			element: "div#demo40 div.show"
 		}
 		, {
 			overlayOpacity: .25,
-			html: "Our hosted web form replaces that page of static text.",
+			html: "Our hosted web form replaces that page of static text",
 			element: "div#demo50 div.show",
 			position: "w",
 			expose: true,
@@ -259,12 +251,12 @@ function initTour(){
 			position: "c"
 		}, 
 		{
-			html: "Help for users.",
+			html: "Help for users",
 			element: "a#learnmorebutton",
 			position: "n"
 		}, 
 		{
-			html: "A tool for editing DMCA requests.",
+			html: "A tool for editing DMCA requests",
 			stubbedout_element: "demo-tgt-1",
 			element: "a#submitbutton",
 			position: "n"			
@@ -273,7 +265,7 @@ function initTour(){
 			element: "#globalnavhighlight a",
 			position: "e",
 			offset: 20,
-			html: "Branding (just set logo image)."
+			html: "Branding (just set logo image)"
 		}, 
 		{
 			html: "Attractive design conveys quality and makes the customer's site look good",
@@ -292,23 +284,23 @@ function initTour(){
 			overlayOpacity: false,
 			element: "li#Q7 h4",
 			position: "e",
-			html: "Prevent complaints that aren't about copyright."
+			html: "Prevent complaints that aren't about copyright"
 		},
 		{		
 			element: "li#Q5 h4",
 			overlayOpacity: false,
-			html: "Pre-written answers to standard questions. Web sites can paste them into emails or just send a link.",
+			html: "Pre-written answers to standard questions. Web sites can paste them into emails or just send a link",
 			position: "n",
 			goTo: "/box/role/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
 		}, 
 		{
-			html: "Discourage posters who don't have legal standing.",
+			html: "Discourage posters who don't have legal standing",
 			element: "div.yourrole",
 			position: "e",
 			goTo: "/box/form/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"		
 		},
 		{
-			html: "Copyright owners do the data entry for each request, rather than sending an email or paper mail and having the web site copy details into a form.",
+			html: "Copyright owners do the data entry for each request, rather than sending an email or paper mail and having the web site copy details into a form",
 			element: "#demo-tgt-1 input[type=text]",
 			position: "e",
 			expose: true
@@ -316,21 +308,21 @@ function initTour(){
 		{
 			element: "#globalnav a.subtitle",
 			position: "s",
-			html: "Minimize frivolous complaints by using design to convey the seriousness of the act."
+			html: "Minimize frivolous complaints by using design to convey the seriousness of the act"
 		},
 		{
 			element: "input#anchor",
 			position: "e",
-			html: "Help copyright owners describe the problem clearly, so that web sites can understand what they're asking for."
+			html: "Help copyright owners describe the problem clearly, so that web sites can understand what they're asking for"
 		},
 		{
 			element: "div#demo-tgt-bypass",
 			position: "n",
-			html: "Guide copyright owners away from email (and into the form) by showing this <em>Bypass</em> link after the form.",
+			html: "Guide copyright owners away from email (and into the form) by showing this <em>Bypass</em> link after the form",
 			goTo: "/box/bymail/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"			
 		},
 		 {
-			html: "When copyright owners do use email instead of the form, help them get it right, so that the web site doesn't have to go back and forth with them.",
+			html: "When copyright owners do use email instead of the form, help them get it right, so that the web site doesn't have to go back and forth with them",
 			element: "p.demo-highlight",
 			position: "w",
 			goTo: "/demo/blank?autopilot=on"
@@ -343,13 +335,13 @@ function initTour(){
 			goTo: "/box/bymail/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
 		}, 
 		{
-			html: "Sites often leave one of these pieces of contact information out, and they are all required by law.",
+			html: "Sites often leave one of these pieces of contact information out, and they are all required by law",
 			element: "div#demo-tgt-20",
 			position: "e",
 			goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on",
 		},
 		{
-			html: "The sophisticated look and thorough feature set of our software says that the web site takes the law seriously.",
+			html: "The sophisticated look and thorough feature set of our software says that the web site takes the law seriously",
 			element: "h3#demo-tgt-200",
 			position: "n",
 			goTo: "/demo/blank?autopilot=on"
@@ -364,11 +356,11 @@ function initTour(){
 		{
 			element: "button#report_another",
 			position: "e",
-			html: "Allow multiple notifications per submission, which means less work and fewer mistakes."
+			html: "Allow multiple notifications per submission, which means less work and fewer mistakes"
 		}, {
 			element: "div#legalrequiredfields",
 			position: "e",
-			html: "Readable typography makes it easier to fill in the form correctly.",
+			html: "Readable typography makes it easier to fill in the form correctly",
 			goTo: "/demo/blank?autopilot=on"
 		},
 		
