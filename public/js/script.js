@@ -242,12 +242,12 @@ function initTour(){
 		}, 
 		
 		{
-			html: "<div class='goal'><h2>Customer Goal</h2> Minimize custom development by using off-the-shelf software.</div>",
+			html: "<div class='goal'><h2>Etsy's Goal</h2> Minimize custom development by using off-the-shelf software.</div>",
 			position: "c",
 			goTo: "/box/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
 		}, 
 		{
-			html: "<div class='goal'><h2>Solution</h2> Our hosted app is the only off-the-shelf package on the market.</div> ",
+			html: "<div class='goal'><h2>Solution</h2> The Safeharbor.in hosted app is the only off-the-shelf package on the market.</div> ",
 			position: "c"
 		}, 
 		{
@@ -276,7 +276,7 @@ function initTour(){
 		
 
 		{
-			html: "<div class='goal'><h2>Customer Goal</h2> Help sites save time by preventing invalid complaints and streamlining business processes.</div>",
+			html: "<div class='goal'><h2>Etsy's Goal</h2> Save time by preventing invalid complaints and streamlining business processes.</div>",
 			position: "c",
 			goTo: "/box/help/learn/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"		
 		}, 
@@ -330,7 +330,7 @@ function initTour(){
 
 
 		{
-			html: "<div class='goal'><h2>Customer Goal</h2> Make our customers hard targets for lawsuits.</div>",
+			html: "<div class='goal'><h2>Etsy's Goal</h2> Be a hard target for lawsuits.</div>",
 			position: "c",
 			goTo: "/box/bymail/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"
 		}, 
@@ -349,7 +349,7 @@ function initTour(){
 
 
 		{
-			html: "<div class='goal'><h2>Customer Goal</h2> Avoid starting a conflict with copyright owners by providing an efficient notification process.</div>",
+			html: "<div class='goal'><h2>Etsy's Goal</h2> Avoid starting a conflict with copyright owners by providing an efficient notification process.</div>",
 			position: "c",
 			goTo: "/box/form/3416a75f4cea9109507cacd8e2f2aefc?autopilot=on"		
 		}, 
