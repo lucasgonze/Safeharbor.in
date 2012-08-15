@@ -1,6 +1,4 @@
 /* TODO: Paige go back through and convert all your pixels to em's for your fonts..you mix and match */
-
-
 @font-face {
 	font-family:MyHoefler;
 	src:url(/fonts/HoeflerText-Regular.eot?) format(eot), url(/fonts/HoeflerText-Regular.woff) format(woff), url(/fonts/HoeflerText-Regular.ttf) format(truetype);
@@ -78,7 +76,6 @@ div#rolepage h2,div#faq h2,div#dmcaform h2,div#bymail div.row div.span7 h2 {
 	font-size:2.4em;
 }
 
-
 a {
 	color:#333;
 	font-family:proxima-nova,helvetica,sans-serif;
@@ -103,14 +100,11 @@ p,li,label {
 	font-family:proxima-nova, helvetica, sans-serif;
 	font-size:1.4em;
 	line-height:1.3em;
-	text-shadow: 0px 1px 1px rgba(255, 255, 255, 1);
-	
-
-
+	text-shadow:0 1px 1px rgba(255,255,255,1);
 }
 
 div.sidebar {
-	margin-top:3em;
+	margin-top:6em;
 
 	
 /* push the content way down below the start of the main content */
@@ -118,13 +112,14 @@ div.sidebar {
 
 div.sidebar h3 {
 	margin-top:3em;
+	color:#848080;
+}
+
 
 	
 /* to separate sections in the sidebars */
-}
-
 div.sidebar p {
-	color:#333;
+	color:#848080;
 }
 
 
@@ -150,7 +145,7 @@ div#globalnavhighlight {
 	padding-top:10px;
 	font-family:MyHNCB;
 	font-size:2.4em;
-border-bottom: 1px solid #333;
+	border-bottom:1px solid #333;
 }
 
 div#haslowerborder {
@@ -181,17 +176,18 @@ footer {
 	font-family:MyHNCB, helvetica;
 	border-top:1px solid #ddd;
 	padding-top:2em;
-}
+color: #7B7E88;}
 
+
+	
 /* add space to the bottom of the whole footer so it doesn't fall off the page */
 footer.row div.about {
-margin-bottom: 70px;
+	margin-bottom:70px;
 }
-
 
 footer div.copyright {
 	text-align:center;
-}f
+}
 
 footer div.legalese {
 	border:1px solid #000;
@@ -214,9 +210,9 @@ footer div.legalese {
 }
 
 #splash div.callout span.youarehere {
-	background-color:#ddd;
+	background-color:#CDD0DA;
 	font-size:2.4em;
-	border:5px solid #666;
+	border:7px solid #7B7E88;
 	padding-left:2em;
 	padding-right:2em;
 	padding-top:1em;
@@ -226,6 +222,7 @@ footer div.legalese {
 #splash p.donot {
 	text-align:center;
 	margin-left:auto;
+	color: #BEBDBB;
 	margin-right:auto;
 	width:44em;
 }
@@ -264,6 +261,7 @@ div#rolepage footer {
 
 div#rolepage .yourrole li {
 	margin:2em;
+	list-style:none;
 }
 
 div#rolepage .yourrole a {
@@ -280,7 +278,6 @@ div#rolepage .yourrole a i {
 
 	
 /* FAQ Learn.html */
-
 div#faq div#toc {
 	margin-bottom:3em;
 	padding-bottom:3em;
@@ -289,7 +286,8 @@ div#faq div#toc {
 
 div#faq li.question {
 	margin-bottom:2em;
-list-style: none;}
+	list-style:none;
+}
 
 ul#toc {
 	margin-bottom:60px;
@@ -304,7 +302,7 @@ li.toc {
 	font-size:1.6em;
 	line-height:1.7em;
 	text-decoration:underline;
-	list-style: none;
+	list-style:none;
 }
 
 li.toc a,.answer p,.answer li {
@@ -316,16 +314,16 @@ li.toc a,.answer p,.answer li {
 	line-height:1.7em;
 }
 
-div.answer p  {
+div.answer p {
 	margin:0 0 12px 23px;
 }
 
-div.answer ul{
+div.answer ul {
 	margin:0 0 0 50px;
 }
 
 div.answer ol li {
-margin-left: 41px;
+	margin-left:41px;
 }
 
 	
@@ -338,6 +336,15 @@ margin-left: 41px;
 
 #dmcaform {
 	margin-top:4em;
+}
+
+#clone_this.co {
+	margin-bottom:20px;
+}
+
+#bypass {
+	margin-top:-29px;
+color: #848080;
 }
 
 
