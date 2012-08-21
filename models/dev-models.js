@@ -126,7 +126,7 @@ exports.cleanTables = function(callback) {
            "(44,5,'Etsy','5.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
              "'agentaddress@etsy.com','Jane Doe Esquire','(800) 555-1212')");
     q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
-           "(44,6,'Etsy','etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
+           "(44,6,'Etsy','www.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
              "'agentaddress@etsy.com','Jane Doe Esquire','(800) 555-1212')");
 
 }
