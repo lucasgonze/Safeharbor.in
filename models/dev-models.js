@@ -108,6 +108,7 @@ exports.cleanTables = function(callback) {
     q("insert into acct (role,email,password) values ('1','jim@safeharbor.in',      'qqqq')");
     q("insert into acct (role,email,password) values ('1','paige.destroy@gmail.com','qqqq')");
     q("insert into acct (role,email,password) values ('3','nicole@safeharbor.in',   'qqqq')");
+    q("insert into acct (role,email,password) values ('3','demo@safeharbor.in',   	'qqqq')");
 
     q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
            "(40,1,'Etsy','1.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
@@ -123,6 +124,9 @@ exports.cleanTables = function(callback) {
              "'agentaddress@etsy.com','Jane Doe Esquire','(800) 555-1212')");
     q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
            "(44,5,'Etsy','5.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
+             "'agentaddress@etsy.com','Jane Doe Esquire','(800) 555-1212')");
+    q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
+           "(44,6,'Etsy','etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
              "'agentaddress@etsy.com','Jane Doe Esquire','(800) 555-1212')");
 
 }
