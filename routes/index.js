@@ -61,7 +61,7 @@ function home( req, res )
 {
 	if(true || req.header('host') === "demo.safeharbor.in")
 		// pretty URL for the sake of potential investors
-		require('./demo-routes.js').getSplash(req,res);
+        res.redirect('/demo');
     else if( login.isLoggedIn() )
         res.redirect('/dash');
     else
