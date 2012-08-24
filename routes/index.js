@@ -59,6 +59,7 @@ function trivialRoute(app) {
 
 function home( req, res )
 {
+	console.log("BP IV "+req.host);
 	if(req.host === "demo.safeharbor.in")
 		res.redirect('/demo');	
     else if( login.isLoggedIn() )
