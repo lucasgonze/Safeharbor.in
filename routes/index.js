@@ -31,7 +31,7 @@ var checkRole = exports.checkRole = function(acceptableRole)
             }
         }
 
-		var disableSecurityForDebugging = false;
+		var disableSecurityForDebugging = true;
 		
         if( disableSecurityForDebugging || ok ) {
             next();
