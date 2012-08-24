@@ -2,7 +2,7 @@
 
 # This is not a proper unit test. Yet. For now it's just an ad hoc thing for checking to see what happens when malformed goo is sent the inbox POST.
 
-TGT="http://localhost:5000/box/3416a75f4cea9109507cacd8e2f2aefc"
+TGT="http://localhost:5000/box/6c8349cc7260ae62e3b1396831a8398f"
 OFN=
 FN="John+Doe"
 JT=
