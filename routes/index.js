@@ -59,7 +59,9 @@ function trivialRoute(app) {
 
 function home( req, res )
 {
-    if( login.isLoggedIn() )
+	if(req.host === "demo.safeharbor.in")
+		res.redirect('/demo');	
+    else if( login.isLoggedIn() )
         res.redirect('/dash');
     else
         res.render( 'firstrun/home.html', { layout:'firstrun/nop.html' } );
