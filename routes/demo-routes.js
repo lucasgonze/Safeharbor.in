@@ -20,6 +20,9 @@ exports.install = function( app )
 	app.get ('/demo/blank$', getBlank);
 }
 
+// used to alias demo.safeharbor.in to /demo. See index.js
+exports.getSplash = getSplash;
+
 // convenience function for reuse only in this file
 function getSplash(req,res){
       res.render( 'demo/demo_splash.html', 

@@ -59,9 +59,9 @@ function trivialRoute(app) {
 
 function home( req, res )
 {
-	console.log("BP IV "+req.host);
-	if(req.host === "demo.safeharbor.in")
-		res.redirect('/demo');	
+	if(true || req.header('host') === "demo.safeharbor.in")
+		// pretty URL for the sake of potential investors
+		require('./demo-routes.js').getSplash(req,res);
     else if( login.isLoggedIn() )
         res.redirect('/dash');
     else
