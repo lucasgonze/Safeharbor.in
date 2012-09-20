@@ -47,9 +47,11 @@ exports.logTakeDownRequest = function( siteIdOrHash, contactInfo, mediaInfo, cal
                             "email",
                             "phone",
                             "fax",
-                            "postal" ];
+                            "postal",
+							"signature"
+ 							];
 
-    var contactSQL = "insert into contact ( " + contactFieldNames.join(', ') + ") values ($1,$2,$3,$4,$5,$6,$7) returning contactid";
+    var contactSQL = "insert into contact ( " + contactFieldNames.join(', ') + ") values ($1,$2,$3,$4,$5,$6,$7,$8) returning contactid";
     var contactValues = extractValues(contactInfo,contactFieldNames);
     
     var contact = new ModelPerformer( {  callback:  function(code,contactId) {
@@ -174,6 +176,8 @@ function getTakedownRequests( callback )
 }
 
 /*
+   LG note 9/19/12: I think the below record will also contain a 'signature' field.
+
     here's what one record looks like:
     
 {  

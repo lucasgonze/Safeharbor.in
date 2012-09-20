@@ -241,7 +241,7 @@ function postBox(req,res){
 		owners_full_name, job_title, fax
 	*/
 
-	// console.log(req.body);
+	console.log("Logging req.body in box-routes.js: "); console.log(req.body);
     if( 
 		(req.body.belief !== "on" && req.body.authorized !== "on") ||
 		!checkString('full_name') ||
@@ -250,7 +250,8 @@ function postBox(req,res){
 		!checkString('postal') ||
 		!checkStringOrArray('page') ||
 		!checkStringOrArray('anchor') ||
-		!checkStringOrArray('description')
+		!checkStringOrArray('description') || 
+		!checkString('signature')
 		) {
         errout( req, res, errlib.err( 400, 'invalid options to postBox') );
         return;
@@ -261,9 +262,10 @@ function postBox(req,res){
     var mediaArgNames = ['description','page','media_url','anchor'];
     var mediaArgs = extractFields(req.body, mediaArgNames,true);
         
-    var contactArgNames = [ 'owners_full_name', 'full_name', 'job_title', 'postal', 'email', 'phone', 'fax' ];
+    var contactArgNames = [ 'owners_full_name', 'full_name', 'job_title', 'postal', 'email', 'phone', 'fax', 'signature' ];
     var contactArgs = extractFields(req.body, contactArgNames,false);
     
+	debug.setVolume(1) // turn on debugging
     var verify   = box.get( regid, nop );
     var auditer  = dash.logTakeDownRequest( regid, contactArgs, mediaArgs, nop );
     var detail   = dash.getAuditDetail( nop );    

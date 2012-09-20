@@ -53,7 +53,8 @@ exports.recreateTables = function(callback){
                             " email text not null, " +
                             " phone text not null, " +
                             " fax text not null, " +
-                            " postal text not null " +                            
+                            " postal text not null, " +                            
+                            " signature text not null " +                            
                             ")");
 
     q('drop table if exists audit');
