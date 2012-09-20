@@ -212,7 +212,7 @@ $(function() {
         }
         var fsName = 'cloned_'+next_incident+'_';
         var firstTab = 100+(next_incident*20);
-        
+
         $('#insert_before_here').before(
                     $('<fieldset>')
                          .html($('#clone_this').html())
@@ -220,11 +220,15 @@ $(function() {
                          .attr('id', fsName)
                          .find('.infringement_number').html(next_incident).end()
                          .find('.renum').each( renumber(firstTab) ).end()
+						 .find('input[type="text"]').focus().end()
                          .prepend( $('<div class="pull-right btn btn-danger">')
                                     .html('<i class="icon-remove"></i>')
                                     .attr('title',"Remove this item from the infringement notification")
                                     .click( removeMe(fsName) ))
                     );
+
+		// put focus in the stuff we just added
+		$("#"+fsName).find('input')[0].focus();
         
         ++next_incident;
 
