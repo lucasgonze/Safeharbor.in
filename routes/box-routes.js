@@ -18,6 +18,8 @@ var errout = errlib.errout();
 var box     = require('../models/box-models.js');
 var dash    = require('../models/dash-models.js');
 
+var mailer = require("../lib/mail.js");
+
 var CODES = box.CODES;
 
 
@@ -104,42 +106,58 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                 // N.B. these params are flipped coming from sendgrid
                 callback: function(success,message) {
                     if( success ) {
+						// fixme: the message is not being output. 
+						// see github #134 
+						// https://github.com/lucasgonze/Safeharbor.in/issues/134
                         res.outputMessage( 
                                         page.MESSAGE_LEVELS.success,
                                         "Your request has been received.",
                                         "Please expect a response via the contact information you provided."
                                         );
-                        res.render({   layout:"box/box_main.html",
+                        res.render(
+	 						{   layout:"box/box_main.html",
                                        pageTitle:"Success",
                                        sitename: this.sitename,
 									   domain: this.domain
-                                     } );
+                             } );
                     }   
                     else {
-                        errout( req, res, errlib.err( 400, 'Email notify failed: ' + message)  );
+						// fixme: page admin on call
+						var emergency = require("lib/emergency");
+						emergency.alert('Email notify failed: ' + message);
+                        errout( req, res, errlib.err( 500, 'Email notify failed: ' + message)  );
                         this.stopChain();
-                    }                    
+                    }                 
                     
                 },
                 
                 performer: function() {            
-                    var subject = "IMPORTANT: DMCA takedown request received",
-                        path = "../views/box/notificationemail.html",
-                        mailerValues = this.findValue('auditDetail'),
-                        mailer = require("../lib/mail.js");
-                        
-                    this.sitename = mailerValues.sitename;
-                    
-                    mailerValues.dashurl =  'http://'+req.headers.host+'/dash';   
-                 	console.log("Sending notification mail to")
-					console.log(mailerValues.agentemail)
-                    mailer.emailFromTemplate( 
-                                          mailerValues.agentemail,
-                                          subject,
-                                          'text goes here', // TODO: um, did 'text' ever work here??
-                                          path,
-                                          mailerValues,
-                                          this.bound_callback());
+                    var mailerValues = this.findValue('auditDetail');
+                    mailerValues.dashurl =  'https://'+req.headers.host+'/dash';   
+                 	console.log("Sending notification mail to");
+					console.log(mailerValues.agentemail);
+
+					mailer.to(
+						{
+							viewsSubdir: "box",
+							template: "notificationemail", 
+							to: mailerValues.agentemail,
+						    subject: utils.gettext("IMPORTANT: DMCA takedown request received"),	
+						
+							templateVars: {
+								sitename: mailerValues.sitename,
+								domain: mailerValues.domain,
+								full_name: mailerValues.full_name,
+								email: mailerValues.email,
+								phone: mailerValues.phone,
+								postal: mailerValues.agentaddress,
+								takedownRequests: mailerValues.takedownRequests,
+								dashurl: mailerValues.dashurl
+							} 
+						}, 
+						this.bound_callback()
+					);
+
                 }                
             });            
 }

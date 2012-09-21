@@ -113,22 +113,22 @@ exports.cleanTables = function(callback) {
 
     q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
            "(40,1,'Etsy','1.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
-             "'agentaddress@etsy.com','Jane Doe Esquire','(800) 555-1212')");
+             "'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212')");
     q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
            "(41,2,'Etsy','company.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
-             "'agentaddress@etsy.com','Jane Doe Esquire','(800) 555-1212')");
+             "'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212')");
     q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
            "(42,3,'Etsy','3.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
-             "'agentaddress@etsy.com','Jane Doe Esquire','(800) 555-1212')");
+             "'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212')");
     q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
            "(43,4,'Etsy','4.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
-             "'agentaddress@etsy.com','Jane Doe Esquire','(800) 555-1212')");
+             "'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212')");
     q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
            "(44,5,'Etsy','5.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
-             "'agentaddress@etsy.com','Jane Doe Esquire','(800) 555-1212')");
+             "'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212')");
     q("insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) values " +
            "(45,6,'Etsy','www.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345'," +
-             "'agentaddress@etsy.com','Jane Doe Esquire','(800) 555-1212')");
+             "'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212')");
 
 }
 

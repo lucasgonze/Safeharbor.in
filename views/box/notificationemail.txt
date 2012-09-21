@@ -1,0 +1,18 @@
+A takedown request has been submitted for the site '{{sitename}}' at {{domain}}.
+
+Contact: {{full_name}}
+Contact email: {{email}}
+Contact phone: {{phone}}
+Contact postal address: 
+
+{{postal}}
+
+{{#each takedownRequests}}
+Page: {{page}}
+	Link: {{media_url}}
+	Where in the page: {{anchor}}
+	Infringed work: {{description}}
+{{/each}}
+
+For a detailed report please visit {{dashurl}}
+
