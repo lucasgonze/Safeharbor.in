@@ -1,0 +1,8 @@
+To reset the password for your account at SafeHarbor.in
+(http://safeharbor.in), use this link:
+
+{{backlink}}
+
+If you didn't intend to reset your password, simply ignore
+this message.
+

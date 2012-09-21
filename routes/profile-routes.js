@@ -11,7 +11,12 @@ var page       = safeharbor.page;
 var loginstate = safeharbor.loginstate;
 var Performer  = safeharbor.Performer;
 
-var util    = require('util');
+var mailer = require("../lib/mail.js");
+
+/* Stubbing out 9/21/2012 - I think this was an old mistake lurking around, because the reference shouldn't work and because it is never dereferenced. 
+var util   = require('util'); 
+*/
+
 var profile = require("../models/profile-models.js");
 
 var CODES          = profile.CODES;
@@ -22,6 +27,9 @@ var errout         = errlib.errout();
     EXPORTED
 ----------------------------*/
 
+function testme(foo,bar,baz){
+	lostPasswordStart(foo,bar,baz);
+}
 exports.install = function( app )
 {
     var not_logged_in = app.checkRole(app.ROLES.not_logged_in),
@@ -34,7 +42,7 @@ exports.install = function( app )
 	app.post('/logout', logged_in, clearLogin);
 		
 	app.trivialRoute('/lostpassword','lostpassword','profile','Lost Password',not_logged_in);
-	app.post('/lostpassword',                             not_logged_in, lostPasswordStart);	
+	app.post('/lostpassword',                             not_logged_in, testme);	
 	app.get ('/lostpassword/:resetSecret([0-9a-z]{10})$', not_logged_in, lostPasswordGet );
 	app.post('/lostpassword/:resetSecret([0-9a-z]{10})$', not_logged_in, lostPasswordPost);
 	
@@ -81,6 +89,7 @@ function saveLogin(req,res) {
 }
 
 function resetPasswordEmail(req, res, to) {	
+	
     return new Performer( 
             { 
                 // N.B. these params are flipped coming from sendgrid
@@ -98,20 +107,26 @@ function resetPasswordEmail(req, res, to) {
                                       bodyClass: "profile"});			
                     }   
                     else {
-                        errout( req, res, exp( 400, 'Email reset failed: ' + message)  );
+						safeharbor.emergency.alert('Email reset failed: ' + message);
+                        errout( req, res, exp( 500, 'Email reset failed: ' + message)  );
                         this.stopChain();
                     }
                 },
                 
-                performer: function() {            
-                    var backlink = "http://"+req.headers.host+"/lostpassword/"+this.prev.resetSecret,
-                        subject = "Password reset for Safeharbor.in",
-                        plainOldAscii = "To reset your password go to "+backlink,
-                        htmlTemplate = "/../views/profile/theemail.html",
-                        htmlVars = {'backlink':backlink},
-                        sendgrid = require('../lib/mail.js');
-                        sendgrid.emailFromTemplate(to,subject,plainOldAscii,
-                                                  htmlTemplate,htmlVars,this.bound_callback());
+                performer: function() {   
+					// new hotttness
+					var backlink = "http://"+req.headers.host+"/lostpassword/"+this.prev.resetSecret;
+					mailer.to(
+						{
+							viewsSubdir: "profile",
+							template: "theemail", 
+							to: to,
+						    subject: utils.gettext("Password reset for SafeHarbor.in"),							
+							templateVars: {'backlink':backlink} 
+						}, 
+						this.bound_callback()
+					);
+										
                  }                
             });            
 }
@@ -119,6 +134,8 @@ function resetPasswordEmail(req, res, to) {
 // save a secret to the DB and email it to the email. note that we always show the "email sent" page, 
 // but we only actually send the email if it was found in the db!
 function lostPasswordStart(req,res){
+	console.log("bp %%%.5");
+	
     var email = req.body.email;
     var rpe = resetPasswordEmail( req, res, email );
 	var init = profile.initPasswordReset( email, function( c, resetSecret ) { 
@@ -128,11 +145,11 @@ function lostPasswordStart(req,res){
 	        }
 	        else if( c == CODES.NO_RECORDS_UPDATED )
 	        {
-                var title = "Uknown email";
+                var title = "Unknown email";
                 res.outputMessage( 
                     page.MESSAGE_LEVELS.error,
                     title,
-                    "Sorry, don't know that email address"
+                    utils.gettext("Sorry, don't know that email address")
                 );
             
                 res.render( 'profile/lostpassword.html', {pageTitle:title} );

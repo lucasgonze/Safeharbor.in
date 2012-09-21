@@ -109,6 +109,7 @@ function emailHandshake(req, res, host) {
                     var text  = 'Please confirm your Safeharbor.in account by going to http://'+req.headers.host+'/reg/'+regid;
                     var path  = "/../views/reg/handshake.html";
                     var vars  = {'regid': regid,'host':host};
+					// fixme: convert this old style email call to the new style mailer.to()
                     require('../lib/mail.js').emailFromTemplate(to,subj,text,path,vars,this.bound_callback());
                 }                
             });            
