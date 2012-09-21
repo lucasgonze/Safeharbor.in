@@ -106,20 +106,11 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                 // N.B. these params are flipped coming from sendgrid
                 callback: function(success,message) {
                     if( success ) {
-						// fixme: the message is not being output. 
-						// see github #134 
-						// https://github.com/lucasgonze/Safeharbor.in/issues/134
-                        res.outputMessage( 
-                                        page.MESSAGE_LEVELS.success,
-                                        "Your request has been received.",
-                                        "Please expect a response via the contact information you provided."
-                                        );
-                        res.render(
-	 						{   layout:"box/box_main.html",
-                                       pageTitle:"Success",
-                                       sitename: this.sitename,
-									   domain: this.domain
-                             } );
+						res.status(202);
+						wrapBox(req,res,"box/receipt.html","Accepted","nop",{
+							sitename: this.sitename,
+						    domain: this.domain
+						});
                     }   
                     else {
 						// fixme: page admin on call
