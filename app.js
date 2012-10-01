@@ -1,26 +1,30 @@
 
-/*
-    N.B. this stuff is very
-    order dependend. Every call to app.use
-    is establishing the order in which 
-    requests are processed.
-*/
-var express = require('express');
-var app = express.createServer();
+app.get('/', function(req, res){
+  res.send('Hello World');
+});
 
-var safeharbor = require('./lib/safeharbor.js');
-
-safeharbor.session.setup(app);
-safeharbor.page.setup(app);
-
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-
-app.use(app.router);
-app.use(express.static(__dirname + '/public'));
-
-safeharbor.routes.setup(app);
-safeharbor.errors.setup(app);
+// /*
+//     N.B. this stuff is very
+//     order dependend. Every call to app.use
+//     is establishing the order in which 
+//     requests are processed.
+// */
+// var express = require('express');
+// var app = express.createServer();
+// 
+// var safeharbor = require('./lib/safeharbor.js');
+// 
+// safeharbor.session.setup(app);
+// safeharbor.page.setup(app);
+// 
+// app.use(express.bodyParser());
+// app.use(express.methodOverride());
+// 
+// app.use(app.router);
+// app.use(express.static(__dirname + '/public'));
+// 
+// safeharbor.routes.setup(app);
+// safeharbor.errors.setup(app);
 
 //******************************
 // Server loop
