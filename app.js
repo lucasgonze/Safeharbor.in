@@ -8,37 +8,13 @@
 var express = require('express');
 var app = express.createServer();
 
-// var globalClient = null;
-// var getClient = function() 
-// {
-//     if( !globalClient ){
-// console.log("BP X.1")	
-//         var pg = require('pg'); //native libpq bindings = `var pg = require('pg').native`
-// console.log("BP X.2")	
-//         var conString = process.env.DATABASE_URL; // on heroku and on my local dev box
-// console.log("BP X.3")	
-//         var client = new pg.Client(conString);
-// console.log("BP X.4")	
-//         if( !client ){
-// 			console.log("BP X.5")	
-// 		    throw new InvalidConnect(conString);
-// 		}
-// console.log("BP X.6")	
-//         client.connect();
-// console.log("BP X.6.2")	
-//        globalClient = client;
-//     }
-// console.log("BP X.7")	
-// 	return(globalClient);
-// }
-
-
 app.get('/', function(req, res){
 	
 	var pg = require('pg'); //native libpq bindings = `var pg = require('pg').native`
-	console.log("BP M.2")	
+	
+	console.log("BP R",process.env.DATABASE_URL)	
+
 	var conString = process.env.DATABASE_URL; // on heroku and on my local dev box
-	console.log("BP M.3")	
 	var client = new pg.Client(conString);
 	console.log("BP M.4")	
 	if( !client ){
