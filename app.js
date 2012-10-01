@@ -37,6 +37,7 @@ app.get('/', function(req, res){
 	var client = getClient();
 	console.log("BP Y.1",client);
 	sql = "create temp table if not exists foo (bar text)";
+	sq = "select 'foo'"
     var query = client.query( sql,function(err, result){
 		console.log("BP Y.3",err,result);
 		} );
