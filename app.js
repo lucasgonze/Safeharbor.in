@@ -37,29 +37,11 @@ app.get('/', function(req, res){
 	var client = getClient();
 	console.log("BP Y.1",client);
 	sql = "create temp table if not exists foo (bar text)";
-    var query = client.query( sql ); // do NOT pass a callback here
-	console.log("BP Y.2",client);
-    
-    if( !query ){
-		console.log("no query");
-		res.send("no query");
-		return;
-    }
+    var query = client.query( sql,function(err, result){
+		console.log("BP Y.3",err,result);
+		} );
 
-    query.on('error', function(data) { 
-		console.log("error: ",data);	
-		res.send('Hello World 3');
-	});
-    
-    query.on('row', function(data) { 
-		console.log("row: ",data);
-		res.send('Hello World 1');
-	});
-    
-    query.on('end', function(data) { 
-		console.log("end: ",data);
-		res.send('Hello World 2');
-	});
+	res.send("BP Y.4");
     
 });
 
