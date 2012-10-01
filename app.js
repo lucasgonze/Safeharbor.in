@@ -34,8 +34,11 @@ console.log("BP X.7")
 
 app.get('/', function(req, res){
 	
+	var client = getClient();
+	console.log("BP Y.1",client);
 	sql = "create temp table if not exists foo (bar text)";
-    var query = getClient().query( sql ); // do NOT pass a callback here
+    var query = client.query( sql ); // do NOT pass a callback here
+	console.log("BP Y.2",client);
     
     if( !query ){
 		console.log("no query");
