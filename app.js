@@ -28,7 +28,7 @@ var getClient = function()
 app.get('/', function(req, res){
 	
 	sql = "create temp table if not exists foo (bar text)";
-    var query = getClient().query( sql, args ); // do NOT pass a callback here
+    var query = getClient().query( sql ); // do NOT pass a callback here
     
     if( !query ){
 		console.log("no query");
