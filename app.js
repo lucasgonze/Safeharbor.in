@@ -1,16 +1,17 @@
 
+/*
+    N.B. this stuff is very
+    order dependend. Every call to app.use
+    is establishing the order in which 
+    requests are processed.
+*/
+var express = require('express');
+var app = express.createServer();
+
 app.get('/', function(req, res){
   res.send('Hello World');
 });
 
-// /*
-//     N.B. this stuff is very
-//     order dependend. Every call to app.use
-//     is establishing the order in which 
-//     requests are processed.
-// */
-// var express = require('express');
-// var app = express.createServer();
 // 
 // var safeharbor = require('./lib/safeharbor.js');
 // 
