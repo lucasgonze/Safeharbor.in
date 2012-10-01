@@ -46,6 +46,11 @@ app.get('/', function(req, res){
 		return;
     }
 
+    query.on('error', function(data) { 
+		console.log("error: ",data);	
+		res.send('Hello World 3');
+	});
+    
     query.on('row', function(data) { 
 		console.log("row: ",data);
 		res.send('Hello World 1');
@@ -54,11 +59,6 @@ app.get('/', function(req, res){
     query.on('end', function(data) { 
 		console.log("end: ",data);
 		res.send('Hello World 2');
-	});
-    
-    query.on('error', function(data) { 
-		console.log("error: ",data);	
-		res.send('Hello World 3');
 	});
     
 });
