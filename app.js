@@ -25,7 +25,8 @@ console.log("BP X.4")
 		}
 console.log("BP X.6")	
         client.connect();
-        globalClient = client;
+console.log("BP X.6.2")	
+       globalClient = client;
     }
 console.log("BP X.7")	
 	return(globalClient);
