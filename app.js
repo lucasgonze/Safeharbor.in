@@ -11,13 +11,19 @@ var app = express.createServer();
 var globalClient = null;
 var getClient = function() 
 {
-    if( !globalClient )
-    {
+    if( !globalClient ){
+console.log("BP X.1")	
         var pg = require('pg'); //native libpq bindings = `var pg = require('pg').native`
-        var conString = process.env.DATABASE_URL || "tcp://postgres:EMbr4EDS@localhost/safeharborin"; // on heroku and on my local dev box
+console.log("BP X.1")	
+        var conString = process.env.DATABASE_URL; // on heroku and on my local dev box
+console.log("BP X.1")	
         var client = new pg.Client(conString);
-        if( !client )
-            throw new InvalidConnect(conString);
+console.log("BP X.1")	
+        if( !client ){
+			console.log("BP X.1")	
+		    throw new InvalidConnect(conString);
+		}
+console.log("BP X.1")	
         client.connect();
         globalClient = client;
     }
