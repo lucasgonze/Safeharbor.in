@@ -4,7 +4,10 @@
 */
 
 var debug = console.log;
-var getClient = require('models/index.js').getClient;
+var getClient = require('../models/index.js').getClient;
 debug("client",getClient());
+
+process.exit(code=0);
+
 
 
