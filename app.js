@@ -12,24 +12,26 @@ app.get('/', function(req, res){
 	
 	var pg = require('pg'); //native libpq bindings = `var pg = require('pg').native`
 	
-	console.log("BP R",process.env.DATABASE_URL);
-	console.log("BP R.2",process.env.HEROKU_POSTGRESQL_BLUE_URL);
-	// var conString = process.env.DATABASE_URL; // on heroku and on my local dev box
-	// var client = new pg.Client(conString);
-	// console.log("BP M.4")	
-	// if( !client ){
-	// 	console.log("BP M.5")	
-	// 	throw new InvalidConnect(conString);
-	// }
-	// console.log("BP M.6")	
-	//     client.connect();
-	// 
-	// console.log("BP Y.1",client);
-	// sql = "create temp table if not exists foo (bar text)";
-	// sq = "select 'foo'";
-	//     var query = client.query( sql,function(err, result){
-	// 	console.log("BP Y.3",err,result);
-	// 	} );
+	var conString = process.env.DATABASE_URL || // old heroku generic shared db
+		process.env.HEROKU_POSTGRESQL_BLUE_URL|| // new heroku postgres
+		"tcp://postgres:EMbr4EDS@localhost/safeharborin"; // on my local machine
+		
+	console.log("conString",conString);
+
+	var client = new pg.Client(conString);
+	if( !client ){
+		console.log("BP M.5")	
+		throw new InvalidConnect(conString);
+	}
+	console.log("BP M.6")	
+	    client.connect();
+	
+	console.log("BP Y.1",client);
+	sql = "create temp table if not exists foo (bar text)";
+	sq = "select 'foo'";
+	    var query = client.query( sql,function(err, result){
+		console.log("BP Y.3",err,result);
+		} );
 
 	res.send("BP Y.4");
     
