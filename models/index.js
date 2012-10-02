@@ -17,9 +17,11 @@ var getClient = function()
     if( !globalClient )
     {
         var pg = require('pg'); //native libpq bindings = `var pg = require('pg').native`
-		var conString = process.env.DATABASE_URL || // old heroku generic shared db
+		var conString = 
 			process.env.HEROKU_POSTGRESQL_BLUE_URL|| // new heroku postgres
+			process.env.DATABASE_URL || // old heroku generic shared db
 			"tcp://postgres:EMbr4EDS@localhost/safeharborin"; // on my local machine
+		console.log("Connect to database at ",conString);
         var client = new pg.Client(conString);
         if( !client )
             throw new InvalidConnect(conString);
