@@ -17,10 +17,33 @@ var CODES      = dash.CODES;
 exports.install = function(app) 
 {
     var logged_in = app.checkRole(app.ROLES.logged_in);
+
+	app.get( '/paige', logged_in, getPaige);
     
     app.get( '/dash', logged_in, getDash );
     app.get( '/disputes', logged_in, getDash );
     app.get( '/detail/:auditid([0-9]+)$', logged_in, getDetail );
+}
+
+function getPaige(req,res){
+
+	var uid = loginstate.getID(req);
+	var log = dash.getAuditLog(uid,
+		function(code,rows){
+			if( code != CODES.SUCCESS )
+				return;
+			res.render( 
+						'dash/inside.html',
+		                {  
+							layout: 'dash/outside.html',
+							pageTitle:"Safe Harbor - [page title here]",
+							bodyClass:"dash-index",
+							submissions: rows                            
+		                 } 
+			);
+	    }
+	);
+	log.handleErrors( req, res ).perform();                         
 }
 
 function getDash( req, res  )
