@@ -12,8 +12,8 @@ app.get('/', function(req, res){
 	
 	var pg = require('pg'); //native libpq bindings = `var pg = require('pg').native`
 	
-	console.log("BP R",process.env.DATABASE_URL)	
-
+	console.log("BP R",process.env.DATABASE_URL);
+	console.log("BP R.2",process.env.HEROKU_POSTGRESQL_BLUE_URL);
 	// var conString = process.env.DATABASE_URL; // on heroku and on my local dev box
 	// var client = new pg.Client(conString);
 	// console.log("BP M.4")	
