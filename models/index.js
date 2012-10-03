@@ -20,7 +20,7 @@ var getClient = function()
 		var conString = 
 			process.env.HEROKU_POSTGRESQL_BLUE_URL|| // new heroku postgres
 			process.env.DATABASE_URL || // old heroku generic shared db
-			"tcp://postgres:EMbr4EDS@localhost/safeharborin"; // on my local machine
+			"tcp://postgres:EMbr4EDS@localhost:5433/safeharborin"; // on my local machine
 		console.log("Connect to database at ",conString);
         var client = new pg.Client(conString);
         if( !client )
