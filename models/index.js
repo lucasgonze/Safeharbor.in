@@ -495,6 +495,7 @@ var tablePrototype = {
         
         debug.out( 'SQL', sql, args );       
         var query = this.client.query( sql, args ); // do NOT pass a callback here
+		console.log( '-->',query.text);
         
         if( !query )
         {

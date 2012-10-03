@@ -73,19 +73,21 @@ create table resets (
 insert into acct (role,email,password) values ('1','lucas@gonze.com', 'abcd');
 
 insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) 
-	values (40,1,'Etsy','1.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345',
+	values (1,1,'Etsy','1.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345',
          	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212');
 
-insert into audit (site, opname) values (1,'takedownRequest');
+insert into audit (site, opname, contact) values (1,'takedownRequest',1);
 
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 9, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 9, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 9, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 9, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 9, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 9, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 9, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 9, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 9, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 9, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into contact (owners_full_name,full_name,job_title,email,phone,fax,postal,signature) values ( 'John Q. Owner', 'Jane Workerbee', 'Attack Dog In Chief', 'jane@example.com', '(900) 555-1212', '(900) 555-1212', '456 Pleasant Valley Avenue, Agrestik CA 12345', '/jane w.');
+
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
 
