@@ -10,6 +10,8 @@ var app = express.createServer();
 
 var safeharbor = require('./lib/safeharbor.js');
 
+safeharbor.debug.setVolume(1);
+
 safeharbor.session.setup(app);
 safeharbor.page.setup(app);
 

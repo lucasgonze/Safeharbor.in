@@ -11,7 +11,8 @@ drop table if exists emailHandshake;
 drop table if exists resets;
 
 -- create new tables
-create table acct ( acctid serial unique,
+create table acct ( 
+	acctid serial unique,
 	email text not null unique,
 	password text not null, 
 	resetSecret text, 
@@ -54,7 +55,8 @@ create table media (
 	page text not null, 
 	media_url text not null, 
 	anchor text not null, 
-	description text not null
+	description text not null,
+	takedown_date timestamp with time zone
 );
 create table emailHandshake (
 	creation timestamp DEFAULT current_timestamp,
@@ -67,6 +69,7 @@ create table resets (
 	userid integer not null,
 	secret text not null
 );
+
 
 -- create default accounts
 

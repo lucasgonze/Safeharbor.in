@@ -11,7 +11,6 @@ var errout = errlib.errout();
 var dash       = require('../models/dash-models.js');
 var profile    = require('../models/profile-models.js');
 
-
 var CODES      = dash.CODES;
 
 exports.install = function(app) 
@@ -19,31 +18,51 @@ exports.install = function(app)
     var logged_in = app.checkRole(app.ROLES.logged_in);
 
 	app.get( '/paige', logged_in, getPaige);
-    
+	app.get( '/panel', logged_in, getOpenDisputes);
+
     app.get( '/dash', logged_in, getDash );
     app.get( '/disputes', logged_in, getDash );
     app.get( '/detail/:auditid([0-9]+)$', logged_in, getDetail );
 }
 
+function getOpenDisputes(req,res){
+	
+	dash.getOpenMedia({uid:loginstate.getID(req), callback:function(err,data){
+		var myStatic = false;
+		
+		if(err){
+			myStatic = true;
+			debug.out("error returned from getOpenMedia");
+		    res.outputMessage( page.MESSAGE_LEVELS.error,
+		                       'Try again later',
+		                       'Fail' );
+			res.status(500).render(page.MESSAGE_VIEW, { pageTitle: 'Sad Page' } );            
+			return;
+		}
+
+		res.render( 
+					'dash/panel.html', {  
+						layout: 'dash/outside.html',
+						pageTitle:"Safe Harbor - [page title here]",
+						bodyClass:"dash-index",
+						disputes: data
+                 } 
+		);
+	}});			
+}
+
+/* sandbox for paige to work on markup */
 function getPaige(req,res){
 
-	var uid = loginstate.getID(req);
-	var log = dash.getAuditLog(uid,
-		function(code,rows){
-			if( code != CODES.SUCCESS )
-				return;
-			res.render( 
-						'dash/inside.html',
-		                {  
-							layout: 'dash/outside.html',
-							pageTitle:"Safe Harbor - [page title here]",
-							bodyClass:"dash-index",
-							submissions: rows                            
-		                 } 
-			);
-	    }
+	res.render( 
+				'dash/inside.html',
+	               {  
+					layout: 'dash/outside.html',
+					pageTitle:"Safe Harbor - [page title here]",
+					bodyClass:"dash-index",
+					submissions: rows                            
+	                } 
 	);
-	log.handleErrors( req, res ).perform();                         
 }
 
 function getDash( req, res  )

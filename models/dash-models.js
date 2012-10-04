@@ -2,6 +2,7 @@ var model      = require( './index.js' );
 var profile    = require('./profile-models.js');
 var debug      = require( '../lib/debug.js' );
 
+var getClient  = require('../models/index.js').getClient;
 
 var ModelPerformer = model.ModelPerformer;
 var CODES = exports.CODES = model.CODES;
@@ -321,4 +322,93 @@ exports.getAuditDetail = function( auditId, callback )
     
     return audit.chain( subSqlPerformer );
 
+}
+
+exports.getOpenMedia_correctButBroken = function( uid, callback ){
+    
+	var sql = ''
+		+ 'select '
+		+ 'site.sitename, site.sitelogo, site.domain, '
+		+ 'media.description, media.media_url, '
+		+ 'audit.creation, '
+		+ '\'OPEN\' as status, ' // fixme: real actual flag in DB
+		+ 'contact.owners_full_name, contact.full_name, contact.job_title, contact.email, contact.phone, contact.fax, contact.postal '
+		+ 'from audit, acct, site, media, contact '
+		+ 'where '
+		+ 'acct.acctid = $1 '
+		+ 'and acct.acctid = site.acct '
+		+ 'and site.siteid = audit.site '
+		+ 'and audit.auditid = media.audit '
+		+ 'and audit.contact = contact.contactid ';
+
+	 var AllRows = new ModelPerformer( { 
+		values: [uid],
+		performer: function() {this.table.findAllRows(sql); },
+		callback: function( code, rows ){			
+			if( code == CODES.SUCCESS )
+			    this.allRows = rows;
+			else
+			    callback.apply(this,[code,rows]);
+		},
+    });
+	return(AllRows);
+}
+
+/*
+The getOpenMedia_correctButBroken function was my first attempt at this. I couldn't make it work, though. 
+The standard template of these things that Victor set up doesn't seem that hard, but I 
+spent most of a day debugging without mastering the complexities and had to move on, 
+so I did the naively simple version below, which I'm sure has horrible fatal bugs in wait 
+that the Victor approach would have prevented.
+
+params: {
+uid: int,
+offset: starting row,
+limit: rows per fetch,
+callback: the callback
+}
+*/
+exports.getOpenMedia = function(params){
+	
+	var sql = ''
+		+ 'select '
+		+ 'site.sitename, site.sitelogo, site.domain, '
+		+ 'media.description, media.media_url, '
+		+ 'audit.creation, '
+		+ 'contact.owners_full_name, contact.full_name, contact.job_title, contact.email, contact.phone, contact.fax, contact.postal '
+		+ 'from audit, acct, site, media, contact '
+		+ 'where '
+		+ 'acct.acctid = $1 '
+		+ 'and media.takedown_date is null ' // i.e. disputes that are "open"
+		+ 'and acct.acctid = site.acct '
+		+ 'and site.siteid = audit.site '
+		+ 'and audit.auditid = media.audit '
+		+ 'and audit.contact = contact.contactid ';
+
+	var query = getClient().query(sql,[params.uid]);
+
+	if( !query ){
+		debug.out("(Null query error for sql: ",sql);
+		params.callback("Null query error");
+		return;
+	}
+
+	var gotErr = false;
+	query.on('error',function(err){
+		debug.out('ERROR',err);
+		gotErr = true;
+		params.callback(err);
+	});
+
+	var rows = [];
+	query.on('row',function(data){
+		rows.push(data);
+	});
+
+	query.on('end',function(data){
+		debug.out('END');
+		if( !gotErr )
+			params.callback(false,rows);
+	});
+	
 }

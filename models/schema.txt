@@ -1,0 +1,30 @@
+DB normalization keys
+
+table audit: 
+	auditid
+	site -> site.siteid
+	contact -> contact.contactid
+
+acct:
+	acctid
+
+site:
+	acct -> acct.acctid
+	siteid
+
+contact:
+	contactid
+
+media:
+	mediaid 
+	audit -> audit.auditid
+
+All takedown requests ever for user with ID 1:
+select * from audit, acct, site, media
+where 
+acct.acctid = 1 
+and acct.acctid = site.acct
+and site.siteid = audit.site
+and audit.auditid = media.audit
+
+

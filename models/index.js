@@ -432,13 +432,15 @@ in the third parameters.
 @param {array} [extraCodes] Array of {{#crossLink "CODES"}}{{/crossLink}} to treat as fatal.
 **/
 ModelPerformer.prototype.handleErrors = function( req, res, extraCodes )
-{
+{	
     var errlib = require('../lib/error.js');
     var func = errlib.errout( [CODES.SQL_ERROR,CODES.INVALID_ARGS].concat(extraCodes || []) );
     this.errorhandler = function( code, err ) { 
                             debug.out('return check: ', code, err );
+console.log("$$$$.2");
                             return func( req, res, code, err ); 
                             }
+console.log("$$$$");
     return this;
 }
 

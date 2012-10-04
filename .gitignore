@@ -1,7 +1,8 @@
 node_modules
 .DS_Store
 
-n
 lib/sh_session.txt
 version.info
 public/debug
+public/paige
+
