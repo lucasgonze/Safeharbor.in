@@ -1,143 +1,187 @@
+/* path: url('/paige/img/noise.png')*/
 
-/* Paige basic stlyes & beginning visual style...see http://www.red-team-design.com/css3-patterned-buttons 
-*/
 
 body{
-background: url('/paige/img/noise.png') repeat scroll 0 0 rgba(155, 158, 163, 0.1);
-font-family: proxima-nova,"Helvetica Neue", Helvetica, Arial, sans-serif; 
+background: url('/paige/img/lighthouse.png') no-repeat, url('/paige/img/noise.png') repeat;
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
 }
 
 
 a {
-color: #37577c;
+color: #666;
 outline: 0;
 }
 
+#page-header h1 {
+margin-bottom: 22px;
+margin-left: 3px;
+color: #5A5C63;
+text-shadow: 0 1px 0 #FFFFFF;
+}
 
 /*--*/
 
+.navbar-inner {
+    background-color: #DDDDDD;
+    background-image: -moz-linear-gradient(center top , #DDDDDD, #D2D2D2);
+ 	border: 1px solid #C4C4C4;
+ }
+ 
+.navbar .nav li a {
+    color: #000000;
+
+}
+    
 .main {
-background-color: #fff;
+background-color: #a8abb5;
 margin-top: 0px;
-border-left: 1px solid #CACACA;
-border-right: 1px solid #CACACA;
-border-bottom: 1px solid #CACACA;
-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 10px rgba(0, 0, 0, 0.1);
+border: 1px solid #7b7e88;
+box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 10px rgba(1, 1, 1, 0.11);
 overflow:hidden;
 }
 
 #sort-list {
 min-height: 60px;
-
 }
 
 #sort-list-link {
-padding: 20px 10px 20px 0px;
-text-decoration: underline;
+margin: 18px 18px 0px 0px; 
 }
-
 
 /* 
 Dispute Tables Basic Styling 
 */
 
-td.left, th.left {
-font-size: .8em;
-color: #888;
-text-align: right;
-font-weight: normal;
-}
 
-td.right, th.right {
-font-weight: normal;
-}
-
-.dispute tr.company {
-height: 43px;
-font-size: 1.3em;
-}
-
-th.company_logo {
-border: none;
-width: 100px;
-padding: 0px;
-background: url('/paige/img/youtube_sm.jpg') no-repeat;
-}
 
 .single-dispute {
-border-top: 1px solid gray;
-height: 279px;
-padding-left: 30px;
+height: 242px;
+background-color: #f2f2f2;
+border: 1px solid #7b7e88;
+margin: 10px 20px;
 -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
      -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+text-shadow: 0 1px 0 #FFFFFF;
 }
 
-.dispute-table {
-padding: 23px 8px 0px;
-width: 600px;
-}
-
-.dispute-table-resolve-button, .preview_image_box, .copyright-table {
+.company-logo-box, .infringement-list-resolve-button, .preview-image-box, .copyright-table-box {
 float: left;
 }
 
-.dispute-table .table td, .copyright-table .table td {
-border-top: none;
-padding: 4px;
+/*Display the Company Logo in the Dispute*/
+
+.company-logo-box {
+border: 1px solid #CACACA;
+border-left: 1px solid #CACACA;
+border-right: 1px solid #CACACA;
+border-bottom: 1px solid #CACACA;
+box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 10px rgba(0, 0, 0, 0.1);
+background-color: #fff;
+height: 105px;
+width: 105px;
+margin: 17px 27px;
 }
 
-.dispute-table table.table {
-margin-bottom: 0px;
+.company-logo {
+border: 1px solid #CACACA;
+width: 90px;
+height: 90px;
+margin: 6px;
 }
 
 
-.resolve a.btn {
-margin-left: 75px;
-width: 220px;
-margin-top: 12px;
-}
-
-.copyright-table {
-padding: 14px 10px 10px 13px;
-margin:10px;
-border: 1px solid #666;
+ul.infringement-list {
+margin:0px 0px 60px 0px;
+list-style: none;
 }
 
 
-.italic {
-font-style: italic; 
-padding: 0px;
+li.infringement-title {
+font-size: 1.4em;
+letter-spacing: .03em;
+color: #333;
+font-weight: bold;
+
+}
+
+li.arrival-date {
+font-size: 1.1em;
 color: #000;
+margin-top: 7px;
+}
+
+li.infringement-url {
+text-decoration: underline;
+color: #333;
+}
+
+li.open .italic {
+font-style: italic; 
 text-transform: none;
 font-weight: normal;
-margin-top:-6px;
+color: #7b7e88;
 }
 
-.dispute-table td.open {
-color: red;
+ul.infringement-list li.open {
+color: #E72626;
 text-transform: uppercase;
 font-weight: bold;
 }
 
-
-.dispute-table table.table, .preview_image_box {
-float: left;
+.infringement-list-resolve-button {
+height: 200px;
+margin: 28px 16px 0px 0px;
 }
 
-.dispute-table-resolve-button {
-width: 500px;
+.resolve {
 }
 
-.preview_image_box {
+.resolve a.btn {
+width: 230px;
+}
+
+
+/*Style the Copyright Owner's Info Table*/
+
+.copyright-table-box {
+    background-color: #eee;
+    background: url('/paige/img/noise.png');
+    border-left: 1px solid #CCCCCC;
+    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.05) inset;
+	width: 483px;
+	height:241px;
+}
+
+.copyright-table {
+padding: 21px 10px 28px 14px;
+color: #333;
+
+}
+
+.copyright-table .table td {
+padding: 1px 6px;
+border-top: none;
+}
+
+td.left, th.left {
+font-size: .9em;
+color: #7b7e88;
+text-align: right;
+font-weight: normal;
+}
+
+/*Preview the URL*/
+
+.preview-image-box {
 width: 20px;
 padding: 0px;
-height: 185px;
+height: 223px;
 padding-top: 20px;
 }
 
-a.preview_image {
-background: url('/paige/img/chevron.png') no-repeat; 
+a.preview-image {
+background: url('/paige/img/chevron.png')no-repeat;
 outline: none;
 width: 20px;
 height: 20px;
@@ -145,8 +189,8 @@ text-indent: -9999px;
 display:inline-block;
  }
 
-a.preview_image:hover {
-background: url('paige/img/chevron_hover.png')no-repeat;
+a.preview-image:hover {
+background: url('/paige/img/chevron_hover.png')no-repeat;
 }
 
 /*Resolve Button*/
@@ -309,3 +353,6 @@ border: 1px solid green;
     display: inline;
     margin-right: 10px;
 }
+
+li.search form.form-search{
+margin-bottom: 0px;}
