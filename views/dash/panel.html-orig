@@ -1,56 +1,53 @@
-<!--All Dispute Types 
-there are three versions of a dispute so far- 
-
-a Single Dispute with the website name & logo, 
-a Single Dispute without the associated website name & logo,
-a CLOSED single dispute with the website name & logo
---> 
-
 
 {{#each disputes}}{{#with this}}
 
+<!-- The data in these fields is not yet used:
+{{sitename}}
+{{sitelogo}}
+{{domain}}						
+-->
 
 <!--Begin Single Dispute with Website Name & Logo-->
-  
- <!-- Begin Single Dispute List Item -->
+   <!-- Begin Single Dispute List Item -->
               <div class="row">
                 <div class="span12">
                   <div class="single-dispute">
-                  <div class="company-logo-box">
-<div class="company-logo"> <img src='{{sitelogo}}' alt="" title=""{{sitename}} />
- </div></div>
-                     <!-- Begin a block holding information about the Infringement and the Resolve Button so they stack nicely-->
-                  <div class="infringement-list-resolve-button">
-  <ul class="infringement-list">
-                                        
-                            <li class="infringement-title">{{description}}</li>
-                          <li class="infringement-url"><a href=
-                            "{{media_url}}">{{media_url}}</a></li>
+                  
+                     <!-- Begin a block holding the dispute table and the resolve button so they stack nicely-->
+                  <div class="dispute-table-resolve-button">
+                    <div class="dispute-table">
+                      <table class="table">
+                       <table>
+<tr>
+<th>{{description}}</th>
 
-                          <li class="arrival-date">{{creation}}</li>
-                          <li class="open">Open Dispute <span class="italic"><!-- fixme: day counter as live data -->3 days until Dispute is Critical</span></li>
-                        
-</ul>   <!--End Infringement Listing-->
+</tr>
+<tr>
+<td>URL:<a href="{{media_url}}" alt="{{media_url}}" title="{{media_url}}">{{media_url}}</a></td>
+</tr>
+<tr>
+ <td>{{creation}}</td>
+</tr>
+<tr>
+ <td>Open Dispute <p class="italic">3 days until Dispute is Critical</p></td>
+</tr>
+</table>                     
+</div><!--End Dispute Content Table -->
                      <!--Begin Resolve Dispute Button -->
 
                     <div class="resolve">
-                      <a href="#" class="btn btn-large" type="button">Resolve Dispute</a>
+                      <a href="#fixme:resolvedispute" class="btn btn-large" type="button">Resolve Dispute</a>
                     </div><!--End Resolve Dispute Button -->
-                                       </div>
-                     
 
-                <!-- End a block holding the infringement information and the resolve button so they stack nicely-->
+                   </div><!-- End a block holding the dispute table and the resolve button so they stack nicely-->
                    
                    <!--Begin Preview Image of Dispute on Website -->
 
-                    <div class="preview-image-box">
-                      <a href="#" class="preview-image" title="preview dispute">here</i></a>
+                    <div class="preview_image_box">
+                      <a href="#fixme:preview_image" class="preview_image" title="preview_dispute">here</a>
                     </div><!--End Preview Image of Dispute on Website -->
-                   
-                   <div class="copyright-table-box"> 
-                   <!-- Copyright Holder Table-->
-
-                    <div class="copyright-table ">
+                    <!-- Copyright Holder Table-->
+                    <div class="copyright-table well well-small">
                       <table class="table">
                         <thead>
                           <tr class="">
@@ -70,7 +67,6 @@ a CLOSED single dispute with the website name & logo
                           <tr>
                             <td></td>
                           </tr>
-
                           <tr>
                             <td class="left">Job Title</td>
 
@@ -78,7 +74,7 @@ a CLOSED single dispute with the website name & logo
                           </tr>
 
                           <tr>
-                            <td class="left">Email</td><!-- fixme: encode HTML entities in email address -->
+                            <td class="left">Email</td>
 
                             <td><a href="mailto:{{email}}" class=
                             "email_link">{{email}}</a></td>
@@ -104,22 +100,9 @@ a CLOSED single dispute with the website name & logo
                         </tbody>
                       </table>
                     </div><!--End Copyright Holder Table-->
-                  </div>                  
+                                     </div>
                 </div>
               </div><!-- End Single Dispute List Item -->
-      </div>
-      
-  
-
-
 <!--End Single Dispute with Website Name & Logo-->
 
 {{/with}}{{/each}}
-
-<!--Begin Single Dispute with NO Website Name & Logo-->
-<!--End Single Dispute with NO Website Name & Logo-->
-
-
-
-<!--Begin CLOSED Single Dispute with Website Name & Logo-->
-<!--End CLOSED Single Dispute with Website Name & Logo-->

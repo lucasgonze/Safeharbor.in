@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="/paige/css/bootstrap.css" rel="stylesheet">
+    <link href="paige/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -18,12 +18,9 @@
         padding: 9px 0;
       }
     </style>
-    <link href="/paige/css/safe_bootstrap.css" rel="stylesheet">
-    <link href="/paige/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="paige/css/safe_bootstrap.css" rel="stylesheet">
+    <link href="paige/css/bootstrap-responsive.css" rel="stylesheet">
 
-<!--Typekit Goo-->
-<script type="text/javascript" src="//use.typekit.net/olc2iqd.js"></script>
-	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -57,14 +54,14 @@
             <ul class="nav">
             
                            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">All Accounts <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-home "></i> All Accounts <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">Youtube.com</a></li>
                   <li><a href="#">Etsy.com</a></li>
                   <li><a href="#">Heineken.com</a></li>
                   <li class="divider"></li>
                   <li class="nav-header">Other Actions</li>
-                  <li><a href="#">+ Add a new Website</a></li>
+                  <li><a href="#"><i class="icon-plus"></i> Add a new Website</a></li>
                   <!-- <li><a href="#">Other Action</a></li> -->
                 </ul>
               </li>
@@ -79,9 +76,9 @@
 -->
 
  <ul class="nav pull-right">
-   <li class="active"><a href="#">+ Add a New Website</a></li>
+   <li class="active"><a href="#"><i class="icon-plus"></i> Add a New Website</a></li>
                                          <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">you@youremail.com<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> you@youremail.com<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">Account Settings</a></li>
                   <li><a href="#">Billing</a></li>
@@ -103,7 +100,7 @@
 
 
 
-<!--Begin Alerts, which presently sit right below navigatio on the page -->
+<!--Begin Alerts, which presently sit right below navigatio on the page 
 
 <div class="row">
       <div class="span11 alert">
@@ -112,14 +109,14 @@
       </div>
     </div>
     
-<!--End Alerts, which presently sit right below navigatio on the page -->
+End Alerts, which presently sit right below navigatio on the page -->
 
 <!--Begin Page Header: Website Name & Count of Disputes -->
 
     <div class="row">
       <div id="page-header" class="span11">
      
-          <h1><small>234 Open Disputes</small></h1>
+          <h1>234 Open Disputes</h1>
           <!-- For the 'home' tab, all properties we would instead of [website name] show All Disputes in the Page Title-->
         </div>
       </div>
@@ -142,8 +139,10 @@
         <li class="disabled"><a href="#tab4" data-toggle="tab">Statistics</a></li>
         <!--Begin Search Bar -->
 
-        <li class="search"><input type="text" class="search-query" placeholder=
-        "Search All Disputes" /></li>
+        <li class="search">
+<div class="input-append">
+<input class="span2" id="appendedInputButtons" size="16" type="text"><button class="btn" type="button">Search</button><button class="btn" type="button">Options</button>
+</div></li>
       </ul><!--End Search Bar -->
 
       <div class="main tab-content">
@@ -152,8 +151,12 @@
 
           <div class="row">
             <div id="sort-list">
-              <a href="#" id="sort-list-link" class="pull-right">Sorted Newest to
+              <a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-up"></i> Sorted Newest to
               Oldest</a>
+<!--
+               <a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-down"></i> Sorted Oldest to
+              Newest</a>
+-->
             </div>
           </div><!--End Sort Listing of Disputes by Newest to Oldest Toggle-->
        
@@ -161,11 +164,10 @@
           <!-- Begin Listing All The Disputes
     ================================================== -->
     
-    {{{body}}}
-      
+   {{{body}}}      
       <!-- End Listing All The Disputes
     ================================================== -->
-        </div>
+   
       <div class="tab-pane" id="tab1"></div>
         <div class="tab-pane" id="tab2"></div>
           <div class="tab-pane" id="tab3"></div>

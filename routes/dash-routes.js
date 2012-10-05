@@ -36,14 +36,14 @@ function getOpenDisputes(req,res){
 		    res.outputMessage( page.MESSAGE_LEVELS.error,
 		                       'Try again later',
 		                       'Fail' );
-			res.status(500).render(page.MESSAGE_VIEW, { pageTitle: 'Sad Page' } );            
+			res.status(500).render(page.MESSAGE_VIEW, { pageTitle: 'Sad' } );            
 			return;
 		}
 
 		res.render( 
 					'dash/panel.html', {  
 						layout: 'dash/outside.html',
-						pageTitle:"Safe Harbor - [page title here]",
+						pageTitle:"SafeHarbor.in - Panel",
 						bodyClass:"dash-index",
 						disputes: data
                  } 
@@ -73,33 +73,33 @@ function getDash( req, res  )
 var renderDashForAccount = exports.renderDashForAccount = function( req, res, uid )
 {
     var log = dash.getAuditLog(uid,
-              function(code,rows) 
-                    {
-                        if( code != CODES.SUCCESS )
-                            return;
+		function(code,rows) 
+		      {
+		          if( code != CODES.SUCCESS )
+		              return;
 
-                        if( rows && rows.length )
-                        {
-                            res.render( 'dash/list.html',
-                                        {
-                                           pageTitle: 'Safe Harbor - Disputes',
-                                           bodyClass: 'disputes',
-                                           auditItems: rows
-                                        } );
-                        }
-                        else
-                        {
-                            res.outputMessage( 
-                                            page.MESSAGE_LEVELS.success,
-                                            "No disputes",
-                                            "You have no open DMCA requests."
-                                            );
-                            res.render( page.MESSAGE_VIEW,
-                                        {  pageTitle:"Safe Harbor - Disputes",
-                                           bodyClass:"disputes"
-                                         } );                            
-                        }
-                    });
+		          if( rows && rows.length )
+		          {
+		              res.render( 'dash/list.html',
+		                          {
+		                             pageTitle: 'Safe Harbor - Disputes',
+		                             bodyClass: 'disputes',
+		                             auditItems: rows
+		                          } );
+		          }
+		          else
+		          {
+		              res.outputMessage( 
+		                              page.MESSAGE_LEVELS.success,
+		                              "No disputes",
+		                              "You have no open DMCA requests."
+		                              );
+		              res.render( page.MESSAGE_VIEW,
+		                          {  pageTitle:"Safe Harbor - Disputes",
+		                             bodyClass:"disputes"
+		                           } );                            
+		          }
+		      });
     
     log.handleErrors( req, res ).perform();
 }
