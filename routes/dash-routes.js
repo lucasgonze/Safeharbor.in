@@ -19,6 +19,7 @@ exports.install = function(app)
 
 	app.get( '/paige', logged_in, getPaige);
 	app.get( '/panel', logged_in, getOpenDisputes);
+	app.get( '/closed', logged_in, getClosedDisputes);
 
     app.get( '/dash', logged_in, getDash );
     app.get( '/disputes', logged_in, getDash );
@@ -28,10 +29,8 @@ exports.install = function(app)
 function getOpenDisputes(req,res){
 	
 	dash.getOpenMedia({uid:loginstate.getID(req), callback:function(err,data){
-		var myStatic = false;
 		
 		if(err){
-			myStatic = true;
 			debug.out("error returned from getOpenMedia");
 		    res.outputMessage( page.MESSAGE_LEVELS.error,
 		                       'Try again later',
@@ -45,6 +44,30 @@ function getOpenDisputes(req,res){
 						layout: 'dash/outside.html',
 						pageTitle:"SafeHarbor.in - Panel",
 						bodyClass:"dash-index",
+						disputes: data
+                 } 
+		);
+	}});			
+}
+
+function getClosedDisputes(req,res){
+	
+	dash.getClosedMedia({uid:loginstate.getID(req), callback:function(err,data){
+		
+		if(err){
+			debug.out("error returned from getOpenMedia");
+		    res.outputMessage( page.MESSAGE_LEVELS.error,
+		                       'Try again later',
+		                       'Fail' );
+			res.status(500).render(page.MESSAGE_VIEW, { pageTitle: 'Sad' } );            
+			return;
+		}
+
+		res.render( 
+					'dash/panel.html', {  
+						layout: 'dash/outside.html',
+						pageTitle:"SafeHarbor.in - Panel",
+						bodyClass:"dash-closed",
 						disputes: data
                  } 
 		);

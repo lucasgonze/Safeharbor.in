@@ -94,3 +94,6 @@ insert into media (anchor, audit,description,media_url,page) values (  'Next to 
 insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
 insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
 
+-- a closed item
+insert into media (anchor, audit,description,media_url,page,takedown_date) values (  'In the blogroll', 1, '"Starz A Poppin!" by Hairosmith',  'http://example.com/abbyrode.mp3', 'http://example.com', current_timestamp);
+

@@ -1,0 +1,127 @@
+<!--All Dispute Types 
+there are three versions of a dispute so far- 
+
+a Single Dispute with the website name & logo, 
+a Single Dispute without the associated website name & logo,
+a CLOSED single dispute with the website name & logo
+
+This file is a copy of panel.html, which is for the first version above. It needs to be modified to be the third version above.
+--> 
+
+
+{{#each disputes}}{{#with this}}
+
+
+<!--Begin Single Dispute with Website Name & Logo-->
+  
+ <!-- Begin Single Dispute List Item -->
+              <div class="row">
+                <div class="span12">
+                  <div class="single-dispute">
+                  <div class="company-logo-box">
+<div class="company-logo"> <img src='{{sitelogo}}' alt="" title=""{{sitename}} />
+ </div></div>
+                     <!-- Begin a block holding information about the Infringement and the Resolve Button so they stack nicely-->
+                  <div class="infringement-list-resolve-button">
+  <ul class="infringement-list">
+                                        
+                            <li class="infringement-title">{{description}}</li>
+                          <li class="infringement-url"><a href=
+                            "{{media_url}}">{{media_url}}</a></li>
+
+                          <li class="arrival-date">{{creation}}</li>
+                          <li class="open">Open Dispute <span class="italic"><!-- fixme: day counter as live data -->3 days until Dispute is Critical</span></li>
+                        
+</ul>   <!--End Infringement Listing-->
+                     <!--Begin Resolve Dispute Button -->
+
+                    <div class="resolve">
+                      <a href="#" class="btn btn-large" type="button">Resolve Dispute</a>
+                    </div><!--End Resolve Dispute Button -->
+                                       </div>
+                     
+
+                <!-- End a block holding the infringement information and the resolve button so they stack nicely-->
+                   
+                   <!--Begin Preview Image of Dispute on Website -->
+
+                    <div class="preview-image-box">
+                      <a href="#" class="preview-image" title="preview dispute">here</i></a>
+                    </div><!--End Preview Image of Dispute on Website -->
+                   
+                   <div class="copyright-table-box"> 
+                   <!-- Copyright Holder Table-->
+
+                    <div class="copyright-table ">
+                      <table class="table">
+                        <thead>
+                          <tr class="">
+                            <th class="left">Copyright Holder</th>
+
+                            <th>{{owners_full_name}}</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr>
+                            <td class="left">Submitted by</td>
+
+                            <td>{{full_name}}</td>
+                          </tr>
+
+                          <tr>
+                            <td></td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Job Title</td>
+
+                            <td class="right">{{job_title}}</td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Email</td><!-- fixme: encode HTML entities in email address -->
+
+                            <td><a href="mailto:{{email}}" class=
+                            "email_link">{{email}}</a></td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Phone</td>
+
+                            <td class="right">{{phone}}</td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Fax</td>
+
+                            <td class="right">{{fax}}</td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Address</td>
+
+                            <td class="right">{{postal}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div><!--End Copyright Holder Table-->
+                  </div>                  
+                </div>
+              </div><!-- End Single Dispute List Item -->
+      </div>
+      
+  
+
+
+<!--End Single Dispute with Website Name & Logo-->
+
+{{/with}}{{/each}}
+
+<!--Begin Single Dispute with NO Website Name & Logo-->
+<!--End Single Dispute with NO Website Name & Logo-->
+
+
+
+<!--Begin CLOSED Single Dispute with Website Name & Logo-->
+<!--End CLOSED Single Dispute with Website Name & Logo-->

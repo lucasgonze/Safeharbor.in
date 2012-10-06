@@ -355,6 +355,14 @@ exports.getOpenMedia_correctButBroken = function( uid, callback ){
 }
 
 /*
+See getOpenMedia
+*/
+exports.getClosedMedia = function(params){
+	params.closed = true;
+	exports.getOpenMedia(params);
+}
+
+/*
 The getOpenMedia_correctButBroken function was my first attempt at this. I couldn't make it work, though. 
 The standard template of these things that Victor set up doesn't seem that hard, but I 
 spent most of a day debugging without mastering the complexities and had to move on, 
@@ -365,10 +373,15 @@ params: {
 uid: int,
 offset: starting row,
 limit: rows per fetch,
-callback: the callback
+callback: the callback,
+closed: any true value
 }
 */
 exports.getOpenMedia = function(params){
+	
+	var closedFlag = "is null ";
+	if( params.closed )
+		closedFlag = "is not null "
 	
 	var sql = ''
 		+ 'select '
@@ -379,7 +392,7 @@ exports.getOpenMedia = function(params){
 		+ 'from audit, acct, site, media, contact '
 		+ 'where '
 		+ 'acct.acctid = $1 '
-		+ 'and media.takedown_date is null ' // i.e. disputes that are "open"
+		+ 'and media.takedown_date '+closedFlag
 		+ 'and acct.acctid = site.acct '
 		+ 'and site.siteid = audit.site '
 		+ 'and audit.auditid = media.audit '
@@ -406,7 +419,6 @@ exports.getOpenMedia = function(params){
 	});
 
 	query.on('end',function(data){
-		debug.out('END');
 		if( !gotErr )
 			params.callback(false,rows);
 	});
