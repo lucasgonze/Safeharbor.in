@@ -63,6 +63,9 @@ function getClosedDisputes(req,res){
 			return;
 		}
 
+
+		/* The view is different depending on whether there is more than one site. 
+		   This 'site' variable is only set for users who have a single site. */
 		var site = null;
 		if( typeof data == 'object' && data.length > 0 ){
 			// fixme: implement URL for real as a preference in the site customization dialog
@@ -73,13 +76,13 @@ function getClosedDisputes(req,res){
 				url: 'http://'+data[0].domain			
 			}
 		}
-		
-		// figure out whether this is a view of more than one site
-		var lastSitename = data[0].sitename;
-		for( var i=0; data[i].sitename == lastSitename;i++)
-			;
+		for(var i=1; i<data.length; i++){
+			if( data[i-1].sitename !== data[i].sitename )
+				break;
+		}
 		if( i < data.length)
-
+			site = null;				
+		
 		res.render( 
 					'dash/panel.html', {  
 						layout: 'dash/outside.html',

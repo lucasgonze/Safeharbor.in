@@ -6,10 +6,12 @@ a Single Dispute without the associated website name & logo,
 a CLOSED single dispute with the website name & logo
 --> 
 
-{{sitename}}
-{{sitelogo}}
-{{sitedomain}}
-{{siteurl}}
+{{#if site}}
+{{site.name}}
+{{site.logo}}
+{{site.domain}}
+{{site.url}}
+{{/if}}
 
 {{#each disputes}}{{#with this}}
 
@@ -19,7 +21,7 @@ a CLOSED single dispute with the website name & logo
  <!-- Begin Single Dispute List Item -->
               <div class="row">
                 <div class="span12">
-                  <div class="single-dispute">
+                  <div class="single-dispute {{#unless sitelogo}}no-logo{{/unless}}">
                   <div class="company-logo-box">
 <div class="company-logo"> <img src='{{sitelogo}}' alt="" title=""{{sitename}} />
  </div></div>
