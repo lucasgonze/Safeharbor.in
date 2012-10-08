@@ -83,7 +83,7 @@ function getPaige(req,res){
 					layout: 'dash/outside.html',
 					pageTitle:"Safe Harbor - [page title here]",
 					bodyClass:"dash-index",
-					submissions: rows                            
+					submissions: []                            
 	                } 
 	);
 }
