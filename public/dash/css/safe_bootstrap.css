@@ -372,3 +372,11 @@ Paige Misc for Finding Things
  
     background-color: #d5d3c9;
     border-color: #b4b1a3 #b4b1a3 transparent;
+}
+
+navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
+    background-color: #B4B1A3;
+    color: #000000;
+    text-decoration: none;
+    text-shadow: 0 1px #D9D6D6
+    }
