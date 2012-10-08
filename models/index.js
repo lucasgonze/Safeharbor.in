@@ -437,10 +437,8 @@ ModelPerformer.prototype.handleErrors = function( req, res, extraCodes )
     var func = errlib.errout( [CODES.SQL_ERROR,CODES.INVALID_ARGS].concat(extraCodes || []) );
     this.errorhandler = function( code, err ) { 
                             debug.out('return check: ', code, err );
-console.log("$$$$.2");
                             return func( req, res, code, err ); 
                             }
-console.log("$$$$");
     return this;
 }
 
@@ -497,7 +495,6 @@ var tablePrototype = {
         
         debug.out( 'SQL', sql, args );       
         var query = this.client.query( sql, args ); // do NOT pass a callback here
-		console.log( '-->',query.text);
         
         if( !query )
         {

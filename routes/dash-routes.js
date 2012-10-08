@@ -63,12 +63,30 @@ function getClosedDisputes(req,res){
 			return;
 		}
 
+		var site = null;
+		if( typeof data == 'object' && data.length > 0 ){
+			// fixme: implement URL for real as a preference in the site customization dialog
+			site = {
+				name: data[0].sitename,
+				logo: data[0].sitelogo,
+				domain: data[0].domain,
+				url: 'http://'+data[0].domain			
+			}
+		}
+		
+		// figure out whether this is a view of more than one site
+		var lastSitename = data[0].sitename;
+		for( var i=0; data[i].sitename == lastSitename;i++)
+			;
+		if( i < data.length)
+
 		res.render( 
 					'dash/panel.html', {  
 						layout: 'dash/outside.html',
 						pageTitle:"SafeHarbor.in - Panel",
 						bodyClass:"dash-closed",
-						disputes: data
+						disputes: data,
+						site: site
                  } 
 		);
 	}});			

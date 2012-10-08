@@ -6,6 +6,12 @@ a Single Dispute without the associated website name & logo,
 a CLOSED single dispute with the website name & logo
 --> 
 
+{{#if site}}
+{{site.name}}
+{{site.logo}}
+{{site.domain}}
+{{site.url}}
+{{/if}}
 
 {{#each disputes}}{{#with this}}
 
