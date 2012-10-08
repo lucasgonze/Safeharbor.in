@@ -1,12 +1,12 @@
-/* path: url('/paige/img/noise.png')*/
+/* path: url('/dash/img/noise.png')*/
 body {
-	background:url(/paige/img/lighthouse.png) no-repeat, url(/paige/img/noise.png) repeat;
+	background:url(/dash/img/lighthouse.png) no-repeat, url(/dash/img/noise.png) repeat;
 	font:400 14px/1.6 'Open Sans', Verdana, Helvetica, sans-serif;
 }
 
 
 .navbar-inner {
-background: url('/paige/img/lighthouse_sm_half.png')no-repeat;
+background: url('/dash/img/lighthouse_sm_half.png')no-repeat;
 }
 a {
 	color:#666;
@@ -171,7 +171,7 @@ ul.infringement-list li.open {
 	height:241px;
 	margin-left:26px;
 	background-color:#eee;
-	background:url(/paige/img/noise.png);
+	background:url(/dash/img/noise.png);
 	border-left:1px solid #CCCCCC;
 	box-shadow:2px 3px 3px rgba(0,0,0,0.05) inset;
 }
@@ -208,7 +208,7 @@ td.right {
 }
 
 a.preview-image {
-	background:url(/paige/img/chevron.png)no-repeat;
+	background:url(/dash/img/chevron.png)no-repeat;
 	outline:none;
 	width:20px;
 	height:20px;
@@ -217,7 +217,7 @@ a.preview-image {
 }
 
 a.preview-image:hover {
-	background:url(/paige/img/chevron_hover.png)no-repeat;
+	background:url(/dash/img/chevron_hover.png)no-repeat;
 }
 
 
