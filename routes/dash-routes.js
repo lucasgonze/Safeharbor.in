@@ -105,6 +105,17 @@ function getClosedDisputes(req,res){
 /* sandbox for paige to work on markup */
 function getPaige(req,res){
 
+/*
+res.render( 
+			'dash/inside.html',
+               {  
+				layout: 'dash/outside.html',
+				pageTitle:"Safe Harbor - [page title here]",
+				bodyClass:"dash-index",
+				submissions: []                            
+                } 
+);
+*/
 	res.render( 
 				'dash/inside.html',
 	               {  

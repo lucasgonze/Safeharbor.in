@@ -52,10 +52,10 @@ exports.install = function( app )
 	app.trivialRoute('/accountdeleter','delete','profile','Delete Account',logged_in);
 	app.post('/accountdeleter', logged_in, deleteAccount);
 
-	app.get('/siteeditor', emitSiteEditor,logged_in);
+	app.get('/siteeditor',logged_in,emitSiteEditor);
 	app.post('/siteeditor', logged_in, saveSiteEdit);
 	
-	app.get('/accteditor', emitAcctEditor,logged_in);
+	app.get('/accteditor', logged_in, emitAcctEditor);
 	app.post('/accteditor', logged_in, saveAcctEditor);
 	
 }
