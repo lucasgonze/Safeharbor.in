@@ -53,7 +53,7 @@ function getOpenDisputes(req,res){
 function getClosedDisputes(req,res){
 	
 	dash.getClosedMedia({uid:loginstate.getID(req), callback:function(err,data){
-		
+				
 		if(err){
 			debug.out("error returned from getOpenMedia");
 		    res.outputMessage( page.MESSAGE_LEVELS.error,
@@ -62,7 +62,6 @@ function getClosedDisputes(req,res){
 			res.status(500).render(page.MESSAGE_VIEW, { pageTitle: 'Sad' } );            
 			return;
 		}
-
 
 		/* The view is different depending on whether there is more than one site. 
 		   This 'site' variable is only set for users who have a single site. */
@@ -77,17 +76,25 @@ function getClosedDisputes(req,res){
 			}
 		}
 		for(var i=1; i<data.length; i++){
-			if( data[i-1].sitename !== data[i].sitename )
+			console.log("i",i)
+			if( data[i-1].sitename !== data[i].sitename ){
+				// don't show the site logo up at the top, do show it on each row
+				site = null;
 				break;
+			}
 		}
-		if( i < data.length)
-			site = null;				
+
+		// set one-site class on the body to tell paige whether there is more than one site
+		var bodyClass = "dash-closed one-site";	
+		if( site == null )
+			bodyClass = "dash-closed";		
 		
+		console.log("data length",data.length)
 		res.render( 
 					'dash/panel.html', {  
 						layout: 'dash/outside.html',
 						pageTitle:"SafeHarbor.in - Panel",
-						bodyClass:"dash-closed",
+						bodyClass: bodyClass,
 						disputes: data,
 						site: site
                  } 
