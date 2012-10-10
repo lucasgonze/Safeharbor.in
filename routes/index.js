@@ -3,40 +3,38 @@ var login = require('../lib/loginstate.js');
 var ROLES = require('../lib/roles.js'); // .ROLES;
 
     
-var checkRole = exports.checkRole = function(acceptableRole)
-{
-    return function (req, res, next) 
-    {
-        var ok = false;
-        
-        var user = login.getUser(req);
+var checkRole = exports.checkRole = function(acceptableRole){
 
-        if( !user )
-        {
-            ok = acceptableRole == ROLES.not_logged_in;
-        }
-        else if( user.role == ROLES.admin || user.role == ROLES.developer)
-        {
-            ok = true;
-        }
-        else
-        {
-            if( acceptableRole <= ROLES.logged_in )
-            {
-                ok = user.role <= acceptableRole;
-            }
-            else  // 'owner'
-            {
-                ok = req.session.seekingAccountId == user.acctid;
-            }
-        }
+	return function (req, res, next) {
 
-        if( ok ) {
-            next();
-        }
-        else {    
-            next( new Error('Wrong permission for this operation') );
-        }
+		var helper = function(next){next();return;};
+
+		// these objects are world-readable
+		if( acceptableRole == ROLES.not_logged_in ) return(helper(next));
+		
+		var user = login.getUser(req);
+		if( !user ){
+			// fixme: set session cookie on where to go after login
+			console.log("Redirecting unknown user to /login. Fixme: set session cookie to enable returning to original target after logging in.");
+			// redirect to login page
+			res.status(302);
+			res.redirect('/login');
+			return; // or next()?
+		}
+
+		if( user.role == ROLES.admin || user.role == ROLES.developer) return(helper(next));
+		if( req.session.seekingAccountId == user.acctid) return(helper(next));
+		if( acceptableRole <= ROLES.logged_in && user.role <= acceptableRole ) return(helper(next));
+
+		var errlib = require('../lib/error.js');
+		var error = errlib.err( 403, 'Forbidden' );
+		res.send(403);
+		/*
+		Victor's original code for handling this error was:
+		next( error );
+		
+		However that cascaded to a 500 Application error. And it's a lot easier to fix it here than there.
+		*/	
     }
 }
 
@@ -76,6 +74,7 @@ exports.setup = function(app) {
 
     app.get('/',home);
 
+    require('./test-routes.js').install(app);
     require('./profile-routes.js').install(app);
     require('./reg-routes.js').install(app);
     require('./box-routes.js').install(app);

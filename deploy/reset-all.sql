@@ -73,9 +73,15 @@ create table resets (
 
 -- create default accounts
 -- this user has only one site
-insert into acct (role,email,password) values ('1','lucas@gonze.com', 'abcd'); 
+insert into acct (acctid,role,email,password) values (1,'1','lucas@gonze.com', 'abcd'); 
 -- this user has more than one site
-insert into acct (role,email,password) values ('1','lucas.gonze@gmail.com', 'abcd'); 
+insert into acct (acctid,role,email,password) values (2,'1','lucas.gonze@gmail.com', 'abcd'); 
+
+-- we only test admin role and logged_in role. Other roles are being phased out.
+-- this user has a admin account (for testing roles)
+insert into acct (acctid,role,email,password) values (3,'2','adminuser@safeharbor.in', 'abcd'); 
+-- this user has a logged in account (for testing roles)
+insert into acct (acctid,role,email,password) values (4,'21','loggedinuser@safeharbor.in', 'abcd'); 
 
 -- for the user with one site
 insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) 

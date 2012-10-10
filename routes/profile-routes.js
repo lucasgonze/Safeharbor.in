@@ -74,15 +74,27 @@ function clearLogin(req,res) {
 function saveLogin(req,res) {
 	
     var model = profile.acctFromEmailPassword( req.body, function(code,acct) { 
-        if( code == CODES.SUCCESS )
-        {
-            loginstate.enable(req,acct);
-            res.redirect("/dash");
-        }
-        else if( code == CODES.NO_RECORDS_FOUND )
-        {
-            errout( req, res, exp( 400, 'Unauthorized')  );
-        }
+
+		if( code == CODES.SUCCESS ){	
+			loginstate.enable(req,acct);
+			res.status(303);
+			res.redirect("/dash");
+			return;
+		} 
+		
+		if( code == CODES.NO_RECORDS_FOUND ){
+			// send user back to form with error message
+			res.status(403);
+			res.render('profile/login.html',	{  
+				pageTitle:'Login', 
+				bodyClass: 'login',
+				loginStatus: "fail"
+			});
+            return;
+		}
+		
+		// app error - code 500
+		throw Error("Application error in saveLogin");
     });
 
     model.handleErrors( req, res ).perform();
@@ -134,7 +146,6 @@ function resetPasswordEmail(req, res, to) {
 // save a secret to the DB and email it to the email. note that we always show the "email sent" page, 
 // but we only actually send the email if it was found in the db!
 function lostPasswordStart(req,res){
-	console.log("bp %%%.5");
 	
     var email = req.body.email;
     var rpe = resetPasswordEmail( req, res, email );
