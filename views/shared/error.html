@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<title>{{#if sitename}}{{sitename}}{{else}}Safeharbor.in{{/if}}{{#if pageTitle}} - {{pageTitle}}{{/if}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/dash/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+/* fixme: move this to the main css file */
+	*.error-status {display:none}
+	body.error-404 .error-status.error-404 {display: block}
+	body.error-500 .error-status.error-500 {display: block}
+    </style>
+    <link href="/dash/css/safe_bootstrap.css" rel="stylesheet">
+    <link href="/dash/css/bootstrap-responsive.css" rel="stylesheet">
+
+<link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/dash/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/dash/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/dash/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/dash/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/dash/ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body {{#if bodyClass}}class="{{bodyClass}}"{{/if}}>
+    <div class="container">
+
+
+<!--Error page background-->
+
+<div class="row error-status error-404">
+	<div class="span11">
+		<div id="error-icon" class="main">
+			<h1>Not found</h1>
+			<p class="error-copy">There is no web page at this link.</p>
+		</div>
+	</div>
+</div>
+
+<div class="row error-status error-500">
+	<div class="span11">
+		<div id="error-icon" class="main">
+			<h2>Oops</h2>
+			<p class="error-copy">There is a bug in this application.</p>
+		</div>
+	</div>
+</div>
+      
+    </div><!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/dash/js/jquery.js"></script>
+    <script src="/dash/js/bootstrap-transition.js"></script>
+    <script src="/dash/js/bootstrap-alert.js"></script>
+    <script src="/dash/js/bootstrap-modal.js"></script>
+    <script src="/dash/js/bootstrap-dropdown.js"></script>
+    <script src="/dash/js/bootstrap-scrollspy.js"></script>
+    <script src="/dash/js/bootstrap-tab.js"></script>
+    <script src="/dash/js/bootstrap-tooltip.js"></script>
+    <script src="/dash/js/bootstrap-popover.js"></script>
+    <script src="/dash/js/bootstrap-button.js"></script>
+    <script src="/dash/js/bootstrap-collapse.js"></script>
+    <script src="/dash/js/bootstrap-carousel.js"></script>
+    <script src="/dash/js/bootstrap-typeahead.js"></script>
+
+  </body>
+</html>
+<!-- {{debugInfo}} -->
