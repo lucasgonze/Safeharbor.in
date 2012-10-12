@@ -1,15 +1,14 @@
-/* path: url('/dash/img/noise.png')*/
+/* path: url('/dash/img/noise.png')
+  background-color: #336699;
+  background-color: #2C5A89;
+*/
 body {
 	background:url(/dash/img/lighthouse.png) no-repeat, url(/dash/img/noise.png) repeat;
 	font:400 14px/1.6 'Open Sans', Verdana, Helvetica, sans-serif;
 }
 
-
-.navbar-inner {
-background: url('/dash/img/lighthouse_sm_half.png')no-repeat;
-}
 a {
-	color:#666;
+	color:#336699;
 	outline:0;
 }
 
@@ -29,19 +28,78 @@ p {
 	text-shadow:0 1px 0 #FFFFFF;
 }
 
+#page-header h1.single-site {
+	margin-left:108px;
+	margin-top:20px;
+}
+
 
 	
-/* 
-Navigation Color Changes
- */
+/* Complicated Top Level Navigation Menu Items Hover States */
 .navbar-inner {
-	background-color: #d5d3c9;
+	background:url(/dash/img/lighthouse_sm_half.png)no-repeat;
+}
+
+.navbar-inner {
+	background-color:#d5d3c9;
 	background-image:0;
 	border:1px solid #b4b1a3;
 }
 
-.navbar .nav li a {
-	color:#000000;
+.nav-tabs .active a,.nav-tabs .active a:hover {
+	background-color:#d5d3c9;
+	border-color:#b4b1a3 #b4b1a3 transparent;
+	outline:0;
+}
+
+.navbar .nav > .active > a,.navbar .nav > .active > a:hover,.navbar .nav > .active > a:focus {
+	color:#333;
+	text-decoration:none;
+	background-color:#b4b1a3;
+	-webkit-box-shadow:inset 0 3px 8px rgba(0,0,0,0.125);
+	-moz-box-shadow:inset 0 3px 8px rgba(0,0,0,0.125);
+	box-shadow:inset 0 3px 8px rgba(0,0,0,0.125);
+	text-shadow:0 1px #D9D6D6;
+}
+
+.dropdown-menu li > a:hover,.dropdown-menu li > a:focus,.dropdown-submenu:hover > a {
+	color:#ffffff;
+	text-decoration:none;
+	background-color:#336699;
+	background-color:#2C5A89;
+	background-image:0;
+	background-image:0 to(#2C5A89));
+	background-image:0;
+	background-image:0;
+	background-image:linear-gradient(tobottom,#336699,#2C5A89);
+	background-repeat:repeat-x;
+	filter:progid:dximagetransform.microsoft.gradient(startColorstr='#ff336699',endColorstr='#ff2C5A89',GradientType=0);
+}
+
+.dropdown-menu .active > a,.dropdown-menu .active > a:hover {
+	color:#ffffff;
+	text-decoration:none;
+	background-color:#336699;
+	background-color:#2C5A89;
+	background-image:linear-gradient(tobottom,#336699,#2C5A89);
+	background-image:0;
+	background-image:0 to(#2C5A89));
+	background-image:0;
+	background-image:0;
+	background-repeat:repeat-x;
+	outline:0;
+	filter:progid:dximagetransform.microsoft.gradient(startColorstr='#ff336699',endColorstr='#ff2C5A89',GradientType=0);
+}
+
+.nav > li > a:hover {
+	text-decoration:none;
+	background-color:#d5d3c9;
+	outline:0;
+}
+
+.nav-tabs > li > a:hover {
+	border-color:#B4B1A3 #B4B1A3 transparent;
+	outline:0;
 }
 
 
@@ -53,6 +111,8 @@ Create Space for the Alert- but consider a different approach after MVP
 	margin-top:10px;
 }
 
+
+	
 /* 
 Main Page, Body Styles 
 */
@@ -62,8 +122,30 @@ Main Page, Body Styles
 	border:1px solid #B4B1A3;
 	box-shadow:0 1px 0 rgba(255,255,255,0.4), 0 0 10px rgba(1,1,1,0.11);
 	overflow:hidden;
+	padding-bottom:30px;
 }
 
+	
+/*Tabbed Nav Styles*/
+.nav-tabs {
+	margin-bottom:0;
+}
+
+.nav-tabs .active a,.nav-tabs .active a:hover {
+	box-shadow:0 1px 0 rgba(255,255,255,0.4), 0 0 10px rgba(0,0,0,0.1);
+	outline:0;
+}
+
+
+	
+/*Search in Tabs */
+li.search form.form-search {
+	margin:2px 0 0 14px;
+}
+
+
+	
+/*Sort the List of Disputes */
 #sort-list {
 	min-height:60px;
 }
@@ -75,45 +157,68 @@ Main Page, Body Styles
 
 	
 /* 
-Dispute Tables Basic Styling 
+Style the Dispute 
 */
 .single-dispute {
 	height:242px;
+	width:1122px;
 	background-color:#F6F7F4;
 	border:1px solid #BDBEBC;
-	margin:10px 20px;
-	-webkit-box-shadow:0 1px 3px rgba(0,0,0,0.1);
-	-moz-box-shadow:0 1px 3px rgba(0,0,0,0.1);
-	box-shadow:0 1px 3px rgba(0,0,0,0.1);
-	text-shadow:0 1px 0 #FFFFFF;
+	margin-left:23px;
+}
+
+.single-dispute-no-logo {
+	height:242px;
+	background-color:#F6F7F4;
+	border:1px solid #BDBEBC;
+	margin:0 23px;
+	padding:0 0 0 45px;
 }
 
 .company-logo-box,.infringement-list-resolve-button,.preview-image-box,.copyright-table-box {
 	float:left;
 }
 
+.single-dispute-no-logo .infringement-list-resolve-button,.preview-image-box,.copyright-table-box {
+	float:left;
+}
+
+.single-dispute-no-logo .infringement-list-resolve-button {
+	width:508px;
+}
+
+.single-dispute-no-logo .infringement-list-resolve-button ul.infringement-list {
+	margin-left:-16px;
+}
+
 
 	
-/*Display the Company Logo in the Dispute*/
+/*Display the Company Logo, in the Page Header*/
 .company-logo-box {
 	border:1px solid #CACACA;
-	border-left:1px solid #CACACA;
-	border-right:1px solid #CACACA;
-	border-bottom:1px solid #CACACA;
 	box-shadow:0 1px 0 rgba(255,255,255,0.4), 0 0 10px rgba(0,0,0,0.1);
 	background-color:#fff;
-	height:105px;
-	width:105px;
-	margin:17px 27px;
+	height:90px;
+	width:90px;
+}
+
+
+	
+/*Display the Company Logo in the Dispute */
+.single-dispute .company-logo-box {
+	margin:26px 21px 0 26px;
 }
 
 .company-logo {
 	border:1px solid #CACACA;
-	width:90px;
-	height:90px;
-	margin:6px;
+	width:80px;
+	height:80px;
+	margin:4px;
 }
 
+
+	
+/*Dispute Details */
 ul.infringement-list {
 	margin:0 0 60px;
 	list-style:none;
@@ -134,8 +239,6 @@ li.arrival-date {
 }
 
 li.infringement-url {
-	text-decoration:underline;
-	color:#333;
 }
 
 li.open .italic {
@@ -153,23 +256,54 @@ ul.infringement-list li.open {
 
 .infringement-list-resolve-button {
 	height:200px;
-	margin:6px 15px 0 0;
+	margin:6px 3px 0 0;
 }
 
-.resolve {
-}
+
+	
+/*Dispute to be resolved...Resolve Button */
 
 .resolve a.btn {
 	width:230px;
+}
+
+.resolve .btn {
+	background-color:hsl(214,37%,28%);
+	background-repeat:repeat-x;
+	background-image:0 to(hsl(214,37%,28%)));
+	background-image:0 hsl(214,37%,28%));
+	background-image:0 hsl(214,37%,28%));
+	background-image:0 color-stop(100%,hsl(214,37%,28%)));
+	background-image:0 hsl(214,37%,28%));
+	background-image:0 hsl(214,37%,28%));
+	background-image:linear-gradient(hsl(214,37%,62%), hsl(214,37%,28%));
+	border-color:hsl(214,37%,28%) hsl(214,37%,28%) hsl(214,37%,19.5%);
+	color:#fff;
+	text-shadow:0 -1px 0 rgba(0,0,0,0.56);
+	-webkit-font-smoothing:antialiased;
+}
+
+
+	
+/*Dispute is resolved...Resolved Button */
+.resolved {
+	margin:-20px 0 0;
+}
+
+.resolved p {
+	margin:4px;
+}
+
+.resolved p a.btn {
 }
 
 
 	
 /*Style the Copyright Owner's Info Table*/
 .copyright-table-box {
-	width:490px;
+	width:533px;
 	height:241px;
-	margin-left:26px;
+	margin-left:8px;
 	background-color:#eee;
 	background:url(/dash/img/noise.png);
 	border-left:1px solid #CCCCCC;
@@ -187,7 +321,7 @@ ul.infringement-list li.open {
 }
 
 td.left,th.left {
-	width:100px;
+	width:75px;
 	font-size:.9em;
 	text-align:right;
 	font-weight:normal;
@@ -200,37 +334,27 @@ td.right {
 
 
 	
-/*Preview the URL*/
+/*Preview the URL of the Dispute*/
 .preview-image-box {
-	width:20px;
+	width:23px;
 	height:223px;
-	padding:28px 0 0;
+	padding:30px 0 0;
 }
 
 a.preview-image {
 	background:url(/dash/img/chevron.png)no-repeat;
-	outline:none;
-	width:20px;
-	height:20px;
+	outline:0;
+	width:22px;
+	height:16px;
 	text-indent:-9999px;
 	display:inline-block;
 }
 
 a.preview-image:hover {
-	background:url(/dash/img/chevron_hover.png)no-repeat;
-}
-
-
-	
-/*Resolve Button*/
-.small {
-	padding-left:10px;
-	font-size:.7em;
-	color:gray;
-}
-
-.no-gray {
-	background-color:transparent;
+	background:url(/dash/img/chevron-hover.png)no-repeat;
+	border:1px solid red;
+	width:22px;
+	height:30px;
 }
 
 
@@ -240,15 +364,27 @@ Form Basic Styles for Account Settings, Website Settings
 */
 #website_settings_form,#account_settings_form {
 	margin:0 0 200px 50px;
+	background-color:#F2F2F2;
+	margin:0 0 100px 50px;
+	padding:18px 0;
+	width:1127px;
+	border:1px solid #BDBEBC;
+	-webkit-box-shadow:0 1px 3px rgba(0,0,0,0.1);
+	-moz-box-shadow:0 1px 3px rgba(0,0,0,0.1);
+	box-shadow:0 1px 3px rgba(0,0,0,0.1);
+	text-shadow:0 1px 0 #FFFFFF;
 }
 
-.email_link {
-	text-decoration:underline;
-	color:#000;
+#website_settings_form {
+	height:900px;
+}
+
+#account_settings_form {
+	height:657px;
 }
 
 .required {
-	color:red;
+	color:#C42121;
 }
 
 .form_leftside {
@@ -289,28 +425,60 @@ textarea.mailing {
 	margin-bottom:30px;
 }
 
-	
-/*Tabbed Nav Styles*/
-.nav-tabs {
-	margin-bottom:0;
-}
 
-.nav-tabs > .active > a,.nav-tabs > .active > a:hover {
-	box-shadow:0 1px 0 rgba(255,255,255,0.4), 0 0 10px rgba(0,0,0,0.1);
+	
+/*Make the weird gray background Twitter puts on the Save/Cancel Buttons go away */
+.no-gray {
+	background-color:transparent;
 }
 
 
 	
-/*Search in Tabs */
+/*Footer Styles, */
+.footer {
+	border-top:1px solid #336699;
+	margin-top:70px;
+	padding:10px 0;
+}
 
-li.search form.form-search {
-	margin: 2px 0px 0px 14px;
+.footer-links {
+	margin:10px 0;
+}
+
+.footer-links li {
+	display:inline;
+	margin-right:10px;
+}
+	
+/*
+Error Page Design Style
+*/
+#error-icon {
+	background:url(/dash/img/lighthouse-big.png) no-repeat;
+	background-color:#f2f2f2;
+	width:1070px;
+	height:643px;
+	padding-bottom:0;
+	margin:0 30px;
+}
+
+.error-copy {
+	width:600px;
+	height:400px;
+	border:1px solid red;
+	margin:20px 0 20px 450px;
 }
 
 	
 /*
 Paige Misc for Finding Things
 */
+.small {
+	padding-left:10px;
+	font-size:.7em;
+	color:gray;
+}
+
 .red {
 	border:1px solid red;
 }
@@ -323,60 +491,17 @@ Paige Misc for Finding Things
 	border:1px solid green;
 }
 
-.dropdown-menu li > a:hover,.dropdown-menu li > a:focus,.dropdown-submenu:hover > a {
-	color:#ffffff;
-	text-decoration:none;
-	background-color:#336699;
-	background-color:#3c5e86;
-	background-image:0;
-	background-image:0 to(#37577c));
-	background-image:0;
-	background-image:0;
-	background-image:linear-gradient(tobottom,#336699,#37577c);
-	background-repeat:repeat-x;
-	filter:progid:dximagetransform.microsoft.gradient(startColorstr='#ff336699',endColorstr='#ff0077b3',GradientType=0);
+.iframe-preview {
+	width:320px;
+	height:600px;
+	border:1px solid red;
 }
 
-.dropdown-menu .active > a,.dropdown-menu .active > a:hover {
-	color:#ffffff;
-	text-decoration:none;
-	background-color:#336699;
-	background-color:#3c5e86;
-	background-image:linear-gradient(tobottom,#336699,#37577c);
-	background-image:0;
-	background-image:0 to(#37577c));
-	background-image:0;
-	background-image:0;
-	background-repeat:repeat-x;
-	outline:0;
-	filter:progid:dximagetransform.microsoft.gradient(startColorstr='#ff336699',endColorstr='#ff37577c',GradientType=0);
+
+#alarm {
+margin-top: 30px;
 }
 
-.footer {
-	background-color:#F5F5F5;
-	border-top:1px solid #E5E5E5;
-	margin-top:70px;
-	padding:70px 0;
+#alarm .control-group label.control-label {
+margin-top: -10px;
 }
-
-.footer-links {
-	margin:10px 0;
-}
-
-.footer-links li {
-	display:inline;
-	margin-right:10px;
-}
-
-.nav-tabs > .active > a, .nav-tabs > .active > a:hover {
- 
-    background-color: #d5d3c9;
-    border-color: #b4b1a3 #b4b1a3 transparent;
-}
-
-navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
-    background-color: #B4B1A3;
-    color: #000000;
-    text-decoration: none;
-    text-shadow: 0 1px #D9D6D6
-    }
