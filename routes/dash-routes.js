@@ -17,13 +17,30 @@ exports.install = function(app)
 {
     var logged_in = app.checkRole(app.ROLES.logged_in);
 
-	app.get( '/paige', logged_in, getPaige);
-	app.get( '/panel', logged_in, getOpenDisputes);
+	// there are two handlers for '/', depending on whether the user is logged in.
+	// this function is the handler for users who are logged in. 
+    app.get( '/', logged_in, getOpenDisputes );
 	app.get( '/closed', logged_in, getClosedDisputes);
+	app.get( '/newsite', logged_in, getNewSite);
+}
 
-    app.get( '/dash', logged_in, getDash );
-    app.get( '/disputes', logged_in, getDash );
-    app.get( '/detail/:auditid([0-9]+)$', logged_in, getDetail );
+function getNewSite(req,res){
+	
+	/* Fixme: 
+	- create a new web site with the stub name "Untitled Site"
+	- put an item in the site listing dropdown
+	- put an [x] next to the item in the site listing dropdown to make it easy to delete the stub site
+	- put the user into the site settings edit tab for the new site
+	*/
+	
+	res.render( 
+				'dash/website_settings.html', {  
+					layout: 'dash/dash-layout.html',
+					pageTitle:"SafeHarbor.in - Add a New Website",
+					bodyClass:"dash-newsite",
+					setSettingsAsActiveTab: 'class="active"'
+             } 
+	);
 }
 
 function getOpenDisputes(req,res){
@@ -31,19 +48,17 @@ function getOpenDisputes(req,res){
 	dash.getOpenMedia({uid:loginstate.getID(req), callback:function(err,data){
 		
 		if(err){
-			debug.out("error returned from getOpenMedia");
-		    res.outputMessage( page.MESSAGE_LEVELS.error,
-		                       'Try again later',
-		                       'Fail' );
-			res.status(500).render(page.MESSAGE_VIEW, { pageTitle: 'Sad' } );            
+			var err = require('../lib/error.js');
+			err.page(500,res,"error returned from getOpenMedia: "+err);
 			return;
 		}
 
 		res.render( 
 					'dash/panel.html', {  
-						layout: 'dash/outside.html',
+						layout: 'dash/dash-layout.html',
 						pageTitle:"SafeHarbor.in - Panel",
 						bodyClass:"dash-index",
+						setOpenAsActiveTab: 'class="active"',
 						disputes: data
                  } 
 		);
@@ -92,7 +107,7 @@ function getClosedDisputes(req,res){
 		console.log("data length",data.length)
 		res.render( 
 					'dash/panel.html', {  
-						layout: 'dash/outside.html',
+						layout: 'dash/dash-layout.html',
 						pageTitle:"SafeHarbor.in - Panel",
 						bodyClass: bodyClass,
 						disputes: data,
@@ -100,31 +115,6 @@ function getClosedDisputes(req,res){
                  } 
 		);
 	}});			
-}
-
-/* sandbox for paige to work on markup */
-function getPaige(req,res){
-
-/*
-res.render( 
-			'dash/inside.html',
-               {  
-				layout: 'dash/outside.html',
-				pageTitle:"Safe Harbor - [page title here]",
-				bodyClass:"dash-index",
-				submissions: []                            
-                } 
-);
-*/
-	res.render( 
-				'dash/inside.html',
-	               {  
-					layout: 'dash/outside.html',
-					pageTitle:"Safe Harbor - [page title here]",
-					bodyClass:"dash-index",
-					submissions: []                            
-	                } 
-	);
 }
 
 function getDash( req, res  )
@@ -166,6 +156,7 @@ var renderDashForAccount = exports.renderDashForAccount = function( req, res, ui
     log.handleErrors( req, res ).perform();
 }
 
+//    app.get( '/detail/:auditid([0-9]+)$', logged_in, getDetail );
 function getDetail( req, res )
 {
     var auditId = req.params.auditid;

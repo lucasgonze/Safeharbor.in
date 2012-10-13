@@ -55,8 +55,8 @@ exports.install = function( app )
 	app.get('/siteeditor',logged_in,emitSiteEditor);
 	app.post('/siteeditor', logged_in, saveSiteEdit);
 	
-	app.get('/accteditor', logged_in, emitAcctEditor);
-	app.post('/accteditor', logged_in, saveAcctEditor);
+	app.get('/account', logged_in, emitAcctEditor);
+	app.post('/account', logged_in, saveAcctEditor);
 	
 }
 
@@ -307,29 +307,29 @@ function saveSiteEdit(req,res) {
         .perform();
 }
 
-
-function emitAcctEditor(req,res){	
-
-    var uid = loginstate.getID(req);
-
-    function showEditor( code, acct ) {
-        debug.out('Show editor: ', code, acct );
-	    if( code == CODES.OK )
-	    {
-            var vars = utils.copy({ 
-                         pagetitle: "Edit Your Account",
-                         bodyClass: "siteeditor" }, acct);
-        
-            res.render("profile/accteditor.html", vars );
-        }
-            
-    }	
-    
-	profile
-	  .acctFromID( uid, showEditor )
-	  .handleErrors( req, res, [CODES.NO_RECORDS_FOUND] )
-	  .perform();
-}
+// first generation, now obsolete
+// function emitAcctEditor(req,res){	
+// 
+//     var uid = loginstate.getID(req);
+// 
+//     function showEditor( code, acct ) {
+//         debug.out('Show editor: ', code, acct );
+// 	    if( code == CODES.OK )
+// 	    {
+//             var vars = utils.copy({ 
+//                          pagetitle: "Edit Your Account",
+//                          bodyClass: "siteeditor" }, acct);
+//         
+//             res.render("profile/accteditor.html", vars );
+//         }
+//             
+//     }	
+//     
+// 	profile
+// 	  .acctFromID( uid, showEditor )
+// 	  .handleErrors( req, res, [CODES.NO_RECORDS_FOUND] )
+// 	  .perform();
+// }
 
 function saveAcctEditor(req,res) {
 
@@ -360,3 +360,34 @@ function saveAcctEditor(req,res) {
        .chain( profile.acctFromID( uid, setSessionUser )  )
        .perform();
 }
+
+function emitAcctEditor(req,res){	
+
+    var uid = loginstate.getID(req);
+
+    function showEditor( code, acct ) {
+        debug.out('Show editor: ', code, acct );
+	    if( code == CODES.OK )
+	    {
+		
+			/* note: bodyClass was siteeditor in the first generation markup. */
+            var vars = utils.copy({ 
+					layout: 'shared/no-tabs.html',
+					pageTitle:"Account Settings"
+					}, acct);
+
+			res.render('profile/account_settings.html', vars);
+        	// old
+            // res.render("profile/accteditor.html", vars );
+        }
+            
+    }	
+    
+	profile
+	  .acctFromID( uid, showEditor )
+	  .handleErrors( req, res, [CODES.NO_RECORDS_FOUND] )
+	  .perform();
+}
+
+
+

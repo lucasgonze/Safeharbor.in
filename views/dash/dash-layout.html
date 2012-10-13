@@ -54,7 +54,7 @@
             <ul class="nav">
             
                            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"></i> All Accounts <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"></i> All Websites <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">Youtube.com</a></li>
                   <li><a href="#">Etsy.com</a></li>
@@ -100,7 +100,9 @@
 
 
 
-<!--Begin Alerts, which presently sit right below navigatio on the page 
+<!--Begin Alerts, which presently sit right below navigation on the page 
+
+todo instead of an alert: fade out the current dispute when the user hits "resolve" button. that replaces this alert stuff.
 
 <div class="row">
       <div class="span11 alert">
@@ -109,18 +111,30 @@
       </div>
     </div>
     
-End Alerts, which presently sit right below navigatio on the page -->
+End Alerts, which presently sit right below navigation on the page -->
 
-<!--Begin Page Header: Website Name & Count of Disputes -->
+<!--Begin Page Header for a SINGLE WEBSITE: Website Name & Count of Disputes -->
 
     <div class="row">
       <div id="page-header" class="span11">
      
-          <h1>234 Open Disputes</h1>
+         <div class="company-logo-box"><div class="company-logo"><img src='/dash/img/youtube_sm.jpg' alt="" title="" /></div></div> <h1 class="single-site">234 Open Disputes</h1>
           <!-- For the 'home' tab, all properties we would instead of [website name] show All Disputes in the Page Title-->
         </div>
       </div>
-<!--End Page Header: Website Name & Count of Disputes -->
+
+<!--End Page Header for a SINGLE WEBSITE: Website Name & Count of Disputes -->
+
+
+<!--Begin Page Header for ALL DISPUTES: Website Name & Count of Disputes -->
+ <div class="row">
+      <div id="page-header" class="span11">
+     
+         <h1>234 Open Disputes</h1>
+          <!-- For the 'home' tab, all properties we would instead of [website name] show All Disputes in the Page Title-->
+        </div>
+      </div>
+<!--End Page Header for ALL DISPUTES: Website Name & Count of Disputes -->
 
 <!--This block describes the secondary tabbed navigation on the website, framed out space for the actual list of disputes-->
 
@@ -130,19 +144,17 @@ End Alerts, which presently sit right below navigatio on the page -->
       <!-- Only required for left/right tabs -->
 
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab1" data-toggle="tab">Testing Open Disputes</a></li>
+        <li {{{setOpenAsActiveTab}}}><a href="/" data-toggle="tab">Open Disputes</a></li>
 
-        <li><a href="#tab2" data-toggle="tab">Closed Disputes</a></li>
+        <li {{{setClosedAsActiveTab}}}><a href="/closed" data-toggle="tab">Closed Disputes</a></li>
 
-        <li><a href="#tab3" data-toggle="tab">Settings</a></li>
+        <li {{{setSettingsAsActiveTab}}}><a href="/sitesettings" data-toggle="tab">Settings</a></li>
 
-        <li class="disabled"><a href="#tab4" data-toggle="tab">Statistics</a></li>
         <!--Begin Search Bar -->
 
         <li class="pull-right search">
 <div class="input-append">
-<input class="span3" id="appendedInputButtons" size="16" type="text"placeholder="Search All Disputes"><button class="btn" type="button"><i class=" icon-search"></i>Search</button><button class="btn" type="button">Options</button>
-</div></li>
+<input class="span3" id="appendedInputButtons" size="16" type="text"placeholder="Search All Disputes"><button class="btn" type="button"><i class=" icon-search"></i> Search</button></div></li>
       </ul><!--End Search Bar -->
 
       <div class="main tab-content">
@@ -154,6 +166,8 @@ End Alerts, which presently sit right below navigatio on the page -->
               <a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-up"></i> Sorted Newest to
               Oldest</a>
 <!--
+note: Lucas this is the other side of the toggle, on activating sorting newest to oldest, flip to this here 
+
                <a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-down"></i> Sorted Oldest to
               Newest</a>
 -->
@@ -168,6 +182,7 @@ End Alerts, which presently sit right below navigatio on the page -->
       <!-- End Listing All The Disputes
     ================================================== -->
    
+	<!-- note / fixme: what is this doing here? Is this stuff Paige's workbench mess to be deleted? -->
       <div class="tab-pane" id="tab1"></div>
         <div class="tab-pane" id="tab2"></div>
           <div class="tab-pane" id="tab3"></div>
@@ -175,17 +190,18 @@ End Alerts, which presently sit right below navigatio on the page -->
       </div>
  
 </div><!--End Disputes Listing Tabbed Navigation-->
+
+
 <!--Begin Footer Navigation-->
 
 <div class="row">
 <div class="span12">
-  <!-- Footer
-    ================================================== -->
+
     <footer class="footer">
 
         <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>It would be really nice to have a small mission statement here at the bottom of the page. This product is made to continue the... and other thing and other thing. Maybe in reference to open sourceness?? </p>
-        <p>Code licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>. Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+        <p>This tool for managing alleged copyright infringement is provided for {{site.name}} by SafeHarbor.in. <p>SafeHarbor.in provides services for DMCA compliance. </p>Our mission is to reduce risk, expense, and stress for web sites while being effective and efficient for copyright owners.  </p>
+        <p>Our Code is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>. Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
         
         <ul class="footer-links">
           <li><a href="#">Copyright @Safeharbor 2012</a></li>

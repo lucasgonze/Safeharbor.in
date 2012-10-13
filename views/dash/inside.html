@@ -1,122 +1,119 @@
-<!--All Dispute Types 
-there are three versions of a dispute so far- 
+<!--Add a New Website is the page that you go to when you want to add a new website to your account, it should be a duplicate of the website_settings.html document, just framed and presented nicely for the user-->
 
-a Single Dispute with the website name & logo, 
-a Single Dispute without the associated website name & logo,
-a CLOSED single dispute with the website name & logo
---> 
+<div class="row">
+       <div id="website_settings_form">
+       <!--Begin Form for filling out information about the Website-->
+          
+                  <form class="span10 form-horizontal" action="">
+            <legend>Website Information</legend> <!--Name of Website-->
 
+            <div id="form_leftside"> 
+            
+            <div class="control-group">
+              <label class="control-label" for="inputWebsiteName">Website Settings</label>
 
-<!--Begin Single Dispute with Website Name & Logo-->
-  
- <!-- Begin Single Dispute List Item -->
-              <div class="row">
-                <div class="span12">
-                  <div class="single-dispute">
-                  <div class="company-logo-box">
-<div class="company-logo"> <img src='paige/img/youtube_sm.jpg' alt="" title="" />
- </div></div>
-                     <!-- Begin a block holding information about the Infringement and the Resolve Button so they stack nicely-->
-                  <div class="infringement-list-resolve-button">
-  <ul class="infringement-list">
-                                        
-                            <li class="infringement-title"><h2>Led Zeppelin Stairway to Heaven Live in NYC</h2></li>
-                          <li class="infringement-url"><a href=
-                            "http://www.youtube.com/watch?v=9Q7Vr3yQYWQvnovenoindfnv">http://www.youtube.com/watch?v=9Q7Vr3yQYWQvnovenoindf</a></li>
+              <div class="controls">
+                <input type="text" id="inputWebsiteName" placeholder=
+                "Youtube.com, Ask.com" /><span class=
+                "required help-inline">*required</span>
+              </div>
+            </div><!--URL of Website-->
 
-                          <li class="arrival-date">June 02, 2012</li>
-                          <li class="open">Open Dispute <span class="italic"> 3 days until Dispute is Critical</span></li>
-                        
-</ul>   <!--End Infringement Listing-->
-                     <!--Begin Resolve Dispute Button -->
+            <div class="control-group">
+              <label class="control-label" for="inputWebsiteUrl">http://</label>
 
-                    <div class="resolve">
-                      <a href="#" class="btn btn-large" type="button">Resolve Dispute</a>
-                    </div><!--End Resolve Dispute Button -->
-                                       </div>
-                     
+              <div class="controls">
+                <input type="text" id="inputWebsiteUrl" placeholder=
+                "mywebsite.com" /><span class="required help-inline">*required</span>
+              </div>
+            </div><!--Logo of Website-->
 
-                <!-- End a block holding the infringement information and the resolve button so they stack nicely-->
-                   
-                   <!--Begin Preview Image of Dispute on Website -->
+            <div class="control-group">
+              <label class="control-label" for="inputWebsiteLogo">Logo URL</label>
 
-                    <div class="preview-image-box">
-                      <a href="#" class="preview-image" title="preview dispute">here</i></a>
-                    </div><!--End Preview Image of Dispute on Website -->
-                   
-                   <div class="copyright-table-box"> 
-                   <!-- Copyright Holder Table-->
+              <div class="controls">
+                <input type="text" class="input-xlarge" id="inputWebsiteURL" placeholder=
+                "http://mywebsite/files/img/my_logo.png" />
+              </div>
+            </div>
+</div>            
 
-                    <div class="copyright-table ">
-                      <table class="table">
-                        <thead>
-                          <tr class="">
-                            <th class="left">Copyright Holder</th>
+<!--Show Logo URL image to the user when they upload it -->
+            <div id="show_logourl_image">
+<div id="logourl_image_box">            <img src=
+              ".../public/dash/img/youtube_sm.jpg"
+              alt=""/>
+            </div>
+            </div>
+          </form>
+          <!--End the first part of the form-->
+          
+          
+          <!--Begin Registered Agent Information-->
+          <form class="span10 form-horizontal" action="">
+          
+            <legend>Registered Agent Information <span class="small pull-right">This information is publically displayed and required by law. <a href="#">Learn More</a></span></legend>
 
-                            <th>Jeffrey John Joseph Long Name</th>
-                          </tr>
-                        </thead>
+            <div class="control-group">
+              <label class="control-label" for="inputName">Name</label>
 
-                        <tbody>
-                          <tr>
-                            <td class="left">Submitted by</td>
+              <div class="controls">
+                <input type="text" id="inputName" placeholder="Full Name" />
+                <span class="required help-inline">*required</span>
+              </div>
+            </div>
 
-                            <td>Joe Jackson Really Really Long Name</td>
-                          </tr>
+            <div class="control-group">
+              <label class="control-label" for="inputEmail">Email</label>
 
-                          <tr>
-                            <td></td>
-                          </tr>
+              <div class="controls">
+                <input type="text" id="inputEmail" placeholder="Email" /> <span class=
+                "required help-inline">*required</span>
+              </div>
+            </div>
 
-                          <tr>
-                            <td class="left">Job Title</td>
+            <div class="control-group">
+              <label class="control-label" for="inputPhone">Phone </label>
 
-                            <td class="right">Administrator of Really Long Things</td>
-                          </tr>
+              <div class="controls">
+                <select>
+                  <option>
+                    United States
+                  </option>
 
-                          <tr>
-                            <td class="left">Email</td>
+                  <option>
+                    Other Country
+                  </option>
 
-                            <td><a href="mailto:%20you@yourreallylongemail.com" class=
-                            "email_link">you@yourreallylongemail.com</a></td>
-                          </tr>
+                  <option>
+                    Other Country
+                  </option>
 
-                          <tr>
-                            <td class="left">Phone</td>
+                  <option>
+                    Other Country
+                  </option>
+                </select> <input type="text" id="inputPhone" placeholder=
+                "Phone Number" /> <span class=" required help-inline">*required</span>
+              </div>
+            </div>
 
-                            <td class="right">+31 224 234 2345</td>
-                          </tr>
+            <div class="control-group">
+              <label class="control-label" for="inputEmail"> Address</label>
 
-                          <tr>
-                            <td class="left">Fax</td>
-
-                            <td class="right">+31 224 234 2345</td>
-                          </tr>
-
-                          <tr>
-                            <td class="left">Address</td>
-
-                            <td class="right address">Safeharbor Corp. PO Box 1234 West 76th St. <br/>New York, NY 12345 USA</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div><!--End Copyright Holder Table-->
-                  </div>                  
-                </div>
-              </div><!-- End Single Dispute List Item -->
+              <div class="controls">
+                <textarea class="mailing" rows="5" cols="" >
+</textarea><span class=" required help-inline">*required</span>
+              </div>
+            </div>
+            <div class="no-gray form-actions">
+              <button type="submit" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn">Cancel</button>
+            </div>
+    </form>
+</div>
       </div>
-      
-  
+      <!--End Form for filling out information about the website-->
+
+  </div>
 
 
-<!--End Single Dispute with Website Name & Logo-->
-
-
-
-<!--Begin Single Dispute with NO Website Name & Logo-->
-<!--End Single Dispute with NO Website Name & Logo-->
-
-
-
-<!--Begin CLOSED Single Dispute with Website Name & Logo-->
-<!--End CLOSED Single Dispute with Website Name & Logo-->

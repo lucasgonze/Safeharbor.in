@@ -1,160 +1,316 @@
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
+<!--All Dispute Types 
+there are three versions of a dispute so far- 
 
-  <title>Safeharbor</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="" />
-  <meta name="author" content="" /><!-- Le styles -->
-  <link href="../assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
-  <link href="../assets/css/safe_bootstrap.css" rel="stylesheet" type="text/css" />
-  <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
-  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-  <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  <!-- Le fav and touch icons -->
-  <link rel="shortcut icon" href="../assets/ico/favicon.ico" />
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href=
-  "../assets/ico/apple-touch-icon-144-precomposed.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href=
-  "../assets/ico/apple-touch-icon-114-precomposed.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href=
-  "../assets/ico/apple-touch-icon-72-precomposed.png" />
-  <link rel="apple-touch-icon-precomposed" href=
-  "../assets/ico/apple-touch-icon-57-precomposed.png" />
-</head>
+a Single Dispute with the website name & logo, 
+a Single Dispute without the associated website name & logo,
+a CLOSED single dispute with the website name & logo
+--> 
 
-<body>
-  <div class="container">
-  
-  
-    <!-- Begin Single Dispute List Item -->
-       <div class="row dispute">
-          <div class="dispute-table">
-            <table class="table">
-              <thead>
-                <tr class="company">
-                  <th class="company_logo"><img src="file:///Volumes/makerlab/Users/paigedestroy/Desktop/paige-markup/bootstrap/docs/assets/img/youtube_sm.jpg" alt="" title="" /></th>
 
-                  <th class="company_name"><a href="#">Youtube.com</a></th>
-                </tr>
-              </thead>
+<!--Begin Single Dispute with Website Name & Logo-->
 
-              <tbody>
-                <tr>
-                  <td class="left">Infringement of</td>
+   <!-- Begin Single Dispute List Item -->
+              <div class="row">
+                <div class="span12">
+                  <div class="single-dispute">
+                  <div class="company-logo-box">
+<div class="company-logo"> <img src='paige/img/youtube_sm.jpg' alt="" title="" />
+ </div></div>
+                     <!-- Begin a block holding information about the Infringement and the Resolve Button so they stack nicely-->
+                  <div class="infringement-list-resolve-button">
+  <ul class="infringement-list">
+                                        
+                            <li class="infringement-title"><h2>Led Zeppelin Stairway to Heaven Live in NYC</h2></li>
+                          <li class="infringement-url"><a href=
+                            "http://www.youtube.com/watch?v=9Q7Vr3yQYWQvnovenoindfnv">http://www.youtube.com/watch?v=9Q7Vr3yQYWQvnovenoindf</a></li>
 
-                  <td>Led Zeppelin Stairway to Heaven Live in NYC</td>
-                </tr>
+                          <li class="arrival-date"><i class="icon-folder-open"></i> June 02, 2012</li>
+                          <li class="open">Open Dispute <span class="italic"> 3 days until Dispute is Critical</span></li>
+                        
+</ul>   <!--End Infringement Listing-->
+                     <!--Begin Resolve Dispute Button -->
 
-                <tr>
-                  <td></td>
-                </tr>
+                    <div class="resolve">
+                      <a href="#" class="btn btn-primary" type="button">Resolve Dispute</a>
+                    </div><!--End Resolve Dispute Button -->
+                                       </div>
+                     
 
-                <tr>
-                  <!--max char limit for URL should be 53 char, then truncate-->
+                <!-- End a block holding the infringement information and the resolve button so they stack nicely-->
+                   
+                   <!--Begin Preview Image of Dispute on Website -->
 
-                  <td class="left">URL</td>
+                    <div class="preview-image-box">
+                      <a href="#" class="preview-image" title="preview dispute">here</i></a>
+                    </div><!--End Preview Image of Dispute on Website -->
+                   
+                   <div class="copyright-table-box"> 
+                   <!-- Copyright Holder Table-->
 
-                  <td class="right"><a href=
-                  "www.youtube.com/watch?v=9Q7Vr3yQYWQvnovenoindfnv">www.youtube.com/watch?v=9Q7Vr3yQYWQvnovenoindf</a></td>
-                </tr>
+                    <div class="copyright-table ">
+                      <table class="table">
+                        <thead>
+                          <tr class="">
+                            <th class="left">Copyright Holder</th>
 
-                <tr>
-                  <td class="left">Date Filed</td>
+                            <th>Jeffrey John Joseph Long Name</th>
+                          </tr>
+                        </thead>
 
-                  <td>June 02, 2012</td>
-                </tr>
+                        <tbody>
+                          <tr>
+                            <td class="left">Submitted by</td>
 
-                <tr>
-                  <td class="left">Status</td>
+                            <td>Joe Jackson Really Really Long Name</td>
+                          </tr>
 
-                  <td class="right open">
-                    Open
+                          <tr>
+                            <td></td>
+                          </tr>
 
-                    <p class="italic">3 days until Dispute is Critical</p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="preview_image_box">
-              <a href="#"><img src=
-              "file:///Volumes/makerlab/Users/paigedestroy/Desktop/paige-markup/bootstrap/docs/assets/img/chevron.png"
-              alt="" title="" width="70px" height="70px" /></a>
-            </div>
+                          <tr>
+                            <td class="left">Job Title</td>
 
-<!--Begin Resolve Dispute Button -->
-           <button class="btn btn-large btn-block" type="button">Block level button</button>          </div><!--End Resolve Dispute Button -->
-<!--End Dispute Content Table -->
+                            <td class="right">Administrator of Really Long Things</td>
+                          </tr>
 
-            
-          <!-- Copyright Holder Table-->
+                          <tr>
+                            <td class="left">Email</td>
 
-          <div class="copyright-table">
-            <table class="table">
-              <thead>
-                <tr class="">
-                  <th class="left">Copyright Holder</th>
+                            <td><a href="mailto:%20you@yourreallylongemail.com" class=
+                            "email_link">you@yourreallylongemail.com</a></td>
+                          </tr>
 
-                  <th>Jeffrey John Joseph Long Name</th>
-                </tr>
-              </thead>
+                          <tr>
+                            <td class="left">Phone</td>
 
-              <tbody>
-                <tr>
-                  <td class="left">Submitted by</td>
+                            <td class="right">+31 224 234 2345</td>
+                          </tr>
 
-                  <td>Joe Jackson Really Really Long Name</td>
-                </tr>
+                          <tr>
+                            <td class="left">Fax</td>
 
-                <tr>
-                  <td></td>
-                </tr>
+                            <td class="right">+31 224 234 2345</td>
+                          </tr>
 
-                <tr>
-                  <td class="left">Job Title</td>
+                          <tr>
+                            <td class="left">Address</td>
 
-                  <td class="right">Administrator of Really Long Things</td>
-                </tr>
-
-                <tr>
-                  <td class="left">Email</td>
-
-                  <td><a href="mailto:%20you@yourreallylongemail.com" class=
-                  "email_link">you@yourreallylongemail.com</a></td>
-                </tr>
-
-                <tr>
-                  <td class="left">Phone</td>
-
-                  <td class="right">+31 224 234 2345</td>
-                </tr>
-
-                <tr>
-                  <td class="left">Fax</td>
-
-                  <td class="right">+31 224 234 2345</td>
-                </tr>
-
-                <tr>
-                  <td class="left">Address</td>
-
-                  <td class="right">1234 West 76th Street Apt.#120 New York, NY
-                  12345</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div><!-- End Single Dispute List Item -->
+                            <td class="right address">Safeharbor Corp. PO Box 1234 West 76th St. <br/>New York, NY 12345 USA</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div><!--End Copyright Holder Table-->
+                  </div>                  
+                </div>
+              </div><!-- End Single Dispute List Item -->
+      </div>
+ 
+<!--End Single Dispute with Website Name & Logo-->
 
 
 
+<!--Begin Single Dispute with NO Website Name & Logo-->
 
-          
-      </div>    
-   
-</body>
-</html>
+ <!-- Begin Single Dispute List Item -->
+              <div class="row">
+                <div class="span12">
+                  <div class="single-dispute-no-logo">
+                             <!-- Begin a block holding information about the Infringement and the Resolve Button so they stack nicely-->
+                  <div class="infringement-list-resolve-button">
+  <ul class="infringement-list">
+                                        
+                            <li class="infringement-title"><h2>Led Zeppelin Stairway to Heaven Live in NYC</h2></li>
+                          <li class="infringement-url"><a href=
+                            "http://www.youtube.com/watch?v=9Q7Vr3yQYWQvnovenoindfnv">http://www.youtube.com/watch?v=9Q7Vr3yQYWQvnovenoindf</a></li>
+
+                          <li class="arrival-date"><i class="icon-folder-open"></i> June 02, 2012</li>
+                          <li class="open">Open Dispute <span class="italic"> 3 days until Dispute is Critical</span></li>
+                        
+</ul>   <!--End Infringement Listing-->
+                     <!--Begin Resolve Dispute Button -->
+
+                    <div class="resolve">
+                      <a href="#" class="btn btn-primary" type="button">Resolve Dispute</a>
+                    </div><!--End Resolve Dispute Button -->
+                                       </div>
+                     
+
+                <!-- End a block holding the infringement information and the resolve button so they stack nicely-->
+                   
+                   <!--Begin Preview Image of Dispute on Website -->
+
+                    <div class="preview-image-box">
+                      <a href="#" class="preview-image" title="preview dispute">here</i></a>
+                    </div><!--End Preview Image of Dispute on Website -->
+                   
+                   <div class="copyright-table-box"> 
+                   <!-- Copyright Holder Table-->
+
+                    <div class="copyright-table ">
+                      <table class="table">
+                        <thead>
+                          <tr class="">
+                            <th class="left">Copyright Holder</th>
+
+                            <th>Jeffrey John Joseph Long Name</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr>
+                            <td class="left">Submitted by</td>
+
+                            <td>Joe Jackson Really Really Long Name</td>
+                          </tr>
+
+                          <tr>
+                            <td></td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Job Title</td>
+
+                            <td class="right">Administrator of Really Long Things</td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Email</td>
+
+                            <td><a href="mailto:%20you@yourreallylongemail.com" class=
+                            "email_link">you@yourreallylongemail.com</a></td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Phone</td>
+
+                            <td class="right">+31 224 234 2345</td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Fax</td>
+
+                            <td class="right">+31 224 234 2345</td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Address</td>
+
+                            <td class="right address">Safeharbor Corp. PO Box 1234 West 76th St. <br/>New York, NY 12345 USA</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div><!--End Copyright Holder Table-->
+                  </div>                  
+                </div>
+              </div><!-- End Single Dispute List Item -->
+      </div>	
+
+
+<!--End Single Dispute with NO Website Name & Logo-->
+
+
+
+<!--Begin CLOSED Single Dispute with Website Name & Logo-->
+
+<!-- Begin Single Dispute List Item -->
+              <div class="row">
+                <div class="span12">
+                  <div class="single-dispute">
+                  <div class="company-logo-box">
+<div class="company-logo"> <img src='paige/img/youtube_sm.jpg' alt="" title="" />
+ </div></div>
+                     <!-- Begin a block holding information about the Infringement and the Resolve Button so they stack nicely-->
+                  <div class="infringement-list-resolve-button">
+  <ul class="infringement-list">
+                                        
+                            <li class="infringement-title"><h2>Led Zeppelin Stairway to Heaven Live in NYC</h2></li>
+                          <li class="infringement-url"><a href=
+                            "http://www.youtube.com/watch?v=9Q7Vr3yQYWQvnovenoindfnv">http://www.youtube.com/watch?v=9Q7Vr3yQYWQvnovenoindf</a></li>
+
+                          <li class="arrival-date">June 02, 2012</li>
+                          <li class="open">Open Dispute <span class="italic"> 3 days until Dispute is Critical</span></li>
+                        
+</ul>   <!--End Infringement Listing-->
+                     <!--Begin Resolved Dispute, Button to Reopen -->
+
+                    <div class="resolved"><p><i class="icon-folder-close"></i> This Dispute was resolved 2/10/2012  </p><a href="#" class="btn btn-warning" type="button">Re-open this Dispute</a>
+                   
+                    </div><!--End Resolved Dispute, Button to Reopen -->
+                                       </div>
+                     
+
+                <!-- End a block holding the infringement information and the resolve button so they stack nicely-->
+                   
+                   <!--Begin Preview Image of Dispute on Website -->
+
+                    <div class="preview-image-box">
+                      <a href="#" class="preview-image" title="preview dispute">here</i></a>
+                    </div><!--End Preview Image of Dispute on Website -->
+                   
+                   <div class="copyright-table-box"> 
+                   <!-- Copyright Holder Table-->
+
+                    <div class="copyright-table ">
+                      <table class="table">
+                        <thead>
+                          <tr class="">
+                            <th class="left">Copyright Holder</th>
+
+                            <th>Jeffrey John Joseph Long Name</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr>
+                            <td class="left">Submitted by</td>
+
+                            <td>Joe Jackson Really Really Long Name</td>
+                          </tr>
+
+                          <tr>
+                            <td></td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Job Title</td>
+
+                            <td class="right">Administrator of Really Long Things</td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Email</td>
+
+                            <td><a href="mailto:%20you@yourreallylongemail.com" class=
+                            "email_link">you@yourreallylongemail.com</a></td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Phone</td>
+
+                            <td class="right">+31 224 234 2345</td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Fax</td>
+
+                            <td class="right">+31 224 234 2345</td>
+                          </tr>
+
+                          <tr>
+                            <td class="left">Address</td>
+
+                            <td class="right address">Safeharbor Corp. PO Box 1234 West 76th St. <br/>New York, NY 12345 USA</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div><!--End Copyright Holder Table-->
+                  </div>                  
+                </div>
+              </div><!-- End Single Dispute List Item -->
+      </div>
+      
+	
+
+<!--End CLOSED Single Dispute with Website Name & Logo-->

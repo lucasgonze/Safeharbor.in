@@ -55,13 +55,12 @@ function trivialRoute(app) {
     }
 }
 
-function home( req, res )
+function home( req, res, next )
 {
-	if(true || req.header('host') === "demo.safeharbor.in")
-		// pretty URL for the sake of potential investors
-        res.redirect('/demo');
-    else if( login.isLoggedIn() )
-        res.redirect('/dash');
+	if( login.isLoggedIn() )
+		// there are two handlers for '/', depending on whether the user is logged in.
+		// this function is the handler for users who aren't logged in. 
+		next();
     else
         res.render( 'firstrun/home.html', { layout:'firstrun/nop.html' } );
 }

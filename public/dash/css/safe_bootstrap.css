@@ -505,3 +505,17 @@ margin-top: 30px;
 #alarm .control-group label.control-label {
 margin-top: -10px;
 }
+
+/*
+For the global error page. Not very arguably this doesn't belong in the CSS for the dashboard, 
+which is only for logged-in users. Maybe the best factoring is for this CSS to become the 
+global CSS.
+
+-Lucas 10/12/12
+*/
+body.error-page *.error-status {display:none}
+body.error-page.error-404 .error-status.error-404 {display: block}
+body.error-page.error-500 .error-status.error-500 {display: block}
+
+/* hide navbar on global error pages. (This is arguably not the right UX choice). */
+body.error-page .navbar-fixed-top {display:none}
