@@ -78,7 +78,7 @@ function saveLogin(req,res) {
 		if( code == CODES.SUCCESS ){	
 			loginstate.enable(req,acct);
 			res.status(303);
-			res.redirect("/dash");
+			res.redirect("/");
 			return;
 		} 
 		
