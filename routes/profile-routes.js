@@ -68,7 +68,7 @@ exports.install = function( app )
 // log out
 function clearLogin(req,res) {
 	loginstate.disable(req);
-	res.redirect("/login");
+	res.redirect("/login",303);
 }
 
 function saveLogin(req,res) {
@@ -77,8 +77,7 @@ function saveLogin(req,res) {
 
 		if( code == CODES.SUCCESS ){	
 			loginstate.enable(req,acct);
-			res.status(303);
-			res.redirect("/");
+			res.redirect("/",303);
 			return;
 		} 
 		

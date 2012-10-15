@@ -19,10 +19,19 @@ function runtimeException(req,res){
 	throw new NoFunctionWithThisNameExistsUnlessIStupidlyCreateIt	();
 }
 
+function loggedout(req,res){
+	var loginstate = require('../lib/loginstate.js');
+	if( loginstate.isLoggedIn() )
+		err.page(400,res,"The session is logged in.");
+	else
+		nop(req,res);
+}
+
 exports.install = function( app ){		
 	app.get('/test/nop', nop);	
-	app.get('/test/admin', app.checkRole(app.ROLES.admin));	
-	app.get('/test/logged_in', app.checkRole(app.ROLES.logged_in), nop);	
+	app.get('/test/admin', app.checkRole(app.ROLES.admin), nop);	
+	app.get('/test/loggedout', loggedout);	
+	app.get('/test/loggedin', app.checkRole(app.ROLES.logged_in), nop);	
 	app.get('/test/500',status500);	
 	app.get('/test/404',status404);	
 	app.get('/test/runtimeException',runtimeException);	

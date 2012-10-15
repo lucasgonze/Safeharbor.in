@@ -28,10 +28,11 @@ function runtest {
 	fi
 
 	set -xv
-	curl -v --include $COOKIES $POSTDATA "http://$HOST/$URL" | tee | head -1 | grep $EXPECTSTATUS 
+	curl -v --include $COOKIES $POSTDATA "http://$HOST/$URL" | tee | head -1 | grep $EXPECTSTATUS
+	STATUS=$?
 	set +xv
-	
-	if [ $? == 0 ]
+		
+	if [ $STATUS == 0 ]
 	then
 		echo PASS
 	else
@@ -42,20 +43,35 @@ function runtest {
 	echo "******************************************************"
 }
 
+# baseline
 runtest test/nop 204
-runtest test/notloggedin 204
-runtest test/loggedin 302 
+
+# GET should just return the page
 runtest login 200
+# POST with wrong password should throw Forbidden
 runtest login 403 'email=wrong&password=wrong'
+# POST with right password redirects to your personalized home page
 runtest login 303 'email=lucas@gonze.com&password=abcd' 
+# verify that you stayed logged-in across requests
 runtest test/loggedin 204 
 
+# logging out should redirect you to /login on success
+runtest logout 303 'method=post'
+# check it in two different ways
+runtest test/loggedout 204
+runtest test/loggedin 302 
+
+# check role "admin"
 runtest login 303 'email=adminuser@safeharbor.in&password=abcd'; runtest test/admin 204
 runtest login 303 'email=loggedinuser@safeharbor.in&password=abcd'; runtest test/admin 403
 
+# check error handlers
 runtest test/500 500
 runtest test/404 404
 runtest test/runtimeException 500
+
+# GET on creating a new site should not cooperate
+runtest newsite 404
 
 echo
 echo "======================================================"

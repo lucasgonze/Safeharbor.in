@@ -22,17 +22,10 @@ exports.install = function(app)
     app.get( '/', logged_in, getOpenDisputes );
 	app.get( '/closed', logged_in, getClosedDisputes);
 	app.get( '/newsite', logged_in, getNewSite);
+	app.get( '/settings', logged_in, getSiteEditor);
 }
 
-function getNewSite(req,res){
-	
-	/* Fixme: 
-	- create a new web site with the stub name "Untitled Site"
-	- put an item in the site listing dropdown
-	- put an [x] next to the item in the site listing dropdown to make it easy to delete the stub site
-	- put the user into the site settings edit tab for the new site
-	*/
-	
+function getSiteEditor(req,res){
 	res.render( 
 				'dash/website_settings.html', {  
 					layout: 'dash/dash-layout.html',
@@ -40,7 +33,17 @@ function getNewSite(req,res){
 					bodyClass:"dash-newsite",
 					setSettingsAsActiveTab: 'class="active"'
              } 
-	);
+	);	
+}
+
+function getNewSite(req,res){	
+	/* Fixme: 
+	- create a new web site with the stub name "Untitled Site"
+	- put an item in the site listing dropdown
+	- put an [x] next to the item in the site listing dropdown to make it easy to delete the stub site
+	- put the user into the site settings edit tab for the new site
+	*/
+	require('../lib/error.js').page(500,res,"/newsite not implemented yet");
 }
 
 function getOpenDisputes(req,res){
@@ -91,7 +94,6 @@ function getClosedDisputes(req,res){
 			}
 		}
 		for(var i=1; i<data.length; i++){
-			console.log("i",i)
 			if( data[i-1].sitename !== data[i].sitename ){
 				// don't show the site logo up at the top, do show it on each row
 				site = null;
@@ -104,7 +106,6 @@ function getClosedDisputes(req,res){
 		if( site == null )
 			bodyClass = "dash-closed";		
 		
-		console.log("data length",data.length)
 		res.render( 
 					'dash/panel.html', {  
 						layout: 'dash/dash-layout.html',
