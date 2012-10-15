@@ -51,10 +51,11 @@ runtest login 303 'email=lucas@gonze.com&password=abcd'
 runtest test/loggedin 204 
 
 runtest login 303 'email=adminuser@safeharbor.in&password=abcd'; runtest test/admin 204
-runtest login 303 'email=loggedinuser@safeharbor.in&passwordabcd'; runtest test/admin 403
+runtest login 303 'email=loggedinuser@safeharbor.in&password=abcd'; runtest test/admin 403
 
 runtest test/500 500
 runtest test/404 404
+runtest test/runtimeException 500
 
 echo
 echo "======================================================"

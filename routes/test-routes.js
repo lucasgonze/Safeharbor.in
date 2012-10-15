@@ -15,12 +15,17 @@ function status404(req,res){
 	err.page(404,res,"this is the debug info");
 }
 
+function runtimeException(req,res){	
+	throw new NoFunctionWithThisNameExistsUnlessIStupidlyCreateIt	();
+}
+
 exports.install = function( app ){		
 	app.get('/test/nop', nop);	
 	app.get('/test/admin', app.checkRole(app.ROLES.admin));	
 	app.get('/test/logged_in', app.checkRole(app.ROLES.logged_in), nop);	
 	app.get('/test/500',status500);	
 	app.get('/test/404',status404);	
+	app.get('/test/runtimeException',runtimeException);	
 }
 
 
