@@ -158,6 +158,13 @@ Main Page, Body Styles
 	outline:0;
 }
 
+.nav > .disabled > a {
+  border-color: transparent;
+  text-decoration: none;
+  cursor: default;
+  background-color: transparent;
+}
+
 .nav > .disabled > a:hover {
   border-color: transparent;
   text-decoration: none;
