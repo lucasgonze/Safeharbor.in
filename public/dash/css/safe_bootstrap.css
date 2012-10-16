@@ -57,14 +57,12 @@ p {
 	box-shadow:inset 0 3px 8px rgba(0,0,0,0.125);
 	text-shadow:0 1px #D9D6D6;
 }
-
-    
     
 .dropdown-menu li > a:hover,.dropdown-menu li > a:focus,.dropdown-submenu:hover > a {
 	color:#ffffff;
 	text-decoration:none;
+	background-color:#000;
 	background-color:#2C4361;
-	background-color:#7A99C1;
 	background-image:0;
 	background-image:0 to(#2C4361));
 	background-image:0;
@@ -77,8 +75,8 @@ p {
 .dropdown-menu .active > a,.dropdown-menu .active > a:hover {
 	color:#ffffff;
 	text-decoration:none;
+	background-color:#000;
 	background-color:#2C4361;
-	background-color:#7A99C1;
 	background-image:linear-gradient(tobottom,#2C4361,#7A99C1);
 	background-image:0;
 	background-image:0 to(#2C4361));
