@@ -7,6 +7,14 @@ a Single Dispute without the associated website name & logo,
 a CLOSED single dispute with the website name & logo
 --> 
 
+{{#if site}}
+{{site.name}}
+{{site.logo}}
+{{site.domain}}
+{{site.url}}
+{{/if}}
+
+{{#each disputes}}{{#with this}}
 
 <!--Begin Single Dispute with Website Name & Logo-->
 
@@ -311,6 +319,6 @@ a CLOSED single dispute with the website name & logo
               </div><!-- End Single Dispute List Item -->
       </div>
       
-	
+	{{/with}}{{/each}}
 
 <!--End CLOSED Single Dispute with Website Name & Logo-->
