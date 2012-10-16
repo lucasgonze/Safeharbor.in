@@ -19,6 +19,12 @@ function runtimeException(req,res){
 	throw new NoFunctionWithThisNameExistsUnlessIStupidlyCreateIt	();
 }
 
+function toStringOfUndefined(req,res){	
+	toStringOfUndefined.nosuchvar.toString();
+}
+
+
+
 function loggedout(req,res){
 	var loginstate = require('../lib/loginstate.js');
 	if( loginstate.isLoggedIn() )
@@ -35,6 +41,7 @@ exports.install = function( app ){
 	app.get('/test/500',status500);	
 	app.get('/test/404',status404);	
 	app.get('/test/runtimeException',runtimeException);	
+	app.get('/test/toStringOfUndefined',toStringOfUndefined)
 }
 
 
