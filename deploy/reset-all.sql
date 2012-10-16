@@ -39,6 +39,7 @@ create table contact (
 	phone text not null, 
 	fax text not null, 
 	postal text not null, 
+	country text not null,
 	signature text not null 
 );
 create table audit (  
