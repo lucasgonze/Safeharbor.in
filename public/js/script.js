@@ -1,10 +1,6 @@
 /* Author:
 Lucas Gonze <lucas@gonze.com>
 
-FIXME ON MONDAY:
-
-you are in the process of rewriting the basic script. you're taking the goals from the summary and using them as themes for groups of slides. right now you are on the first goal. however there is some error, probably in the JSON, and the demo JS won't run at all.
-
 */
 
 var initValidation = function(){
@@ -186,6 +182,53 @@ function initAjaxForms(){
 					$("#loginform input[type=text], #loginform input[type=password]").off('keypress', clearfail);
 				};
 				$("#loginform input[type=text], #loginform input[type=password]").on('keypress', clearfail);
+			}		
+		});
+		
+		return false; 
+	}); 
+
+	$('#loginform').submit(function() { 
+		
+		$.ajax({
+			type: 'POST',
+			url: '/login',
+			data: $("#loginform").serialize(),
+			success: function success(data){
+				window.location = "/";
+			},
+			error: function err(data){
+				$(".hideerroruntilfail").addClass("fail");
+				var clearfail = function clearfail(){
+					$(".hideerroruntilfail").removeClass("fail");
+					$("#loginform input[type=text], #loginform input[type=password]").off('keypress', clearfail);
+				};
+				$("#loginform input[type=text], #loginform input[type=password]").on('keypress', clearfail);
+			}		
+		});
+		
+		return false; 
+	}); 
+
+	$("form[action='/settings']").submit(function() { 
+		
+		$.ajax({
+			type: 'POST',
+			url: '/settings-nop',
+			data: $("form[action='/settings']").serialize(),
+			success: function success(data){
+				$("div[class='alert alert-success']").show();
+				$("input[type=text]").on('keypress', function (){
+					$("div[class='alert alert-success']").hide();
+					$("input[type=text]").off('keypress', clearfail);
+				});
+			},
+			error: function err(data){
+				$("div[class='alert alert-error']").show();
+				$("input[type=text]").on('keypress', function (){
+					$("div[class='alert alert-fail']").hide();
+					$("input[type=text]").off('keypress', clearfail);
+				});
 			}		
 		});
 		
