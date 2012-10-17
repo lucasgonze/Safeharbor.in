@@ -20,16 +20,71 @@ exports.install = function(app)
 	// there are two handlers for '/', depending on whether the user is logged in.
 	// this function is the handler for users who are logged in. 
     app.get( '/', logged_in, getOpenDisputes );
+
 	app.get( '/closed', logged_in, getClosedDisputes);
 	app.get( '/newsite', logged_in, getNewSite);
 	app.get( '/settings', logged_in, getSiteEditor);
+	app.post( '/settings', logged_in, saveSiteEdit);
 }
 
-function getSiteEditor(req,res){
+// clone of profile-routes.saveSiteEdit
+function saveSiteEdit(req,res) {
+
+	console.log("BP 5.2",req.body)
+
+    var uid = loginstate.getID(req);
+    
+    function callback( code, err ) {
+        if( code == CODES.OK )
+        {
+            var title = "Site Properties";
+            res.outputMessage( 
+                page.MESSAGE_LEVELS.success,
+                title,
+                "Changes to site saved."
+            );    
+			getSiteEditor(req,res);
+//            res.render( page.MESSAGE_VIEW, {pageTitle:title,layout:'dash/dash-layout.html'} );
+        }
+    }            
+    var args = utils.copy( {acct: uid}, req.body );
+
+    profile
+        .updateSiteForUser( args, callback )
+        .handleErrors( req, res )
+        .perform();
+}
+
+// clone of profile-routes.emitSiteEditor
+function getSiteEditor(req,res){	
+	
+	var uid = loginstate.getID(req);
+
+    function success(code, site) {
+        if( code == CODES.OK )
+        {
+            res.render("dash/website_settings.html", utils.copy({
+													layout: 'dash/dash-layout.html',
+                                                    pageTitle: "Edit Site",
+                                                    bodyClass: "siteeditor" }, site) );
+        } else if( code == CODES.MULTIPLE_RECORDS_FOUND ) {
+			return(errlib.page(500,res,"Multiple sites not implemented yet."))
+		} else {
+			return(errlib.page(500,res,"Unexpected code "+code+" in getSiteEditor"))
+		}
+    }
+    
+	profile
+	    .getSiteForUser( uid, success )
+	    .handleErrors( req, res, [CODES.NO_RECORDS_FOUND] )
+	    .perform();
+}
+
+function getSiteEditor_v1(req,res){
 	res.render( 
 				'dash/website_settings.html', {  
 					layout: 'dash/dash-layout.html',
-					pageTitle:"SafeHarbor.in - Add a New Website",
+					pageTitle:"Add a New Website",
 					bodyClass:"dash-newsite",
 					setSettingsAsActiveTab: 'class="active"'
              } 
@@ -43,7 +98,7 @@ function getNewSite(req,res){
 	- put an [x] next to the item in the site listing dropdown to make it easy to delete the stub site
 	- put the user into the site settings edit tab for the new site
 	*/
-	require('../lib/error.js').page(500,res,"/newsite not implemented yet");
+	errlib.page(500,res,"/newsite not implemented yet");
 }
 
 function getOpenDisputes(req,res){
@@ -51,8 +106,7 @@ function getOpenDisputes(req,res){
 	dash.getOpenMedia({uid:loginstate.getID(req), callback:function(err,data){
 		
 		if(err){
-			var err = require('../lib/error.js');
-			err.page(500,res,"error returned from getOpenMedia: "+err);
+			errlib.page(500,res,"error returned from getOpenMedia: "+err);
 			return;
 		}
 

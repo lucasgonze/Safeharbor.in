@@ -98,6 +98,16 @@
     
 <!--End Navigation-->
 
+{{#each messages}}
+<div {{#if class}}class="{{class}}"{{/if}}>
+    <div class="alert alert-{{level}} notsonarrowblock" style="text-align:center">
+        <p><i class="icon-{{status}}"></i> {{{title}}}</p>
+        <p>{{{text}}}</p>            
+    </div>
+    {{#if quicktip}}<p class="quicktip"><small><i class="icon-info-sign"></i>{{quicktip}}</small></p>{{/if}}
+</div>
+{{/each}}
+
 
 
 <!--Begin Alerts, which presently sit right below navigation on the page 
@@ -224,6 +234,8 @@ note: Lucas this is the other side of the toggle, on activating sorting newest t
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/dash/js/jquery.js"></script>
+
+	<!-- we don't need all these. fixme: identify scripts we actually *are* using.
     <script src="/dash/js/bootstrap-transition.js"></script>
     <script src="/dash/js/bootstrap-alert.js"></script>
     <script src="/dash/js/bootstrap-modal.js"></script>
@@ -236,6 +248,10 @@ note: Lucas this is the other side of the toggle, on activating sorting newest t
     <script src="/dash/js/bootstrap-collapse.js"></script>
     <script src="/dash/js/bootstrap-carousel.js"></script>
     <script src="/dash/js/bootstrap-typeahead.js"></script>
+	 -->
+
+	<script src="/js/libs/jquery-validation-x/jquery.validate.min.js"></script>
+    <script src="/js/script.js"></script>
 
   </body>
 </html>

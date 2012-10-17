@@ -52,8 +52,11 @@ exports.install = function( app )
 	app.trivialRoute('/accountdeleter','delete','profile','Delete Account',logged_in);
 	app.post('/accountdeleter', logged_in, deleteAccount);
 
+	// these now overlap on the same functions in the dashboard. though I'm not sure they belong in *either* location.
+	// fixme: delete one or the other
 	app.get('/siteeditor',logged_in,emitSiteEditor);
 	app.post('/siteeditor', logged_in, saveSiteEdit);
+	
 	
 	app.get('/account', logged_in, emitAcctEditor);
 	app.post('/account', logged_in, saveAcctEditor);
@@ -271,7 +274,7 @@ function emitSiteEditor(req,res){
         if( code == CODES.OK )
         {
             res.render("profile/siteeditor.html", utils.copy({
-                                                    pagetitle: "Edit Site",
+                                                    pageTitle: "Edit Site",
                                                     bodyClass: "siteeditor" }, site) );
         }
     }

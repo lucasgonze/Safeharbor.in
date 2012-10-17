@@ -2,78 +2,77 @@
        <div id="website_settings_form">
        <!--Begin Form for filling out information about the Website-->
           
-                  <form class="span10 form-horizontal" action="">
+          <form class="span10 form-horizontal" action="/settings" method="post">
             <legend>Website Information</legend> <!--Name of Website-->
 
             <div id="form_leftside"> 
             
             <div class="control-group">
-              <label class="control-label" for="inputWebsiteName">Website Settings</label>
+              <label class="control-label" for="sitename">Website Settings</label>
 
               <div class="controls">
-                <input type="text" id="inputWebsiteName" placeholder=
-                "Youtube.com, Ask.com" /><span class=
+                <input type="text" id="sitename" name="sitename" placeholder=
+                "Youtube.com, Ask.com" value="{{sitename}}" /><span class=
                 "required help-inline">*required</span>
               </div>
             </div><!--URL of Website-->
 
             <div class="control-group">
-              <label class="control-label" for="inputWebsiteUrl">http://</label>
+              <label class="control-label" for="domain">http://</label>
 
               <div class="controls">
-                <input type="text" id="inputWebsiteUrl" placeholder=
-                "mywebsite.com" /><span class="required help-inline">*required</span>
+                <input type="text" id="domain" name="domain" placeholder=
+                "mywebsite.com" value="{{domain}}" /><span class="required help-inline">*required</span>
               </div>
             </div><!--Logo of Website-->
 
             <div class="control-group">
-              <label class="control-label" for="inputWebsiteLogo">Logo URL</label>
+              <label class="control-label" for="sitelogo">Logo URL</label>
 
               <div class="controls">
-                <input type="text" class="input-xlarge" id="inputWebsiteURL" placeholder=
-                "http://mywebsite/files/img/my_logo.png" />
+                <input type="text" class="input-xlarge" id="sitelogo" name="sitelogo" placeholder=
+                "http://mywebsite/files/img/my_logo.png" value="{{sitelogo}}" />
               </div>
             </div>
 </div>            
 
-<!--Show Logo URL image to the user when they upload it -->
+<!--Show Logo URL image to the user when they upload it --><!-- fixme -->
             <div id="show_logourl_image">
 <div id="logourl_image_box">            <img src=
-              "/public/dash/img/youtube_sm.jpg"
+              "{{sitelogo}}"
               alt=""/>
             </div>
             </div>
-          </form>
+
           <!--End the first part of the form-->
           
           
           <!--Begin Registered Agent Information-->
-          <form class="span10 form-horizontal" action="">
           
-            <legend>Registered Agent Information <span class="small pull-right">This information is publically displayed and required by law. <a href="#">Learn More</a></span></legend>
+            <legend class="lucas-sucks-at-css">Registered Agent Information <span class="small pull-right">This information is publically displayed and required by law. <a href="#">Learn More</a></span></legend>
 
             <div class="control-group">
-              <label class="control-label" for="inputName">Name</label>
+              <label class="control-label" for="agentname">Name</label>
 
               <div class="controls">
-                <input type="text" id="inputName" placeholder="Full Name" />
+                <input type="text" id="agentname" name="agentname" placeholder="Full Name" value="{{agentname}}" />
                 <span class="required help-inline">*required</span>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label" for="inputEmail">Email</label>
+              <label class="control-label" for="agentemail">Email</label>
 
               <div class="controls">
-                <input type="text" id="inputEmail" placeholder="Email" /> <span class=
+                <input type="text" id="agentemail" name="agentemail" placeholder="Email" value="{{agentemail}}" /> <span class=
                 "required help-inline">*required</span>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label" for="inputPhone">Phone </label>
+              <label class="control-label" for="agentphone">Phone </label>
 
-              <div class="controls">
+              <div class="controls"><!-- fixme: real list of countries. (There's a github issue for that). -->
                 <select>
                   <option>
                     United States
@@ -90,22 +89,24 @@
                   <option>
                     Other Country
                   </option>
-                </select> <input type="text" id="inputPhone" placeholder=
-                "Phone Number" /> <span class=" required help-inline">*required</span>
+                </select> <input type="text" id="agentphone" name="agentphone" placeholder=
+                "Phone Number"  value="{{agentphone}}" /> <span class=" required help-inline">*required</span>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label" for="inputEmail"> Address</label>
+              <label class="control-label" for="agentaddress"> Address</label>
 
               <div class="controls">
-                <textarea class="mailing" rows="5" cols="" >
+                <textarea class="mailing" rows="5" cols="" id="agentaddress" name="agentaddress">{{agentaddress}}
 </textarea><span class=" required help-inline">*required</span>
               </div>
             </div>
             <div class="no-gray form-actions">
               <button type="submit" class="btn btn-primary">Save changes</button>
               <button type="button" class="btn">Cancel</button>
+			  <div class="alert alert-success" style="display:none"><i class="icon-ok"></i> Saved</div>
+			  <div class="alert alert-error" style="display:none"><i class="icon-exclamation-sign"></i> Error</div>
             </div>
     </form>
 </div>

@@ -70,8 +70,8 @@ runtest test/500 500
 runtest test/404 404
 runtest test/runtimeException 500
 
-# GET on creating a new site should not cooperate
-runtest newsite 404
+# GET on creating a new site should not cooperate until we actually implement it
+runtest newsite 500
 
 echo
 echo "======================================================"

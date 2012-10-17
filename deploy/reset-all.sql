@@ -39,6 +39,9 @@ create table contact (
 	phone text not null, 
 	fax text not null, 
 	postal text not null, 
+-- don't implement until the country selector is done
+-- http://baymard.com/labs/country-selector
+--	country text not null,
 	signature text not null 
 );
 create table audit (  
