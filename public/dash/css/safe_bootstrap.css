@@ -317,7 +317,7 @@ ul.infringement-list li.open {
 	width:230px;
 }
 
-.resolve .btn-primary {
+.resolve .btn {
 	background-color:hsl(0,0%,79%)!important;
 	background-repeat:repeat-x;
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#134134134",endColorstr="#c9c9c9");
