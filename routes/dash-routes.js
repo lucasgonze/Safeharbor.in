@@ -30,8 +30,6 @@ exports.install = function(app)
 // clone of profile-routes.saveSiteEdit
 function saveSiteEdit(req,res) {
 
-	console.log("BP 5.2",req.body)
-
     var uid = loginstate.getID(req);
     
     function callback( code, err ) {
@@ -43,8 +41,10 @@ function saveSiteEdit(req,res) {
                 title,
                 "Changes to site saved."
             );    
+			// this way is slow but sure
 			getSiteEditor(req,res);
-//            res.render( page.MESSAGE_VIEW, {pageTitle:title,layout:'dash/dash-layout.html'} );
+			// this way is fast but flaky
+			// res.render( page.MESSAGE_VIEW, {pageTitle:title,layout:'dash/dash-layout.html'} );
         }
     }            
     var args = utils.copy( {acct: uid}, req.body );

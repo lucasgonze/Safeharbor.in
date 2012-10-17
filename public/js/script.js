@@ -214,7 +214,7 @@ function initAjaxForms(){
 		
 		$.ajax({
 			type: 'POST',
-			url: '/settings-nop',
+			url: '/settings',
 			data: $("form[action='/settings']").serialize(),
 			success: function success(data){
 				$("div[class='alert alert-success']").show();
