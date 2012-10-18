@@ -6,6 +6,24 @@ Lucas Gonze <lucas@gonze.com>
 var initValidation = function(){
 
 	/* http://docs.jquery.com/Plugins/Validation#List_of_built-in_Validation_methods */
+	
+	$("#website_settings_form form").validate({	
+		rules: {
+			sitename: { required: true },
+			domain: { required: true },
+			sitelogo: {url: true},
+			agentaddress: { required: true },
+			agentemail: {
+				required: true,
+				email: true
+			},
+			agentname: { required: true },
+			agentphone: { required: true }
+		}
+	});
+		
+	/* Items below are from the first-gen code */
+	
 	$("#reg1form").validate({	
 		rules: {
 			email: {
@@ -173,28 +191,6 @@ function initAjaxForms(){
 			url: '/login',
 			data: $("#loginform").serialize(),
 			success: function success(data){
-				window.location = "/dash";
-			},
-			error: function err(data){
-				$(".hideerroruntilfail").addClass("fail");
-				var clearfail = function clearfail(){
-					$(".hideerroruntilfail").removeClass("fail");
-					$("#loginform input[type=text], #loginform input[type=password]").off('keypress', clearfail);
-				};
-				$("#loginform input[type=text], #loginform input[type=password]").on('keypress', clearfail);
-			}		
-		});
-		
-		return false; 
-	}); 
-
-	$('#loginform').submit(function() { 
-		
-		$.ajax({
-			type: 'POST',
-			url: '/login',
-			data: $("#loginform").serialize(),
-			success: function success(data){
 				window.location = "/";
 			},
 			error: function err(data){
@@ -210,25 +206,27 @@ function initAjaxForms(){
 		return false; 
 	}); 
 
-	$("form[action='/settings']").submit(function() { 
+	$("form[action='/settings']").submit(function() { 				
 		
 		$.ajax({
 			type: 'POST',
 			url: '/settings',
 			data: $("form[action='/settings']").serialize(),
-			success: function success(data){
-				$("div[class='alert alert-success']").show();
-				$("input[type=text]").on('keypress', function (){
+			success: function success(data){				
+				var toggler = function(){
 					$("div[class='alert alert-success']").hide();
-					$("input[type=text]").off('keypress', clearfail);
-				});
+					$("input[type=text]").off('keypress', toggler);					
+				}				
+				$("div[class='alert alert-success']").show();
+				$("input[type=text]").on('keypress', toggler);
 			},
 			error: function err(data){
+				var toggler = function(){
+					$("div[class='alert alert-error']").hide();
+					$("input[type=text]").off('keypress', toggler);					
+				}				
 				$("div[class='alert alert-error']").show();
-				$("input[type=text]").on('keypress', function (){
-					$("div[class='alert alert-fail']").hide();
-					$("input[type=text]").off('keypress', clearfail);
-				});
+				$("input[type=text]").on('keypress', toggler);
 			}		
 		});
 		

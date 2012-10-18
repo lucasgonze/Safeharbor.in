@@ -25,6 +25,7 @@ create table site (  acct integer not null,
 	sitename text not null, 
 	sitelogo text, 
 	domain text not null unique, 
+	country text not null,
 	agentaddress text not null, 
 	agentemail text not null,
 	agentname text not null,
@@ -39,9 +40,6 @@ create table contact (
 	phone text not null, 
 	fax text not null, 
 	postal text not null, 
--- don't implement until the country selector is done
--- http://baymard.com/labs/country-selector
---	country text not null,
 	signature text not null 
 );
 create table audit (  
@@ -87,16 +85,16 @@ insert into acct (acctid,role,email,password) values (3,'2','adminuser@safeharbo
 insert into acct (acctid,role,email,password) values (4,'21','loggedinuser@safeharbor.in', 'abcd'); 
 
 -- for the user with one site
-insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone) 
+insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone,country) 
 	values (1,1,'Etsy','1.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345',
-         	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212');
+         	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212','Swaziland');
 -- for the user with two sites
-insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone) 
+insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone,country) 
 	      values (2,2,'Example.com #1','1.example.com','123 Main St\nPalo Alot CA 12345',
-         	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212');
-insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone) 
+         	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212','Canada');
+insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone,country) 
 	values (3,2,'Example.com #2','2.example.com','456 Central St\nPalo Alot CA 12345',
-        	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212');
+        	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212','United States');
 
 -- user with one site
 insert into audit (site, opname, contact) values (1,'takedownRequest',1);

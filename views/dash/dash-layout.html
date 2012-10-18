@@ -21,8 +21,8 @@
     <link href="/dash/css/safe_bootstrap.css" rel="stylesheet">
     <link href="/dash/css/bootstrap-responsive.css" rel="stylesheet">
 
-<link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -34,6 +34,10 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/dash/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/dash/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="/dash/ico/apple-touch-icon-57-precomposed.png">
+
+	<!-- ordinarily at the end for speed but we need it before the body so that view pages can load custom libraries -->
+    <script src="/dash/js/jquery.js"></script>
+
   </head>
 
   <body {{#if bodyClass}}class="{{bodyClass}}"{{/if}}>
@@ -233,7 +237,6 @@ note: Lucas this is the other side of the toggle, on activating sorting newest t
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/dash/js/jquery.js"></script>
 
 	<!-- we don't need all these. fixme: identify scripts we actually *are* using.
     <script src="/dash/js/bootstrap-transition.js"></script>

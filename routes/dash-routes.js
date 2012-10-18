@@ -30,6 +30,21 @@ exports.install = function(app)
 // clone of profile-routes.saveSiteEdit
 function saveSiteEdit(req,res) {
 
+	var blank = function(name){ 
+		if( (req.body[name] ? req.body[name] : '').length < 1 ){
+			errlib.page(400,res,"Required argument missing: "+name);
+			return(false);
+		}
+	}			
+	if( blank('sitename')
+	|| blank('domain')
+	|| blank('agentaddress')
+	|| blank('agentemail')
+	|| blank('agentname')
+	|| blank('agentphone')
+	|| blank('country')
+	) return;
+
     var uid = loginstate.getID(req);
     
     function callback( code, err ) {
