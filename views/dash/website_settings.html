@@ -358,8 +358,8 @@
   </div>
 
 <!-- https://github.com/JamieAppleseed/selectToAutocomplete . For country pulldown. -->
-<script src="/js/libs/selectToAutocomplete/jquery-ui-autocomplete.js"></script>
-<script src="/js/libs/selectToAutocomplete/jquery.select-to-autocomplete.min.js"></script>
+<script src="/js/libs/selectToAutocomplete-kludge/jquery-ui-autocomplete.js"></script>
+<script src="/js/libs/selectToAutocomplete-kludge/jquery.select-to-autocomplete.min.js"></script>
 <script type="text/javascript">
 jQuery(function(){
   $('select#country').selectToAutocomplete();
@@ -371,7 +371,7 @@ jQuery(function(){
 .form-actions div.alert-success, .form-actions div.alert-error {
 	position: fixed;
 	bottom: 0;
-	left: 5px;
+	x-left: 5px;
 }
 
 .ui-autocomplete {
