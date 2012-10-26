@@ -36,6 +36,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#faf9fcfb', e
 #img.lighthouse {
 	width: 100%;
 	position: absolute;
+	z-index: -9999;
 	top: 0;
 	left: 0;
 }
