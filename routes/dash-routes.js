@@ -23,7 +23,7 @@ exports.install = function(app)
 
 	app.get( '/closed', logged_in, getClosedDisputes);
 	app.get( '/newsite', logged_in, getNewSite);
-	//app.get( '/settings', logged_in, getSiteEditor);
+	app.get( '/settings', logged_in, getSiteEditor);
 	app.post( '/settings', logged_in, saveSiteEdit);
 }
 
@@ -72,20 +72,18 @@ function saveSiteEdit(req,res) {
 
 // clone of profile-routes.emitSiteEditor
 function getSiteEditor(req,res){	
-	console.log("BP 6")
+	
 	var uid = loginstate.getID(req);
 
     function success(code, site) {
         if( code == CODES.OK )
         {
-	
 			var countryList = page.countryList(site.country);
-			console.log("BP 5",countryList)
 	
-            res.render("dash/website_settings.html-x", utils.copy({
+            res.render("dash/website_settings.html", utils.copy({
 													layout: 'dash/dash-layout.html',
                                                     pageTitle: "Edit Site",
-													countryList: countryList
+													countryList: countryList,
                                                     bodyClass: "siteeditor" }, site) );
         } else if( code == CODES.MULTIPLE_RECORDS_FOUND ) {
 			return(errlib.page(500,res,"Multiple sites not implemented yet."))

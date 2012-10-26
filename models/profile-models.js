@@ -192,9 +192,9 @@ exports.getFirstSiteIdForUser = function(ownerid,callback) {
 
 exports.updateSiteForUser = function( obj, callback ) {
 	
-    var sql = 'update site set sitename = $2, domain = $3, agentaddress = $4, agentemail = $5, agentname = $6, agentphone = $7, country = $8 where acct = $1';
+    var sql = 'update site set sitename = $2, domain = $3, agentaddress = $4, agentemail = $5, agentname = $6, agentphone = $7, country = $8, sitelogo = $9 where acct = $1';
     return new ModelPerformer( { parseObj: obj, 
-                                 names: ['acct','sitename','domain','agentaddress','agentemail','agentname','agentphone','country'], 
+                                 names: ['acct','sitename','domain','agentaddress','agentemail','agentname','agentphone','country','sitelogo'], 
                                  callback: callback, 
                                  performer: function(){ this.table.updateSingleRecord(sql); }} );
 }

@@ -11,7 +11,7 @@
               <label class="control-label" for="sitename">Name</label>
 
               <div class="controls">
-                <input type="text" id="sitename" name="sitename" placeholder=
+                <input type="text" id="sitename" name="sitename" autofocus placeholder=
                 "YouTube" value="{{sitename}}" /><span class=
                 "required help-inline">*required</span>
               </div>
@@ -72,8 +72,8 @@
             <div class="control-group">
               <label class="control-label" for="country">Country </label>
               <div class="controls">
-				<select name="country" id="country" autofocus="autofocus" autocorrect="off" autocomplete="off">
-					{{countryList}}
+				<select name="country" id="country" autocorrect="off" autocomplete="off">
+					{{{countryList}}}
 				</select>	
 			  </div>
 			</div>
@@ -91,8 +91,7 @@
               <label class="control-label" for="agentaddress"> Address</label>
 
               <div class="controls">
-                <textarea class="mailing" rows="5" cols="" id="agentaddress" name="agentaddress">{{agentaddress}}
-</textarea><span class=" required help-inline">*required</span>
+                <textarea class="mailing" rows="5" cols="" id="agentaddress" name="agentaddress">{{agentaddress}}</textarea><span class=" required help-inline">*required</span>
               </div>
             </div>
             <div class="no-gray form-actions">
@@ -109,43 +108,18 @@
   </div>
 
 <!-- https://github.com/JamieAppleseed/selectToAutocomplete . For country pulldown. -->
-<script src="/js/libs/selectToAutocomplete-kludge/jquery-ui-autocomplete.js"></script>
-<script src="/js/libs/selectToAutocomplete-kludge/jquery.select-to-autocomplete.min.js"></script>
+<script src="/js/libs/selectToAutocomplete/jquery-ui-autocomplete.js"></script>
+<script src="/js/libs/selectToAutocomplete/jquery.select-to-autocomplete.min.js"></script>
 <script type="text/javascript">
 jQuery(function(){
-  $('select#country').selectToAutocomplete();
+	
+	// fancy country selector
+	$('select#country').selectToAutocomplete();
+	
+	// auto-show the logo image as the user leaves the input for the URL
+	$("input#sitelogo").blur(function(){
+		$("#logourl_image_box img").attr("src",this.value);
+	});
 });
 </script>
-
-<style type="text/css" media="screen">
-
-.form-actions div.alert-success, .form-actions div.alert-error {
-	position: fixed;
-	bottom: 0;
-}
-
-.ui-autocomplete {
-  padding: 0;
-  list-style: none;
-  background-color: #fff;
-  width: 218px;
-  border: 1px solid #B0BECA;
-  max-height: 350px;
-  overflow-y: scroll;
-}
-.ui-autocomplete .ui-menu-item a {
-  border-top: 1px solid #B0BECA;
-  display: block;
-  padding: 4px 6px;
-  color: #353D44;
-  cursor: pointer;
-}
-.ui-autocomplete .ui-menu-item:first-child a {
-  border-top: none;
-}
-.ui-autocomplete .ui-menu-item a.ui-state-hover {
-  background-color: #D5E5F4;
-  color: #161A1C;
-}
-</style>
 
