@@ -59,7 +59,7 @@ function saveSiteEdit(req,res) {
 			// this way is slow but sure
 			getSiteEditor(req,res);
 			// this way is fast but flaky
-			// res.render( page.MESSAGE_VIEW, {pageTitle:title,layout:'shared/gen2.html'} );
+			// res.render( page.MESSAGE_VIEW, {pageTitle:title,layout:'shared/main.html'} );
         }
     }            
     var args = utils.copy( {acct: uid}, req.body );
@@ -82,7 +82,7 @@ function getSiteEditor(req,res){
 	
             res.render("dash/website_settings.html", utils.copy({
 													"is-dash":true,
-													layout: 'shared/gen2.html',
+													layout: 'shared/main.html',
                                                     pageTitle: "Edit Site",
 													countryList: countryList,
                                                     bodyClass: "siteeditor" }, site) );
@@ -103,7 +103,7 @@ function getSiteEditor_v1(req,res){
 	res.render( 
 				'dash/website_settings.html', {  
 					"is-dash":true,
-					layout: 'shared/gen2.html',
+					layout: 'shared/main.html',
 					pageTitle:"Add a New Website",
 					bodyClass:"dash-newsite",
 					setSettingsAsActiveTab: 'class="active"'
@@ -133,7 +133,7 @@ function getOpenDisputes(req,res){
 		res.render( 
 					'dash/panel.html', {  
 						"is-dash":true,
-						layout: 'shared/gen2.html',
+						layout: 'shared/main.html',
 						pageTitle:"SafeHarbor.in - Panel",
 						bodyClass:"dash-index",
 						setOpenAsActiveTab: 'class="active"',
@@ -184,7 +184,7 @@ function getClosedDisputes(req,res){
 		res.render( 
 					'dash/panel.html', {  
 						"is-dash":true,
-						layout: 'shared/gen2.html',
+						layout: 'shared/main.html',
 						pageTitle:"SafeHarbor.in - Panel",
 						bodyClass: bodyClass,
 						disputes: data,
