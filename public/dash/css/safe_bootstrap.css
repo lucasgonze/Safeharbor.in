@@ -3,6 +3,11 @@
   background-color: #2C5A89;
 */
 
+body {
+	background-image: url('/dash/img/lighthouse.png') no-repeat, -moz-linear-gradient(top,  #ffffff,  #a7bed4);
+	background-image: url('/dash/img/lighthouse.png'), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#a7bed4));
+}
+
 	
 /*
 For the global error page. Not very arguably this doesn't belong in the CSS for the dashboard, 
@@ -21,11 +26,6 @@ body.error-page.error-500 .error-status.error-500 {
 }
 
 
-
-body {
-	background-image: url('/dash/img/lighthouse.png') no-repeat, -moz-linear-gradient(top,  #ffffff,  #a7bed4);
-	background-image: url('/dash/img/lighthouse.png'), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#a7bed4));
-}
 
 
 
