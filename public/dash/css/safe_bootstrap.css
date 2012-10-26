@@ -20,12 +20,10 @@ body.error-page.error-500 .error-status.error-500 {
 	display:block;
 }
 
-body {
-	background:url(/dash/img/lighthouse.png) no-repeat, url(/dash/img/noise.png) repeat;
-	font:400 14px/1.6 'Open Sans', Helvetica, sans-serif;
-}
 
 body {
+	font-family:400 14px/1.6 'Open Sans', Helvetica, sans-serif;
+	background:url(/dash/img/lighthouse.png) no-repeat, url(/dash/img/noise.png) repeat;
 background: -moz-linear-gradient(top,  rgba(249,252,251,0.98) 71%, rgba(167,190,212,1) 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(71%,rgba(249,252,251,0.98)), color-stop(100%,rgba(167,190,212,1))); /* Chrome,Safari4+ */
 background: -webkit-linear-gradient(top,  rgba(249,252,251,0.98) 71%,rgba(167,190,212,1) 100%); /* Chrome10+,Safari5.1+ */
