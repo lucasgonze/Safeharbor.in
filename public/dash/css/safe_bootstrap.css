@@ -21,25 +21,12 @@ body.error-page.error-500 .error-status.error-500 {
 }
 
 
+
 body {
-	font-family:400 14px/1.6 'Open Sans', Helvetica, sans-serif;
-	background: no-repeat, url(/dash/img/noise.png) repeat;
-background: -moz-linear-gradient(top,  rgba(249,252,251,0.98) 71%, rgba(167,190,212,1) 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(71%,rgba(249,252,251,0.98)), color-stop(100%,rgba(167,190,212,1))); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  rgba(249,252,251,0.98) 71%,rgba(167,190,212,1) 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  rgba(249,252,251,0.98) 71%,rgba(167,190,212,1) 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  rgba(249,252,251,0.98) 71%,rgba(167,190,212,1) 100%); /* IE10+ */
-background: linear-gradient(to bottom,  rgba(249,252,251,0.98) 71%,rgba(167,190,212,1) 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#faf9fcfb', endColorstr='#a7bed4',GradientType=0 ); /* IE6-9 */
+	background-image: url(/dash/img/lighthouse.png) no-repeat, -moz-linear-gradient(top,  #ffffff,  #a7bed4);
+	background-image: url(/dash/img/lighthouse.png), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#a7bed4));
 }
 
-#img.lighthouse {
-	width: 100%;
-	position: fixed;
-	z-index: -9999;
-	top: 0;
-	left: 0;
-}
 
 
 
