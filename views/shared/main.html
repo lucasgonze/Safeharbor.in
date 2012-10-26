@@ -1,90 +1,221 @@
-<!doctype html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
 	<title>{{#if sitename}}{{sitename}}{{else}}Safeharbor.in{{/if}}{{#if pageTitle}} - {{pageTitle}}{{/if}}</title>
-	<meta name="description" content="">
-	<meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-	<meta name="viewport" content="width=device-width">
+    <!-- Le styles -->
+    <link href="/dash/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
 
-	<link rel="stylesheet" href="/css/bootstrap.css">
-	<link rel="stylesheet" href="/css/font-awesome.css">
-	<link rel="stylesheet" href="/css/bootstrap-responsive.css">
-	<link rel="stylesheet" href="/css/style.css">
+    </style>
+    <link href="/dash/css/safe_bootstrap.css" rel="stylesheet">
+    <link href="/dash/css/bootstrap-responsive.css" rel="stylesheet">
 
-	<script type="text/javascript" src="//use.typekit.net/olc2iqd.js"></script>
-	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	<link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
-	<script src="/js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/dash/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/dash/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/dash/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/dash/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/dash/ico/apple-touch-icon-57-precomposed.png">
+
+	<!-- JS is ordinarily at the end for speed but we need it before the body so that view pages 
+		can load custom libraries which rely on JQuery-->
+    <script src="/dash/js/jquery.js"></script>
+
+  </head>
+
+  <body {{#if bodyClass}}class="{{bodyClass}}"{{/if}}>
+    <div class="container">
 	
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+		<!--Begin Main (Top Level) Navigation for Safeharbor-->
+	    <div class="navbar navbar navbar-fixed-top">
+	      <div class="navbar-inner">
+	        <div class="container">
+	          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </a>
+	                   <div class="nav-collapse collapse">
+	            <ul class="nav">
 
-	<link rel="icon" type="image/png" href="/img/logo_favicon.png">
+                      <li class="dropdown">
+	                <a href="#" class="dropdown-toggle" data-toggle="dropdown"></i> All Websites <b class="caret"></b></a>
+	                <ul class="dropdown-menu">
+	                  <li><a href="#">Youtube.com</a></li>
+	                  <li><a href="#">Etsy.com</a></li>
+	                  <li><a href="#">Heineken.com</a></li>
+	                  <li class="divider"></li>
+	                  <li class="nav-header">Other Actions</li>
+	                  <li><a href="#"><i class="icon-plus"></i> Add a new Website</a></li>
+	                  <!-- <li><a href="#">Other Action</a></li> -->
+	                </ul>
+	              </li>
+	            </ul>
+
+	          <!-- Hidden until implemented.
+	  <form class="navbar-form pull-right">
+	              <input class="span2" type="text" placeholder="Email">
+	              <input class="span2" type="password" placeholder="Password">
+	              <button type="submit" class="btn">Sign in</button>
+	            </form>
+	-->
+
+	 <ul class="nav pull-right">
+	   <li class="active"><a href="#"><i class="icon-plus"></i> Add a New Website</a></li>
+	                                         <li class="dropdown">
+	                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> you@youremail.com<b class="caret"></b></a>
+	                <ul class="dropdown-menu">
+	                  <li><a href="/account">Account Settings</a></li>
+					  <!-- Hidden until implemented.
+	                  <li><a href="/fixme:billing">Billing</a></li>
+
+	                  <li class="divider"></li>
+	                  <li class="nav-header">Other Actions</li>
+					   -->
+	                  <li><a href="/logout">Logout</a></li>
+	                  <!-- <li><a href="#">Other Action</a></li> -->
+	                </ul>
+	              </li>
+	            </ul>
+
+	          </div><!--/.nav-collapse -->
+	        </div>
+	      </div>
+	    </div>
+		<!--End Navigation-->		
 	
-</head>
-<body {{#if bodyClass}}class="{{bodyClass}}"{{/if}}>
-
-	<div class="navbar navbar-fixed-top" {{loggedInStatusClass}}>
-		<a class="brand" href="/"><img src="/img/logo/247x33.png" alt="Safeharbor.in"></a>
-		<div class="btn-group pull-right">
-		    <a class="btn" href="#"><i class="icon-user"></i></a>
-		    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-chevron-down"></span></a>
-		    <ul class="dropdown-menu">
-		       {{#each menu.site.items}}
-		        <li><a href="{{url}}" title="{{help}}"><i class="icon-key"></i>{{link}}</a></li>
-		       {{/each}}
-		       {{#each menu.user.items}}
-		        <li><a href="{{url}}" title="{{help}}"><i class="icon-key"></i>{{link}}</a></li>
-		       {{/each}}
-		    </ul>		
-		</div>	
-		<div class="navbar-inner">
-			<div class="container">								
-				<ul class="nav pull-right">
-                   {{#each menu.tablinks.items}}
-                    <li><a href="{{url}}" title="{{help}}">{{link}}</a></li>
-                   {{/each}}
-				</ul>		
+		<!-- I'm not confident this block gets used anywhere. I think page.js *used* to use it 
+			but that code is subject to terminal bitrot. -->
+		{{#each messages}}
+		<div {{#if class}}class="{{class}}"{{/if}}>
+		    <div class="alert alert-{{level}} notsonarrowblock" style="text-align:center">
+		        <p><i class="icon-{{status}}"></i> {{{title}}}</p>
+		        <p>{{{text}}}</p>            
+		    </div>
+		    {{#if quicktip}}<p class="quicktip"><small><i class="icon-info-sign"></i>{{quicktip}}</small></p>{{/if}}
+		</div>
+		{{/each}}
+			
+{{#if is-dash}}
+		<!--Begin Page Header for a SINGLE WEBSITE: Website Name & Count of Disputes -->
+		<div class="row">
+			<div id="page-header" class="span11">
+			<div class="company-logo-box"><div class="company-logo"><img src='/dash/img/youtube_sm.jpg' alt="" title="" /></div></div> <h1 class="single-site">234 Open Disputes</h1>
+			<!-- For the 'home' tab, all properties we would instead of [website name] show All Disputes in the Page Title-->
 			</div>
-	  </div>
-	</div>
-    <ul style="float:right; margin-right:20px;">
-       {{#each menu.safeharbor.items}}
-        <li><a href="{{url}}" title="{{help}}">{{link}}</a></li>
-       {{/each}}
-       {{#each menu.admin.items}}
-        <li><a href="{{url}}" title="{{help}}">{{link}}</a></li>
-       {{/each}}
-       {{#each menu.developer.items}}
-        <li><a href="{{url}}" title="{{help}}">{{link}}</a></li>
-       {{/each}}
-    </ul>		
+		</div>
+		<!--End Page Header for a SINGLE WEBSITE: Website Name & Count of Disputes -->
 
+		<!--Begin Page Header for ALL DISPUTES: Website Name & Count of Disputes -->
+		<div class="row">
+			<div id="page-header" class="span11">
+				<h1>234 Open Disputes</h1>
+				<!-- For the 'home' tab, all properties we would instead of [website name] show All Disputes in the Page Title-->
+			</div>
+		</div>
+		<!--End Page Header for ALL DISPUTES: Website Name & Count of Disputes -->
 
-    {{#each messages}}
-    <div {{#if class}}class="{{class}}"{{/if}}>
-        <div class="alert alert-{{level}} notsonarrowblock" style="text-align:center">
-            <p><i class="icon-{{status}}"></i> {{title}}</p>
-            <p>{{text}}</p>            
-        </div>
-        {{#if quicktip}}<p class="quicktip"><small><i class="icon-info-sign"></i>{{quicktip}}</small></p>{{/if}}
-    </div>
-    {{/each}}
+		<!--This block describes the secondary tabbed navigation on the website, framed out space for the actual list of disputes-->
 
-	<div id="filling" class="container">{{{body}}}</div>
-	
-	<script src="/js/libs/bootstrap/transition.js"></script>
-	<script src="/js/libs/bootstrap/collapse.js"></script>
-	<script src="/js/libs/bootstrap/bootstrap.js"></script>
-	<script src="/js/libs/bootstrap/tab.js"></script>
+		<!--Tabbed nav block for the dashboard -->
+		<div class="tabbable">
+
+			<ul class="nav nav-tabs">
+				<li {{{setOpenAsActiveTab}}}><a href="/">Open Disputes</a></li>
+				<li {{{setClosedAsActiveTab}}}><a href="/closed">Closed Disputes</a></li>
+				<li {{{setSettingsAsActiveTab}}}><a href="/settings">Settings</a></li>	
+				<li class="pull-right search"><!-- Search Bar -->
+					<div class="input-append">
+					<input class="span3" id="appendedInputButtons" size="16" type="text"placeholder="Search All Disputes"><button class="btn" type="button"><i class=" icon-search"></i> Search</button></div></li>
+			</ul>
+
+			<div class="main tab-content"><!-- NEVER CLOSED? -->
+				<div class="tab-pane active"><!-- removed this inactive attribute: id="tab1 open" -->
+
+					<!--Begin Sort Listing of Disputes by Newest to Oldest Toggle-->
+					<div class="row">
+						<div id="sort-list">
+							<a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-up"></i> Sorted Newest to
+						Oldest</a>
+						<!--
+						note: Lucas this is the other side of the toggle, on activating sorting newest to oldest, flip to this here 
+
+						<a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-down"></i> Sorted Oldest to
+						Newest</a>
+						-->
+						</div><!-- /sort-list -->
+					</div><!-- /row -->
+					<!--End Sort Listing of Disputes by Newest to Oldest Toggle-->
+
+{{/if}}<!-- /is-dash -->
+				   {{{body}}}
+
+{{#if is-dash}}
+				</div><!-- /tab-pane -->
+			</div><!-- /tab-content -->
+		</div><!-- /tabbable -->
+		<!-- /Tabbed nav block for the dashboard -->
+{{/if}}<!-- /is-dash -->
+
+		<!-- BEGIN global footer -->
+		<div class="row">
+			<div class="span12">
+				<footer class="footer">
+					<p class="pull-right"><a href="#">Back to top</a></p>
+					<p>This tool for managing alleged copyright infringement is provided for {{site.name}} by SafeHarbor.in. <p>SafeHarbor.in provides services for DMCA compliance. </p>Our mission is to reduce risk, expense, and stress for web sites while being effective and efficient for copyright owners.  </p>
+					<p>Our Code is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>. Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+					<ul class="footer-links">
+						<li><a href="#">Copyright @Safeharbor 2012</a></li>
+						<li><a href="#">Company</a></li>
+
+						<li><a href="#">Terms of Service</a></li>
+						<li><a href="#">Contact Us</a></li>
+					</ul>
+				</footer>
+			</div><!-- /span12 -->
+		</div>
+		<!-- END global footer -->
+
+    </div><!-- /container -->
+
+	<!-- we don't need all these. fixme: identify scripts we actually *are* using.
+    <script src="/dash/js/bootstrap-transition.js"></script>
+    <script src="/dash/js/bootstrap-alert.js"></script>
+    <script src="/dash/js/bootstrap-modal.js"></script>
+    <script src="/dash/js/bootstrap-scrollspy.js"></script>
+    <script src="/dash/js/bootstrap-tab.js"></script>
+    <script src="/dash/js/bootstrap-tooltip.js"></script>
+    <script src="/dash/js/bootstrap-popover.js"></script>
+    <script src="/dash/js/bootstrap-button.js"></script>
+    <script src="/dash/js/bootstrap-collapse.js"></script>
+    <script src="/dash/js/bootstrap-carousel.js"></script>
+    <script src="/dash/js/bootstrap-typeahead.js"></script>
+	 -->
+
+    <script src="/dash/js/bootstrap-dropdown.js"></script>
 	<script src="/js/libs/jquery-validation-x/jquery.validate.min.js"></script>
-	<script src="/js/script.js"></script>
-	
-</body>
+    <script src="/js/script.js"></script>
+
+  </body>
+</html>
+<!-- {{debugInfo}} -->

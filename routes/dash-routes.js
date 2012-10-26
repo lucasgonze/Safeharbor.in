@@ -59,7 +59,7 @@ function saveSiteEdit(req,res) {
 			// this way is slow but sure
 			getSiteEditor(req,res);
 			// this way is fast but flaky
-			// res.render( page.MESSAGE_VIEW, {pageTitle:title,layout:'dash/dash-layout.html'} );
+			// res.render( page.MESSAGE_VIEW, {pageTitle:title,layout:'shared/gen2.html'} );
         }
     }            
     var args = utils.copy( {acct: uid}, req.body );
@@ -81,7 +81,8 @@ function getSiteEditor(req,res){
 			var countryList = page.countryList(site.country);
 	
             res.render("dash/website_settings.html", utils.copy({
-													layout: 'dash/dash-layout.html',
+													"is-dash":true,
+													layout: 'shared/gen2.html',
                                                     pageTitle: "Edit Site",
 													countryList: countryList,
                                                     bodyClass: "siteeditor" }, site) );
@@ -101,7 +102,8 @@ function getSiteEditor(req,res){
 function getSiteEditor_v1(req,res){
 	res.render( 
 				'dash/website_settings.html', {  
-					layout: 'dash/dash-layout.html',
+					"is-dash":true,
+					layout: 'shared/gen2.html',
 					pageTitle:"Add a New Website",
 					bodyClass:"dash-newsite",
 					setSettingsAsActiveTab: 'class="active"'
@@ -130,7 +132,8 @@ function getOpenDisputes(req,res){
 
 		res.render( 
 					'dash/panel.html', {  
-						layout: 'dash/dash-layout.html',
+						"is-dash":true,
+						layout: 'shared/gen2.html',
 						pageTitle:"SafeHarbor.in - Panel",
 						bodyClass:"dash-index",
 						setOpenAsActiveTab: 'class="active"',
@@ -180,7 +183,8 @@ function getClosedDisputes(req,res){
 		
 		res.render( 
 					'dash/panel.html', {  
-						layout: 'dash/dash-layout.html',
+						"is-dash":true,
+						layout: 'shared/gen2.html',
 						pageTitle:"SafeHarbor.in - Panel",
 						bodyClass: bodyClass,
 						disputes: data,
@@ -207,6 +211,7 @@ var renderDashForAccount = exports.renderDashForAccount = function( req, res, ui
 		          {
 		              res.render( 'dash/list.html',
 		                          {
+									"is-dash":true,
 		                             pageTitle: 'Safe Harbor - Disputes',
 		                             bodyClass: 'disputes',
 		                             auditItems: rows
@@ -221,6 +226,7 @@ var renderDashForAccount = exports.renderDashForAccount = function( req, res, ui
 		                              );
 		              res.render( page.MESSAGE_VIEW,
 		                          {  pageTitle:"Safe Harbor - Disputes",
+									"is-dash":true,
 		                             bodyClass:"disputes"
 		                           } );                            
 		          }
@@ -229,24 +235,4 @@ var renderDashForAccount = exports.renderDashForAccount = function( req, res, ui
     log.handleErrors( req, res ).perform();
 }
 
-//    app.get( '/detail/:auditid([0-9]+)$', logged_in, getDetail );
-function getDetail( req, res )
-{
-    var auditId = req.params.auditid;
-    
-    var verify = dash.verifyAuditDetailOwner( auditId, loginstate.getID(req), function(){} );
-    var detail = dash.getAuditDetail( auditId, function( code, detail ) {
-                if( code == CODES.SUCCESS )
-                {
-                    res.render( 'dash/detail.html',
-                                {
-                                   pageTitle: 'Safe Harbor - Dispute Detail',
-                                   bodyClass: 'disputes',
-                                   detail: detail[0] || detail
-                                } );
-                }
-        });
-    
-    verify.chain(detail).handleErrors(req,res).perform();
-}
 

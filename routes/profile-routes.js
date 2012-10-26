@@ -374,7 +374,7 @@ function emitAcctEditor(req,res){
 		
 			/* note: bodyClass was siteeditor in the first generation markup. */
             var vars = utils.copy({ 
-					layout: 'shared/no-tabs.html',
+					layout: 'shared/gen2.html',
 					pageTitle:"Account Settings"
 					}, acct);
 
