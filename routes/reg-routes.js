@@ -134,7 +134,7 @@ function startEmailHandshake(req, res) {
                                     
                 res.render("profile/login.html",
                     {
-                        layout:"shared/main.html",
+                        layout:"shared/reg-main.html",
                         pageTitle:"Account exists",
                         bodyClass: "login",
                     });
