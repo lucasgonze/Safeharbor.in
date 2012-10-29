@@ -546,8 +546,7 @@ textarea.mailing {
 /*
 Error Page Design Style
 */
-#error-icon {
-	background:	
+#error-page {
 	background-color:#f2f2f2;
 	width:1070px;
 	height:643px;
@@ -559,8 +558,9 @@ Error Page Design Style
 	width:600px;
 	height:400px;
 	margin:20px 0 20px 450px;
-font-size: 3em;
-font-weight: normal;}
+	font-size: 3em;
+	font-weight: normal;
+	}
 
 
 	
