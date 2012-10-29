@@ -548,7 +548,7 @@ Error Page Design Style
 */
 #error-page {
 	background-color:#f2f2f2;
-background: url('/dash/img/shore.png') no-repeat;
+background:url(/dash/img/shore.png) no-repeat;
 	padding-bottom:0;
 	margin:30px;
 }
