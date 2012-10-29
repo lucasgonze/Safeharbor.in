@@ -4,8 +4,8 @@
 */
 
 body {
-	background:url(/dash/img/lighthouse.png) no-repeat, url(/dash/img/noise.png) repeat;
-	background-size: 100%;
+	background:url(/dash/img/lighthouse.png) 100% no-repeat, url(/dash/img/noise.png) repeat;
+
 }
 	
 /*
