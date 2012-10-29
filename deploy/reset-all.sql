@@ -84,6 +84,9 @@ insert into acct (acctid,role,email,password) values (3,'2','adminuser@safeharbo
 -- this user has a logged in account (for testing roles)
 insert into acct (acctid,role,email,password) values (4,'21','loggedinuser@safeharbor.in', 'abcd'); 
 
+-- only for demo - not for testing (user ID 5)
+insert into acct (acctid,role,email,password) values (5,'21','demo@safeharbor.in', 'abcd'); 
+
 -- for the user with one site
 insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone,country) 
 	values (1,1,'Etsy','1.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345',
@@ -95,12 +98,18 @@ insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,
 insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone,country) 
 	values (3,2,'Example.com #2','2.example.com','456 Central St\nPalo Alot CA 12345',
         	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212','United States');
+-- for the demo user (siteid 4)
+insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone,country) 
+	values (4,5,'Etsy','etsy.com','http://latest.safeharbor.in/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345',
+		'lucasgonze@safeharbor.in','Jane Doe Esquire','(800) 555-1212','United States');
 
 -- user with one site
 insert into audit (site, opname, contact) values (1,'takedownRequest',1);
 -- user with two sites
 insert into audit (site, opname, contact) values (2,'takedownRequest',2);
 insert into audit (site, opname, contact) values (3,'takedownRequest',2);
+-- demo user
+insert into audit (site, opname, contact) values (4,'takedownRequest',5);
 
 -- user with one site
 insert into contact (owners_full_name,full_name,job_title,email,phone,fax,postal,signature) 
@@ -108,6 +117,8 @@ insert into contact (owners_full_name,full_name,job_title,email,phone,fax,postal
 -- user with two sites
 insert into contact (owners_full_name,full_name,job_title,email,phone,fax,postal,signature) 
 	values ( 'John Q. Owner', 'Jane Workerbee', 'Attack Dog In Chief', 'jane@example.com', '(900) 555-1212', '(900) 555-1212', '456 Pleasant Valley Avenue, Agrestik CA 12345', '/jane w.');
+-- demo user
+insert into contact (owners_full_name,full_name,job_title,email,phone,fax,postal,signature) values ( 'John Q. Owner', 'Jane Workerbee', 'Attack Dog In Chief', 'jane@example.com', '(900) 555-1212', '(900) 555-1212', '456 Pleasant Valley Avenue, Agrestik CA 12345', '/jane w.');
 
 -- for the user with only one site
 insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
@@ -128,3 +139,5 @@ insert into media (anchor, audit,description,media_url,page,takedown_date) value
 insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 2, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
 insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 3, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
 
+-- for demo user
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 4, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
