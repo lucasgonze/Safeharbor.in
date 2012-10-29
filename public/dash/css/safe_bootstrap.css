@@ -5,7 +5,11 @@
 
 body {
 	background:url(/dash/img/lighthouse.png) no-repeat, url(/dash/img/noise.png) repeat;
-	}
+	 height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
 	
 /*
 For the global error page. Not very arguably this doesn't belong in the CSS for the dashboard, 
