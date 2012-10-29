@@ -4,13 +4,18 @@
 */
 
 body {
-	background-image: url('/dash/img/lighthouse.png') no-repeat, -moz-linear-gradient(top,  #ffffff,  #a7bed4);
-	background-image: url('/dash/img/lighthouse.png'), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#a7bed4));
+background-color: #a7bed4;
+background:url(/dash/img/lighthouse.png) no-repeat;
 }
-
 	
-/*
-For the global error page. Not very arguably this doesn't belong in the CSS for the dashboard, 
+.noise {
+background:url(/dash/img/noise.png) 
+background: repeat;
+position: fixed;
+background-size: 100% 100%;
+}
+	 
+/* For the global error page. Not very arguably this doesn't belong in the CSS for the dashboard, 
 which is only for logged-in users. Maybe the best factoring is for this CSS to become the 
 global CSS.*/
 body.error-page .error-status {
