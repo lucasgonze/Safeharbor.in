@@ -285,7 +285,7 @@ function initTour(){
 		{
 			html: "<div class='goal'><h2>Etsy's Goal</h2> Minimize custom development by using off-the-shelf software.</div>",
 			position: "c",
-			goTo: "/box/6c8349cc7260ae62e3b1396831a8398f?autopilot=on"
+			goTo: "/box/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"
 		}, 
 		{
 			html: "<div class='goal'><h2>Solution</h2> The Safeharbor.in hosted app is the only off-the-shelf package on the market.</div> ",
@@ -319,7 +319,7 @@ function initTour(){
 		{
 			html: "<div class='goal'><h2>Etsy's Goal</h2> Save time by preventing invalid complaints and streamlining business processes.</div>",
 			position: "c",
-			goTo: "/box/help/learn/6c8349cc7260ae62e3b1396831a8398f?autopilot=on"		
+			goTo: "/box/help/learn/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"		
 		}, 
 		{	
 			overlayOpacity: false,
@@ -332,13 +332,13 @@ function initTour(){
 			overlayOpacity: false,
 			html: "Pre-written answers to standard questions. Web sites can paste them into emails or just send a link",
 			position: "n",
-			goTo: "/box/role/6c8349cc7260ae62e3b1396831a8398f?autopilot=on"
+			goTo: "/box/role/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"
 		}, 
 		{
 			html: "Discourage posters who don't have legal standing",
 			element: "div.yourrole",
 			position: "e",
-			goTo: "/box/form/6c8349cc7260ae62e3b1396831a8398f?autopilot=on"		
+			goTo: "/box/form/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"		
 		},
 		{
 			html: "Copyright owners do the data entry for each request, rather than sending an email or paper mail and having the web site copy details into a form",
@@ -360,7 +360,7 @@ function initTour(){
 			element: "div#demo-tgt-bypass",
 			position: "n",
 			html: "Guide copyright owners away from email (and into the form) by showing this <em>Bypass</em> link after the form",
-			goTo: "/box/bymail/6c8349cc7260ae62e3b1396831a8398f?autopilot=on"			
+			goTo: "/box/bymail/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"			
 		},
 		 {
 			html: "When copyright owners do use email instead of the form, help them get it right, so that the web site doesn't have to go back and forth with them",
@@ -373,13 +373,13 @@ function initTour(){
 		{
 			html: "<div class='goal'><h2>Etsy's Goal</h2> Be a hard target for lawsuits.</div>",
 			position: "c",
-			goTo: "/box/bymail/6c8349cc7260ae62e3b1396831a8398f?autopilot=on"
+			goTo: "/box/bymail/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"
 		}, 
 		{
 			html: "Sites often leave one of these pieces of contact information out, and they are all required by law",
 			element: "div#demo-tgt-20",
 			position: "e",
-			goTo: "/box/help/learn/6c8349cc7260ae62e3b1396831a8398f?autopilot=on",
+			goTo: "/box/help/learn/a87ff679a2f3e71d9181a67b7542122c?autopilot=on",
 		},
 		{
 			html: "The sophisticated look and thorough feature set of our software says that the web site takes the law seriously",
@@ -392,7 +392,7 @@ function initTour(){
 		{
 			html: "<div class='goal'><h2>Etsy's Goal</h2> Avoid starting a conflict with copyright owners by providing an efficient notification process.</div>",
 			position: "c",
-			goTo: "/box/form/6c8349cc7260ae62e3b1396831a8398f?autopilot=on"		
+			goTo: "/box/form/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"		
 		}, 
 		{
 			element: "button#report_another",
