@@ -556,10 +556,12 @@ Error Page Design Style
 
 
 .error-copy {
-	width:600px;
+	width:800px;
+	border: 1px solid #B4B1A3;
 	height:400px;
 	color:#5A5C63;
-	margin:20px 0 20px 450px;
+	margin: 60px auto:
+	padding: 10px; 
 	font-size: 3em;
 	font-weight: normal;
 	}
@@ -571,6 +573,9 @@ font-weight:400;
 	text-shadow:0 1px 0 #FFFFFF;
 }
 
+.error-copy a {
+text-decoration: underline;}
+	
 	
 /*
 Paige Misc for Finding Things
