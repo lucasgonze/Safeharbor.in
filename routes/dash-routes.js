@@ -81,7 +81,7 @@ function getSiteEditor(req,res){
 			var countryList = page.countryList(site.country);
 	
             res.render("dash/website_settings.html", utils.copy({
-													"is-dash":true,
+													"is-dash":false,
 													layout: 'shared/main.html',
                                                     pageTitle: "Edit Site",
 													countryList: countryList,
@@ -97,18 +97,6 @@ function getSiteEditor(req,res){
 	    .getSiteForUser( uid, success )
 	    .handleErrors( req, res, [CODES.NO_RECORDS_FOUND] )
 	    .perform();
-}
-
-function getSiteEditor_v1(req,res){
-	res.render( 
-				'dash/website_settings.html', {  
-					"is-dash":true,
-					layout: 'shared/main.html',
-					pageTitle:"Add a New Website",
-					bodyClass:"dash-newsite",
-					setSettingsAsActiveTab: 'class="active"'
-             } 
-	);	
 }
 
 function getNewSite(req,res){	
