@@ -42,7 +42,7 @@ p {
 	font:400 14px/1.6 'Open Sans', Helvetica, sans-serif;
 }
 
-#page-header h1 {
+#page-header h1, .error-copy h1 {
 	font-weight:400;
 	margin-bottom:22px;
 	margin-left:3px;
@@ -554,27 +554,21 @@ Error Page Design Style
 	margin:0 30px;
 }
 
-
 .error-copy {
 	width:800px;
-	border: 1px solid #B4B1A3;
 	height:400px;
 	color:#5A5C63;
 	margin: 60px auto;
 	padding: 10px; 
-	font-size: 3em;
-	font-weight: normal;
 	}
 
-.error-copy h1{
-font-weight:400;
-	margin-bottom:22px;
-	margin-left:3px;
-	text-shadow:0 1px 0 #FFFFFF;
+.error-copy p {
+text-align: center;
 }
 
 .error-copy a {
-text-decoration: underline;}
+text-decoration: underline;
+}
 	
 	
 /*
