@@ -4,11 +4,12 @@
 */
 
 body {
-	background:url(/dash/img/lighthouse.png) 100% no-repeat, url(/dash/img/noise.png) repeat;
-
+	background:url(/dash/img/lighthouse.png) no-repeat;
+	background-size: 100% 100%;
 }
 	
-/*
+	 
+/* url(/dash/img/noise.png) repeat;
 For the global error page. Not very arguably this doesn't belong in the CSS for the dashboard, 
 which is only for logged-in users. Maybe the best factoring is for this CSS to become the 
 global CSS.*/
