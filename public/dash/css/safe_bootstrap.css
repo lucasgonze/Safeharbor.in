@@ -548,8 +548,6 @@ Error Page Design Style
 */
 #error-page {
 	background-color:#f2f2f2;
-	width:100%;
-	height:643px;
 	padding-bottom:0;
 	margin:30px;
 }
