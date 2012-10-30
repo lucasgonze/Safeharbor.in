@@ -81,13 +81,14 @@ function getSiteEditor(req,res){
 			var countryList = page.countryList(site.country);
 	
             res.render("dash/website_settings.html", utils.copy({
-													"is-dash":false,
+													"is-dash":true,
 													layout: 'shared/main.html',
                                                     pageTitle: "Edit Site",
 													countryList: countryList,
                                                     bodyClass: "siteeditor" }, site) );
         } else if( code == CODES.MULTIPLE_RECORDS_FOUND ) {
 			return(errlib.page(500,res,"Multiple sites not implemented yet."))
+			/* We would want to set multiple-sites-open-disputes in this case. */
 		} else {
 			return(errlib.page(500,res,"Unexpected code "+code+" in getSiteEditor"))
 		}
@@ -117,7 +118,19 @@ function getOpenDisputes(req,res){
 			errlib.page(500,res,"error returned from getOpenMedia: "+err);
 			return;
 		}
+		
+		if( !data || !data[0]){
+			errlib.page(500,res,"Open Dispute listing with no listings not impelemented yet.");
+			return;
+		}
 
+		var logo = data && data.length > 0 ? data[0].sitelogo : null;
+		
+		console.log("BP 44",data && data[0]);
+
+		for( var i=0; i<data.length; i++)
+			data[i].postal.replace('\n','<br/>');
+			
 		res.render( 
 					'dash/panel.html', {  
 						"is-dash":true,
@@ -125,7 +138,11 @@ function getOpenDisputes(req,res){
 						pageTitle:"SafeHarbor.in - Panel",
 						bodyClass:"dash-index",
 						setOpenAsActiveTab: 'class="active"',
-						disputes: data
+						disputes: data,
+						"dispute-count":data.length,
+						sitelogo:data[0].sitelogo,
+						sitename: data[0].sitename,
+						"single-site-open-disputes":true
                  } 
 		);
 	}});			

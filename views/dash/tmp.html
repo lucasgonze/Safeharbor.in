@@ -1,5 +1,4 @@
-{{#each disputes}}{{#with this}}
-
+BBB{{single-site-open-disputes}}ZZZ
 <!--All Dispute Types 
 there are three versions of a dispute so far- 
 
@@ -8,7 +7,9 @@ a Single Dispute without the associated website name & logo,
 a CLOSED single dispute with the website name & logo
 --> 
 
-{{#if multiple-sites-open-disputes}}
+{{#each disputes}}{{#with this}}
+
+{{#if "multiple-sites-open-disputes"}}
 {{#if false}} Note: we're only supporting a single site at a time for now. {{/if}}
 <!--Begin Single Dispute with Website Name & Logo-->
 
@@ -113,7 +114,7 @@ a CLOSED single dispute with the website name & logo
 <!--End Single Dispute with Website Name & Logo-->
 {{/if}}
 
-{{#if "single-site-open-disputes"}}
+{{#if single-site-open-disputes}}
 <!--Begin Single Dispute with NO Website Name & Logo-->
 
  <!-- Begin Single Dispute List Item -->
@@ -124,11 +125,11 @@ a CLOSED single dispute with the website name & logo
                   <div class="infringement-list-resolve-button">
   <ul class="infringement-list">
                                         
-                            <li class="infringement-title"><h2>{{description}}</h2></li>
+                            <li class="infringement-title"><h2>Led Zeppelin Stairway to Heaven Live in NYC</h2></li>
                           <li class="infringement-url"><a href=
-                            "{{media_url}}">{{media_url}}</a></li>
+                            "http://www.youtube.com/watch?v=9Q7Vr3yQYWQvnovenoindfnv">http://www.youtube.com/watch?v=9Q7Vr3yQYWQvnovenoindf</a></li>
 
-                          <li class="arrival-date"><i class="icon-folder-open"></i> {{creation}}</li>
+                          <li class="arrival-date"><i class="icon-folder-open"></i> June 02, 2012</li>
                           <li class="open">Open Dispute <span class="italic"> 3 days until Dispute is Critical</span></li>
                         
 </ul>   <!--End Infringement Listing-->
@@ -157,7 +158,7 @@ a CLOSED single dispute with the website name & logo
                           <tr class="">
                             <th class="left">Copyright Holder</th>
 
-                            <th>{{owners_full_name}}</th>
+                            <th>Jeffrey John Joseph Long Name</th>
                           </tr>
                         </thead>
 
@@ -165,7 +166,7 @@ a CLOSED single dispute with the website name & logo
                           <tr>
                             <td class="left">Submitted by</td>
 
-                            <td>{{full_name}}</td>
+                            <td>Joe Jackson Really Really Long Name</td>
                           </tr>
 
                           <tr>
@@ -175,32 +176,32 @@ a CLOSED single dispute with the website name & logo
                           <tr>
                             <td class="left">Job Title</td>
 
-                            <td class="right">{{job_title}}</td>
+                            <td class="right">Administrator of Really Long Things</td>
                           </tr>
 
                           <tr>
                             <td class="left">Email</td>
 
-                            <td><a href="mailto:{{email}}" class=
-                            "email_link">{{email}}</a></td>
+                            <td><a href="mailto:%20you@yourreallylongemail.com" class=
+                            "email_link">you@yourreallylongemail.com</a></td>
                           </tr>
 
                           <tr>
                             <td class="left">Phone</td>
 
-                            <td class="right">{{phone}}</td>
+                            <td class="right">+31 224 234 2345</td>
                           </tr>
 
                           <tr>
                             <td class="left">Fax</td>
 
-                            <td class="right">{{fax}}</td>
+                            <td class="right">+31 224 234 2345</td>
                           </tr>
 
                           <tr>
                             <td class="left">Address</td>
 
-                           <td class="right"><address>{{postal}}</address></td>
+                           <td class="right"><address>Safeharbor Corp.<br/> PO Box 1234 West 76th St. <br/>New York, NY 12345 USA</address></td>
 
                           </tr>
                         </tbody>
@@ -216,7 +217,7 @@ a CLOSED single dispute with the website name & logo
 {{/if}}
 
 
-{{#if "multiple-sites-closed-disputes"}}
+{{#if multiple-sites-closed-disputes}}
 <!--Begin CLOSED Single Dispute with Website Name & Logo-->
 
 <!-- Begin Single Dispute List Item -->
@@ -316,8 +317,7 @@ a CLOSED single dispute with the website name & logo
               </div><!-- End Single Dispute List Item -->
       </div>
       
+	{{/with}}{{/each}}
+
 <!--End CLOSED Single Dispute with Website Name & Logo-->
 {{/if}}
-
-{{/with}}{{/each}}
-
