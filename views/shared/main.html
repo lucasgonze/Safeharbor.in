@@ -165,12 +165,12 @@
 
 			<div class="main tab-content"><!-- NEVER CLOSED? -->
 				<div class="tab-pane active"><!-- removed this inactive attribute: id="tab1 open" -->
-
-					{{#if true}}
+					
 					{{#if false}}Sort back end borked for now. https://github.com/lucasgonze/Safeharbor.in/issues/220{{/if}}
 					<!--Begin Sort Listing of Disputes by Newest to Oldest Toggle-->
 					<div class="row">
 						<div id="sort-list">
+							{{#if single-site-open-disputes}}
 							<a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-up"></i> Sorted Newest to
 						Oldest</a>
 						<!--
@@ -179,10 +179,10 @@
 						<a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-down"></i> Sorted Oldest to
 						Newest</a>
 						-->
+						{{/if}}
 						</div><!-- /sort-list -->
 					</div><!-- /row -->
 					<!--End Sort Listing of Disputes by Newest to Oldest Toggle-->
-					{{/if}}
 
 {{/if}}<!-- /show-nav-for-dashboard -->
 				   {{{body}}}
