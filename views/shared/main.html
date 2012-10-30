@@ -117,24 +117,29 @@
 		{{/each}}
 			
 {{#if is-dash}}
+		{{#if sitelogo}}
 		<!--Show this header if the user has only one web site -->
 		<div class="row">
 			<div id="page-header" class="span11">
-			<div class="company-logo-box"><div class="company-logo"><img src='/dash/img/youtube_sm.jpg' alt="" title="" /></div></div> <h1 class="single-site">234 Open Disputes</h1>
+			<div class="company-logo-box"><div class="company-logo"><img src='{{sitelogo}}' alt="" title="" /></div></div> 
+			<h1 class="single-site">{{dispute-count}} Open Disputes</h1>
 			<!-- For the 'home' tab, all properties we would instead of [website name] show All Disputes in the Page Title-->
 			</div>
 		</div>
 		<!--End Page Header for a user with a single website -->
+		{{/if}}
 
+		{{#unless sitelogo}}
 		<!--Begin Page Header for a user with more than one web site -->
 		<div class="row">
 			<div id="page-header" class="span11">
-				<h1>234 Open Disputes</h1>
+				<h1>{{dispute-count}} Open Disputes</h1>
 				<!-- For the 'home' tab, all properties we would instead of [website name] show All Disputes in the Page Title-->
 			</div>
 		</div>
 		<!--End Page Header for a user with more than one web site -->
-
+		{{/unless}}
+		
 		<!--This block describes the secondary tabbed navigation on the website, framed out space for the actual list of disputes-->
 
 		<!--Tabbed nav block for the dashboard -->

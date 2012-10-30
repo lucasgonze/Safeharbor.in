@@ -89,7 +89,7 @@ insert into acct (acctid,role,email,password) values (5,'21','demo@safeharbor.in
 
 -- for the user with one site
 insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone,country) 
-	values (1,1,'Etsy','1.etsy.com','/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345',
+	values (1,1,'Etsy','1.etsy.com','http://latest.safeharbor.in/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345',
          	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212','Swaziland');
 -- for the user with two sites
 insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone,country) 
