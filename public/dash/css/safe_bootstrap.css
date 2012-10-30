@@ -3,7 +3,7 @@
   background-color: #2C5A89;
 */
 
- {
+body {
 background:url(/dash/img/lighthouse.png) no-repeat, url(/dash/img/noise.png) repeat;
 font:400 14px/1.6 'Open Sans', Helvetica, sans-serif;
 
