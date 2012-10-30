@@ -552,13 +552,14 @@ Error Page Design Style
 */
 #error-page {
 	padding-bottom:0
-
+	background-color:#f2f2f2;
+	
 }
 
 .error-copy {
 	width:800px;
 	height: 200px;
-		background-color:#f2f2f2;
+	background-color:#f2f2f2;
 	color:#5A5C63;
 	border: 3px solid #fff;
 	margin: 200px auto;
