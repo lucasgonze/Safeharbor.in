@@ -548,9 +548,8 @@ Error Page Design Style
 */
 #error-page {
 	background-color:#f2f2f2;
-
 	padding-bottom:0;
-	margin:30px;
+
 }
 
 .error-copy {
