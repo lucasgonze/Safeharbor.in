@@ -557,8 +557,10 @@ Error Page Design Style
 
 .error-copy {
 	width:800px;
+	height: 200px;
 		background-color:#f2f2f2;
 	color:#5A5C63;
+	border: 3px solid #fff;
 	margin: 200px auto;
 	padding: 10px; 
 	text-align: center;
