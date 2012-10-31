@@ -1,3 +1,70 @@
+{{#if false}} 
+
+This file contains the tabbed nav block for the dashboard, including open disputes, closed disputes and site settings. In theory it supports multiple sites. 
+
+However, multiple sites and closed disputes are both out of scope for the current milestone, so this file is temporarily vestigial and out of service.
+
+DO NOT USE THIS TEMPLATE.
+
+{{/if}}
+
+
+		{{#if sitelogo}}
+		<!--Show this header if the user has only one web site -->
+		<div class="row">
+			<div id="page-header" class="span11">
+			<div class="company-logo-box"><div class="company-logo"><img src='{{sitelogo}}' alt="" title="" /></div></div> 
+			<h1 class="single-site">{{dispute-count}} Open Disputes</h1>
+			<!-- For the 'home' tab, all properties we would instead of [website name] show All Disputes in the Page Title-->
+			</div>
+		</div>
+		<!--End Page Header for a user with a single website -->
+		{{/if}}
+
+		{{#unless sitelogo}}
+		<!--Begin Page Header for a user with more than one web site -->
+		<div class="row">
+			<div id="page-header" class="span11">
+				<h1>{{dispute-count}} Open Disputes</h1>
+				<!-- For the 'home' tab, all properties we would instead of [website name] show All Disputes in the Page Title-->
+			</div>
+		</div>
+		<!--End Page Header for a user with more than one web site -->
+		{{/unless}}
+		
+		<!--This block describes the secondary tabbed navigation on the website, framed out space for the actual list of disputes-->
+
+		<!--Tabbed nav block for the dashboard -->
+		<div class="tabbable">
+
+			<ul class="nav nav-tabs">
+				<li {{{setOpenAsActiveTab}}}><a href="/">Open Disputes</a></li>
+				<li {{{setClosedAsActiveTab}}}><a href="/closed">Closed Disputes</a></li>
+				<li {{{setSettingsAsActiveTab}}}><a href="/settings">Settings</a></li>	
+				<li class="pull-right search"><!-- Search Bar -->
+					<div class="input-append">
+					<input class="span3" id="appendedInputButtons" size="16" type="text"placeholder="Search All Disputes"><button class="btn" type="button"><i class=" icon-search"></i> Search</button></div></li>
+			</ul>
+
+			<div class="main tab-content"><!-- NEVER CLOSED? -->
+				<div class="tab-pane active"><!-- removed this inactive attribute: id="tab1 open" -->
+
+					<!--Begin Sort Listing of Disputes by Newest to Oldest Toggle-->
+					<div class="row">
+						<div id="sort-list">
+							<a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-up"></i> Sorted Newest to
+						Oldest</a>
+						<!--
+						note: Lucas this is the other side of the toggle, on activating sorting newest to oldest, flip to this here 
+
+						<a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-down"></i> Sorted Oldest to
+						Newest</a>
+						-->
+						</div><!-- /sort-list -->
+					</div><!-- /row -->
+					<!--End Sort Listing of Disputes by Newest to Oldest Toggle-->
+
+
 {{#each disputes}}{{#with this}}
 
 <!--All Dispute Types 
@@ -320,4 +387,9 @@ a CLOSED single dispute with the website name & logo
 {{/if}}
 
 {{/with}}{{/each}}
+
+				</div><!-- /tab-pane -->
+			</div><!-- /tab-content -->
+		</div><!-- /tabbable -->
+
 
