@@ -486,6 +486,8 @@ Form Basic Styles for Account Settings, Website Settings
 	min-width:500px;
 	min-height:220px;
 	margin-bottom:5px;
+
+border: 1px solid red;
 }
 
 #form_leftside,#show_logourl_image {
