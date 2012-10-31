@@ -670,9 +670,9 @@ div#example { border: 1px solid red; color: red !important; font-weight: bold; }
 
 .alert-danger,
 .alert-error {
-  color: #b94a48;
-  background-color: #f2dede;
-  border-color: #eed3d7;
+  color: red;
+  background-color: red;
+  border-color: red;
 }
 
 .alert-info {
