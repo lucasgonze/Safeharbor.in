@@ -57,19 +57,21 @@
 	          </a>
 	                   <div class="nav-collapse collapse">
 	            <ul class="nav">
-
-                      <li class="dropdown">
-	                <a href="#" class="dropdown-toggle" data-toggle="dropdown">All Websites <b class="caret"></b></a>
-	                <ul class="dropdown-menu">
-	                  <li><a href="#">Youtube.com</a></li>
-	                  <li><a href="#">Etsy.com</a></li>
-	                  <li><a href="#">Heineken.com</a></li>
-	                  <li class="divider"></li>
-	                  <li class="nav-header">Other Actions</li>
-	                  <li><a href="#"><i class="icon-plus"></i> Add a new Website</a></li>
-	                  <!-- <li><a href="#">Other Action</a></li> -->
-	                </ul>
-	              </li>
+					{{#if false}}
+					This code stubbed out until work on the "multiple websites" milestone.
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"></i> All Websites <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Youtube.com</a></li>
+							<li><a href="#">Etsy.com</a></li>
+							<li><a href="#">Heineken.com</a></li>
+							<li class="divider"></li>
+							<li class="nav-header">Other Actions</li>
+							<li><a href="#"><i class="icon-plus"></i> Add a new Website</a></li>
+							<!-- <li><a href="#">Other Action</a></li> -->
+						</ul>
+					</li>
+					{{/if}}
 	            </ul>
 
 	          <!-- Hidden until implemented.
@@ -81,9 +83,12 @@
 	-->
 
 	 <ul class="nav pull-right">
-	   <li class="active"><a href="#"><i class="icon-plus"></i> Add a New Website</a></li>
+		{{#if false}}
+		This code stubbed out until work on the "multiple websites" milestone.
+		<li class="active"><a href="#"><i class="icon-plus"></i> Add a New Website</a></li>
+		{{/if}}
 	                                         <li class="dropdown">
-	                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> you@youremail.com<b class="caret"></b></a>
+	                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>{{#if user.email}} {{user.email}}{{/if}} <b class="caret"></b></a>
 	                <ul class="dropdown-menu">
 	                  <li><a href="/account">Account Settings</a></li>
 					  <!-- Hidden until implemented.
@@ -104,11 +109,10 @@
 	    </div>
 		<!--End Navigation-->		
 	
-		<!-- I'm not confident this block gets used anywhere. I think page.js *used* to use it 
-			but that code is subject to terminal bitrot. -->
 		{{#each messages}}
-		<div {{#if class}}class="{{class}} close"{{/if}}>
-		    <div class="alert alert-{{level}} notsonarrowblock" style="text-align:center">
+		<div {{#if class}}class="{{class}}"{{/if}}>
+		    <div class="alert alert-{{level}}" style="text-align:center">
+				<button type="button" class="close" data-dismiss="alert">×</button>			
 		        <p><i class="icon-{{status}}"></i> {{{title}}}</p>
 		        <p>{{{text}}}</p>            
 		    </div>
@@ -116,50 +120,56 @@
 		</div>
 		{{/each}}
 			
-{{#if is-dash}}
-		{{#if sitelogo}}
+{{#if show-nav-for-dashboard}}
+		<!--This block describes the secondary tabbed navigation on the website. It is needed for the listings 
+			of disputes and for the website settings page. -->
+
+		{{#if "single-site-open-disputes"}}
 		<!--Show this header if the user has only one web site -->
 		<div class="row">
 			<div id="page-header" class="span11">
-			<div class="company-logo-box"><div class="company-logo"><img src='{{sitelogo}}' alt="" title="" /></div></div> 
-			<h1 class="single-site">{{dispute-count}} Open Disputes</h1>
-			<!-- For the 'home' tab, all properties we would instead of [website name] show All Disputes in the Page Title-->
+				<div class="company-logo-box"><div class="company-logo"><img src='{{sitelogo}}' alt="{{sitename}}" /></div></div> 
+				{{#if false}}
+				This code stubbed out for work on the "passive listings" milestone, because this code
+				doesn't make sense until the "close dispute" button is re-enabled.
+				<h1 class="single-site">{{dispute-count}} Open Disputes</h1>
+				{{/if}}
+				<h1 class="single-site">{{dispute-count}} Disputes</h1>			
 			</div>
 		</div>
 		<!--End Page Header for a user with a single website -->
-		{{/if}}
-
-		{{#unless sitelogo}}
-		<!--Begin Page Header for a user with more than one web site -->
-		<div class="row">
-			<div id="page-header" class="span11">
-				<h1>{{dispute-count}} Open Disputes</h1>
-				<!-- For the 'home' tab, all properties we would instead of [website name] show All Disputes in the Page Title-->
-			</div>
-		</div>
-		<!--End Page Header for a user with more than one web site -->
-		{{/unless}}
-		
-		<!--This block describes the secondary tabbed navigation on the website, framed out space for the actual list of disputes-->
+		{{/if}}	
 
 		<!--Tabbed nav block for the dashboard -->
 		<div class="tabbable">
 
 			<ul class="nav nav-tabs">
+				<li {{{setOpenAsActiveTab}}}><a href="/">Disputes</a></li>			
+				{{#if false}}
+				This code stubbed out for work on the "passive listings" milestone, because this code
+				doesn't make sense until the "close dispute" button is re-enabled.
 				<li {{{setOpenAsActiveTab}}}><a href="/">Open Disputes</a></li>
 				<li {{{setClosedAsActiveTab}}}><a href="/closed">Closed Disputes</a></li>
+				{{/if}}
 				<li {{{setSettingsAsActiveTab}}}><a href="/settings">Settings</a></li>	
+				
+				{{#if false}}
+				Search UX stubbed out until I have time to do it.
+				https://github.com/lucasgonze/Safeharbor.in/issues/219
 				<li class="pull-right search"><!-- Search Bar -->
 					<div class="input-append">
 					<input class="span3" id="appendedInputButtons" size="16" type="text"placeholder="Search All Disputes"><button class="btn" type="button"><i class=" icon-search"></i> Search</button></div></li>
+				{{/if}}
 			</ul>
 
 			<div class="main tab-content"><!-- NEVER CLOSED? -->
 				<div class="tab-pane active"><!-- removed this inactive attribute: id="tab1 open" -->
-
+					
+					{{#if false}}Sort back end borked for now. https://github.com/lucasgonze/Safeharbor.in/issues/220{{/if}}
 					<!--Begin Sort Listing of Disputes by Newest to Oldest Toggle-->
 					<div class="row">
 						<div id="sort-list">
+							{{#if single-site-open-disputes}}
 							<a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-up"></i> Sorted Newest to
 						Oldest</a>
 						<!--
@@ -168,25 +178,26 @@
 						<a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-down"></i> Sorted Oldest to
 						Newest</a>
 						-->
+						{{/if}}
 						</div><!-- /sort-list -->
 					</div><!-- /row -->
 					<!--End Sort Listing of Disputes by Newest to Oldest Toggle-->
 
-{{/if}}<!-- /is-dash -->
+{{/if}}<!-- /show-nav-for-dashboard -->
 				   {{{body}}}
-{{#if is-dash}}
+{{#if show-nav-for-dashboard}}
 				</div><!-- /tab-pane -->
 			</div><!-- /tab-content -->
 		</div><!-- /tabbable -->
 		<!-- /Tabbed nav block for the dashboard -->
-{{/if}}<!-- /is-dash -->
+{{/if}}
 
 		<!-- BEGIN global footer -->
 		<div class="row">
 			<div class="span12">
 				<footer class="footer">
 					<p class="pull-right"><a href="#">Back to top</a></p>
-					<p>This tool for managing alleged copyright infringement is provided for {{site.name}} by SafeHarbor.in. <p>SafeHarbor.in provides services for DMCA compliance. </p><p>Our mission is to reduce risk, expense, and stress for web sites while being effective and efficient for copyright owners.  </p>
+					<p>This tool for managing alleged copyright infringement is provided for {{site.name}} by SafeHarbor.in. <p>SafeHarbor.in provides services for DMCA compliance. Our mission is to reduce risk, expense, and stress for web sites while being effective and efficient for copyright owners.  </p>
 					<p>Our Code is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>. Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
 					<ul class="footer-links">
 						<li><a href="#">Copyright @Safeharbor 2012</a></li>
@@ -204,7 +215,6 @@
 
 	<!-- we don't need all these. fixme: identify scripts we actually *are* using.
     <script src="/dash/js/bootstrap-transition.js"></script>
-    <script src="/dash/js/bootstrap-alert.js"></script>
     <script src="/dash/js/bootstrap-modal.js"></script>
     <script src="/dash/js/bootstrap-scrollspy.js"></script>
     <script src="/dash/js/bootstrap-tab.js"></script>
@@ -216,10 +226,22 @@
     <script src="/dash/js/bootstrap-typeahead.js"></script>
 	 -->
 
+    <script src="/dash/js/bootstrap-alert.js"></script>
     <script src="/dash/js/bootstrap-dropdown.js"></script>
 	<script src="/js/libs/jquery-validation-x/jquery.validate.min.js"></script>
     <script src="/js/script.js"></script>
 
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-35975225-1']);
+	  _gaq.push(['_setDomainName', 'safeharbor.in']);
+	  _gaq.push(['_trackPageview']);
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
   </body>
 </html>
 <!-- {{debugInfo}} -->

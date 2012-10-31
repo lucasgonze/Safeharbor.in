@@ -7,6 +7,21 @@ var initValidation = function(){
 
 	/* http://docs.jquery.com/Plugins/Validation#List_of_built-in_Validation_methods */
 	
+	$("#account_settings_form form").validate({	
+		rules: {
+			input_email: {
+				required: true,
+				email: true
+			}, 
+			new_password: {
+				minlength: 4
+			},
+			confirm_password: {
+				equalTo: '#new_password'
+			}
+		}
+	});
+	
 	$("#website_settings_form form").validate({	
 		rules: {
 			sitename: { required: true },
@@ -180,6 +195,29 @@ function initInbox(){
 		newNode.id = "description-"+Math.ceil(Math.random() * 100000000);
 		this.parentElement.insertBefore(newNode,this);
 	});
+}
+
+function initAccountForm(){
+	
+	$("#account_settings_form #current_password").keyup( function(event){
+		if( $("#account_settings_form #current_password").attr("value").length > 0 )
+			$("#account_settings_form form input#new_password").attr("disabled",null);
+		else {
+			$("#account_settings_form form input#new_password").attr("disabled","disabled");
+			$("#account_settings_form form input#confirm_password").attr("disabled","disabled");			
+		}
+	})
+	$("#account_settings_form #new_password").keyup( function(event){
+		if( $("#account_settings_form #new_password").attr("value").length > 0 )
+			$("#account_settings_form form input#confirm_password").attr("disabled",null);
+	})
+	$("#account_settings_form form").submit( function(event){
+		if( $("#account_settings_form #new_password").attr("value") !=
+			$("#account_settings_form form input#confirm_password") ){
+				
+			}
+	})
+	
 }
 
 function initAjaxForms(){
@@ -447,10 +485,11 @@ function initTour(){
 }
 
 $(document).ready(function() {
-        initValidation();       
-        initInbox();
-        initAjaxForms();
-        initTour();
+	initValidation();       
+	initInbox();
+	initAjaxForms();
+	initTour();
+	initAccountForm();
 });
 
 

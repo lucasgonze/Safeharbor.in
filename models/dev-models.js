@@ -29,7 +29,6 @@ exports.recreateTables = function(callback){
 	                      ' password text not null, ' +
 	                      ' resetSecret text, ' +
 	                      ' role text not null, ' +
-	                      ' autologin integer not null default 0, ' +
 	                      ' resetDate timestamp ' + 
 	                      ') with oids');
 

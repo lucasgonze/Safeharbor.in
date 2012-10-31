@@ -335,6 +335,20 @@ function saveSiteEdit(req,res) {
 
 function saveAcctEditor(req,res) {
 
+	console.log("BP 33.1",req.body)
+
+	var ck = function(t){ return( t && t.length && t.length > 3) };
+	if( ck(req.body.new_password) ){ // did reset password
+		if( 
+			!ck(req.body.current_password) // didn't set current password
+			|| !ck(req.body.confirm_password) // didn't confirm new password
+			|| req.body.confirm_password !== req.body.new_password // confirmation failed
+		){
+			errlib.page(400,res,"Syntax error in password reset. Check current, new, and confirmation.");
+			return;
+		}
+	}
+	
     function setSessionUser(code,acct) 
     { 
         if( code=!CODES.OK )
@@ -352,10 +366,7 @@ function saveAcctEditor(req,res) {
     };
     
     var uid = loginstate.getID(req);
-    var args = utils.copy( {acct: uid, autologin: '0'}, req.body )
-
-    args.autologin = args.autologin.replace(/on/,'1') >>> 0;
-
+    var args = utils.copy( {acct: uid}, req.body )
     profile
        .updateAccount( args, function(){} )
        .handleErrors(  req, res )
