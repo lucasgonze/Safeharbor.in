@@ -26,12 +26,9 @@ var menu = [
 	[ 'turn off console debugging', null, flipDebug, '/dev/debugout/0' ],
 	[ 'hard-wired /box form', '/dev/testboxpost', testboxpost ],
 	[ 'test dashboard for account (1)', '/dev/testdash', testdash ],
-    [ 'some fun docs', '/dev/docs', docs ]
+    [ 'some fun docs', '/dev/docs', docs ],
+	[ 'rebuild tables/factory install (<b style="color:red">DESTRUCTIVE</b> - NO UNDO)', '/dev/scaffolding', recreateTables ]
 ];
-/* Disabled for security. A deploy script is now doing this. See Github issue #160 https://github.com/lucasgonze/Safeharbor.in/issues/160
-,
-[ 'rebuild tables/factory install (<b style="color:red">DESTRUCTIVE</b> - NO UNDO)', '/dev/scaffolding', recreateTables ]
-*/
 
 function hangout(req,res){
 	res.redirect('https://plus.google.com/hangouts/_/e8402e9cd589061e6bad0ffe62e501b91e86dd3c?authuser=0&hl=en');	

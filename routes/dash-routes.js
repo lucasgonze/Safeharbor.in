@@ -81,11 +81,10 @@ function getSiteEditor(req,res){
 			var countryList = page.countryList(site.country);
 	
             res.render("dash/website_settings.html", utils.copy({
-													"show-nav-for-dashboard":true,
+													"is-dash":true,
 													layout: 'shared/main.html',
                                                     pageTitle: "Edit Site",
 													countryList: countryList,
-													setSettingsAsActiveTab: "class=active",
                                                     bodyClass: "siteeditor" }, site) );
         } else if( code == CODES.MULTIPLE_RECORDS_FOUND ) {
 			return(errlib.page(500,res,"Multiple sites not implemented yet."))
@@ -120,30 +119,35 @@ function getOpenDisputes(req,res){
 			return;
 		}
 		
-		var sitelogo = data && data.length > 0 ? data[0].sitelogo : null;
-		var sitename = data && data.length > 0 ? data[0].sitename : null;
+		if( !data || !data[0]){
+			errlib.page(500,res,"Open Dispute listing with no listings not impelemented yet.");
+			return;
+		}
+
+		var logo = data && data.length > 0 ? data[0].sitelogo : null;
 		
+		console.log("BP 44",data && data[0]);
+
 		for( var i=0; i<data.length; i++)
 			data[i].postal.replace('\n','<br/>');
 			
 		res.render( 
-					'dash/single-site-open-disputes.html', {  
-						"show-nav-for-dashboard":true,
+					'dash/panel.html', {  
+						"is-dash":true,
 						layout: 'shared/main.html',
 						pageTitle:"SafeHarbor.in - Panel",
 						bodyClass:"dash-index",
 						setOpenAsActiveTab: 'class="active"',
 						disputes: data,
-						"dispute-count": data.length,
-						sitelogo: sitelogo,
-						sitename: sitename,
+						"dispute-count":data.length,
+						sitelogo:data[0].sitelogo,
+						sitename: data[0].sitename,
 						"single-site-open-disputes":true
                  } 
 		);
 	}});			
 }
 
-// this is out of scope for the "Passive Listing" milestone
 function getClosedDisputes(req,res){
 	
 	dash.getClosedMedia({uid:loginstate.getID(req), callback:function(err,data){
@@ -184,7 +188,7 @@ function getClosedDisputes(req,res){
 		
 		res.render( 
 					'dash/panel.html', {  
-						"show-nav-for-dashboard":true,
+						"is-dash":true,
 						layout: 'shared/main.html',
 						pageTitle:"SafeHarbor.in - Panel",
 						bodyClass: bodyClass,
@@ -212,7 +216,7 @@ var renderDashForAccount = exports.renderDashForAccount = function( req, res, ui
 		          {
 		              res.render( 'dash/list.html',
 		                          {
-									"show-nav-for-dashboard":true,
+									"is-dash":true,
 		                             pageTitle: 'Safe Harbor - Disputes',
 		                             bodyClass: 'disputes',
 		                             auditItems: rows
@@ -227,7 +231,7 @@ var renderDashForAccount = exports.renderDashForAccount = function( req, res, ui
 		                              );
 		              res.render( page.MESSAGE_VIEW,
 		                          {  pageTitle:"Safe Harbor - Disputes",
-									"show-nav-for-dashboard":true,
+									"is-dash":true,
 		                             bodyClass:"disputes"
 		                           } );                            
 		          }

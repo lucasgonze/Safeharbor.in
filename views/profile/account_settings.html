@@ -1,24 +1,27 @@
 
   <div class="row">
     <div id="account_settings_form">
-		<!--Begin Form for filling out your Account Information-->
+      <!--Begin Form for filling out your Account Information-->
+      
+      
+      <!--Note to Lucas: Here is the form behavior we were talking about for this form: https://www.tumblr.com/settings/account -->
 
-		<!--Note to Lucas: Here is the form behavior we were talking about for this form: https://www.tumblr.com/settings/account -->
-
-		<form class="span10 form-horizontal" action=""/settings method="post">
-		<legend>Your Account Information</legend>
+            <form class="span10 form-horizontal" action="">
+          <legend>Your Account Information</legend>
    
-			<div class="email">
-				<div class="control-group">
-				  <label class="control-label" for="inputEmail">Email Address</label>
+   <div class="email">
+          <div class="control-group">
+            <label class="control-label" for="inputEmail">Email Address</label>
 
-				  <div class="controls">
-				    <input type="text" id="inputEmail" placeholder="Email" value="{{user.email}}" /> <span class=
-				    "required help-inline">*required</span><span class="help-block">This is the
-				    email address associated with your account.</span>
-				  </div>
-				</div>
-			</div>
+            <div class="controls">
+              <input type="text" id="inputEmail" placeholder="Email" /> <span class=
+              "required help-inline">*required</span><span class="help-block">This is the
+              email address associated with your account.</span>
+            </div>
+          </div>
+          </div>
+         
+
 
           <div class="row"> 
             <div class="span10 control-group">
@@ -50,34 +53,37 @@
               </div> 
             </div>
 
-	{{#if false}}
-	<div id="alarm">
-		<legend>Alarm <span class="small">An alarm goes off when a dispute is not closed on time</span></legend>
 
-		<div class="control-group">
-			<label class="control-label" for="inputAlarm">Hours before alarm goes off</label>
-			<div class="controls">
-				<input type="text" class="span1" id="inputAlarm" placeholder="3">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="inputAlarmEmail">When the alarm goes off, send an email to this address</label>
-			<div class="controls">
-				<input type="text" id="inputAlarmEmail" 	placeholder="you@youremail.com">
-			</div>
-		</div>
-	</div>
-	{{/if}}
+   <div id="alarm">
+     <legend>Alarm <span class="small">An alarm goes off when a dispute is not closed on time</span></legend>
+
+   
+   <div class="control-group">
+<label class="control-label" for="inputAlarm">Hours before alarm goes off</label>
+<div class="controls">
+<input type="text" class="span1" id="inputAlarm" placeholder="3">
+</div>
+</div>
+<div class="control-group">
+<label class="control-label" for="inputAlarmEmail">When the alarm goes off, send an email to this address</label>
+<div class="controls">
+<input type="text" id="inputAlarmEmail" 	placeholder="you@youremail.com">
+</div>
+</div>
+                 </div>
+
+
+           
+   
         
-	<div class="no-gray form-actions">
-		<button type="submit" class="btn btn-primary">Save changes</button>
-		<button type="button" class="btn">Cancel</button>
-	</div>
-
-</form>
-</div>
-<!--End Form for filling out your account information-->
-</div>
-       
+              <div class="no-gray form-actions">
+              <button type="submit" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn">Cancel</button>
+            </div>
+    </form>
+          </div>
+          <!--End Form for filling out your account information-->
+          </div>
+        
 
   
