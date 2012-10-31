@@ -2,52 +2,52 @@
        <div id="website_settings_form">
        <!--Begin Form for filling out information about the Website-->
           
-                  <form class="span10 form-horizontal" action="">
-            <legend>Website Information</legend> <!--Name of Website-->
+          <form class="span10 form-horizontal" action="/settings" method="post">
+            <legend>Website Settings</legend> <!--Name of Website-->
 
             <div id="form_leftside"> 
             
             <div class="control-group">
-              <label class="control-label" for="inputWebsiteName">Website Settings</label>
+              <label class="control-label" for="sitename">Name</label>
 
               <div class="controls">
-                <input type="text" id="inputWebsiteName" placeholder=
-                "Youtube.com, Ask.com" /><span class=
+                <input type="text" id="sitename" name="sitename" autofocus placeholder=
+                "YouTube" value="{{sitename}}" /><span class=
                 "required help-inline">*required</span>
               </div>
             </div><!--URL of Website-->
 
             <div class="control-group">
-              <label class="control-label" for="inputWebsiteUrl">http://</label>
+              <label class="control-label" for="domain">URL</label>
 
               <div class="controls">
-                <input type="text" id="inputWebsiteUrl" placeholder=
-                "mywebsite.com" /><span class="required help-inline">*required</span>
+                <input type="text" id="domain" name="domain" placeholder=
+                "http://example.com" value="{{domain}}" /><span class="required help-inline">*required</span>
               </div>
             </div><!--Logo of Website-->
 
             <div class="control-group">
-              <label class="control-label" for="inputWebsiteLogo">Logo URL</label>
+              <label class="control-label" for="sitelogo">Logo URL</label>
 
               <div class="controls">
-                <input type="text" class="input-xlarge" id="inputWebsiteURL" placeholder=
-                "http://mywebsite/files/img/my_logo.png" />
+                <input type="text" class="input-xlarge" id="sitelogo" name="sitelogo" placeholder=
+                "http://example.com/logo.png" value="{{sitelogo}}" />
               </div>
             </div>
 </div>            
 
-<!--Show Logo URL image to the user when they upload it -->
+<!--Show Logo URL image to the user when they upload it --><!-- fixme -->
             <div id="show_logourl_image">
 <div id="logourl_image_box">            <img src=
-              ".../public/paige/img/youtube_sm.jpg"
+              "{{sitelogo}}"
               alt=""/>
             </div>
             </div>
-          </form>
+ </form>
           <!--End the first part of the form-->
           
           
-          <!--Begin Registered Agent Information-->
+        <!--Begin Registered Agent Information-->
           <form class="span10 form-horizontal" action="">
           
             <legend>Registered Agent Information <span class="small pull-right">This information is publically displayed and required by law. <a href="#">Learn More</a></span></legend>
@@ -55,63 +55,84 @@
             <div class="control-group">
               <label class="control-label" for="inputName">Name</label>
 
+
+
               <div class="controls">
-                <input type="text" id="inputName" placeholder="Full Name" />
+                <input type="text" id="agentname" name="agentname" placeholder="Full Name" value="{{agentname}}" />
                 <span class="required help-inline">*required</span>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label" for="inputEmail">Email</label>
+              <label class="control-label" for="agentemail">Email</label>
 
               <div class="controls">
-                <input type="text" id="inputEmail" placeholder="Email" /> <span class=
+                <input type="text" id="agentemail" name="agentemail" placeholder="Email" value="{{agentemail}}" /> <span class=
                 "required help-inline">*required</span>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label" for="inputPhone">Phone </label>
+              <label class="control-label" for="country">Country </label>
+              <div class="controls">
+				<select name="country" id="country" autocorrect="off" autocomplete="off">
+					{{{countryList}}}
+				</select>	
+			  </div>
+			</div>
+
+            <div class="control-group">
+              <label class="control-label" for="agentphone">Phone </label>
 
               <div class="controls">
-                <select>
-                  <option>
-                    United States
-                  </option>
+				<input type="text" id="agentphone" name="agentphone" placeholder=
+                "Phone Number"  value="{{agentphone}}" /> <span class=" required help-inline">*required</span>
+              </div>
+            </div>
 
-                  <option>
-                    Other Country
-                  </option>
+<div class="control-group">
+              <label class="control-label" for="agentfax">Fax </label>
 
-                  <option>
-                    Other Country
-                  </option>
-
-                  <option>
-                    Other Country
-                  </option>
-                </select> <input type="text" id="inputPhone" placeholder=
-                "Phone Number" /> <span class=" required help-inline">*required</span>
+              <div class="controls">
+				<input type="text" id="agentfax" name="agentfax" placeholder=
+                "Fax Number"  value="{{agentfax}}" /> <span class=" required help-inline">*required</span>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label" for="inputEmail"> Address</label>
+              <label class="control-label" for="agentaddress"> Address</label>
 
               <div class="controls">
-                <textarea class="mailing" rows="5" cols="" >
-</textarea><span class=" required help-inline">*required</span>
+                <textarea class="mailing" rows="5" cols="" id="agentaddress" name="agentaddress">{{agentaddress}}</textarea><span class=" required help-inline">*required</span>
               </div>
             </div>
+            
             <div class="no-gray form-actions">
               <button type="submit" class="btn btn-primary">Save changes</button>
               <button type="button" class="btn">Cancel</button>
+			  <div class="alert alert-success" style="display:none"><i class="icon-ok"></i> Saved</div>
+			  <div class="alert alert-error" style="display:none"><i class="icon-exclamation-sign"></i> Error</div>
             </div>
     </form>
 </div>
       </div>
       <!--End Form for filling out information about the website-->
 
-  </div>
 
+
+<!-- https://github.com/JamieAppleseed/selectToAutocomplete . For country pulldown. -->
+<script src="/js/libs/selectToAutocomplete/jquery-ui-autocomplete.js"></script>
+<script src="/js/libs/selectToAutocomplete/jquery.select-to-autocomplete.min.js"></script>
+<script type="text/javascript">
+jQuery(function(){
+	
+	// fancy country selector
+	$('select#country').selectToAutocomplete();
+	
+	// auto-show the logo image as the user leaves the input for the URL
+	$("input#sitelogo").blur(function(){
+		$("#logourl_image_box img").attr("src",this.value);
+	});
+});
+</script>
 
