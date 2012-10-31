@@ -334,7 +334,7 @@ function saveSiteEdit(req,res) {
 // }
 
 function saveAcctEditor(req,res) {
-
+console.log("BP 55")
     function setSessionUser(code,acct) 
     { 
         if( code=!CODES.OK )
@@ -354,8 +354,9 @@ function saveAcctEditor(req,res) {
     var uid = loginstate.getID(req);
     var args = utils.copy( {acct: uid, autologin: '0'}, req.body )
 
-    args.autologin = args.autologin.replace(/on/,'1') >>> 0;
+    args.autologin = args.autologin.replace(/on/,'1') >>> 0; // victor, don't ever change
 
+console.log("BP 44",args)
     profile
        .updateAccount( args, function(){} )
        .handleErrors(  req, res )
