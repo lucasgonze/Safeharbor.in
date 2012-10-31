@@ -545,7 +545,9 @@ textarea.mailing {
 	margin-right:10px;
 }
 
-
+footer.footer ul-footer-links li a {
+color: #fff;
+}
 	
 /*
 Error Page Design Style
@@ -671,8 +673,7 @@ div#example { border: 1px solid red; color: red !important; font-weight: bold; }
 .alert-danger,
 .alert-error {
   color: #666;
-  background-color: #f2dede;
-  border-color: #eed3d7;
+ 
 }
 
 .alert-info {
