@@ -45,7 +45,7 @@ function wrapBox(req,res,viewPath,pageTitle,bodyClass,extraVars){
             return;
 
 		var pageVars = 	{
-		                    layout:     'box/inbox_main.html',
+		                    layout:     'inbox/inbox_main.html',
 		                    skipMenu:   true,
 		                    pageTitle:  pageTitle,
 		                    bodyClass:  bodyClass,
@@ -64,7 +64,7 @@ function wrapBox(req,res,viewPath,pageTitle,bodyClass,extraVars){
 }
 
 function getByMail(req,res){
-	wrapBox(req,res,'box/bymail.html','Copyright - Submit By Mail','bymail');
+	wrapBox(req,res,'inbox/bymail.html','Copyright - Submit By Mail','bymail');
 };
 
 // for submitting a dispute to yourself
@@ -80,7 +80,7 @@ function getOwnForm(req,res){
         if( code != CODES.SUCCESS ) 
             return;
 
-        // note that layout is NOT set to 'box/inbox_main.html', so is 
+        // note that layout is NOT set to 'inbox/inbox_main.html', so is 
 		// different from everything else in box-routes.js
 		var pageVars = 	{
 		                    skipMenu:   true,
@@ -109,7 +109,7 @@ function getForm(req,res){
 	else
 		roleOtherChecked = "checked";
 			
-	wrapBox(req,res,'box/form.html','Copyright - Submit Dispute','dmcaform',{
+	wrapBox(req,res,'inbox/form.html','Copyright - Submit Dispute','dmcaform',{
 		roleCopyrightOwnerChecked: roleCopyrightOwnerChecked,
 		roleAuthorizedRepresentativeChecked: roleAuthorizedRepresentativeChecked,
 		roleOtherChecked: roleOtherChecked
@@ -117,19 +117,19 @@ function getForm(req,res){
 };
 
 function getRoleHelp(req,res){
-	wrapBox(req,res,'box/rolehelp.html','Copyright Help - Role','rolehelp');
+	wrapBox(req,res,'inbox/rolehelp.html','Copyright Help - Role','rolehelp');
 };
 
 function getLearn(req,res){
-	wrapBox(req,res,'box/learn.html','Copyright Help - Learn','learn');
+	wrapBox(req,res,'inbox/learn.html','Copyright Help - Learn','learn');
 };
 
 function getRole(req,res){
-	wrapBox(req,res,'box/role.html','Copyright - Select Role','role');
+	wrapBox(req,res,'inbox/role.html','Copyright - Select Role','role');
 };
 
 function getSplash(req,res){
-	wrapBox(req,res,'box/splash.html','Copyright','splash');
+	wrapBox(req,res,'inbox/splash.html','Copyright','splash');
 };
 
 function notifyEmailer(req, res, contactInfo, mediaInfo ) {	
@@ -139,7 +139,7 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                 callback: function(success,message) {
                     if( success ) {
 						res.status(202);
-						wrapBox(req,res,"box/receipt.html","Accepted","nop",{
+						wrapBox(req,res,"inbox/receipt.html","Accepted","nop",{
 							sitename: this.sitename,
 						    domain: this.domain
 						});
@@ -162,7 +162,7 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
 
 					mailer.to(
 						{
-							viewsSubdir: "box",
+							viewsSubdir: "inbox",
 							template: "notificationemail", 
 							to: mailerValues.agentemail,
 						    subject: utils.gettext("IMPORTANT: DMCA takedown request received"),	
