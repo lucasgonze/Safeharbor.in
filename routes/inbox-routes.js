@@ -15,7 +15,7 @@ var Performer  = safeharbor.Performer;
 var util = require('util');
 var errout = errlib.errout();
 
-var box     = require('../models/box-models.js');
+var box     = require('../models/inbox-models.js');
 var dash    = require('../models/dash-models.js');
 
 var mailer = require("../lib/mail.js");
@@ -27,14 +27,14 @@ exports.install = function( app )
 {	
 	var logged_in = app.checkRole(app.ROLES.logged_in);
     
-	app.get ('/box/bymail/:regid([0-9a-f]+)$',  	getByMail);
-	app.get ('/box/form/:regid([0-9a-f]+)$',  		getForm);
+	app.get ('/inbox/bymail/:regid([0-9a-f]+)$',  	getByMail);
+	app.get ('/inbox/form/:regid([0-9a-f]+)$',  		getForm);
 	app.get('/myinbox',	   							logged_in, getOwnForm);
-	app.get ('/box/help/learn/:regid([0-9a-f]+)$',	getLearn);
-	app.get ('/box/help/role/:regid([0-9a-f]+)$',  	getRoleHelp);
-	app.get ('/box/role/:regid([0-9a-f]+)$',  		getRole);
-	app.get ('/box/:regid([0-9a-f]+)$',  			getSplash);
-	app.post('/box/:regid([0-9a-f]+)',   			postBox);
+	app.get ('/inbox/help/learn/:regid([0-9a-f]+)$',	getLearn);
+	app.get ('/inbox/help/role/:regid([0-9a-f]+)$',  	getRoleHelp);
+	app.get ('/inbox/role/:regid([0-9a-f]+)$',  		getRole);
+	app.get ('/inbox/:regid([0-9a-f]+)$',  			getSplash);
+	app.post('/inbox/:regid([0-9a-f]+)',   			postBox);
 }
 
 // convenience function for reuse only in this file
@@ -45,7 +45,7 @@ function wrapBox(req,res,viewPath,pageTitle,bodyClass,extraVars){
             return;
 
 		var pageVars = 	{
-		                    layout:     'box/box_main.html',
+		                    layout:     'box/inbox_main.html',
 		                    skipMenu:   true,
 		                    pageTitle:  pageTitle,
 		                    bodyClass:  bodyClass,
@@ -80,7 +80,7 @@ function getOwnForm(req,res){
         if( code != CODES.SUCCESS ) 
             return;
 
-        // note that layout is NOT set to 'box/box_main.html', so is 
+        // note that layout is NOT set to 'box/inbox_main.html', so is 
 		// different from everything else in box-routes.js
 		var pageVars = 	{
 		                    skipMenu:   true,
@@ -205,8 +205,8 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
     // incident
   description: [ 'work is being', 'desc2', [length]: 2 ],
   page: 
-   [ 'http://localhost.com/box/24738',
-     'http://localhost.net/box/24738',
+   [ 'http://localhost.com/inbox/24738',
+     'http://localhost.net/inbox/24738',
      [length]: 2 ],
   anchor: [ 'ch work is be', 'page2', [length]: 2 ] }
 

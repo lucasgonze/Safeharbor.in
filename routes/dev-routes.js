@@ -24,7 +24,7 @@ var menu = [
 	[ 'permanent Google+ Hangout', '/hangout', hangout],
 	[ 'turn on console debugging', '/dev/debugout/:volume([0-9])', flipDebug, '/dev/debugout/1' ],
 	[ 'turn off console debugging', null, flipDebug, '/dev/debugout/0' ],
-	[ 'hard-wired /box form', '/dev/testboxpost', testboxpost ],
+	[ 'hard-wired /inbox form', '/dev/testboxpost', testboxpost ],
 	[ 'test dashboard for account (1)', '/dev/testdash', testdash ],
     [ 'some fun docs', '/dev/docs', docs ]
 ];

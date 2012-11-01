@@ -215,7 +215,7 @@ function getTakedownRequests( callback )
          description: 'work is being',
          media_url: 'http://somemedia.mp3',
          mediaid: 2,
-         page: 'http://localhost.com/box/24738',
+         page: 'http://localhost.com/inbox/24738',
         }, 
        { 
          anchor: 'page2',
@@ -223,7 +223,7 @@ function getTakedownRequests( callback )
          description: 'desc2',
          media_url: 'http://someothermedia.mp3',
          mediaid: 3,
-         page: 'http://localhost.net/box/24738'
+         page: 'http://localhost.net/inbox/24738'
         }
       ],
     
