@@ -2,9 +2,14 @@
   background-color: #336699;
   background-color: #2C5A89;
 */
+/*
 
 body {
 background:url(/dash/img/lighthouse.png) no-repeat, url(/dash/img/noise.png) repeat;
+}
+*/
+
+body{
 font:400 14px/1.6 'Open Sans', Helvetica, sans-serif;
 	}
 	 
@@ -35,7 +40,7 @@ p {
 margin-bottom: 20px;
 }
 
-#page-header h1, .error-copy h1 {
+h1 {
 	font-weight:400;
 	margin-bottom:22px;
 	margin-left:3px;
