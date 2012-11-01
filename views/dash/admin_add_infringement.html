@@ -1,0 +1,249 @@
+<div class="" id="dmcaform">
+	<a id="prefill" class="btn btn-small">Prefill</a>
+	<form action="/box/{{idhash}}" method="post" id="request">
+
+		<!-- this first row contains everything before the "submit" button. We need a separate dedicated 
+		     row because we want the links to the direct contact fields to appear in the sidebar parallel to
+		     the form submit buttons, so that we can be sure the copyright owner has viewed the form before
+		     deciding to use the old school manual submission process instead. -->
+		<div class="row">
+			<div class="span8">
+
+			    <h2 class="kludge">About you</h2>
+			    <div class="co ar">
+
+				    <div class="control-group" id="demo-tgt-1">
+				      <label class="control-label" for="full_name">Your full name</label>
+				      <div class="controls">
+						<input tabindex="10" type="text" placeholder="John Doe" id="full_name" name="full_name" autofocus required>
+						 <sup>* required</sup>
+				      </div>
+				    </div>
+
+				    <div class="control-group ar vestigial" >
+				      <label class="control-label" for="owners_full_name">Copyright owner's full name</label>
+				      <div class="controls">
+						<input tabindex="20" type="text" placeholder="John Doe" id="owners_full_name" name="owners_full_name">
+				      </div>
+				    </div>
+
+				    <div class="control-group vestigial">
+				     <label class="control-label" for="job_title">Job title</label>
+				      <div class="controls">
+						<input tabindex="30" type="text" placeholder="Copyright screener" id="job_title" name="job_title" >
+				      </div>
+				    </div>
+
+				    <div class="control-group">
+				      <label class="control-label" for="email">Email:</label>
+				      <div class="controls">
+				        <input tabindex="40" type="text" placeholder="johndoe@example.com" name="email" id="email" required>
+					    <sup>* required</sup>
+				      </div>
+					  <div class="hint help-block">Email address where you can be reached easily. Use one you check frequently. Make sure the spam filters won't prevent you from getting our messages.</div>
+				    </div>
+
+				    <div class="control-group">
+				      <label class="control-label" for="fax">Fax:</label>
+				      <div class="controls">
+				        <input tabindex="50" type="text" placeholder="(800) 555-1212" name="fax" id="fax" >
+				      </div>
+					  				    </div>
+
+				    <div class="control-group">
+				      <label class="control-label" for="phone">Phone:</label>
+				      <div class="controls">
+				        <input tabindex="60" type="text" placeholder="(800) 555-1212" name="phone" id="phone" >
+				      </div>
+					 
+				    </div>
+
+				    <div class="control-group">
+				      <label class="control-label" for="postal">Mailing address:</label>
+				      <div class="controls">
+				        <textarea tabindex="70" cols="30" rows="5" name="postal" id="postal" required></textarea>
+						 <sup class="textarea-adjust">* required</sup>
+				      </div>
+									    </div>
+
+			    </div><!-- end contact info -->
+
+				<div class="co ar cloneblock"   id="clone_this">
+				    <h2>About the claimed infringement (<span class="infringement_number">1</span>)</h2>
+
+				    <div class="control-group" id="kill_switch_pre">
+				      <label class="control-label" for="page">Page containing the infringement:</label>
+				      <div class="controls">
+				        <input tabindex="100" type="text" placeholder="http://example.com/somesong.mp3" required id="page" name="page" class="renum" >
+						 <sup>* required</sup>
+				      </div>
+					  <div class="help-block"><a href="http://www.copyright.gov/title17/92chap5.html#512" target="new-window"><span class="icon-question-sign"></span></a> <em>The link that allegedly needs to be taken down.</em> If there is a specific file, the file's URL. If alleging infringement by an external site which this site is linking to, give us the link on this site which contains the link to the external site. <a href="http://www.copyright.gov/title17/92chap5.html#512" target="new-window">Defined</a> as <q>Information reasonably sufficient to permit the service provider to locate the material. </q></div>
+				    </div>
+
+				    <div class="control-group">
+				      <label class="control-label" for="anchor">Where is it in that page?</label>
+				      <div class="controls">
+				        <input tabindex="101" type="text" placeholder="Link titled &ldquo;The Beatles&rdquo;" id="anchor" name="anchor" class="renum" >
+				      </div>
+					  <div class="help-block"><a href="http://www.copyright.gov/title17/92chap5.html#512" target="new-window"><span class="icon-question-sign"></span></a> Point us to the part of the page that is the concern. The information you are providing here is defined in DMCA 512(c) as <q>Identification of the material to be removed</q>.</div>
+				    </div>
+
+				    <div class="control-group">
+				      <label class="control-label" for="description">Which work is being infringed?</label>
+				      <div class="controls">
+						<input tabindex="102" type="text" placeholder="&ldquo;A Hard Day&apos;s Night&rdquo; by The Beatles" id="description" name="description" required class="renum" >
+						 <sup>* required</sup>
+				      </div>
+					  <div class="hint help-block"><a href="http://www.copyright.gov/title17/92chap5.html#512"><span class="icon-question-sign"></span></a> Tell us what is the source work that is being infringed. If it's a song, say the artist, album and title. If it's a movie tell us the name, year, or anything else that defines the work. The information is this field is defined in the law as <q>Identification of the copyrighted work claimed to have been infringed</q>.</div>
+				    </div>
+				</div><!-- end .cloneblock -->
+
+				<p class="primary" id="insert_before_here">
+				  <button id="report_another" tabindex = "1000" class="btn-large">+Add another claimed infringement</button>
+				</p>
+
+				<div class="co ar" id="legalrequiredfields" >
+				    <h2>Legal Required Fields</h2>
+
+					<p>With regard to the material that is claimed to be infringing or to be the subject of infringing activity and that is to be removed or access to which is to be disabled:</p>
+
+				    <div class="control-group">
+				      <label class="control-label radio" for="person-type-copyright-owner">
+				        <input type="radio" class="person-type inline" name="person-type" id="person-type-copyright-owner" value="co" {{roleCopyrightOwnerChecked}}/> 
+						I am the copyright owner.
+					  </label> 
+				    </div>
+
+				    <div class="control-group">
+				      <label class="control-label radio" for="person-type-authorized-rep">
+					    <input class="person-type" type="radio" name="person-type" id="person-type-authorized-rep" value="ar" {{roleAuthorizedRepresentativeChecked}} />
+						I am an authorized representative of the copyright owner.
+					  </label>
+				    </div>
+
+				    <div class="control-group">
+				      <label class="control-label radio" for="person-type-none">
+					    <input type="radio" name="person-type" id="person-type-none" class="person-type" value="no" {{roleOtherChecked}} />
+						I am not the copyright owner and I don't officially represent them.
+					   </label> 
+				    </div>
+
+				    <div class="control-group" style="margin-top: 2em">
+				      <label class="control-label checkbox"><input tabindex="1010" type="checkbox" name="authorized"> Under penalty of perjury I state that I am authorized to act on behalf of the owner of the exclusive right that is allegedly infringed.</label>
+					  <div class="hint help-block">This form is for copyright complaints from people affiliated with the copyright. If you are not the owner, you cannot use this form. Lying about this is a criminal act.</div>
+				    </div>
+
+				    <div class="control-group">
+				      <label class="control-label checkbox"><input tabindex="1020" type="checkbox" name="belief"> I have a good faith belief that use of the material in the manner complained of is not authorized by the copyright owner, it's agent, or the law.</label>
+					  <div class="hint help-block">You are personally asserting this and are legally responsible for being truthful.</div>
+				    </div>
+				
+				    <div class="control-group">
+				      <label class="control-label" for="description">Signature</label>
+				      <div class="controls">
+						<input tabindex="1025" type="text" placeholder="/Your Name" id="signature" name="signature" required>
+						 <sup>* required</sup>
+				      </div>
+					  <div class="hint help-block"><a href="http://www.copyright.gov/title17/92chap5.html#512"><span class="icon-question-sign"></span></a> Affix your mark. The information is this field is defined in the law as <q>a physical or electronic signature of a person authorized to act on behalf of the owner of an exclusive right that is allegedly infringed.</q>.</div>
+				    </div>								
+				
+				</div><!-- end #legalrequiredfields -->
+
+			</div><!-- end .span8 -->
+			<div class="span4 sidebar">
+				<p>This form asks for details because we really need them to process your claim effectively. Please take the time to provide all the information we request.</p>
+				<p><a href="/box/help/learn/{{regid}}" class="learnmore">Learn more about Copyright Infringement</a></p>
+				
+				
+				<h3>Before submitting this form</h3>
+
+				<p>This form only relates to alleged copyright infringement. If you wish to report something else, this is not the place to do it.</p>
+
+				<p>Only the actual copyright owner or their legally authorized agent can report copyright infringement. If you are neither the owner nor the registered agent of a copyright owner, please tell the person who is, and direct them to this page.</p>
+				
+				
+			</div>			
+		</div>
+
+		<div class="row bottom">
+			<div class="span8">
+				<p><button tabindex="1030"  class="btn btn-large btn-inverse">File Notification</button></p>
+			</div>
+			<div class="span4" id="demo-tgt-bypass">
+				<h3>Bypassing this form</h3>
+				
+				<p>Submitting this online form is the most reliable and efficient way to communicate your concern to us. If you prefer to submit notification directly, you may use postal mail or send an email.</p> 
+				<p><a href="/box/bymail/{{regid}}" class="learnmore">More Information on Direct Submission</a> </p>
+			</div>			
+		</div>
+
+		
+	</form>
+</div>
+
+<script>
+$(function() {
+    var next_incident = 2;
+    
+    function renumberIncidents()
+    {
+        var count = 1;
+        $('.infringement_number',document).each( function() {
+            $(this).html( count++ );
+            });
+        next_incident = count;
+    }
+    
+    $('#report_another').click( function() {
+        
+        function removeMe( fs ) {
+            return function() {
+                    $('#'+fs).remove();
+                    renumberIncidents();
+                    }
+        }
+        
+        function renumber(base) {
+            return function() {
+                $(this).attr('tabindex', base++);
+            }
+        }
+        var fsName = 'cloned_'+next_incident+'_';
+        var firstTab = 100+(next_incident*20);
+
+        $('#insert_before_here').before(
+                    $('<fieldset>')
+                         .html($('#clone_this').html())
+                         .addClass( 'co ar' )
+                         .attr('id', fsName)
+                         .find('.infringement_number').html(next_incident).end()
+                         .find('.renum').each( renumber(firstTab) ).end()
+						 .find('input[type="text"]').focus().end()
+                         .prepend( $('<div class="pull-right btn btn-danger">')
+                                    .html('<i class="icon-remove"></i>')
+                                    .attr('title',"Remove this item from the infringement notification")
+                                    .click( removeMe(fsName) ))
+                    );
+
+		// put focus in the stuff we just added
+		$("#"+fsName).find('input')[0].focus();
+        
+        ++next_incident;
+
+		return(false); // dont submit form
+    });
+
+	$('#prefill').click(function(){
+		$('#full_name').attr('value','John Doe');
+		$('#email').attr('value','lucas.gonze@gmail.com');
+		$('#phone').attr('value','(900) 555-1234');
+		$('#postal').attr('value','1234 Main St Peoria IL 12345');
+		$('#page').attr('value','http://example.com');
+		$('#anchor').attr('value','In the blogroll');
+		$('#description').attr('value','Billie Jean by Michael Jackson');
+		$("input[type=checkbox]").attr("checked","checked");
+		$("#signature").attr("value","/testing");
+	})
+});
+</script>
+

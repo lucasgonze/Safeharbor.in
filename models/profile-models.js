@@ -124,20 +124,20 @@ exports.resetPasswordForLoggedInUser = function( obj, callback ) {
     var sql = "update acct set password = $1 where acctid = $2 and password = $3 returning acctid";
     
     return new ModelPerformer({ parseObj: obj, 
-                                names: ['newpassword','acct','current'], 
+                                names: ['new_password','acct','current_password'], 
                                 callback: callback, 
                                 performer: function() {this.table.updateSingleRecord( sql ); }
                               });    
 }
 
 exports.updateAccount = function( obj, callback ) {
-    var sql = 'update acct set email = $2, autologin = $3 where acctid = $1';
+    var sql = 'update acct set email = $2 where acctid = $1';
     var updateAcct = new ModelPerformer( { parseObj: obj, 
-                                 names: ['acct','email','autologin'], 
+                                 names: ['acct','input_email'], 
                                  callback: callback, 
                                  performer: function(){ this.table.updateSingleRecord(sql); }} );
                                  
-    if( obj.newpassword )
+    if( obj.new_password )
     {
         var updatePass = exports.resetPasswordForLoggedInUser(obj,callback);
         updateAcct.chain( updatePass );
