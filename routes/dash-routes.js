@@ -79,6 +79,10 @@ function getSiteEditor(req,res){
         if( code == CODES.OK )
         {
 			var countryList = page.countryList(site.country);
+				
+			// fixes https://github.com/lucasgonze/Safeharbor.in/issues/228
+			// (however the real cause of this problem is probably in the input saving side - to be continued, most likely).
+			site.agentaddress = site.agentaddress.replace('\\n','\n');
 	
             res.render("dash/website_settings.html", utils.copy({
 													"show-nav-for-dashboard":true,
