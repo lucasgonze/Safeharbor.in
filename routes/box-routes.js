@@ -86,7 +86,7 @@ function getOwnForm(req,res){
 		                    skipMenu:   true,
 		                    pageTitle:  pageTitle,
 		                    bodyClass:  bodyClass,
-							regid: 		req.params.regid
+							regid: 		site.idhash
 	 					};
 		pageVars = utils.copy(pageVars,site);
         res.render( viewPath, pageVars);			
@@ -156,7 +156,7 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                 
                 performer: function() {            
                     var mailerValues = this.findValue('auditDetail');
-                    mailerValues.dashurl =  'https://'+req.headers.host+'/dash';   
+                    mailerValues.dashurl =  'http://'+req.headers.host+'/dash';   
                  	console.log("Sending notification mail to");
 					console.log(mailerValues.agentemail);
 

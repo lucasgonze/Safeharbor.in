@@ -86,6 +86,9 @@ insert into acct (acctid,role,email,password) values (4,'21','loggedinuser@safeh
 -- only for demo - not for testing (user ID 5)
 insert into acct (acctid,role,email,password) values (5,'21','demo@safeharbor.in', 'abcd'); 
 
+-- only for testing - user ID 6
+insert into acct (acctid,role,email,password) values (6,'21','testers@safeharbor.in', 'abcd'); 
+
 -- for the user with one site
 insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone,country) 
 	values (1,1,'Etsy','1.etsy.com','http://latest.safeharbor.in/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345',
@@ -101,6 +104,10 @@ insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,
 insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone,country) 
 	values (4,5,'Etsy','etsy.com','http://latest.safeharbor.in/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345',
 		'lucasgonze@safeharbor.in','Jane Doe Esquire','(800) 555-1212','United States');
+-- for the QA user (siteid 5)
+insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone,country) 
+	values (5,6,'Etsy','testdomain.safeharbor.in','http://latest.safeharbor.in/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345',
+		'testers@safeharbor.in','Jane Doe Esquire','(800) 555-1212','United States');
 
 -- user with one site
 insert into audit (site, opname, contact) values (1,'takedownRequest',1);
