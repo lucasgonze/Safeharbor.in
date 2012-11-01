@@ -1,5 +1,55 @@
-<div class="" id="dmcaform">
-	<a id="prefill" class="btn btn-small">Prefill</a>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<title>{{#if sitename}}{{sitename}}{{else}}Safeharbor.in{{/if}}{{#if pageTitle}} - {{pageTitle}}{{/if}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/dash/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+    </style>
+    <link href="/dash/css/safe_bootstrap.css" rel="stylesheet">
+    <link href="/dash/css/bootstrap-responsive.css" rel="stylesheet">
+
+	<link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/dash/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/dash/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/dash/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/dash/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/dash/ico/apple-touch-icon-57-precomposed.png">
+
+	<!-- JS is ordinarily at the end for speed but we need it before the body so that view pages 
+		can load custom libraries which rely on JQuery-->
+    <script src="/dash/js/jquery.js"></script>
+
+  </head>
+
+
+<body>
+
+<div class="row">
+<div class="span10" id="dmcaform">
+
 	<form action="/box/{{idhash}}" method="post" id="request">
 
 		<!-- this first row contains everything before the "submit" button. We need a separate dedicated 
@@ -9,7 +59,7 @@
 		<div class="row">
 			<div class="span8">
 
-			    <h2 class="page header">About you</h2>
+			    <h2 class="page header">Add a New Dispute</h2>
 			    <form class="">
 
 				    <div class="control-group" id="demo-tgt-1">
@@ -22,7 +72,7 @@
 
 				    <div class="control-group" >
 				      <label class="control-label" for="owners_full_name">Copyright owner's full name</label>
-				      <div class="controls">
+					      <div class="controls">
 						<input tabindex="20" type="text" placeholder="John Doe" id="owners_full_name" name="owners_full_name">
 				      </div>
 				    </div>
@@ -98,6 +148,8 @@
 				    </div>
 				</div><!-- end .cloneblock -->
 
+
+<!-- begin #legalrequiredfields 
 				<p class="primary" id="insert_before_here">
 				  <button id="report_another" tabindex = "1000" class="btn-large">+Add another claimed infringement</button>
 				</p>
@@ -180,6 +232,7 @@
 		
 	</form>
 </div>
+</div>
 
 <script>
 $(function() {
@@ -246,4 +299,5 @@ $(function() {
 	})
 });
 </script>
-
+</body>
+</html>
