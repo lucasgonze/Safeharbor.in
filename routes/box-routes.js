@@ -27,6 +27,7 @@ exports.install = function( app )
 {
 	app.get ('/box/bymail/:regid([0-9a-f]+)$',  	getByMail);
 	app.get ('/box/form/:regid([0-9a-f]+)$',  		getForm);
+	app.get('/myinbox',	   							getOwnForm);
 	app.get ('/box/help/learn/:regid([0-9a-f]+)$',	getLearn);
 	app.get ('/box/help/role/:regid([0-9a-f]+)$',  	getRoleHelp);
 	app.get ('/box/role/:regid([0-9a-f]+)$',  		getRole);
@@ -63,6 +64,39 @@ function wrapBox(req,res,viewPath,pageTitle,bodyClass,extraVars){
 function getByMail(req,res){
 	wrapBox(req,res,'box/bymail.html','Copyright - Submit By Mail','bymail');
 };
+
+// for submitting a dispute to yourself
+function getOwnForm(req,res){
+
+	var acctid = 1; // assume for now, just to get started
+	var viewPath = "dash/admin_add_infringement.html";
+	var pageTitle = "fixme";
+	var bodyClass = "fixme";
+	var extraVars = {};
+	
+	var p = box.getOwn( acctid, function (code, site) {
+        if( code != CODES.SUCCESS ) 
+            return;
+
+		var pageVars = 	{
+		                    layout:     'box/box_main.html',
+		                    skipMenu:   true,
+		                    pageTitle:  pageTitle,
+		                    bodyClass:  bodyClass,
+							regid: 		req.params.regid
+	 					};
+		pageVars = utils.copy(pageVars,site);
+		if( typeof extraVars !== "undefined")
+			pageVars = utils.copy(pageVars,extraVars);
+
+		// console.log("passing vars to wrapBox")
+		// console.log(pageVars)
+        res.render( viewPath, pageVars);			
+    } );
+
+    p.handleErrors(req,res,[CODES.MULTIPLE_RECORDS_FOUND,CODES.NO_RECORDS_FOUND]).perform();			
+	
+}
 
 function getForm(req,res){
 
