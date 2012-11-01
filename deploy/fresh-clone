@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#
+# This is a script to check out the latest source from github for the purpose of doing work in a local branch.
+#
+
+# We store checkouts in a directory called "checkouts" in your home directory.
+DATE=`date +m%m_d%d_y%y_h%H_m%M`
+D="~/checkouts/$DATE"
+mkdir -p "$D" || exit "$D" $?
+cd "$D" || exit $?
+
+git clone https://github.com/lucasgonze/Safeharbor.in.git || exit $?
+cd Safeharbor.in || exit $?
+git checkout -b "$DATE"
+
+P=`pwd`
+rm -r ~/latest-checkout
+ln -s "$P" ~/latest-checkout
+
+npm install || exit $?
+
+git remote add github https://github.com/lucasgonze/Safeharbor.in.git
+git remote add latest git@heroku.com:quiet-planet-1702.git
+git remote add paige git@heroku.com:severe-winter-9697.git
+
+echo "Fresh clone in ~/latest-checkout ready for use"
