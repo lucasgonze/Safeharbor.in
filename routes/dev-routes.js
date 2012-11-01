@@ -131,7 +131,7 @@ function page(req,res)
         outputMessage( msg.warning, "No, really, be careful out there" ).
         outputMessage( msg.error, "That's what I'm talking about" );
         
-    res.render( 'dev/pageargs.html', { } ); // {}? is that supposed to be self-documenting? fucking hell, victor.
+    res.render( 'dev/pageargs.html', { } ); // see contextDumper in page.js for what happens next
 }
 
 function testboxpost(req,res)

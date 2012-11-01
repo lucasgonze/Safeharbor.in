@@ -24,10 +24,12 @@ var CODES = box.CODES;
 
 
 exports.install = function( app )
-{
+{	
+	var logged_in = app.checkRole(app.ROLES.logged_in);
+    
 	app.get ('/box/bymail/:regid([0-9a-f]+)$',  	getByMail);
 	app.get ('/box/form/:regid([0-9a-f]+)$',  		getForm);
-	app.get('/myinbox',	   							getOwnForm);
+	app.get('/myinbox',	   							logged_in, getOwnForm);
 	app.get ('/box/help/learn/:regid([0-9a-f]+)$',	getLearn);
 	app.get ('/box/help/role/:regid([0-9a-f]+)$',  	getRoleHelp);
 	app.get ('/box/role/:regid([0-9a-f]+)$',  		getRole);
@@ -68,29 +70,25 @@ function getByMail(req,res){
 // for submitting a dispute to yourself
 function getOwnForm(req,res){
 
-	var acctid = 1; // assume for now, just to get started
+	var user = safeharbor.loginstate.getUser(req);
+	var acctid = user.acctid; // assume for now, just to get started
 	var viewPath = "dash/admin_add_infringement.html";
-	var pageTitle = "fixme";
-	var bodyClass = "fixme";
-	var extraVars = {};
+	var pageTitle = "Submit Dispute to Your Own Site";
+	var bodyClass = "myinbox";
 	
-	var p = box.getOwn( acctid, function (code, site) {
+	var p = box.getOwn( user.acctid, function (code, site) {
         if( code != CODES.SUCCESS ) 
             return;
 
+        // note that layout is NOT set to 'box/box_main.html', so is 
+		// different from everything else in box-routes.js
 		var pageVars = 	{
-		                    layout:     'box/box_main.html',
 		                    skipMenu:   true,
 		                    pageTitle:  pageTitle,
 		                    bodyClass:  bodyClass,
 							regid: 		req.params.regid
 	 					};
 		pageVars = utils.copy(pageVars,site);
-		if( typeof extraVars !== "undefined")
-			pageVars = utils.copy(pageVars,extraVars);
-
-		// console.log("passing vars to wrapBox")
-		// console.log(pageVars)
         res.render( viewPath, pageVars);			
     } );
 
