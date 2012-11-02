@@ -127,15 +127,15 @@ insert into contact (owners_full_name,full_name,job_title,email,phone,fax,postal
 insert into contact (owners_full_name,full_name,job_title,email,phone,fax,postal,signature) values ( 'John Q. Owner', 'Jane Workerbee', 'Attack Dog In Chief', 'jane@example.com', '(900) 555-1212', '(900) 555-1212', '456 Pleasant Valley Avenue, Agrestik CA 12345', '/jane w.');
 
 -- for the user with only one site
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Oh Darlene" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Below to the header titled "The Beatles"', 1, '"Kind Mr Mustard" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
 insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"I Want to Hold Your Schnozzle" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Noterday" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Y Dont We Dew Et En Th Rod" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'On to the header titled "The Beatles"', 1, '"Abby Rode" by The Beetles',  'http://example.com/my-name-is-norbert.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Feebles',  'http://example.com/abbyrode.mp3', 'http://google.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bagles',  'http://example.com/abbyrode.mp3', 'http://example.com');
 insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
 
 -- a closed item for the user with only one site
