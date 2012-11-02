@@ -1,3 +1,4 @@
+#!/usr/local/bin/node
 
 /*
  Set up the sandbox accounts for testing/hacking.
@@ -43,10 +44,7 @@ var runSQLFile = function(filename,callback){
 	})	
 }
 
-
-var files = ['deploy/sandbox.sql'];
-if( process.argv.length > 2 && process.argv[2] === "--clear")
-	files.push('deploy/reset-all.sql');
+var files = ['deploy/reset-all.sql'];
 
 async.forEachSeries(files, runSQLFile, function(err){
     // if any of the files produced an error, err would equal that error
@@ -55,6 +53,8 @@ async.forEachSeries(files, runSQLFile, function(err){
 		process.exit(code=3);
 	} else {
 		debug('A-OK, no errors');
+		process.exit(code=3);
+		
 	}
 });
 

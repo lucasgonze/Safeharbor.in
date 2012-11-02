@@ -111,6 +111,12 @@ insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,a
 
 -- user with one site
 insert into audit (site, opname, contact) values (1,'takedownRequest',1);
+
+-- create a takedown request with a later date for testing date sort
+insert into audit (site, opname, contact) values (1,'takedownRequest',1);
+update audit set creation = now()+interval '1000 seconds' where auditid = 2;
+insert into media (anchor, audit,description,media_url,page) values (  'In the blogroll', 2, '(This item is newer)',  'http://example.com/abbyrode.mp3', 'http://example.com');	
+	
 -- user with two sites
 insert into audit (site, opname, contact) values (2,'takedownRequest',2);
 insert into audit (site, opname, contact) values (3,'takedownRequest',2);
@@ -136,14 +142,16 @@ insert into media (anchor, audit,description,media_url,page) values (  'Next to 
 insert into media (anchor, audit,description,media_url,page) values (  'On to the header titled "The Beatles"', 1, '"Abby Rode" by The Beetles',  'http://example.com/my-name-is-norbert.mp3', 'http://example.com');
 insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Feebles',  'http://example.com/abbyrode.mp3', 'http://google.com');
 insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bagles',  'http://example.com/abbyrode.mp3', 'http://example.com');
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 1, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+	
+-- warning: this line will be executed in a later script
+-- insert into media (anchor, audit,description,media_url,page) values (  '(This item has a later date)"', 2, '(This item has a later date)',  'http://example.com/abbyrode.mp3', 'http://example.com');
 
 -- a closed item for the user with only one site
 insert into media (anchor, audit,description,media_url,page,takedown_date) values (  'In the blogroll', 1, '"Starz A Poppin!" by Hairosmith',  'http://example.com/abbyrode.mp3', 'http://example.com', current_timestamp);
 
 -- for the user with more than one site
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 2, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
 insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 3, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 4, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
 
 -- for demo user
-insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 4, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');
+insert into media (anchor, audit,description,media_url,page) values (  'Next to the header titled "The Beatles"', 5, '"Abby Rode" by The Bztles',  'http://example.com/abbyrode.mp3', 'http://example.com');

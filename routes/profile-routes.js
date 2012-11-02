@@ -335,8 +335,6 @@ function saveSiteEdit(req,res) {
 
 function saveAcctEditor(req,res) {
 
-	console.log("BP 33.1",req.body)
-
 	var ck = function(t){ return( t && t.length && t.length > 3) };
 	if( ck(req.body.new_password) ){ // did reset password
 		if( 
