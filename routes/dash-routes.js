@@ -128,7 +128,6 @@ function getOpenDisputes(req,res){
 		var sortNewToOld = false;
 	}
 
-console.log("Bp 22",directionClass,sortNewToOld);
 	dash.getOpenMedia({uid:loginstate.getID(req), sortNewToOld:sortNewToOld, callback:function(err,data){
 		
 		if(err){
