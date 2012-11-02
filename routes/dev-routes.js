@@ -24,7 +24,7 @@ var menu = [
 	[ 'permanent Google+ Hangout', '/hangout', hangout],
 	[ 'turn on console debugging', '/dev/debugout/:volume([0-9])', flipDebug, '/dev/debugout/1' ],
 	[ 'turn off console debugging', null, flipDebug, '/dev/debugout/0' ],
-	[ 'hard-wired /box form', '/dev/testboxpost', testboxpost ],
+	[ 'hard-wired /inbox form', '/dev/testboxpost', testboxpost ],
 	[ 'test dashboard for account (1)', '/dev/testdash', testdash ],
     [ 'some fun docs', '/dev/docs', docs ]
 ];
@@ -131,7 +131,7 @@ function page(req,res)
         outputMessage( msg.warning, "No, really, be careful out there" ).
         outputMessage( msg.error, "That's what I'm talking about" );
         
-    res.render( 'dev/pageargs.html', { } ); // {}? is that supposed to be self-documenting? fucking hell, victor.
+    res.render( 'dev/pageargs.html', { } ); // see contextDumper in page.js for what happens next
 }
 
 function testboxpost(req,res)

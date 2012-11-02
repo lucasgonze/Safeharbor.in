@@ -15,7 +15,7 @@ var Performer  = safeharbor.Performer;
 var util = require('util');
 var errout = errlib.errout();
 
-var box     = require('../models/box-models.js');
+var box     = require('../models/inbox-models.js');
 var dash    = require('../models/dash-models.js');
 
 var mailer = require("../lib/mail.js");
@@ -24,15 +24,17 @@ var CODES = box.CODES;
 
 
 exports.install = function( app )
-{
-	app.get ('/box/bymail/:regid([0-9a-f]+)$',  	getByMail);
-	app.get ('/box/form/:regid([0-9a-f]+)$',  		getForm);
-	app.get('/myinbox',	   							getOwnForm);
-	app.get ('/box/help/learn/:regid([0-9a-f]+)$',	getLearn);
-	app.get ('/box/help/role/:regid([0-9a-f]+)$',  	getRoleHelp);
-	app.get ('/box/role/:regid([0-9a-f]+)$',  		getRole);
-	app.get ('/box/:regid([0-9a-f]+)$',  			getSplash);
-	app.post('/box/:regid([0-9a-f]+)',   			postBox);
+{	
+	var logged_in = app.checkRole(app.ROLES.logged_in);
+    
+	app.get ('/inbox/bymail/:regid([0-9a-f]+)$',  	getByMail);
+	app.get ('/inbox/form/:regid([0-9a-f]+)$',  		getForm);
+	app.get('/myinbox',	   							logged_in, getOwnForm);
+	app.get ('/inbox/help/learn/:regid([0-9a-f]+)$',	getLearn);
+	app.get ('/inbox/help/role/:regid([0-9a-f]+)$',  	getRoleHelp);
+	app.get ('/inbox/role/:regid([0-9a-f]+)$',  		getRole);
+	app.get ('/inbox/:regid([0-9a-f]+)$',  			getSplash);
+	app.post('/inbox/:regid([0-9a-f]+)',   			postBox);
 }
 
 // convenience function for reuse only in this file
@@ -43,7 +45,7 @@ function wrapBox(req,res,viewPath,pageTitle,bodyClass,extraVars){
             return;
 
 		var pageVars = 	{
-		                    layout:     'box/box_main.html',
+		                    layout:     'inbox/inbox_main.html',
 		                    skipMenu:   true,
 		                    pageTitle:  pageTitle,
 		                    bodyClass:  bodyClass,
@@ -62,35 +64,31 @@ function wrapBox(req,res,viewPath,pageTitle,bodyClass,extraVars){
 }
 
 function getByMail(req,res){
-	wrapBox(req,res,'box/bymail.html','Copyright - Submit By Mail','bymail');
+	wrapBox(req,res,'inbox/bymail.html','Copyright - Submit By Mail','bymail');
 };
 
 // for submitting a dispute to yourself
 function getOwnForm(req,res){
 
-	var acctid = 1; // assume for now, just to get started
+	var user = safeharbor.loginstate.getUser(req);
+	var acctid = user.acctid; // assume for now, just to get started
 	var viewPath = "dash/admin_add_infringement.html";
-	var pageTitle = "fixme";
-	var bodyClass = "fixme";
-	var extraVars = {};
+	var pageTitle = "Submit Dispute to Your Own Site";
+	var bodyClass = "myinbox";
 	
-	var p = box.getOwn( acctid, function (code, site) {
+	var p = box.getOwn( user.acctid, function (code, site) {
         if( code != CODES.SUCCESS ) 
             return;
 
+        // note that layout is NOT set to 'inbox/inbox_main.html', so is 
+		// different from everything else in box-routes.js
 		var pageVars = 	{
-		                    layout:     'box/box_main.html',
 		                    skipMenu:   true,
 		                    pageTitle:  pageTitle,
 		                    bodyClass:  bodyClass,
-							regid: 		req.params.regid
+							regid: 		site.idhash
 	 					};
 		pageVars = utils.copy(pageVars,site);
-		if( typeof extraVars !== "undefined")
-			pageVars = utils.copy(pageVars,extraVars);
-
-		// console.log("passing vars to wrapBox")
-		// console.log(pageVars)
         res.render( viewPath, pageVars);			
     } );
 
@@ -111,7 +109,7 @@ function getForm(req,res){
 	else
 		roleOtherChecked = "checked";
 			
-	wrapBox(req,res,'box/form.html','Copyright - Submit Dispute','dmcaform',{
+	wrapBox(req,res,'inbox/form.html','Copyright - Submit Dispute','dmcaform',{
 		roleCopyrightOwnerChecked: roleCopyrightOwnerChecked,
 		roleAuthorizedRepresentativeChecked: roleAuthorizedRepresentativeChecked,
 		roleOtherChecked: roleOtherChecked
@@ -119,19 +117,19 @@ function getForm(req,res){
 };
 
 function getRoleHelp(req,res){
-	wrapBox(req,res,'box/rolehelp.html','Copyright Help - Role','rolehelp');
+	wrapBox(req,res,'inbox/rolehelp.html','Copyright Help - Role','rolehelp');
 };
 
 function getLearn(req,res){
-	wrapBox(req,res,'box/learn.html','Copyright Help - Learn','learn');
+	wrapBox(req,res,'inbox/learn.html','Copyright Help - Learn','learn');
 };
 
 function getRole(req,res){
-	wrapBox(req,res,'box/role.html','Copyright - Select Role','role');
+	wrapBox(req,res,'inbox/role.html','Copyright - Select Role','role');
 };
 
 function getSplash(req,res){
-	wrapBox(req,res,'box/splash.html','Copyright','splash');
+	wrapBox(req,res,'inbox/splash.html','Copyright','splash');
 };
 
 function notifyEmailer(req, res, contactInfo, mediaInfo ) {	
@@ -141,7 +139,7 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                 callback: function(success,message) {
                     if( success ) {
 						res.status(202);
-						wrapBox(req,res,"box/receipt.html","Accepted","nop",{
+						wrapBox(req,res,"inbox/receipt.html","Accepted","nop",{
 							sitename: this.sitename,
 						    domain: this.domain
 						});
@@ -158,13 +156,13 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
                 
                 performer: function() {            
                     var mailerValues = this.findValue('auditDetail');
-                    mailerValues.dashurl =  'https://'+req.headers.host+'/dash';   
+                    mailerValues.dashurl =  'http://'+req.headers.host+'/dash';   
                  	console.log("Sending notification mail to");
 					console.log(mailerValues.agentemail);
 
 					mailer.to(
 						{
-							viewsSubdir: "box",
+							viewsSubdir: "inbox",
 							template: "notificationemail", 
 							to: mailerValues.agentemail,
 						    subject: utils.gettext("IMPORTANT: DMCA takedown request received"),	
@@ -207,8 +205,8 @@ function notifyEmailer(req, res, contactInfo, mediaInfo ) {
     // incident
   description: [ 'work is being', 'desc2', [length]: 2 ],
   page: 
-   [ 'http://localhost.com/box/24738',
-     'http://localhost.net/box/24738',
+   [ 'http://localhost.com/inbox/24738',
+     'http://localhost.net/inbox/24738',
      [length]: 2 ],
   anchor: [ 'ch work is be', 'page2', [length]: 2 ] }
 

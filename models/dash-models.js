@@ -215,7 +215,7 @@ function getTakedownRequests( callback )
          description: 'work is being',
          media_url: 'http://somemedia.mp3',
          mediaid: 2,
-         page: 'http://localhost.com/box/24738',
+         page: 'http://localhost.com/inbox/24738',
         }, 
        { 
          anchor: 'page2',
@@ -223,7 +223,7 @@ function getTakedownRequests( callback )
          description: 'desc2',
          media_url: 'http://someothermedia.mp3',
          mediaid: 3,
-         page: 'http://localhost.net/box/24738'
+         page: 'http://localhost.net/inbox/24738'
         }
       ],
     
@@ -379,6 +379,7 @@ closed: any true value
 */
 exports.getOpenMedia = function(params){
 	
+	console.log("BP 1")
 	var closedFlag = "is null ";
 	if( params.closed )
 		closedFlag = "is not null "
@@ -398,7 +399,50 @@ exports.getOpenMedia = function(params){
 		+ 'and audit.auditid = media.audit '
 		+ 'and audit.contact = contact.contactid ';
 
+	console.log("BP 12",sql)
 	var query = getClient().query(sql,[params.uid]);
+	console.log("BP 13",query)
+
+	if( !query ){
+		debug.out("(Null query error for sql: ",sql);
+		params.callback("Null query error");
+		return;
+	}
+
+	var gotErr = false;
+	query.on('error',function(err){
+		debug.out('ERROR',err);
+		gotErr = true;
+		params.callback(err);
+	});
+
+	var rows = [];
+	query.on('row',function(data){
+		rows.push(data);
+	});
+
+	query.on('end',function(data){
+		if( !gotErr )
+			params.callback(false,rows);
+	});
+	
+}
+
+exports.searchOpenMedia = function(params){
+	
+	var closedFlag = "is null ";
+	if( params.closed )
+		closedFlag = "is not null "
+		
+	// fixme: prevent problems with nulls in fields using SELECT COALESCE(description, short_description, '(none)') ...
+	var sql = 
+		"select site.sitename, site.sitelogo, site.domain, media.description, media.media_url, audit.creation, contact.owners_full_name, contact.full_name, contact.job_title, contact.email, contact.phone, contact.fax, contact.postal from audit, acct, site, media, contact"
+		+ " where acct.acctid = $1 and media.takedown_date is null and acct.acctid = site.acct and site.siteid = audit.site and audit.auditid = media.audit and audit.contact = contact.contactid"
+		+ " and"
+		+ " to_tsvector('english',site.sitename||' '||site.sitelogo||' '||site.domain||' '||media.description||' '||media.media_url||' '||audit.creation||' '||contact.owners_full_name||' '||contact.full_name||' '||contact.job_title||' '||contact.email||' '||contact.phone||' '||contact.fax||' '||contact.postal)"
+		+ " @@ to_tsquery('english',$2)";	
+
+	var query = getClient().query(sql,[params.uid,params.needle]);
 
 	if( !query ){
 		debug.out("(Null query error for sql: ",sql);

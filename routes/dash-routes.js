@@ -25,6 +25,9 @@ exports.install = function(app)
 	app.get( '/newsite', logged_in, getNewSite);
 	app.get( '/settings', logged_in, getSiteEditor);
 	app.post( '/settings', logged_in, saveSiteEdit);
+		
+	app.get( '/query', logged_in, searchOpenDisputes );
+    
 }
 
 // clone of profile-routes.saveSiteEdit
@@ -79,6 +82,10 @@ function getSiteEditor(req,res){
         if( code == CODES.OK )
         {
 			var countryList = page.countryList(site.country);
+				
+			// fixes https://github.com/lucasgonze/Safeharbor.in/issues/228
+			// (however the real cause of this problem is probably in the input saving side - to be continued, most likely).
+			site.agentaddress = site.agentaddress.replace('\\n','\n');
 	
             res.render("dash/website_settings.html", utils.copy({
 													"show-nav-for-dashboard":true,
@@ -114,6 +121,38 @@ function getNewSite(req,res){
 function getOpenDisputes(req,res){
 	
 	dash.getOpenMedia({uid:loginstate.getID(req), callback:function(err,data){
+		
+		if(err){
+			errlib.page(500,res,"error returned from getOpenMedia: "+err);
+			return;
+		}
+		
+		var sitelogo = data && data.length > 0 ? data[0].sitelogo : null;
+		var sitename = data && data.length > 0 ? data[0].sitename : null;
+		
+		for( var i=0; i<data.length; i++)
+			data[i].postal.replace('\n','<br/>');
+			
+		res.render( 
+					'dash/single-site-open-disputes.html', {  
+						"show-nav-for-dashboard":true,
+						layout: 'shared/main.html',
+						pageTitle:"SafeHarbor.in - Panel",
+						bodyClass:"dash-index",
+						setOpenAsActiveTab: 'class="active"',
+						disputes: data,
+						"dispute-count": data.length,
+						sitelogo: sitelogo,
+						sitename: sitename,
+						"single-site-open-disputes":true
+                 } 
+		);
+	}});			
+}
+
+function searchOpenDisputes(req,res){
+	
+	dash.searchOpenMedia({uid:loginstate.getID(req), needle:req.query.needle,callback:function(err,data){
 		
 		if(err){
 			errlib.page(500,res,"error returned from getOpenMedia: "+err);
