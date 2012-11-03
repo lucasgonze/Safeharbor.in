@@ -379,29 +379,35 @@ closed: any true value
 */
 exports.getOpenMedia = function(params){
 	
-	console.log("BP 1")
 	var closedFlag = "is null ";
 	if( params.closed )
 		closedFlag = "is not null "
 	
-	var sql = ''
-		+ 'select '
-		+ 'site.sitename, site.sitelogo, site.domain, '
-		+ 'media.description, media.media_url, '
-		+ 'audit.creation, '
-		+ 'contact.owners_full_name, contact.full_name, contact.job_title, contact.email, contact.phone, contact.fax, contact.postal '
-		+ 'from audit, acct, site, media, contact '
-		+ 'where '
-		+ 'acct.acctid = $1 '
-		+ 'and media.takedown_date '+closedFlag
-		+ 'and acct.acctid = site.acct '
-		+ 'and site.siteid = audit.site '
-		+ 'and audit.auditid = media.audit '
-		+ 'and audit.contact = contact.contactid ';
+	var sortDirection = "asc";
+	if( params.sortNewToOld)
+		sortDirection = "desc";
+	console.log("Bp 23",params.sortNewToOld,sortDirection);
 
-	console.log("BP 12",sql)
+	
+	var sql = ''
+		+ ' select'
+		+ ' site.sitename, site.sitelogo, site.domain,'
+		+ ' media.description, media.media_url,'
+		+ ' audit.creation,'
+		+ ' contact.owners_full_name, contact.full_name, contact.job_title, contact.email, contact.phone, contact.fax, contact.postal'
+		+ ' from audit, acct, site, media, contact'
+		+ ' where'
+		+ ' acct.acctid = $1'
+		+ ' and media.takedown_date '+closedFlag
+		+ ' and acct.acctid = site.acct'
+		+ ' and site.siteid = audit.site'
+		+ ' and audit.auditid = media.audit'
+		+ ' and audit.contact = contact.contactid'
+		+ ' order by audit.creation '+sortDirection
+		;
+
 	var query = getClient().query(sql,[params.uid]);
-	console.log("BP 13",query)
+console.log("BP 22",query);
 
 	if( !query ){
 		debug.out("(Null query error for sql: ",sql);
@@ -432,7 +438,7 @@ exports.searchOpenMedia = function(params){
 	
 	var closedFlag = "is null ";
 	if( params.closed )
-		closedFlag = "is not null "
+		closedFlag = "is not null ";
 		
 	// fixme: prevent problems with nulls in fields using SELECT COALESCE(description, short_description, '(none)') ...
 	var sql = 
@@ -440,7 +446,7 @@ exports.searchOpenMedia = function(params){
 		+ " where acct.acctid = $1 and media.takedown_date is null and acct.acctid = site.acct and site.siteid = audit.site and audit.auditid = media.audit and audit.contact = contact.contactid"
 		+ " and"
 		+ " to_tsvector('english',site.sitename||' '||site.sitelogo||' '||site.domain||' '||media.description||' '||media.media_url||' '||audit.creation||' '||contact.owners_full_name||' '||contact.full_name||' '||contact.job_title||' '||contact.email||' '||contact.phone||' '||contact.fax||' '||contact.postal)"
-		+ " @@ to_tsquery('english',$2)";	
+		+ " @@ plainto_tsquery('english',$2)";	
 
 	var query = getClient().query(sql,[params.uid,params.needle]);
 
