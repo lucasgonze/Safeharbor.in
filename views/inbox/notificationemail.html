@@ -13,9 +13,54 @@
       body {
         padding-top: 60px;
         padding-bottom: 40px;
+        color: #232323;
+       font:400 14px/1.6 'Open Sans', Helvetica, sans-serif;
       }
+      
+      
+h1,h2,h3,h4,h5,h6 {
+	font-family:'Bree Serif', Georgia, serif;
+font-weight: normal;
+margin: 0px;
+}
+
       .sidebar-nav {
         padding: 9px 0;
+      }
+      
+      #email-styles {
+      width: inherit;
+      height: inherit;
+      border: 10px solid #a7bed4;
+        outline: 1px solid #000;
+      background-color: #eeeded;
+      padding: 20px;
+      }
+      
+      .critical {
+      color: red;
+      font-style: italic;
+      font-weight: normal;
+      font-size: 1.2em;
+      }
+
+      #email-styles h1 {
+      color: #232323;
+	  margin-top: 0px;
+	  margin-bottom: 10px;
+	  font-size: 1.8em;
+	  
+	 }
+      .black {
+      color: #232323;
+      text-decoration: none;
+      }
+      .website-name {
+      color: #336699;
+      }
+      
+      a {
+      color: #336699;
       }
       
       ul {
@@ -24,24 +69,56 @@
       padding: 0;
       
       }
- ul li {
-margin: 0; 
-padding: 0 3px 0px 0px; 
-display: inline 
-;}
-
-h2, tr {
-color: #666;
-}
 
 p {
 color: #000000;
+margin-top:5px;
+margin-bottom: 0px;
 }
 
 #email-footer {
-border-top: 1px solid #666666; margin: 20px 0px 20px 0px;
+border-top: 1px solid #666666; 
+margin-top: 20px;
 }
-    </style>
+
+#email-footer ul li{
+display: inline;
+margin: 0; 
+padding: 0 10px 0px 0px; 
+}
+
+#in-email-links, #copyright-table {
+margin-top: 20px;
+}
+
+#copyright-table {
+width:inherit;
+	height:inherit;
+	padding: 20px;
+	background-color:#eee;
+	border:1px solid #CCCCCC;
+	box-shadow:2px 3px 3px rgba(0,0,0,0.05) inset;
+}
+
+td, tr {
+padding: 0px 20px 0px 0px; 
+}
+
+td.left {
+color: #555;
+}
+
+td.right {
+color: #000;
+}    
+
+#footer-links ul {
+margin: 0;
+}
+
+
+</style>
+
     <link href="/dash/css/safe_bootstrap.css" rel="stylesheet">
     <link href="/dash/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -67,30 +144,33 @@ border-top: 1px solid #666666; margin: 20px 0px 20px 0px;
 
 <body><!-- Begin Single Dispute List Item in an Email Template-->
 
+<div id="email-styles"><h1>A takedown request has been submitted for <span class="website-name">Youtube</span></h1>
 
-<h2>A takedown request has been submitted for Youtube</h2>
+
    
 		<!--Begin Infringement Listing-->
 
 			 <ul >
-				<li class="infringement-title">Stairway to Heaven by Led Zeppelin LIVE</li>
-				<li class="infringement-url" ><a href="file:///Volumes/makerlab/Users/paigedestroy/Desktop/%7B%7Bmedia_url%7D%7D" >media_url</a></li>
+			 <li class="status"><span class="critical"> 3 days until Dispute is Critical</span></li>
+				<li class="infringement-title"><h2>Stairway to Heaven by Led Zeppelin LIVE</h2></li>
+				<li class="infringement-url" ><span class="black">Link:</span> <a href="https://www.youtube.com/watch?v=PD-MdiUm1_Y&feature=plcp" >https://www.youtube.com/watch?v=PD-MdiUm1_Y&feature=plcp </a></li>
 				<li class="arrival-date">June 2, 2012  3:45pm</li>
-				<li class="open">Dispute is Open<span class="italic"> 3 days until Dispute is Critical</span></li>
+				<li class="open">Dispute is Open</li>
 					</ul>   
 		<!--End Infringement Listing-->
 		
 <div id="in-email-links">		 
 <ul >
 	<!--Begin From Email, Go to Safeharbor to see Dispute-->
-<li ><h3><a href="#" class="dispute-link" title="dispute-link" >Link to Dispute Ticket: </a></h3></li><!--End From Email, Go to Safeharbor to see Dispute-->		
+	<h3>Dispute Ticket</h3>
+<li><a href="#" class="dispute-link" title="dispute-link" >https://www.safeharbor.in/youtube/disputes/new-disputes </a></li><!--End From Email, Go to Safeharbor to see Dispute-->		
 </ul>
 </div>	
 
 	
  <!-- Begin Copyright Holder Table-->
 
-      <div class="copyright-table ">
+      <div id="copyright-table">
         <table class="table">
           <thead>
           </thead>
@@ -111,16 +191,16 @@ border-top: 1px solid #666666; margin: 20px 0px 20px 0px;
       
       <div id="email-footer">
       
-<p >This tool for managing alleged copyright infringement is provided for {{site.name}} by SafeHarbor.in. SafeHarbor.in provides services for DMCA compliance. Our mission is to reduce risk, expense, and stress for web sites while being effective and efficient for copyright owners. </p>
-					<ul class="footer-links">
-						<li><a href="#">&#169; Safeharbor</a></li>
+<p >This tool for managing alleged copyright infringement is provided for {{site.name}} by SafeHarbor.in. SafeHarbor.in provides services for DMCA compliance. Our mission is to reduce risk, expense, and stress for web sites while being effective and efficient for copyright owners. <ul class="footer-links"><li><a href="#">&#169; Safeharbor</a></li>
 						<li><a href="#">Company</a></li>
 						<li><a href="#" >Contact Us</a></li>
-					</ul>
-				</div>
+					</ul></p>
+
+									</div>
 
       
   <!-- End Single Dispute List Item in an Email-->
 
+</div>
 
 </body></html>
