@@ -119,16 +119,8 @@ function getNewSite(req,res){
 }
 
 function getOpenDisputes(req,res){
-		
-	var directionClass = "new-to-old";
-	var sortNewToOld = true;
-	if( req.query.oldToNew != "newToOld"){ 
-		// all you really need to do set ?desc, the value is irrelevant
-		var directionClass = "old-to-new";
-		var sortNewToOld = false;
-	}
-
-	dash.getOpenMedia({uid:loginstate.getID(req), sortNewToOld:sortNewToOld, callback:function(err,data){
+	
+	dash.getOpenMedia({uid:loginstate.getID(req), callback:function(err,data){
 		
 		if(err){
 			errlib.page(500,res,"error returned from getOpenMedia: "+err);
@@ -146,7 +138,7 @@ function getOpenDisputes(req,res){
 						"show-nav-for-dashboard":true,
 						layout: 'shared/main.html',
 						pageTitle:"SafeHarbor.in - Panel",
-						bodyClass:"dash-index "+directionClass,
+						bodyClass:"dash-index",
 						setOpenAsActiveTab: 'class="active"',
 						disputes: data,
 						"dispute-count": data.length,
@@ -159,42 +151,35 @@ function getOpenDisputes(req,res){
 }
 
 function searchOpenDisputes(req,res){
-
-	// fixme: direction
-	//	asc:req.query.asc,
 	
-	dash.searchOpenMedia({
-		uid:loginstate.getID(req), 
-		needle:req.query.needle,
-		callback:function(err,data){
+	dash.searchOpenMedia({uid:loginstate.getID(req), needle:req.query.needle,callback:function(err,data){
 		
-			if(err){
-				errlib.page(500,res,"error returned from getOpenMedia: "+err);
-				return;
-			}
-		
-			var sitelogo = data && data.length > 0 ? data[0].sitelogo : null;
-			var sitename = data && data.length > 0 ? data[0].sitename : null;
-		
-			for( var i=0; i<data.length; i++)
-				data[i].postal.replace('\n','<br/>');
-			
-			res.render( 
-						'dash/single-site-open-disputes.html', {  
-							"show-nav-for-dashboard":true,
-							layout: 'shared/main.html',
-							pageTitle:"SafeHarbor.in - Panel",
-							bodyClass:"dash-index",
-							setOpenAsActiveTab: 'class="active"',
-							disputes: data,
-							"dispute-count": data.length,
-							sitelogo: sitelogo,
-							sitename: sitename,
-							"single-site-open-disputes":true
-	                 } 
-			);
+		if(err){
+			errlib.page(500,res,"error returned from getOpenMedia: "+err);
+			return;
 		}
-	});			
+		
+		var sitelogo = data && data.length > 0 ? data[0].sitelogo : null;
+		var sitename = data && data.length > 0 ? data[0].sitename : null;
+		
+		for( var i=0; i<data.length; i++)
+			data[i].postal.replace('\n','<br/>');
+			
+		res.render( 
+					'dash/single-site-open-disputes.html', {  
+						"show-nav-for-dashboard":true,
+						layout: 'shared/main.html',
+						pageTitle:"SafeHarbor.in - Panel",
+						bodyClass:"dash-index",
+						setOpenAsActiveTab: 'class="active"',
+						disputes: data,
+						"dispute-count": data.length,
+						sitelogo: sitelogo,
+						sitename: sitename,
+						"single-site-open-disputes":true
+                 } 
+		);
+	}});			
 }
 
 // this is out of scope for the "Passive Listing" milestone
