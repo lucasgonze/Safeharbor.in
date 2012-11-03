@@ -8,12 +8,140 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
+    <link href="/dash/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        color: #232323;
+       font:400 14px/1.6 'Open Sans', Helvetica, sans-serif;
+      }
     
-    
- 
-    
+		h1,h2,h3,h4,h5,h6 {
+		font-family:'Bree Serif', Georgia, serif;
+		font-weight: normal;
+		margin: 0px;
+		color: #232323;
+		}
+
+	#email-header {
+  	text-align: center;
+	height: 60px;
+	border-bottom: 1px solid #666;
+	margin: 10px 0px 30px 0px;
+	}
 	
-	
+  #email-header h1 {
+      color: #232323;
+	  margin-top: 0px;
+	  margin-bottom: 10px;
+	  font-size: 1.8em;
+	 }
+
+		a {
+      color: #336699;
+      }
+      
+      ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      
+      }
+
+	   p {
+	color: #000000;
+	margin-top:5px;
+	margin-bottom: 0px;
+	}
+
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      
+      #email-styles {
+      width: inherit;
+      height: inherit;
+      border: 10px solid #D5D3C9;
+        outline: 1px solid #B4B1A3;
+      background-color: #eeeded;
+      padding: 20px;
+        -moz-box-shadow:    3px 3px 5px 6px #000;
+  -webkit-box-shadow: 3px 3px 5px 6px #000;
+  box-shadow:         3px 3px 5px 6px #000;
+      }
+      
+      .critical {
+      color: red;
+      font-style: italic;
+      font-weight: normal;
+      font-size: 1.2em;
+      }
+
+    
+	 
+	   .black {
+      color: #232323;
+      text-decoration: none;
+      }
+      
+      .website-name {
+      color: #336699;
+      }
+      
+
+	 
+	 #in-email-links, #copyright-table {
+		margin-top: 20px;
+		}
+
+	#copyright-table {
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	width:50%;
+	height:inherit;
+	margin-left: 10px;
+	padding: 20px 0px 20px 30px;
+	background-color:#D5D3C9;
+	border:1px solid #B4B1A3;
+	box-shadow:2px 3px 3px rgba(0,0,0,0.05) inset;
+	}
+
+	td, tr {
+	padding: 0px 20px 0px 0px; 
+	}
+
+	td.left {
+	color: #555;
+	}
+
+	td.right {
+	color: #000;
+	}    
+
+          
+	#email-footer {
+	border-top: 1px solid #666666; 
+	margin-top: 20px;
+	}
+
+	#email-footer ul li{
+	display: inline;
+	margin: 0; 
+	padding: 0 10px 0px 0px; 
+	}
+
+
+	#footer-links ul {
+	margin: 0;
+	}
+
+
+</style>
+ <link href="/dash/css/safe_bootstrap.css" rel="stylesheet">
+    <link href="/dash/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -32,61 +160,61 @@
     <script src="/dash/js/jquery.js"></script>
 </head>
 
-<body style="padding-top: 60px;padding-bottom: 40px;color: #232323;font: 400 14px/1.6 'Open Sans', Helvetica, sans-serif;"><!-- Begin Single Dispute List Item in an Email Template-->
+<body><!-- Begin Single Dispute List Item in an Email Template-->
 
-<div id="email-styles" style="width: inherit;height: inherit;border: 10px solid #D5D3C9;outline: 1px solid #B4B1A3;background-color: #eeeded;padding: 20px;-moz-box-shadow: 3px 3px 5px 6px #ccc;-webkit-box-shadow: 3px 3px 5px 6px #ccc;box-shadow: 3px 3px 5px 6px #ccc;">
-<div id="email-header" style="text-align: center;height: 60px;border-bottom: 1px solid #000;margin: 0px 0px 30px 0px;">
-<h1 style="font-family: 'Bree Serif', Georgia, serif;font-weight: normal;margin: 0px;color: #232323;margin-top: 0px;margin-bottom: 10px;font-size: 1.8em;">A Takedown Request has been submitted for <span class="website-name" style="color: #336699;">Youtube</span></h1>
+<div id="email-styles">
+<div id="email-header">
+<h1>A Takedown Request has been submitted for <span class="website-name">Youtube</span></h1>
 </div>
 
    
 		<!--Begin Infringement Listing-->
 
-			 <ul style="list-style: none;margin: 0;padding: 0;">
-			 <li class="status"><span class="critical" style="color: red;font-style: italic;font-weight: normal;font-size: 1.2em;"> 3 days until Dispute is Critical</span></li>
-				<li class="infringement-title"><h2 style="font-family: 'Bree Serif', Georgia, serif;font-weight: normal;margin: 0px;color: #232323;">Stairway to Heaven by Led Zeppelin LIVE</h2></li>
-				<li class="infringement-url"><span class="black" style="color: #232323;text-decoration: none;">Link:</span> <a href="https://www.youtube.com/watch?v=PD-MdiUm1_Y&feature=plcp" style="color: #336699;">https://www.youtube.com/watch?v=PD-MdiUm1_Y&feature=plcp </a></li>
+			 <ul >
+			 <li class="status"><span class="critical"> 3 days until Dispute is Critical</span></li>
+				<li class="infringement-title"><h2>Stairway to Heaven by Led Zeppelin LIVE</h2></li>
+				<li class="infringement-url" ><span class="black">Link:</span> <a href="https://www.youtube.com/watch?v=PD-MdiUm1_Y&feature=plcp" >https://www.youtube.com/watch?v=PD-MdiUm1_Y&feature=plcp </a></li>
 				<li class="arrival-date">June 2, 2012  3:45pm</li>
 				<li class="open">Dispute is Open</li>
 					</ul>   
 		<!--End Infringement Listing-->
 		
-<div id="in-email-links" style="margin-top: 20px;">		 
+<div id="in-email-links">		 
 
-<ul style="list-style: none;margin: 0;padding: 0;">
+<ul>
 	<!--Begin From Email, Go to Safeharbor to see Dispute-->
-<li><h3 style="font-family: 'Bree Serif', Georgia, serif;font-weight: normal;margin: 0px;color: #232323;">A ticket for this Dispute has been created here</h3></li>	
-<li><a href="#" class="dispute-link" title="dispute-link" style="color: #336699;">https://www.safeharbor.in/youtube/disputes/new-disputes </a></li><!--End From Email, Go to Safeharbor to see Dispute-->		
+<li><h3>A ticket for this Dispute has been created here</h3></li>	
+<li><a href="#" class="dispute-link" title="dispute-link" >https://www.safeharbor.in/youtube/disputes/new-disputes </a></li><!--End From Email, Go to Safeharbor to see Dispute-->		
 </ul>
 </div>	
 
 	
  <!-- Begin Copyright Holder Table-->
 
-      <div id="copyright-table" style="margin-top: 20px;-moz-border-radius: 3px;border-radius: 3px;width: 30%;height: inherit;padding: 20px 0px 20px 30px;background-color: #D5D3C9;border: 1px solid #B4B1A3;box-shadow: 2px 3px 3px rgba(0,0,0,0.05) inset;">
+      <div id="copyright-table">
         <table class="table">
           <thead>
           </thead>
 
           <tbody>
-            <tr style="padding: 0px 20px 0px 0px;"><td class="left" style="padding: 0px 20px 0px 0px;color: #555;">Copyright Holder</td><td class="right" style="padding: 0px 20px 0px 0px;color: #000;">owners_full_name</td></tr>
-            <tr style="padding: 0px 20px 0px 0px;"><td class="left" style="padding: 0px 20px 0px 0px;color: #555;">Submitted by</td><td class="right" style="padding: 0px 20px 0px 0px;color: #000;">full_name</td></tr>
-            <tr style="padding: 0px 20px 0px 0px;"><td class="left" style="padding: 0px 20px 0px 0px;color: #555;">Job Title</td><td class="right" style="padding: 0px 20px 0px 0px;color: #000;">job_title</td></tr>
-            <tr style="padding: 0px 20px 0px 0px;"><td class="left" style="padding: 0px 20px 0px 0px;color: #555;">Email</td><td style="padding: 0px 20px 0px 0px;"><a href="mailto:%7B%7Bemail%7D%7D" class="email_link right" style="color: #336699;">email</a></td></tr>
-            <tr style="padding: 0px 20px 0px 0px;"><td class="left" style="padding: 0px 20px 0px 0px;color: #555;">Phone</td><td class="right" style="padding: 0px 20px 0px 0px;color: #000;">phone</td></tr>
-            <tr style="padding: 0px 20px 0px 0px;"><td class="left" style="padding: 0px 20px 0px 0px;color: #555;">Fax</td><td class="right" style="padding: 0px 20px 0px 0px;color: #000;">fax</td></tr>
-            <tr style="padding: 0px 20px 0px 0px;"><td class="left" style="padding: 0px 20px 0px 0px;color: #555;">Address</td><td class="right" style="padding: 0px 20px 0px 0px;color: #000;"><address>postal</address></td></tr>
+            <tr ><td class="left">Copyright Holder</td><td class="right">owners_full_name</td></tr>
+            <tr ><td class="left">Submitted by</td><td class="right">full_name</td></tr>
+            <tr ><td class="left">Job Title</td><td class="right">job_title</td></tr>
+            <tr ><td class="left">Email</td><td><a href="mailto:%7B%7Bemail%7D%7D" class="email_link right" >email</a></td></tr>
+            <tr ><td class="left">Phone</td><td class="right">phone</td></tr>
+            <tr ><td class="left">Fax</td><td class="right">fax</td></tr>
+            <tr ><td class="left">Address</td><td class="right"><address>postal</address></td></tr>
           </tbody>
 
         </table>
       </div><!--End Copyright Holder Table-->   
       
    </div>   
-      <div id="email-footer" style="border-top: 1px solid #666666;margin-top: 20px;">
+      <div id="email-footer">
       
-<p style="color: #000000;margin-top: 5px;margin-bottom: 0px;">This tool for managing alleged copyright infringement is provided for {{site.name}} by SafeHarbor.in. SafeHarbor.in provides services for DMCA compliance. Our mission is to reduce risk, expense, and stress for web sites while being effective and efficient for copyright owners. <ul class="footer-links" style="list-style: none;margin: 0;padding: 0;"><li style="display: inline;margin: 0;padding: 0 10px 0px 0px;"><a href="#" style="color: #336699;">&#169; Safeharbor</a></li>
-						<li style="display: inline;margin: 0;padding: 0 10px 0px 0px;"><a href="#" style="color: #336699;">Company</a></li>
-						<li style="display: inline;margin: 0;padding: 0 10px 0px 0px;"><a href="#" style="color: #336699;">Contact Us</a></li>
+<p >This tool for managing alleged copyright infringement is provided for {{site.name}} by SafeHarbor.in. SafeHarbor.in provides services for DMCA compliance. Our mission is to reduce risk, expense, and stress for web sites while being effective and efficient for copyright owners. <ul class="footer-links"><li><a href="#">&#169; Safeharbor</a></li>
+						<li><a href="#">Company</a></li>
+						<li><a href="#" >Contact Us</a></li>
 					</ul></p>
 
 									</div>
