@@ -459,6 +459,10 @@ Form Basic Styles for Account Settings, Website Settings
 	min-height: 1200px;
 	}
 
+#admin_add_dispute .hint {
+padding-left: 181px;
+}
+
 #website_settings_form {
 	height:900px;
 }
@@ -476,8 +480,7 @@ Form Basic Styles for Account Settings, Website Settings
 	min-height:220px;
 	margin-bottom:5px;
 
-border: 1px solid red;
-}
+
 
 #form_leftside,#show_logourl_image {
 	float:left;
