@@ -48,17 +48,13 @@
 <body>
 
 <div class="row">
-<div class="span10" id="admin_add_dispute_form">
+<div  id="admin_add_dispute_form">
 
-	<form action="/inbox/{{idhash}}" method="post" id="request">
+	<form action="/inbox/{{idhash}}" method="post" id="request" class="span10 form-horizontal">
 
-		<!-- this first row contains everything before the "submit" button. We need a separate dedicated 
-		     row because we want the links to the direct contact fields to appear in the sidebar parallel to
-		     the form submit buttons, so that we can be sure the copyright owner has viewed the form before
-		     deciding to use the old school manual submission process instead. -->
-		
-			    <h1>Add a New Dispute</h1>
-			    <form class="">
+
+			    <legend>Add a New Dispute</legend> <!--Add a new dispute ticket-->
+			    <div id ="form_leftside">
 
 				    <div class="control-group" id="demo-tgt-1">
 				      <label class="control-label" for="full_name">Your full name</label>
