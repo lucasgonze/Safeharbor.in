@@ -459,7 +459,7 @@ Form Basic Styles for Account Settings, Website Settings
 	min-height: 1200px;
 	}
 
-#admin_add_dispute .help-block {
+.help-block {
 padding-left: 181px;
 }
 
