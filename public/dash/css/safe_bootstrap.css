@@ -36,9 +36,7 @@ p {
 	font:400 14px/1.6 'Open Sans', Helvetica, sans-serif;
 }
 
-#page-header {
-margin-bottom: 20px;
-}
+
 
 h1 {
 	font-weight:400;
@@ -53,7 +51,9 @@ h1 {
 	margin-top:20px;
 }
 
-
+#page-header {
+margin-bottom: 20px;
+}
 	
 /* Complicated Top Level Navigation Menu Items Hover States */
 .navbar-inner {
@@ -114,7 +114,6 @@ Create Space for the Alert- but consider a different approach after MVP
 	margin-top:10px;
 }
 
-
 	
 /* 
 Main Page, Body Styles 
@@ -157,17 +156,17 @@ Main Page, Body Styles
 	border-color:#B4B1A3 #B4B1A3 transparent;
 }
 
+.nav > li > a:hover {
+	text-decoration:none;
+	background-color:#B4B1A3;
+}
+
 .nav-tabs > .active > a,.nav-tabs > .active > a:hover {
 	color:#555555;
 	cursor:default;
 	background-color:#d5d3c9;
 	border:1px solid #B4B1A3;
 	border-bottom-color:transparent;
-}
-
-.nav > li > a:hover {
-	text-decoration:none;
-	background-color:#B4B1A3;
 }
 
 .nav-tabs .active a,.nav-tabs .active a:hover {
@@ -189,13 +188,11 @@ Main Page, Body Styles
 	background-color:transparent;
 }
 
-
 	
 /*Search in Tabs */
 li.search form.form-search {
 	margin:2px 0 0 14px;
 }
-
 
 	
 /*Sort the List of Disputes */
@@ -206,7 +203,6 @@ li.search form.form-search {
 #sort-list-link {
 	margin:18px 18px 0 0;
 }
-
 
 	
 /* 
@@ -312,7 +308,7 @@ ul.infringement-list li.open {
 	margin:6px 3px 0 0;
 }
 
-
+/*Dispute Buttons…need Ari's JS file to continue this work, finish buttons */
 
 .btn-darkblue {
 background-color: hsl(214, 37%, 28%) !important; background-repeat: repeat-x; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#7a99c1", endColorstr="#2c4361"); background-image: -khtml-gradient(linear, left top, left bottom, from(#7a99c1), to(#2c4361)); background-image: -moz-linear-gradient(top, #7a99c1, #2c4361); background-image: -ms-linear-gradient(top, #7a99c1, #2c4361); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7a99c1), color-stop(100%, #2c4361)); background-image: -webkit-linear-gradient(top, #7a99c1, #2c4361); background-image: -o-linear-gradient(top, #7a99c1, #2c4361); background-image: linear-gradient(#7a99c1, #2c4361); border-color: #2c4361 #2c4361 hsl(214, 37%, 19.5%); color: #fff !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.56); -webkit-font-smoothing: antialiased;	}
@@ -375,9 +371,6 @@ background-color: hsl(214, 37%, 28%) !important; background-repeat: repeat-x; fi
 	-webkit-font-smoothing:antialiased;
 }
 
-
-	
-/*Dispute is resolved...Resolved Button */
 .resolved {
 	margin:-20px 0 0;
 }
@@ -452,17 +445,23 @@ a.preview-image:hover {
 /*
 Form Basic Styles for Account Settings, Website Settings
 */
-#website_settings_form,#account_settings_form {
-	margin:0 0 200px 50px;
+
+#website_settings_form, #account_settings_form, #admin_add_dispute_form {
 	background-color:#F2F2F2;
-	margin:0 0 100px 50px;
-	padding:18px 0;
-	width:1127px;
 	border:1px solid #BDBEBC;
 	-webkit-box-shadow:0 1px 3px rgba(0,0,0,0.1);
 	-moz-box-shadow:0 1px 3px rgba(0,0,0,0.1);
 	box-shadow:0 1px 3px rgba(0,0,0,0.1);
 	text-shadow:0 1px 0 #FFFFFF;
+}
+
+
+
+#website_settings_form, #account_settings_form {
+	margin:0 0 200px 50px;
+	margin:0 0 100px 50px;
+	padding:18px 0;
+	width:1127px;
 }
 
 #website_settings_form {
