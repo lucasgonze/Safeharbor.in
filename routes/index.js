@@ -62,7 +62,7 @@ function home( req, res, next )
 		// this function is the handler for users who aren't logged in. 
 		next();
     else
-        res.render( 'firstrun/home.html', { layout:'firstrun/nop.html' } );
+        res.render( 'firstrun/comingsoon.html', { layout:'firstrun/nop.html' } );
 }
 
 exports.setup = function(app) {
