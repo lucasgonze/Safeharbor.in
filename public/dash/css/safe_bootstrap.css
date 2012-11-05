@@ -465,3 +465,8 @@ border : green solid 1px;
 .safeharbor-logo {
 background: url(/landing/img/243x23.png);  
 }
+
+
+.agent-name {
+margin-bottom: 20px;
+}
