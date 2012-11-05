@@ -524,13 +524,13 @@ textarea.mailing {
 
 	
 /*Footer Styles, */
-.footer {
+footer.footer {
 	border-top:1px solid red;
 	margin-top:70px;
 	padding:10px 0;
 }
 
-.footer-links {
+footer.footer > ul.footer-links {
 	margin:10px 0;
 }
 
