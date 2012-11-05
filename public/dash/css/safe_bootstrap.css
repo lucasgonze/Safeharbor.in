@@ -690,3 +690,10 @@ margin-bottom: 24px;
 border: 1px solid red;
 margin-top: 40px;
 }
+
+
+.hide-text {
+text-indent: 100%;
+white-space: nowrap;
+overflow: hidden;
+}
