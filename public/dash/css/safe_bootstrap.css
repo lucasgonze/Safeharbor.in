@@ -459,7 +459,7 @@ Form Basic Styles for Account Settings, Website Settings
 	min-height: 1200px;
 	}
 
-.help-block {
+#website_settings_form .help-block, #account_settings_form .help-block, #admin_add_dispute_form .help-block {
 padding-left: 181px;
 }
 
@@ -696,4 +696,11 @@ margin-top: 40px;
 text-indent: 100%;
 white-space: nowrap;
 overflow: hidden;
+}
+
+form.navbar-form .login-help {
+padding: 0px;
+margin: 0;
+border: 1px solid red;
+
 }
