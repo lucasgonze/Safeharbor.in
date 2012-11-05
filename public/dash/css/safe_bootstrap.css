@@ -698,9 +698,9 @@ white-space: nowrap;
 overflow: hidden;
 }
 
-form.navbar-form .login-help {
+span.loginhelp {
 padding: 0px;
 margin: 0;
 border: 1px solid red;
-
+color: #000;
 }
