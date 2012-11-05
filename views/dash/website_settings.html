@@ -2,10 +2,11 @@
        <div id="website_settings_form">
        <!--Begin Form for filling out information about the Website-->
           
-          <form class="span10 form-horizontal" action="/settings" method="post">
+               <div id="form_leftside"> 
+               <form class="span10 form-horizontal" action="/settings" method="post">
             <legend>Website Settings</legend> <!--Name of Website-->
 
-            <div id="form_leftside"> 
+       
             
             <div class="control-group">
               <label class="control-label" for="sitename">Name</label>
@@ -36,13 +37,6 @@
             </div>
 </div>            
 
-<!--Show Logo URL image to the user when they upload it --><!-- fixme -->
-            <div id="show_logourl_image">
-<div id="logourl_image_box">            <img src=
-              "{{sitelogo}}"
-              alt=""/>
-            </div>
-            </div>
  </form>
           <!--End the first part of the form-->
           
@@ -50,7 +44,7 @@
         <!--Begin Registered Agent Information-->
           <form class="span10 form-horizontal" action="">
           
-            <legend class="pad-top">Registered Agent Information <span class="small pull-right">This information is publically displayed and required by law. <a href="#">Learn More</a></span></legend>
+            <legend class="pad-top">Registered Agent Information </legend>
 
             <div class="control-group">
               <label class="control-label" for="inputName">Name</label>
@@ -110,10 +104,18 @@
             <div class="no-gray form-actions">
               <button type="submit" class="btn btn-primary">Save changes</button>
               <button type="button" class="btn">Cancel</button>
-			  <div class="alert alert-success" style="display:none"><i class="icon-ok"></i> Saved</div>
-			  <div class="alert alert-error" style="display:none"><i class="icon-exclamation-sign"></i> Error</div>
+			  <div class="alert alert-success" style="display:none"><i class="icon-ok"></i> Your website settings are saved</div>
+			  <div class="alert alert-error" style="display:none"><i class="icon-exclamation-sign"></i> I'm sorry there seems to be an error, could you check the form again?</div>
             </div>
     </form>
+    <!--Show Logo URL image to the user when they upload it --><!-- fixme -->
+            <div id="show_logourl_image">
+<div id="logourl_image_box">            <img src=
+              "{{sitelogo}}"
+              alt=""/>
+            </div>
+            </div>
+
 </div>
       </div>
       <!--End Form for filling out information about the website-->
