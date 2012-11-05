@@ -25,7 +25,10 @@ outline : 0;
 }
 h1, h2, h3, h4, h5, h6 {
 font-family : 'Bree Serif', Georgia, serif;
+color : #5A5C63;
+font-weight : 400;
 }
+
 p {
 font : 400 14px/1.6 'Open Sans', Helvetica, sans-serif;
 }
@@ -299,16 +302,11 @@ height: 1150px;
 .required {
 color : #C42121;
 }
-#show_logourl_image {
-width : 130px;
-height : 200px;
-margin-left : 20px;
-margin-bottom : 46px;
-}
+
 #logourl_image_box {
-margin-top : 100px;
-width : 120px;
-height : 120px;
+margin-top : 158px;
+width : 100px;
+height : 100px;
 padding : 4px;
 background-color : #fff;
 border : #ccc solid 1px;
@@ -475,3 +473,21 @@ background: url(/landing/img/243x23.png);
 #demo-tgt-1.large-bottom-margin {
 margin-bottom: 53px;
 }
+
+
+#form_leftside, #form_rightside {
+float: left;
+}
+
+#form_leftside {
+width: 533px;
+}
+
+#form_rightside{
+width: 500px;
+min-height: 500px;}
+
+#form_rightside #rightside-copy-block {
+margin: 20px 0px 0px 120px; 
+text-align: right; }
+
