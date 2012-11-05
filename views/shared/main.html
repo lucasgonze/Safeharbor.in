@@ -167,8 +167,9 @@
 					<!--Begin Sort Listing of Disputes by Newest to Oldest Toggle-->
 					<div class="row">
 						<div id="sort-list">
+							{{#if false}} can't fix the bugs in this today and need to move on and it's not totally necessary.
 							{{#if single-site-open-disputes}}
-							<a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-up"></i> Sorted Newest to
+							<a href="?desc" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-up"></i> Sorted Newest to
 						Oldest</a>
 						<!--
 						note: Lucas this is the other side of the toggle, on activating sorting newest to oldest, flip to this here 
@@ -176,6 +177,7 @@
 						<a href="#" id="sort-list-link" class="btn pull-right"><i class=" icon-chevron-down"></i> Sorted Oldest to
 						Newest</a>
 						-->
+						{{/if}}
 						{{/if}}
 						</div><!-- /sort-list -->
 					</div><!-- /row -->
