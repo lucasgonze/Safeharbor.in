@@ -29,13 +29,18 @@ font-family : 'Bree Serif', Georgia, serif;
 p {
 font : 400 14px/1.6 'Open Sans', Helvetica, sans-serif;
 }
-h1 {
+
+h1, .hero-unit h1 {
 font-weight : 400;
 margin-bottom : 22px;
-margin-left : 3px;
 color : #5A5C63;
 text-shadow : 0 1px 0 #FFFFFF;
 }
+
+.hero-unit h1 {
+font-size: 3em;
+}
+
 #page-header h1.single-site {
 margin-left : 108px;
 margin-top : 20px;
@@ -467,6 +472,6 @@ background: url(/landing/img/243x23.png);
 }
 
 
-.agent-name {
-margin-bottom: 20px;
+#demo-tgt-1.large-bottom-margin {
+margin-bottom: 53px;
 }
