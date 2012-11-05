@@ -2,16 +2,7 @@
 body {
 font : 400 14px/1.6 'Open Sans', Helvetica, sans-serif;
 }
-#dropdown-signin {
-border : red solid 1px;
-background-color : #eee;
-}
-.loginhelp {
-color : #336699;
-text-decoration : underline;
-padding-left : 10px;
-font-size : 0.9em;
-}
+
 body.error-page .error-status {
 display : none;
 }
@@ -258,17 +249,23 @@ text-shadow : 0 1px 0 #FFFFFF;
 margin : 0 0 200px 50px;
 padding : 18px 0;
 width : 1127px;
-min-height : 1200px;
 }
-#website_settings_form .help-block, #account_settings_form .help-block, #admin_add_dispute_form .help-block {
+
+#website_settings_form.help-block, #account_settings_form.help-block, #admin_add_dispute_form.help-block {
 padding-left : 181px;
 }
+
 #website_settings_form {
 height : 900px;
 }
 #account_settings_form {
-height : 657px;
+height : 500px;
 }
+
+#admin_add_dispute_form{
+height: 600px;
+}
+
 .required {
 color : #C42121;
 }
@@ -298,7 +295,7 @@ margin-bottom : 30px;
 background-color : transparent;
 }
 footer.footer {
-border-top : 1px solid red;
+border-top : 1px solid #336699;
 margin-top : 70px;
 padding : 10px 0;
 }
@@ -419,3 +416,23 @@ margin-top : 30px;
 #clone_this .control-group {
 margin-bottom : 24px;
 }
+
+#dropdown-signin {
+border : red solid 1px;
+background-color : #eee;
+}
+
+.loginhelp {
+color : #336699;
+text-decoration : underline;
+padding-left : 10px;
+padding-top: 3px;
+font-size : 0.9em;
+}
+
+
+.navbar .brand {
+    display: block;
+    float: left;
+ 	margin-left: 20px;
+ }
