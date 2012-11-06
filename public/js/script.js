@@ -271,6 +271,23 @@ function initAjaxForms(){
 		return false; 
 	}); 
 
+	$("a[href='/logout']").click(function(){
+		
+		$.ajax({
+			type: 'POST',
+			url: '/logout',
+			success: function success(data){
+				window.location.href = "/logout";
+			},
+			error: function err(data){
+				window.location.href = "/err500"; // fixme: create this URL
+			}		
+		});
+		
+		return false; 
+		
+	});
+
 }
 
 function initTour(){
