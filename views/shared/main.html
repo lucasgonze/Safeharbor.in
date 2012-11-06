@@ -39,14 +39,19 @@
 
 	<!-- JS is ordinarily at the end for speed but we need it before the body so that view pages 
 		can load custom libraries which rely on JQuery-->
+	<!-- fixme: shouldn't this be /js/libs/jquery-1.7.1.min.js instead of whatever is in /dash ?-->
     <script src="/dash/js/jquery.js"></script>
+
+	<!-- Add fancyBox main JS and CSS files -->
+	<link rel="stylesheet" type="text/css" href="lightbox/jquery.fancybox.css?v=2.1.2" media="screen" />
 
   </head>
 
-    <body class="classes-here {{#if bodyClass}}{{bodyClass}}{{/if}}">
+  <body class="classes-here {{#if bodyClass}}{{bodyClass}}{{/if}}">
     <div class="container">
 	
 		<!--Begin Main (Top Level) Navigation for Safeharbor-->
+		{{#unless suppressNavigation}}
 	    <div class="navbar navbar navbar-fixed-top">
 	      <div class="navbar-inner">
 	        <div class="container">
@@ -86,7 +91,7 @@
 		{{#if false}}
 		This code stubbed out until work on the "multiple websites" milestone.
 		<li class="active"><a href="#"><i class="icon-plus"></i> Add a New Website</a></li>
-		{{/if}}	<li class="active"><a href="#"><i class="icon-plus"></i> Add a New Dispute</a></li>
+		{{/if}}	<li class="active"><a href="/myinbox" id="add-new-dispute-button"><i class="icon-plus"></i> Add a New Dispute</a></li>
 	
 	                                         <li class="dropdown">
 	                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>{{#if user.email}} {{user.email}}{{/if}} <b class="caret"></b></a>
@@ -108,6 +113,7 @@
 	        </div>
 	      </div>
 	    </div>
+		{{/unless}}
 		<!--End Navigation-->		
 	
 		{{#each messages}}
@@ -193,6 +199,7 @@
 {{/if}}
 
 		<!-- BEGIN global footer -->
+		{{#unless suppressNavigation}}	
 		<div class="row">
 			<div class="span12">
 				<footer class="footer">
@@ -209,27 +216,16 @@
 				</footer>
 			</div><!-- /span12 -->
 		</div>
+		{{/unless}}
 		<!-- END global footer -->
 
     </div><!-- /container -->
-
-	<!-- we don't need all these. fixme: identify scripts we actually *are* using.
-    <script src="/dash/js/bootstrap-transition.js"></script>
-    <script src="/dash/js/bootstrap-modal.js"></script>
-    <script src="/dash/js/bootstrap-scrollspy.js"></script>
-    <script src="/dash/js/bootstrap-tab.js"></script>
-    <script src="/dash/js/bootstrap-tooltip.js"></script>
-    <script src="/dash/js/bootstrap-popover.js"></script>
-    <script src="/dash/js/bootstrap-button.js"></script>
-    <script src="/dash/js/bootstrap-collapse.js"></script>
-    <script src="/dash/js/bootstrap-carousel.js"></script>
-    <script src="/dash/js/bootstrap-typeahead.js"></script>
-	 -->
 
     <script src="/dash/js/bootstrap-alert.js"></script>
     <script src="/dash/js/bootstrap-dropdown.js"></script>
 	<script src="/js/libs/jquery-validation-x/jquery.validate.min.js"></script>
     <script src="/js/script.js"></script>
+	<script type="text/javascript" src="lightbox/jquery.fancybox.js?v=2.1.3"></script>
 
 	<script type="text/javascript">
 	  var _gaq = _gaq || [];

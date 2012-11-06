@@ -86,10 +86,13 @@ function getOwnForm(req,res){
 		                    skipMenu:   true,
 		                    pageTitle:  pageTitle,
 		                    bodyClass:  bodyClass,
-							regid: 		site.idhash
+							regid: 		site.idhash,
+							suppressNavigation: true
 	 					};
 		pageVars = utils.copy(pageVars,site);
-        res.render( viewPath, pageVars);			
+        res.render( viewPath, pageVars);		
+
+	
     } );
 
     p.handleErrors(req,res,[CODES.MULTIPLE_RECORDS_FOUND,CODES.NO_RECORDS_FOUND]).perform();			

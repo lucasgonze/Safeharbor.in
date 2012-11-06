@@ -195,6 +195,17 @@ function initInbox(){
 		newNode.id = "description-"+Math.ceil(Math.random() * 100000000);
 		this.parentElement.insertBefore(newNode,this);
 	});
+
+	$("a#add-new-dispute-button").click(function() {
+		$("a#add-new-dispute-button").click(function() {
+			$.fancybox.open({
+				href : '/myinbox?template=no',
+				type : 'iframe',
+				padding : 5
+			});
+		});
+		return(false)
+	})	
 }
 
 function initAccountForm(){
