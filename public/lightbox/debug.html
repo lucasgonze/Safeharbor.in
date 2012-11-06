@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>fancyBox - Fancy jQuery Lightbox Alternative | Demonstration</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<!-- Add jQuery library -->
+	<script type="text/javascript" src="jquery.js"></script>
+
+	<!-- Add fancyBox main JS and CSS files -->
+	<script type="text/javascript" src="lightbox/jquery.fancybox.js?v=2.1.3"></script>
+	<link rel="stylesheet" type="text/css" href="lightbox/jquery.fancybox.css?v=2.1.2" media="screen" />
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			$("#fancybox-manual-b").click(function() {
+				$.fancybox.open({
+					href : 'iframe.html',
+					type : 'iframe',
+					padding : 5
+				});
+			});
+
+
+		});
+	</script>
+</head>
+<body>
+		<li><a id="fancybox-manual-b" classname="fancybox.iframe" href="#">Open single item, custom options</a></li>
+
+</body>
+</html>

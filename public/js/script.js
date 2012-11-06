@@ -195,6 +195,17 @@ function initInbox(){
 		newNode.id = "description-"+Math.ceil(Math.random() * 100000000);
 		this.parentElement.insertBefore(newNode,this);
 	});
+
+	$("a#add-new-dispute-button").click(function() {
+		$("a#add-new-dispute-button").click(function() {
+			$.fancybox.open({
+				href : '/myinbox?template=no',
+				type : 'iframe',
+				padding : 5
+			});
+		});
+		return(false)
+	})	
 }
 
 function initAccountForm(){
@@ -270,6 +281,23 @@ function initAjaxForms(){
 		
 		return false; 
 	}); 
+
+	$("a[href='/logout']").click(function(){
+		
+		$.ajax({
+			type: 'POST',
+			url: '/logout',
+			success: function success(data){
+				window.location.href = "/logout";
+			},
+			error: function err(data){
+				window.location.href = "/err500"; // fixme: create this URL
+			}		
+		});
+		
+		return false; 
+		
+	});
 
 }
 

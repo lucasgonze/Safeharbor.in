@@ -38,7 +38,7 @@ exports.install = function( app )
 	app.trivialRoute('/login','login','profile','Log In',not_logged_in);
 	app.post('/login', not_logged_in, saveLogin);
 
-	app.trivialRoute('/logout','logout','profile','Log Out',logged_in);
+	app.trivialRoute('/logout','logout','profile','Log Out');
 	app.post('/logout', logged_in, clearLogin);
 		
 	app.trivialRoute('/lostpassword','lostpassword','profile','Lost Password',not_logged_in);
