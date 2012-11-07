@@ -80,8 +80,15 @@ function saveLogin(req,res) {
     var model = profile.acctFromEmailPassword( req.body, function(code,acct) { 
 
 		if( code == CODES.SUCCESS ){	
+
 			loginstate.enable(req,acct);
-			res.redirect("/",303);
+			if( typeof req.session.detour == "string" ){
+				// we interrupted something to force a login, 
+				// so now we need to go back there.
+				res.redirect(req.session.detour,303);
+				req.session.detour = null;
+			} else
+				res.redirect("/",303);
 			return;
 		} 
 		
@@ -107,7 +114,7 @@ function resetPasswordEmail(req, res, to) {
 	
     return new Performer( 
             { 
-                // N.B. these params are flipped coming from sendgrid
+                // N.B. these   are flipped coming from sendgrid
                 callback: function(success,message) {
                     if( success ) {
                         res.outputMessage( 

@@ -386,8 +386,6 @@ exports.getOpenMedia = function(params){
 	var sortDirection = "asc";
 	if( params.sortNewToOld)
 		sortDirection = "desc";
-	console.log("Bp 23",params.sortNewToOld,sortDirection);
-
 	
 	var sql = ''
 		+ ' select'
@@ -407,7 +405,6 @@ exports.getOpenMedia = function(params){
 		;
 
 	var query = getClient().query(sql,[params.uid]);
-console.log("BP 22",query);
 
 	if( !query ){
 		debug.out("(Null query error for sql: ",sql);

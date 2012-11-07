@@ -15,8 +15,9 @@ var checkRole = exports.checkRole = function(acceptableRole){
 		var user = login.getUser(req);
 		if( !user ){
 			// redirect to login page
+			req.session.detour = req.path;
 			res.status(302);
-			res.redirect('/#login?interrupted='+escape(req.path));
+			res.redirect('/#login');
 			return; // or next()?
 		}
 

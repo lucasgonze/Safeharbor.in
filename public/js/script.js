@@ -3,6 +3,16 @@ Lucas Gonze <lucas@gonze.com>
 
 */
 
+var initFocus = function(){
+
+	/* If we are opening a window with #login as the hash, try to put focus on the login form. */
+	if( typeof window.location.hash == "string" 
+		&& window.location.hash == "#login" ){
+			$("form[action=/login] input[name=email]").focus();
+		}
+	
+}
+
 var initValidation = function(){
 
 	/* http://docs.jquery.com/Plugins/Validation#List_of_built-in_Validation_methods */
@@ -518,6 +528,7 @@ $(document).ready(function() {
 	initAjaxForms();
 	initTour();
 	initAccountForm();
+	initFocus();
 });
 
 
