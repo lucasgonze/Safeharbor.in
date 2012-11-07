@@ -28,7 +28,8 @@ create table site (  acct integer not null,
 	agentaddress text not null, 
 	agentemail text not null,
 	agentname text not null,
-	agentphone text not null
+	agentphone text not null,
+	agentfax text not null
 ) with oids;
 create table contact ( 
 	contactid serial unique, 
@@ -90,24 +91,24 @@ insert into acct (acctid,role,email,password) values (5,'21','demo@safeharbor.in
 insert into acct (acctid,role,email,password) values (6,'21','testers@safeharbor.in', 'abcd'); 
 
 -- for the user with one site
-insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone,country) 
+insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone,country,agentfax) 
 	values (1,1,'Etsy','1.etsy.com','http://latest.safeharbor.in/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345',
-         	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212','Swaziland');
+         	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212','Swaziland','(666) 666-6666');
 -- for the user with two sites
-insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone,country) 
+insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone,country,agentfax) 
 	      values (2,2,'Example.com #1','1.example.com','123 Main St\nPalo Alot CA 12345',
-         	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212','Canada');
-insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone,country) 
+         	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212','Canada','(666) 666-6666');
+insert into site (siteid,acct,sitename,domain,agentaddress,agentemail,agentname,agentphone,country,agentfax) 
 	values (3,2,'Example.com #2','2.example.com','456 Central St\nPalo Alot CA 12345',
-        	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212','United States');
+        	'lucas@gonze.com','Jane Doe Esquire','(800) 555-1212','United States','(666) 666-6666');
 -- for the demo user (siteid 4)
-insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone,country) 
+insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone,country,agentfax) 
 	values (4,5,'Etsy','etsy.com','http://latest.safeharbor.in/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345',
-		'lucasgonze@safeharbor.in','Jane Doe Esquire','(800) 555-1212','United States');
+		'lucasgonze@safeharbor.in','Jane Doe Esquire','(800) 555-1212','United States','(666) 666-6666');
 -- for the QA user (siteid 5)
-insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone,country) 
+insert into site (siteid,acct,sitename,domain,sitelogo,agentaddress,agentemail,agentname,agentphone,country,agentfax) 
 	values (5,6,'Etsy','testdomain.safeharbor.in','http://latest.safeharbor.in/img/etsy.png','1 Infinite Hype Way\nPalo Alot CA 12345',
-		'testers@safeharbor.in','Jane Doe Esquire','(800) 555-1212','United States');
+		'testers@safeharbor.in','Jane Doe Esquire','(800) 555-1212','United States','(666) 666-6666');
 
 -- user with one site
 insert into audit (site, opname, contact) values (1,'takedownRequest',1);

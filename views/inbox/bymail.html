@@ -11,16 +11,29 @@
 			website operators in writing.</p>
 
 			<div id="demo-tgt-20">
-			<p>To send notification by postal mail, use this
-			address:</p>
-			<pre>{{agentname}}
+				
+				{{#if agentname}}
+				<p>To send notification by postal mail, use this
+				address:</p>
+				<pre>{{agentname}}
 {{agentaddress}}</pre>
+				{{/if}}
 
-			<p>To send notification by email, use this address:</p>
-			<pre>{{agentemail}}</pre>
+				{{#if agentemail}}
+				<p>To send notification by email, use this address:</p>
+				<pre>{{agentemail}}</pre>
+				{{/if}}
 
-			<p>To contact the agent by phone, use this number:</p>
-			<pre>{{agentphone}}</pre>
+				{{#if agentphone}}
+				<p>To contact the agent by phone, use this number:</p>
+				<pre>{{agentphone}}</pre>
+				{{/if}}
+				
+				{{#if agentfax}}
+				<p>To contact the agent by fax, use this number:</p>
+				<pre>{{agentfax}}</pre>
+				{{/if}}
+				
 			</div>
 
 <h2>Your written notification (the Notification) to the above-referenced designated agent must include substantially all of the following:</h2>
