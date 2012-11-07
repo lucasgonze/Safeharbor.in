@@ -24,7 +24,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 
 a {
-color: #000;
+color: #336699;
 }
 
 p,
@@ -438,5 +438,8 @@ box-shadow: none;}
 
 .thumbnail > img {
 margin-left: 9px;
-
 }
+
+.page-header {
+ border-bottom: 1px solid #ccc; 
+  }
