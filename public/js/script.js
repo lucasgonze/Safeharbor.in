@@ -288,7 +288,7 @@ function initAjaxForms(){
 			type: 'POST',
 			url: '/logout',
 			success: function success(data){
-				window.location.href = "/logout";
+				window.location.href = "/";
 			},
 			error: function err(data){
 				window.location.href = "/err500"; // fixme: create this URL

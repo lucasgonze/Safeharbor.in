@@ -68,12 +68,13 @@ exports.install = function( app )
     URL Handlers
 ----------------------------*/
 
-// log out
+// sign out
 function clearLogin(req,res) {
 	loginstate.disable(req);
-	res.redirect("/login",303);
+	res.redirect("/",303);
 }
 
+// sign in
 function saveLogin(req,res) {
 	
     var model = profile.acctFromEmailPassword( req.body, function(code,acct) { 

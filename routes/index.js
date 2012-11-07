@@ -14,11 +14,9 @@ var checkRole = exports.checkRole = function(acceptableRole){
 		
 		var user = login.getUser(req);
 		if( !user ){
-			// fixme: set session cookie on where to go after login
-			console.log("Redirecting unknown user to /login. Fixme: set session cookie to enable returning to original target after logging in.");
 			// redirect to login page
 			res.status(302);
-			res.redirect('/login');
+			res.redirect('/#login?interrupted='+escape(req.path));
 			return; // or next()?
 		}
 
@@ -55,14 +53,26 @@ function trivialRoute(app) {
     }
 }
 
-function home( req, res, next )
-{
-	if( login.isLoggedIn() )
+function home( req, res, next ){
+
+	if( login.isLoggedIn() ){
 		// there are two handlers for '/', depending on whether the user is logged in.
 		// this function is the handler for users who aren't logged in. 
 		next();
-    else
+		return;
+	}
+
+	// if we're on the public host, show the blank/coming-soon home page.
+	if( req.host == "safeharbor.in" ){
         res.render( 'firstrun/comingsoon.html', { layout:'firstrun/nop.html' } );
+		return;
+	}
+
+	// if we're on a developer host, show the real actual home page. (This will 
+	// become / for non-logged-in users once we remove the "coming soon" page and go live).
+	res.render('firstrun/deleteme.html', { layout:'shared/main.html' } );
+//	res.render( 'firstrun/home.html', { layout:'firstrun/nop.html' } );
+
 }
 
 exports.setup = function(app) {
