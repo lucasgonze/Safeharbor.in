@@ -140,6 +140,9 @@ test_http_status myinbox 302
 echo '* Sign in and see if we are redirected to the original URL'
 test_redirect_target login /myinbox 'email=adminuser@safeharbor.in&password=abcd'
 
+# verify that the /err500 page to always return an application error is indeed returning 500
+test_http_status err500 500
+
 echo
 echo "======================================================"
 echo "Failed test count: $EXITSTATUS"

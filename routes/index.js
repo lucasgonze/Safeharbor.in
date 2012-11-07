@@ -80,6 +80,11 @@ function corp( req, res, next ){
 	res.render( { layout:'firstrun/corp-wip.html' } );
 }
 
+function err500( req, res, next ){
+	var err = require('../lib/error.js')
+	err.page(500,res,"This is a page that always returns an application error, but only when it is working.");
+}
+
 exports.setup = function(app) {
 
     app.checkRole    = checkRole;
@@ -88,6 +93,7 @@ exports.setup = function(app) {
 
     app.get('/',home);
     app.get('/corp',corp);
+	app.get('/err500',err500);
 
     require('./test-routes.js').install(app);
     require('./profile-routes.js').install(app);
