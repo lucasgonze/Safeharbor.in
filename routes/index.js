@@ -70,9 +70,13 @@ function home( req, res, next ){
 
 	// if we're on a developer host, show the real actual home page. (This will 
 	// become / for non-logged-in users once we remove the "coming soon" page and go live).
-	res.render('firstrun/deleteme.html', { layout:'shared/main.html' } );
+	res.render('firstrun/corp.html', { layout:'shared/main.html' } );
 //	res.render( 'firstrun/home.html', { layout:'firstrun/nop.html' } );
 
+}
+
+function corp( req, res, next ){
+	res.render( { layout:'firstrun/corp-wip.html' } );
 }
 
 exports.setup = function(app) {
@@ -82,6 +86,7 @@ exports.setup = function(app) {
 	app.trivialRoute = trivialRoute(app);
 
     app.get('/',home);
+    app.get('/corp',corp);
 
     require('./test-routes.js').install(app);
     require('./profile-routes.js').install(app);
