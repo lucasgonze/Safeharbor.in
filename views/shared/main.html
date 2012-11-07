@@ -17,7 +17,6 @@
       .sidebar-nav {
         padding: 9px 0;
       }
-
     </style>
     <link href="/dash/css/safe_bootstrap.css" rel="stylesheet">
     <link href="/dash/css/bootstrap-responsive.css" rel="stylesheet">
@@ -47,7 +46,7 @@
 
   </head>
 
-  <body class="classes-here {{#if bodyClass}}{{bodyClass}}{{/if}}">
+  <body class="{{#if bodyClass}}{{bodyClass}}{{/if}}">
     <div class="container">
 	
 		<!--Begin Main (Top Level) Navigation for Safeharbor-->
@@ -60,54 +59,27 @@
 	            <span class="icon-bar"></span>
 	            <span class="icon-bar"></span>
 	          </a>
-	                   <div class="nav-collapse collapse">
-	            <ul class="nav">
-					{{#if false}}
-					This code stubbed out until work on the "multiple websites" milestone.
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"></i> All Websites <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Youtube.com</a></li>
-							<li><a href="#">Etsy.com</a></li>
-							<li><a href="#">Heineken.com</a></li>
-							<li class="divider"></li>
-							<li class="nav-header">Other Actions</li>
-							<li><a href="#"><i class="icon-plus"></i> Add a new Website</a></li>
-							<!-- <li><a href="#">Other Action</a></li> -->
-						</ul>
-					</li>
-					{{/if}}
-	            </ul>
+              <div class="nav-collapse collapse">
+            <ul class="nav">{{! almost certainly cruft }}
+            </ul>
 
-	          <!-- Hidden until implemented.
-	  <form class="navbar-form pull-right">
-	              <input class="span2" type="text" placeholder="Email">
-	              <input class="span2" type="password" placeholder="Password">
-	              <button type="submit" class="btn">Sign in</button>
-	            </form>
-	-->
-
-	 <ul class="nav pull-right">
-		{{#if false}}
-		This code stubbed out until work on the "multiple websites" milestone.
-		<li class="active"><a href="#"><i class="icon-plus"></i> Add a New Website</a></li>
-		{{/if}}	<li class="active"><a href="/myinbox" id="add-new-dispute-button"><i class="icon-plus"></i> Add a New Dispute</a></li>
-	
-	                                         <li class="dropdown">
-	                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>{{#if user.email}} {{user.email}}{{/if}} <b class="caret"></b></a>
-	                <ul class="dropdown-menu">
-	                  <li><a href="/account">Account Settings</a></li>
-					  <!-- Hidden until implemented.
-	                  <li><a href="/fixme:billing">Billing</a></li>
-
-	                  <li class="divider"></li>
-	                  <li class="nav-header">Other Actions</li>
-					   -->
-	                  <li><a href="/logout">Logout</a></li>
-	                  <!-- <li><a href="#">Other Action</a></li> -->
-	                </ul>
-	              </li>
-	            </ul>
+				{{#if user.email}}
+				 <ul class="nav pull-right">
+				    <li class="dropdown">
+				      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>{{user.email}} <b class="caret"></b></a>
+				      <ul class="dropdown-menu">
+				        <li><a href="/account">Account Settings</a></li>
+				        <li><a href="/logout">Logout</a></li>
+				      </ul>
+				    </li>
+				 </ul>
+				{{/if}}
+				{{#unless user.email}}
+				<form class="navbar-form pull-right" action="/login" method="post">
+				  <input class="span2" type="text" placeholder="Email" name="email"> 
+				   <input class="span2" type="password" placeholder="Password" name="password">    <span class="login-help">Lost password</span>           <button type="submit" class="btn">Sign in</button>
+				</form>    
+				{{/unless}}
 
 	          </div><!--/.nav-collapse -->
 	        </div>
@@ -127,7 +99,7 @@
 		</div>
 		{{/each}}
 			
-{{#if show-nav-for-dashboard}}
+		{{#if show-nav-for-dashboard}}
 		<!--This block describes the secondary tabbed navigation on the website. It is needed for the listings 
 			of disputes and for the website settings page. -->
 
@@ -145,7 +117,7 @@
 			</div>
 		</div>
 		<!--End Page Header for a user with a single website -->
-		{{/if}}	
+		{{/if}}
 
 		<!--Tabbed nav block for the dashboard -->
 		<div class="tabbable">
@@ -190,7 +162,9 @@
 					<!--End Sort Listing of Disputes by Newest to Oldest Toggle-->
 
 {{/if}}<!-- /show-nav-for-dashboard -->
+
 				   {{{body}}}
+
 {{#if show-nav-for-dashboard}}
 				</div><!-- /tab-pane -->
 			</div><!-- /tab-content -->
