@@ -488,6 +488,13 @@ width: 500px;
 min-height: 500px;}
 
 #form_rightside #rightside-copy-block {
-margin: 20px 0px 0px 120px; 
-text-align: right; }
+margin: 30px 0px 0px 120px; 
+padding-left: 110px;
+text-align: right; 
+color: #666;
+}
 
+#form_rightside #rightside-copy-block h3{
+font-family: inherit;
+margin-bottom: 0px;
+}
