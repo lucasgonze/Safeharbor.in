@@ -475,6 +475,10 @@ margin-bottom: 53px;
 }
 
 
+body.siteeditor legend.registeredagent, body.siteeditor div#rightside-copy-block {
+	padding-top: 80px;
+}
+
 #form_leftside, #form_rightside {
 float: left;
 }
