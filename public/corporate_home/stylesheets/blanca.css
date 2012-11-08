@@ -328,11 +328,17 @@ footer .stripe-color {
   opacity: 0.65;
 }
 /* ========== INDEX ========== */
-.landing-message {
-  padding: 20px 0px 0px !important;
+.landing-message h3{
+
   font-style: italic;
   text-align: center;
+  font-size: 2em;
 }
+
+.landing-message {
+background-color: #eee;
+}
+
 img.feature-icon {
   float: right;
 }
@@ -446,34 +452,40 @@ margin-left: 9px;
   
 #navigation_bar {
  position: fixed;
- font-size: 2em;
-
- width: 50%;
+ font-size: 1.6em;
+ width: 40%;
  height: 47px;
     bottom: 0;
  
-    background-color: #fff;
-    border-top: 1px solid #ccc;
-       border-left: 1px solid #ccc;
-          border-right: 1px solid #ccc;
- 
-    -webkit-box-shadow: 2px -1px 8px rgba(50, 50, 50, 0.44);
--moz-box-shadow:    2px -1px 8px rgba(50, 50, 50, 0.44);
-box-shadow:         2px -1px 8px rgba(50, 50, 50, 0.44);
+    background-color: #ADA8A8;
+    border-top: 1px solid #9C9797;
+       border-left: 1px solid #9C9797;
+          border-right: 1px solid #9C9797;
+-webkit-box-shadow: 0px -4px 5px rgba(50, 50, 50, 0.22);
+-moz-box-shadow:    0px -4px 5px rgba(50, 50, 50, 0.22);
+box-shadow:         0px -4px 5px rgba(50, 50, 50, 0.22);
 color: #666;
+   
+    } 
     
-    }  
+     
 #navigation_bar ul.nav {
 margin: 5px;
 }
 
 #navigation_bar ul {
     padding-left: 0px;
-    }
+  }
 
+#navigation_bar ul li a {
+color: #333;
+padding-bottom: 8px;
+
+}
 
 #navigation_bar ul.nav li.active > a, #navigation_bar ul.nav li.active > a:hover {
-  background-color: red;
-  color: #555;
+  background-color: #eee;
+  color: #333;
+
 }
 
