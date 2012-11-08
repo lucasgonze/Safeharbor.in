@@ -80,7 +80,7 @@ blockquote p {
   border-top-color: #555;
 }
 #nav .dropdown-menu a:hover {
-  color: white !important;
+  color: #fff;
 }
 #nav .btn-navbar {
   background-color: #DDD;
@@ -92,8 +92,8 @@ blockquote p {
 }
 #nav .nav .active > a,
 #nav .nav .active > a:hover {
-  background-color: #f6f6f6 !important;
-  color: #555 !important;
+  background-color: #f6f6f6;
+  color: #555;
 }
 .stripe-top {
   background-image: url("http://subtlepatterns.com/patterns/arches.png");
@@ -446,16 +446,34 @@ margin-left: 9px;
   
 #navigation_bar {
  position: fixed;
+ font-size: 2em;
+
+ width: 50%;
+ height: 47px;
     bottom: 0;
-    width: 100%;
+ 
     background-color: #fff;
     border-top: 1px solid #ccc;
        border-left: 1px solid #ccc;
           border-right: 1px solid #ccc;
-    width: 30%;
+ 
     -webkit-box-shadow: 2px -1px 8px rgba(50, 50, 50, 0.44);
 -moz-box-shadow:    2px -1px 8px rgba(50, 50, 50, 0.44);
 box-shadow:         2px -1px 8px rgba(50, 50, 50, 0.44);
 color: #666;
     
     }  
+#navigation_bar ul.nav {
+margin: 5px;
+}
+
+#navigation_bar ul {
+    padding-left: 0px;
+    }
+
+
+#navigation_bar ul.nav li.active > a, #navigation_bar ul.nav li.active > a:hover {
+  background-color: red;
+  color: #555;
+}
+
