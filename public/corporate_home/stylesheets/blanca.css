@@ -449,4 +449,14 @@ margin-left: 9px;
  position: fixed;
     bottom: 0;
     width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+       border-left: 1px solid #ccc;
+          border-right: 1px solid #ccc;
+    width: 30%;
+    -webkit-box-shadow: 2px -1px 8px rgba(50, 50, 50, 0.44);
+-moz-box-shadow:    2px -1px 8px rgba(50, 50, 50, 0.44);
+box-shadow:         2px -1px 8px rgba(50, 50, 50, 0.44);
+color: #666;
+    
     }  
