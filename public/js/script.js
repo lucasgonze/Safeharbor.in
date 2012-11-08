@@ -211,11 +211,14 @@ function initInbox(){
 			$.fancybox.open({
 				href : '/myinbox?template=no',
 				type : 'iframe',
-				padding : 5
+				padding : [20,20,20,20],
+				height: 1250,
+				width: 916
 			});
 		});
 		return(false)
-	})	
+	});
+	
 }
 
 function initAccountForm(){
