@@ -313,7 +313,9 @@ height : 500px;
 }
 
 #admin_add_dispute_form{
-height: 1150px;
+height: 1350px;
+margin: 40px 0px;
+width: auto;
 }
 
 .required {
