@@ -443,3 +443,10 @@ margin-left: 9px;
 .page-header {
  border-bottom: 1px solid #ccc; 
   }
+  
+  
+#navigation_bar {
+ position: fixed;
+    bottom: 0;
+    width: 100%;
+    }  
