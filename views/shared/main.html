@@ -124,15 +124,17 @@
 		<div class="tabbable">
 
 			<ul class="nav nav-tabs">
-				<li {{{setOpenAsActiveTab}}}><a href="/">Disputes</a></li>			
+				<li {{{setOpenAsActiveTab}}}><a href="/">Disputes</a></li>	
+				<li {{{setSettingsAsActiveTab}}}><a href="/settings">+Add Dispute</a></li>	
+		
 				{{#if false}}
 				This code stubbed out for work on the "passive listings" milestone, because this code
 				doesn't make sense until the "close dispute" button is re-enabled.
 				<li {{{setOpenAsActiveTab}}}><a href="/">Open Disputes</a></li>
 				<li {{{setClosedAsActiveTab}}}><a href="/closed">Closed Disputes</a></li>
 				{{/if}}
-				<li {{{setSettingsAsActiveTab}}}><a href="/settings">Settings</a></li>	
-				
+				<li {{{setSettingsAsActiveTab}}}><a href="/settings">Settings</a></li>
+								
 				<li class="pull-right search"><!-- Search Bar -->
 					<div class="input-append">
 					<form action="/query" method="get" style="display:inline; margin:0;padding:0"><input class="span3" id="appendedInputButtons" name="needle" size="16" type="text" placeholder="Search All Disputes"><button class="btn" type="button"><i class=" icon-search"></i> Search</button></form></div></li>
