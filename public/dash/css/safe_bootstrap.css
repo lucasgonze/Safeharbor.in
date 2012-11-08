@@ -2,9 +2,26 @@
 Author: Paige Saez
 */
 
+
+/* how the path works: url('/dash/img/noise.png')
+ #336699; med blue
+ #2C5A89; lighter blue
+ #232323; dark gray black
+ #666; charcoal gray 
+ #000 
+ #A7BED4; 
+ #D7DFE6;
+ 
+ background:url(/dash/img/lighthouse.png) no-repeat, url(/dash/img/noise.png) repeat;
+*/
+
+
+
+
 /*Generic Styles*/
 body {
 font : 400 14px/1.6 'Open Sans', Helvetica, sans-serif;
+
 }
 
 body.error-page .error-status {
