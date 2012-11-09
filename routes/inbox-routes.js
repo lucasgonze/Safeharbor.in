@@ -27,14 +27,14 @@ exports.install = function( app )
 {	
 	var logged_in = app.checkRole(app.ROLES.logged_in);
     
-	app.get ('/inbox/bymail/:regid([0-9a-f]+)$',  	getByMail);
+	app.get ('/inbox/bymail/:regid([0-9a-f]+)$',  		getByMail);
 	app.get ('/inbox/form/:regid([0-9a-f]+)$',  		getForm);
-	app.get('/myinbox',	   							logged_in, getOwnForm);
+	app.get('/myinbox',	   								logged_in, getOwnForm);
 	app.get ('/inbox/help/learn/:regid([0-9a-f]+)$',	getLearn);
 	app.get ('/inbox/help/role/:regid([0-9a-f]+)$',  	getRoleHelp);
 	app.get ('/inbox/role/:regid([0-9a-f]+)$',  		getRole);
-	app.get ('/inbox/:regid([0-9a-f]+)$',  			getSplash);
-	app.post('/inbox/:regid([0-9a-f]+)',   			postBox);
+	app.get ('/inbox/:regid([0-9a-f]+)$',  				getSplash);
+	app.post('/inbox/:regid([0-9a-f]+)',   				postBox);
 }
 
 // convenience function for reuse only in this file
@@ -87,8 +87,12 @@ function getOwnForm(req,res){
 		                    pageTitle:  pageTitle,
 		                    bodyClass:  bodyClass,
 							regid: 		site.idhash,
-							suppressNavigation: true
+							suppressNavigation: false,
+							"show-nav-for-dashboard":true,
+							layout:     "shared/main.html",
+							setAddDisputeAsActiveTab: "class=active"
 	 					};
+	
 		pageVars = utils.copy(pageVars,site);
         res.render( viewPath, pageVars);		
 
