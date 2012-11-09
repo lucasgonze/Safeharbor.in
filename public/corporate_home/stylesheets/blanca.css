@@ -329,14 +329,18 @@ footer .stripe-color {
 }
 /* ========== INDEX ========== */
 .landing-message h3{
-
+color: #2C3848;
+line-height: 1.2em;
   font-style: italic;
   text-align: center;
   font-size: 2em;
+  text-shadow : 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .landing-message {
-background-color: #eee;
+background-color: #a7bed4;
+ border-top: 1px solid #2C3848;
+  border-bottom: 1px solid #2C3848;
 }
 
 img.feature-icon {
@@ -434,7 +438,7 @@ font-style: normal;
 font-weight: normal;
 font-size: 4em;
 text-shadow : 0 1px 0 rgba(255, 255, 255, 0.5);
-color: #666;
+color: #3C3434;
 }
 
 .thumbnail {
@@ -452,12 +456,12 @@ margin-left: 9px;
   
 #navigation_bar {
  position: fixed;
- font-size: 1.6em;
+ font-size: 1.5em;
  width: 40%;
  height: 47px;
     bottom: 0;
  
-    background-color: #ADA8A8;
+    background-color: #a7bed4;
     border-top: 1px solid #9C9797;
        border-left: 1px solid #9C9797;
           border-right: 1px solid #9C9797;
