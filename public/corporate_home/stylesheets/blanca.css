@@ -342,7 +342,7 @@ footer .stripe-color {
 }
 /* ========== INDEX ========== */
 .landing-message h3{
-color: #2C3848;
+color: #336699;
 line-height: 1.2em;
   font-style: italic;
   text-align: center;
@@ -353,7 +353,7 @@ font-weight: normal;
 }
 
 .landing-message {
-background-color: #a7bed4;
+background-color: #eee;
  border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 }
@@ -470,28 +470,29 @@ margin-left: 9px;
 
 .page-header {
  border-bottom: 1px solid #ccc; 
-  }
+}
   
-  
-
-h1.safeharbor small, .page-header h1.small {
+h1.safeharbor small, h1.page-header small {
 font-family: "Droid Serif", Georgia, "Times New Roman", Times, serif;
 }
 
 form.form-inline {
-margin: 0;}
-
-#signup {
-height: 30px;
-margin-top: 8px;
-margin-left: 100px;
-}
-.product-offering p{
-color: #336699;
+margin: 0;
 }
 
-.product-offering h2{
+.product-offering h2 {
 font-size: 3em;
-margin-bottom: 10px;
+margin-bottom: 10px;}
+
+h1, h2{
 color: #336699;
+}
+
+.thumbnail {
+border: 1px solid #DDDDDD;
+border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+    display: block;
+    line-height: 1;
+    padding: 4px;
 }
