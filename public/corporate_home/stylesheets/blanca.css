@@ -373,7 +373,7 @@ footer .stripe-color {
 }
 /* ========== INDEX ========== */
 .landing-message h3{
-color: #336699;
+color: #1b75bc;
 line-height: 1.2em;
   font-style: italic;
   text-align: center;
@@ -490,12 +490,7 @@ color : #5A5C63;
 font-weight : 400;
 }
 
-.thumbnail {
-border: none;
-box-shadow: none;
-}
-
-.thumbnail > img {
+.thumbnail img {
 margin-left: 9px;
 }
 
@@ -514,11 +509,9 @@ margin: 0;
 .product-offering h2 {
 font-size: 3em;
 margin-bottom: 10px;
+color: #1b75bc;
 }
 
-h1, h2{
-color: #336699;
-}
 
 .thumbnail {
 border: 1px solid #DDDDDD;
@@ -528,3 +521,4 @@ border-radius: 4px 4px 4px 4px;
     line-height: 1;
     padding: 4px;
 }
+

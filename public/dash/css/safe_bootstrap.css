@@ -17,7 +17,9 @@ Author: Paige Saez
 
 
 
+body{
 background:url(/dash/img/lighthouse.png) no-repeat, url(/dash/img/noise.png) repeat;
+}
 
 /*Generic Styles*/
 body {
@@ -290,31 +292,38 @@ height : 30px;
 
 /*Form styles*/
 
-#website_settings_form, #account_settings_form, #admin_add_dispute_form {
+#website_settings_form, #account_settings_form, #admin_add_dispute_form, #login_form {
 background-color : #F2F2F2;
-border : #BDBEBC solid 1px;
-box-shadow : 0 1px 3px rgba(0, 0, 0, 0.1);
-text-shadow : 0 1px 0 #FFFFFF;
-margin : 0 0 50px 50px;
-padding : 18px 0;
-width : 1127px;
+border: #BDBEBC solid 1px;
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+text-shadow: 0 1px 0 #FFFFFF;
+margin: 0 0 50px 50px;
+padding: 18px 0;
+width: 1127px;
 }
 
-#website_settings_form .help-block, #account_settings_form .help-block, #admin_add_dispute_form .help-block {
+#website_settings_form .help-block, account_settings_form .help-block, #admin_add_dispute_form .help-block, {
 padding-left : 181px;
 }
+#login_form {
+border : none;
+}
 
+#login_form .help-block{
+padding: none;
+}
 #website_settings_form {
 height : 900px;
 }
 #account_settings_form {
 height : 500px;
 }
-
 #admin_add_dispute_form{
 height: 1350px;
 }
-
+#login_form {
+min-height: 500px;
+}
 .required {
 color : #C42121;
 }

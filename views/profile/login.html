@@ -1,7 +1,10 @@
 {{{alert-from-reset}}}
+<div class="row">
+<div id="login_form">
+      <!--Begin Form for logging into the Website-->
 
-<div class="narrowblock">
-	<form action="/login" method="post" id="loginform" class="bigass hideerroruntilfail {{loginStatus}}">
+<div id="form_leftside">
+	<form class="span11 form-horizontal action="/login" method="post" id="loginform"  {{loginStatus}}">
 
 		<div class="alert alert-error">
 			<!-- fixme: on typing, hide error message -->
@@ -10,17 +13,37 @@
 
 		{{{alert-from-create}}}
 
-		<p class="upper">Email address</p>
-		<p><input type="text" placeholder="your-email@example.com" autofocus required name="email"></p>
-		<p class="upper">Password</p>
-		<p><input type="password" placeholder="***" required name="password"></p>
-		<p><input type="submit" class="btn btn-primary btn-large" value="Sign in"></p>
+<div class="control-group">
+              <label class="control-label" for="sitename">Your Email Address</label>
 
-		<div style="text-align: left">
-			<p><a href="/lostpassword">Lost password</a></p>
-			<p><a href="/reg">Create account</a></p>
+              <div class="controls">
+                <input type="text" id="email" name="email" autofocus placeholder=
+                "" value="" /><span class=
+                "required help-inline">*required</span>
+              </div>
+            </div><!--URL of Website-->
+
+<div class="control-group">
+              <label class="control-label" for="password">Your Password</label>
+
+              <div class="controls">
+                <input type="text" id="password" name="password" autofocus placeholder=
+                "" value="" /><span class=
+                "required help-inline">*required</span>
+                <span class="help-block"><a href="/lostpassword">Lost your password?</a></span>
+              </div>
+            </div><!--URL of Website-->
+
+		 <div class="no-gray form-actions">
+              <button type="submit" class="btn btn-large btn-inverse">Sign In</button>
+             
+
+	
+			<!-- <p><a href="/reg">Create account</a></p> -->
 		</div>
 	</form>
 
+</div>
+</div>
 </div>
 
