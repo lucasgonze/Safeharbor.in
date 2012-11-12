@@ -12,11 +12,12 @@ Author: Paige Saez
  #A7BED4; 
  #D7DFE6;
  
- background:url(/dash/img/lighthouse.png) no-repeat, url(/dash/img/noise.png) repeat;
 */
 
 
 
+
+background:url(/dash/img/lighthouse.png) no-repeat, url(/dash/img/noise.png) repeat;
 
 /*Generic Styles*/
 body {
