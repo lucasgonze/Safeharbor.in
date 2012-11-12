@@ -1,6 +1,10 @@
 body {
   font-family: "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+
+/*
+
 h1,
 h2,
 h3,
@@ -10,6 +14,16 @@ h6 {
   font-weight: normal;
   font-family: "Droid Serif", Georgia, "Times New Roman", Times, serif;
 }
+*/
+
+
+h1, h2, h3, h4, h5, h6 {
+font-family : 'Bree Serif', Georgia, serif;
+color : #5A5C63;
+font-weight : 400;
+}
+
+
 
 body {
 background: rgb(255,255,255); /* Old browsers */
@@ -335,12 +349,14 @@ line-height: 1.2em;
   text-align: center;
   font-size: 2em;
   text-shadow : 0 1px 0 rgba(255, 255, 255, 0.5);
+font-weight: normal;
+  font-family: "Droid Serif", Georgia, "Times New Roman", Times, serif;
 }
 
 .landing-message {
 background-color: #a7bed4;
- border-top: 1px solid #2C3848;
-  border-bottom: 1px solid #2C3848;
+ border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 
 img.feature-icon {
@@ -432,18 +448,22 @@ article {
 
 /* ========== THINGS PAIGE ADDED OR TOOK AWAY ========== */
 
+
+
 .safeharbor {
 text-align: center;
-font-style: normal;
-font-weight: normal;
 font-size: 4em;
 text-shadow : 0 1px 0 rgba(255, 255, 255, 0.5);
-color: #3C3434;
+color: #666;
+font-family : 'Bree Serif', Georgia, serif;
+color : #5A5C63;
+font-weight : 400;
 }
 
 .thumbnail {
 border: none;
-box-shadow: none;}
+box-shadow: none;
+}
 
 .thumbnail > img {
 margin-left: 9px;
@@ -493,3 +513,6 @@ padding-bottom: 8px;
 
 }
 
+h1.safeharbor small, .page-header h1.small {
+font-family: "Droid Serif", Georgia, "Times New Roman", Times, serif;
+}
