@@ -141,9 +141,7 @@ cursor : default;
 background-color : transparent;
 }
 .navbar .brand {
-    display: block;
-    float: left;
- 	margin-left: 20px;
+   
  }
  
 /*Search*/
@@ -314,8 +312,6 @@ height : 500px;
 
 #admin_add_dispute_form{
 height: 1350px;
-margin: 40px 0px;
-width: auto;
 }
 
 .required {
