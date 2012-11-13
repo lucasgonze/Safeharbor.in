@@ -306,7 +306,6 @@ width: 1127px;
 padding-left : 181px;
 }
 #login_form {
-border : none;
 }
 
 #login_form .help-block{
@@ -323,6 +322,8 @@ height: 1350px;
 }
 #login_form {
 min-height: 500px;
+margin: 30px auto;
+padding: auto;
 }
 .required {
 color : #C42121;
