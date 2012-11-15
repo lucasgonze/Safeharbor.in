@@ -71,7 +71,7 @@ function home( req, res, next ){
 
 	// if we're on a developer host, show the real actual home page. (This will 
 	// become / for non-logged-in users once we remove the "coming soon" page and go live).
-	res.render('firstrun/corp.html', { layout:'shared/main.html' } );
+	res.render('firstrun/corp.html', { layout:'shared/main.html', corp_home: true } );
 //	res.render( 'firstrun/home.html', { layout:'firstrun/nop.html' } );
 
 }
