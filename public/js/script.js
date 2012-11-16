@@ -263,10 +263,10 @@ function initAjaxForms(){
 			url: '/contact',
 			data: $("form[action='/contact']").serialize(),
 			success: function success(data){				
-				alert("success");
+				alert("success: fixme UX");
 			},
 			error: function err(data){
-				alert("failure");
+				alert("failure: fixme UX");
 			}		
 		});
 		
