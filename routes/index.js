@@ -104,4 +104,5 @@ exports.setup = function(app) {
     require('./admin-routes.js').install(app);
     require('./dev-routes.js').install(app);
     require('./demo-routes.js').install(app);
+    require('./firstrun-routes.js').install(app);
 }

@@ -17,6 +17,15 @@ var initValidation = function(){
 
 	/* http://docs.jquery.com/Plugins/Validation#List_of_built-in_Validation_methods */
 	
+	$("body.corphome form[action='/contact']").validate({	
+		rules: {
+			email: {
+				email: true
+			}
+		}
+	});
+	
+	
 	$("#account_settings_form form").validate({	
 		rules: {
 			input_email: {
@@ -245,6 +254,24 @@ function initAccountForm(){
 }
 
 function initAjaxForms(){
+
+	$("body.corphome form[action='/contact']").submit(function() { 				
+		console.log("BP 33")
+		
+		$.ajax({
+			type: 'POST',
+			url: '/contact',
+			data: $("form[action='/contact']").serialize(),
+			success: function success(data){				
+				alert("success");
+			},
+			error: function err(data){
+				alert("failure");
+			}		
+		});
+		
+		return false; 
+	}); 
 
 	$('#loginform').submit(function() { 
 		

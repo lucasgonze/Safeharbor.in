@@ -1,0 +1,10 @@
+Someone has submitted the contact form on the site home page.
+
+Name: {{name}}
+
+Email: {{email}}
+
+Message: 
+
+{{message}}
+
