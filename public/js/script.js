@@ -256,7 +256,6 @@ function initAccountForm(){
 function initAjaxForms(){
 
 	$("body.corphome form[action='/contact']").submit(function() { 				
-		console.log("BP 33")
 		
 		$.ajax({
 			type: 'POST',

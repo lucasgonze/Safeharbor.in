@@ -528,3 +528,7 @@ color: #666;
 font-family: inherit;
 margin-bottom: 0px;
 }
+
+div.alert-error.hideerroruntilfail { display: none}
+div.alert-error.hideerroruntilfail.fail { display: block}
+
