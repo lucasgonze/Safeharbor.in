@@ -19,11 +19,14 @@ h6 {
 
 h1, h2, h3, h4, h5, h6 {
 font-family : 'Bree Serif', Georgia, serif;
-color : #5A5C63;
+color : #336699;
 font-weight : 400;
 }
 
-	
+h4 {
+font-size: 18px;
+margin-bottom: 10px;
+}	
 
 body {
 background: rgb(255,255,255); /* Old browsers */
@@ -486,10 +489,8 @@ article {
 text-align: center;
 font-size: 4em;
 text-shadow : 0 1px 0 rgba(255, 255, 255, 0.5);
-color: #666;
 line-height: 1em;
 font-family : 'Bree Serif', Georgia, serif;
-color : #5A5C63;
 font-weight : 400;
 }
 
@@ -501,7 +502,7 @@ margin-left: 9px;
  border-bottom: 1px solid #ccc; 
 }
   
-h1.safeharbor small, h1.page-header small {
+.safeharbor small, .page-header small {
 font-family: "Droid Serif", Georgia, "Times New Roman", Times, serif;
 }
 
@@ -534,7 +535,7 @@ margin: 20px 0 0 0;
 }
 
 
-h3.pull-quote {
+.pull-quote {
 font-size: 2em;
 line-height: 1.1em;
 color: #336699;
@@ -542,7 +543,3 @@ text-align: center;
 margin-top: 20px;
 }
 
-h4 {
-font-size: 18px;
-margin-bottom: 5px;
-}
