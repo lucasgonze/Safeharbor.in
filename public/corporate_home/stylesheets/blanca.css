@@ -126,7 +126,7 @@ padding-left: 100px;
 }
 
 .stripe-color {
-  background-image: url(../images/bgnoise.gif);
+  background-image: url(/corporate_home/images/noise.png);
   border-top: 1px solid #EEE;
   border-bottom: 1px solid #EEE;
 }
