@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
     <title>Safeharbor</title>
@@ -8,41 +9,30 @@
     <link href="/corporate_home/stylesheets/blanca.css" media="screen" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Serif:regular,italic,bold,bolditalic" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'><!-- JS is ordinarily at the end for speed but we need it before the body so that view pages 
+        can load custom libraries which rely on JQuery-->
+    <!-- fixme: shouldn't this be /js/libs/jquery-1.7.1.min.js instead of whatever is in /dash ?-->
 
-	<!-- JS is ordinarily at the end for speed but we need it before the body so that view pages 
-		can load custom libraries which rely on JQuery-->
-	<!-- fixme: shouldn't this be /js/libs/jquery-1.7.1.min.js instead of whatever is in /dash ?-->
-    <script src="/dash/js/jquery.js"></script>
+    <script src="/dash/js/jquery.js" type="text/javascript">
 </script>
 </head>
 
 <body class="corphome">
     <div id="nav" class="navbar navbar-fixed-top">
         <div class="navbar-inner">
-  
             <div class="container-fluid">
-              
-              
-              
-              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</a>
-<!-- <a href="index.html" class="brand">Safeharbor</a> -->
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"></a> <!-- <a href="index.html" class="brand">Safeharbor</a> -->
 
-             											    <div class="nav-collapse">
+                <div class="nav-collapse">
                     <ul class="nav pull-right">
-                      <!--   <li><a href="">Register</a></li> -->
+                        <!--   <li><a href="">Register</a></li> -->
 
-                        <li>   
-       <form action="/login" style="display:inline"><button type="submit" class="btn btn-inverse">Sign in</button></form>
-    </li>
-          
-
-    </ul>
-
+                        <li>
+                            <form action="/login" style="display:inline">
+                                <button type="submit" class="btn btn-inverse">Sign in</button>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -54,12 +44,11 @@
             <small>SafeHarbor.in</small></h1>
         </div>
     </div>
-<hr>
+    <hr>
 
     <div class="stripe landing-message">
         <div class="container">
-            <h3>
-				We handle DMCA takedown notices for search engines, user generated content sites and ISPs </h3>
+            <h3>We handle DMCA takedown notices for search engines, user generated content sites and ISPs</h3>
         </div>
     </div><!--
     <div class="stripe hero">
@@ -68,8 +57,7 @@
         </div>
     </div>
 -->
-    
-   <!--
+    <!--
  <div class="stripe stripe-color">
         <div class="container">
             <div id="email-now" class="row">
@@ -87,241 +75,247 @@
             </div>
         </div>
 -->
-        
-
     <hr>
     <!--Begin Product Facts -->
 
     <div class="stripe">
         <div class="container">
-         <div class="stripe">
-        <div class="container">
-            <div class="product-offering row">
-                <div class="span4">
-                  
-                    <h2>Our Product</h2>
-					
-					<p>We have created reusable forms for accepting DMCA takedown requests. Our forms are exhaustively double checked for problems and optimized for efficient processing on receipt.
-					<p><button type="submit" class="btn btn-large"><a href="http://demo.safeharbor.in/demo">View Demo</a>
-</button></p>
+            <div class="stripe">
+                <div class="container">
+                    <div class="product-offering row">
+                        <div class="span4">
+                            <h2>Our Product</h2>
+
+                            <p>We have created reusable forms for accepting DMCA takedown requests. Our forms are exhaustively double checked for problems and optimized for efficient processing on receipt.</p>
+
+                            <p><button type="submit" class="btn btn-large"><a href="http://demo.safeharbor.in/demo">View Demo</a></button></p>
+                        </div>
+
+                        <div class="span4">
+                            <h2>Our Solution</h2>
+
+                            <p>We know that this is not just a software problem. We are here to help with buying and configuring third-party software, forms for submitting requests, workflow processes and training.</p>
+
+                            <p><button type="submit" class="btn btn-large"><a href="">Learn More</a></button></p>
+                        </div>
+
+                        <div class="span4">
+                            <h2>Our Services</h2>
+
+                            <p>We have devoted our time and energy to figuring out how to solve the problems you have. Whatever issues you are presently dealing with, come talk to us about maintenance and improvements.</p>
+
+                            <p><button type="submit" class="btn btn-large"><a href="">Contact Us</a></button></p>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="span4">
-                  
-                    <h2>Our Solution</h2>
-
-                    <p>We know that this is not just a software problem. We are here to help with buying and configuring third-party software, forms for submitting requests, workflow processes and training.</p><p><button type="submit" class="btn btn-large"><a href="">Learn More</a>
-</button></p>
-
-	
-                </div>
-
-                <div class="span4">
-                  
-                    <h2>Our Services</h2>
-
-                    <p>We have devoted our time and energy to figuring out how to solve the problems you have. Whatever issues you are presently dealing with, come talk to us about maintenance and improvements.</p><p><button type="submit" class="btn btn-large"><a href="">Contact Us </a>
-</button></p>
-
-                </div>
-  </div>
-          </div>
-         </div><!--End Product Facts -->
-
- <!--Begin Audience Types -->
-
-    <div class="stripe">
-        <div class="container">
-         <div class="stripe">
-        <div class="container">
-            <div class="product-offering row">
-                <div class="span4">
-                  
-                    <h2>Audience 1</h2>
-					
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-					<p><a href="http://demo.safeharbor.in/demo">View Demo</a></p>
-
-                </div>
-
-                <div class="span4">
-                  
-                    <h2>Audience 2</h2>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-	
-                </div>
-
-                <div class="span4">
-                  
-                    <h2>Audience 3</h2>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                </div>
-  </div>
-          </div>
-         </div><!--End Audience Types -->
-                     
-  <div class="stripe">
-        <div class="container">
-            <div class="row">
-                <div class="span3">
-                    <img alt="Cloud" class="feature-icon" src="/corporate_home/images/thumb.png">
-
-                    <h2>Get it right</h2>
-
-                    <p>It's easy to make a mistake with DMCA rules, and sites often do. Because we're specialists we're less likely to make a mistake, and because our software is shared across many sites we can invest more time in the details.</p>
-                </div>
-
-                <div class="span3">
-                    <img alt="Browser" class="feature-icon" src="/corporate_home/images/people.png">
-
-                    <h2>Worry Less</h2>
-
-                    <p>Copyright lawsuits are a huge risk. A trivial mistake can easily balloon into millions of dollars in lawsuits. Don't just cross your fingers and hope - outsourcing to us means we take on some of the worrying.</p>
-                </div>
-
-                <div class="span3">
-                    <img alt="Music" class="feature-icon" src="/corporate_home/images/dollar.png">
-
-                    <h2>Save Money</h2>
-
-                    <p>Doing it yourself is the expensive way to do it, since so much DMCA infrastructure is the same from one company to another.</p>
-                </div>
-
-                <div class="span3">
-                    <img alt="Music" class="feature-icon" src="/corporate_home/images/hourglass.png">
-
-                    <h2>Stay Focused</h2>
-
-                    <p>You need to concentrate on what you do that's unique, but that doesn't mean you can afford to leave yourself exposed. Using us to deal with the DMCA means your time and attention can be devoted to your unique value proposition.</p>
-                </div>
-            </div>
-          </div>
-         </div><!--End Product Facts -->
-                        <!--Begin Our Mission-->
+            </div><!--End Product Facts -->
+            <!--Begin Audience Types -->
 
             <div class="stripe">
                 <div class="container">
-                    <div class="row">
-                        <div class="span12">
-                            <div class="page-header">
-                                <h1>Our Mission</h1>
+                    <div class="stripe">
+                        <div class="container">
+                            <div class="product-offering row">
+                                <div class="span4">
+                                    <h2>Audience 1</h2>
+
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                                    <p><a href="http://demo.safeharbor.in/demo">View Demo</a></p>
+                                </div>
+
+                                <div class="span4">
+                                    <h2>Audience 2</h2>
+
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                </div>
+
+                                <div class="span4">
+                                    <h2>Audience 3</h2>
+
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--End Audience Types -->
+
+                    <div class="stripe">
+                        <div class="container">
+                            <div class="row">
+                                <div class="span3">
+                                    <img alt="Cloud" class="feature-icon" src="/corporate_home/images/thumb.png">
+
+                                    <h2>Get it right</h2>
+
+                                    <p>It's easy to make a mistake with DMCA rules, and sites often do. Because we're specialists we're less likely to make a mistake, and because our software is shared across many sites we can invest more time in the details.</p>
+                                </div>
+
+                                <div class="span3">
+                                    <img alt="Browser" class="feature-icon" src="/corporate_home/images/people.png">
+
+                                    <h2>Worry Less</h2>
+
+                                    <p>Copyright lawsuits are a huge risk. A trivial mistake can easily balloon into millions of dollars in lawsuits. Don't just cross your fingers and hope - outsourcing to us means we take on some of the worrying.</p>
+                                </div>
+
+                                <div class="span3">
+                                    <img alt="Music" class="feature-icon" src="/corporate_home/images/dollar.png">
+
+                                    <h2>Save Money</h2>
+
+                                    <p>Doing it yourself is the expensive way to do it, since so much DMCA infrastructure is the same from one company to another.</p>
+                                </div>
+
+                                <div class="span3">
+                                    <img alt="Music" class="feature-icon" src="/corporate_home/images/hourglass.png">
+
+                                    <h2>Stay Focused</h2>
+
+                                    <p>You need to concentrate on what you do that's unique, but that doesn't mean you can afford to leave yourself exposed. Using us to deal with the DMCA means your time and attention can be devoted to your unique value proposition.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--End Product Facts -->
+                    <!--Begin Our Mission-->
+
+                    <div class="stripe">
+                        <div class="container">
+                            <div class="row">
+                                <div class="span12">
+                                    <div class="page-header">
+                                        <h1>Our Mission</h1>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="span6">
+                                    <p>We specialize in technology for handling DMCA requests because raising the bar on this technology can create a more fair world for web sites, for their users, and for copyright owners.</p>
+
+                                    <p>On the internet, authors have a hard time enforcing their copyrights. People who upload content to sites like YouTube get pushed around by copyright owners. Web sites have too much risk and too big a burden. We think that really well made technology for implementing the DMCA can reduce all these harms.</p>
+                                </div>
+
+                                <div class="span6">
+                                    <h3 class="pull-quote">Companies often do a suboptimal job because legal risk is not core to their mission. So we made it our core mission. <small>-Lucas Gonze</small></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--End Our Mission-->
+                    <!--Begin FAQ-->
+
+                    <div class="stripe">
+                        <div class="container">
+                            <div class="row">
+                                <div class="span12">
+                                    <div class="page-header">
+                                        <h1>Frequently Asked Questions <small>how Safeharbor helps with DMCA compliance</small></h1>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row questions">
+                                <div class="span6">
+                                    <h3>How does the solution work?</h3>
+
+                                    <p>We provide a suite of products and services around your workflow for handling DMCA requests. That includes programming, training, and third party customer support software.</p>
+
+                                    <h3>How do I get started?</h3>
+
+                                    <p><a href="#contact-us">Contact us</a> to discuss your company's needs.</p>
+                                </div>
+
+                                <div class="span6">
+                                    <h3>Why it's so important to get it right</h3>
+
+                                    <p>For a web site, a copyright lawsuit is a nightmare. At best it's expensive and distracting, at worst the company goes out of business. You're better off preventing lawsuits than defending them.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--End FAQ -->
+                    <!--Begin Our Team -->
+
+                    <div class="stripe">
+                        <div class="container">
+                            <div class="row">
+                                <div class="span12">
+                                    <div class="page-header">
+                                        <h1>Our team</h1>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="about" class="row">
+                                <div class="span4">
+                                    <img src="/corporate_home/images/lucas.png" class="thumbnail">
+
+                                    <h4>Lucas Gonze</h4>
+
+                                    <p class="sub">Lucas is a digital music veteran. He is a former executive at Yahoo! Music, founded Webjay! and led consumer electronics at MOG.</p>
+
+                                    <p class="sub"></p>
+
+                                    <blockquote>
+                                        "I'm here because I had an insight that much of the collision between the internet and copyright is a technology problem. I want to bring safe harbor technology to the point of creating a more fair world for artists, web sites, and curators."
+                                    </blockquote>
+                                    <p>
+                                </div>
+
+                                <div class="span4">
+                                    <img src="/corporate_home/images/nicole.png" class="thumbnail">
+
+                                    <h4>Nicole Lafayette Young</h4>
+
+                                    <p class="sub">Nicole is a former senior executive at Charles Schwab. She likes making things happen, yoga and living in New York City. She's Safe Harbor's "designated adult" or C.O.O.</p>
+
+                                    <p></p>
+
+                                    <blockquote>
+                                        "I'm here to support Lucas' passion for bringing law and order to the copyright frontier. Further, the fact that he's a good guy compels me. It's energizing to collaborate with smart people. It matters to me that our product is grounded in being useful <em>and</em> fair."
+                                    </blockquote>
+                                    <p>
+                                </div>
+
+                                <div class="span4">
+                                    <img src="http://placehold.it/260x300" class="thumbnail">
+
+                                    <h4>Paige Saez-Falcon</h4>
+
+                                    <p class="sub">Paige is an interaction designer with a passion for the intersection of community, culture and art. She's fond of HCI, art and rhinestones. She lives and works in San Francisco.</p>
+
+                                    <p></p>
+
+                                    <blockquote>
+                                        "I am here because I believe in the transformative power of the arts but recognize that traditional economic models are being revolutionized by the internet and other socially transformative technologies. I want to help foster sustainable, fair economic modes of keeping creative collaborative culture alive."
+                                    </blockquote>
+                                    <p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="span6">
-	
-						<p>We specialize in technology for handling DMCA requests because raising the bar on this technology can create a more fair world for web sites, for their users, and for copyright owners. </p>		<p>On the internet, authors have a hard time enforcing their copyrights. People who upload content to sites like YouTube get pushed around by copyright owners. Web sites have too much risk and too big a burden. We think that really well made technology for implementing the DMCA can reduce all these harms.</p>
-												
-                        </div>
+                    <div class="stripe" style="display:none">
+                        <div class="container">
+                            <div id="team-desc" class="row">
+                                <div class="span10 offset1">
+                                    <h2>We care about Copyright</h2>
+                                </div>
 
-                        <div class="span6">
-							<h3 class="pull-quote">Companies often do a suboptimal job because legal risk is not core to their mission. So we made it our core mission. <small> -Lucas Gonze</small></h3>	
-                        </div>
+                                <div class="span5 offset1">
+                                    <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
 
+                                    <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+                                </div>
 
-						
+                                <div class="span5">
+                                    <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
 
-
-                    </div>
-                </div>
-            </div><!--End Our Mission-->
-            <!--Begin FAQ-->
-
-            <div class="stripe">
-                <div class="container">
-                    <div class="row">
-                        <div class="span12">
-                            <div class="page-header">
-                                <h1>Frequently Asked Questions <small>how Safeharbor helps with DMCA compliance</small></h1>
+                                    <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row questions">
-                        <div class="span6">
-                            <h3>How does the solution work?</h3>
-
-                            <p>We provide a suite of products and services around your workflow for handling DMCA requests. That includes programming, training, and third party customer support software.</p>
-
-                            <h3>How do I get started?</h3>
-
-                            <p><a href="#contact-us">Contact us</a> to discuss your company's needs.</p>
-
-                            
-                        </div>
-
-                        <div class="span6">
-                            <h3>Why it's so important to get it right</h3>
-
-							<p>For a web site, a copyright lawsuit is a nightmare. At best it's expensive and distracting, at worst the company goes out of business.  You're better off preventing lawsuits than defending them.</p>
-
-                                                 </div>
-                    </div>
-                </div>
-            </div><!--End FAQ -->
-            
-            <!--Begin Our Team -->
-            
-            <div class="stripe">
-<div class="container">
-	<div class="row">
-		<div class="span12">
-			<div class="page-header"><h1>Our team</h1></div>
-		</div>
-	</div>	
-	<div id="about" class="row">
-		<div class="span4">
-			<img src="/corporate_home/images/lucas.png" class="thumbnail" />
-			<h4>Lucas Gonze</h4>
-			<p class="sub">Lucas is a digital music veteran. He is a former executive at Yahoo! Music, founded Webjay! and led consumer electronics at MOG. </p>
-			<p class="sub"><blockquote>"I'm here because I had an insight that much of the collision between the internet and copyright is a technology problem. I want to bring safe harbor technology to the point of creating a more fair world for artists, web sites, and curators."</blockquote></p>
-			
-		</div>
-		<div class="span4">
-			<img src="/corporate_home/images/nicole.png" class="thumbnail" />
-			<h4>Nicole Lafayette Young</h4>
-			<p class="sub">Nicole is a former senior executive at Charles Schwab. She likes making things happen, yoga and living in New York City. She's Safe Harbor's "designated adult" or C.O.O.</p>
-			<p><blockquote>"I'm here to support Lucas' passion for bringing law and order to the 
-			copyright frontier. Further, the fact that he's a good guy
-			compels me.  It's energizing to collaborate with smart
-			people. It matters to me that our product is grounded 
-			in being useful <em>and</em> fair."</blockquote></p>
-		</div>
-		<div class="span4">
-			<img src="http://placehold.it/260x300" class="thumbnail" />
-			<h4>Paige Saez-Falcon</h4>
-			<p class="sub">Paige is an interaction designer with a passion for the intersection of community, culture and art. She's fond of HCI, art and rhinestones. She lives and works in San Francisco. </p>
-			<p><blockquote>"I am here because I believe in the transformative power of the arts but recognize that traditional economic models are being revolutionized by the internet and other socially transformative technologies. I want to help foster sustainable, fair economic modes of keeping creative collaborative culture alive."</blockquote> </p>
-		</div>
-			</div>
-</div>
-</div>
-<div class="stripe" style="display:none">
-	<div class="container">
-	<div id="team-desc" class="row">
-		<div class="span10 offset1">
-			<h2>We care about Copyright</h2>
-		</div>
-		<div class="span5 offset1">
-			<p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p> 
-			<p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
-		</div>
-		<div class="span5">
-			<p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
-			<p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-		</div>
-	</div>
-</div>
-</div>
-            <!--End Our Team  -->
-
-            <!--Begin Contact Us, Form Letter 
-            <div class="stripe" id="contact-us">
+                    </div><!--End Our Team  -->
+                    
+                  <div class="stripe" id="contact-us">
                 <div class="container">
                     <div class="row">
                         <div class="span12">
@@ -362,85 +356,78 @@
                         </div>
                     </div>
                 </div>
-            </div><!--End Contact Us, Form Letter -->
-       
+            </div>
+<footer>
+                    <footer>
+                        <div id="footer" class="stripe-color">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="span3">
+                                        <h6>Contact us:</h6>
 
-        <footer>
-            <footer>
-                <div id="footer" class="stripe-color">
-                    <div class="container">
-                        <div class="row">
-                            <div class="span3">
-                                <h6>Contact us:</h6>
+                                        <address>
+                                            <strong>SafeHarbor Technology, Inc.</strong><br>
+                                            548 Market St #78343<br>
+                                            San Francisco, CA 94104-5401<br>
+                                            <abbr title="Phone">P:</abbr> (415) 967-1342
+                                        </address>
+                                    </div>{{#if false}}
 
-                    
-                 
+                                    <div class="span3">
+                                        <h6>From the Blog</h6>
 
+                                        <p>Some Comment here about something</p>
 
-                    
-                                <address>
-                                    <strong>SafeHarbor Technology, Inc.</strong><br>
-                                    548 Market St #78343<br>
-                                    San Francisco, CA 94104-5401<br>
-                                    <abbr title="Phone">P:</abbr> (415) 967-1342
-                                </address>
-                            </div>
+                                        <p class="sub">April 31st, 2012</p>
 
-{{#if false}}
-                            <div class="span3">
-                                <h6>From the Blog</h6>
+                                        <p>A Comment from Lucas about Copyright</p>
 
-                                <p>Some Comment here about something</p>
+                                        <p class="sub">February 2nd, 2012</p>
+                                    </div>
 
-                                <p class="sub">April 31st, 2012</p>
+                                    <div class="span3">
+                                        <h6>From Facebook</h6>
 
-                                <p>A Comment from Lucas about Copyright</p>
+                                        <p>Latest additions to our team make us stronger, faster, better!</p>
 
-                                <p class="sub">February 2nd, 2012</p>
-                            </div>
+                                        <p class="sub">April 31st, 2012</p>
 
-                            <div class="span3">
-                                <h6>From Facebook</h6>
+                                        <p>Other Comment Here</p>
 
-                                <p>Latest additions to our team make us stronger, faster, better!</p>
+                                        <p class="sub">March 20th, 2012</p>
+                                    </div>
 
-                                <p class="sub">April 31st, 2012</p>
+                                    <div class="span3">
+                                        <h6>From Twitter</h6>
 
-                                <p>Other Comment Here</p>
+                                        <p><a href="">@SafeHarbor.in</a> Some Comment Here about Something someone said</p>
 
-                                <p class="sub">March 20th, 2012</p>
-                            </div>
+                                        <p class="sub">One hour ago (12:32 PM)</p>
 
-                            <div class="span3">
-                                <h6>From Twitter</h6>
+                                        <p><a href="">@simon</a> way to go!</p>
 
-                                <p><a href="">@SafeHarbor.in</a> Some Comment Here about Something someone said</p>
+                                        <p class="sub">Two hours ago (11:45 AM)</p>
+                                    </div>{{/if}}
+                                </div>
 
-                                <p class="sub">One hour ago (12:32 PM)</p>
+                                <div class="divider"></div>
 
-                                <p><a href="">@simon</a> way to go!</p>
-
-                                <p class="sub">Two hours ago (11:45 AM)</p>
-                            </div>
-{{/if}}
-                        </div>
-
-                        <div class="divider"></div>
-
-                        <div class="row last">
-                            <div class="span12">
-                                <p class="sub">&copy; Safeharbor 2012 | SafeHarbor Technology provides services for DMCA compliance. Our mission is to reduce risk, expense, and stress for web sites while being effective and efficient for copyright owners.</p>
+                                <div class="row last">
+                                    <div class="span12">
+                                        <p class="sub">&copy; Safeharbor 2012 | SafeHarbor Technology provides services for DMCA compliance. Our mission is to reduce risk, expense, and stress for web sites while being effective and efficient for copyright owners.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </footer><script src="/dash/js/bootstrap-alert.js" type="text/javascript">
+</script> <script src="/dash/js/bootstrap-dropdown.js" type="text/javascript">
+</script> <script src="/js/libs/jquery-validation-x/jquery.validate.min.js" type="text/javascript">
+</script> <script src="/js/script.js" type="text/javascript">
+</script> <script type="text/javascript" src="lightbox/jquery.fancybox.js?v=2.1.3">
+</script>
                 </div>
-            </footer>
-		    <script src="/dash/js/bootstrap-alert.js"></script>
-		    <script src="/dash/js/bootstrap-dropdown.js"></script>
-			<script src="/js/libs/jquery-validation-x/jquery.validate.min.js"></script>
-		    <script src="/js/script.js"></script>
-			<script type="text/javascript" src="lightbox/jquery.fancybox.js?v=2.1.3"></script>
-        </footer>
+            </div>
+        </div>
     </div>
 </body>
 </html>
