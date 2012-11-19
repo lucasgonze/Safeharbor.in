@@ -47,9 +47,11 @@ label,
 input,
 button,
 select,
-textarea {
+textarea,
+blockquote {
   font-family: "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
+font-size: 1.2em;
+line-height: 1.3em;}
 
 p,
 li,
@@ -525,11 +527,19 @@ border-radius: 4px 4px 4px 4px;
 
 blockquote {
 border: 0 none;
-
-padding: 0;
-font-size: 1.1em;
+color: #666;
+padding: 0 5px 0 5px;
 font-style: italic;
 margin: 20px 0 0 0;
+}
+
+
+h3.pull-quote {
+font-size: 2em;
+line-height: 1.1em;
+color: #336699;
+text-align: center;
+margin-top: 20px;
 }
 
 h4 {
