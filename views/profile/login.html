@@ -9,7 +9,7 @@
 <div id="form_leftside">
 	<form class="span11 form-horizontal action="/login" method="post" id="loginform"  {{loginStatus}}">
 
-		<div class="alert alert-error">
+		<div class="alert alert-error hideerroruntilfail">
 			<!-- fixme: on typing, hide error message -->
 			Not found. 
 		</div>
@@ -33,7 +33,7 @@
               <label class="control-label" for="password">Your Password</label>
 
               <div class="controls">
-                <input type="text" id="password" name="password" autofocus placeholder=
+                <input type="password" id="password" name="password" autofocus placeholder=
                 "" value="" /><span class=
                 "required help-inline">*required</span>
                 <span class="help-block"><a href="/lostpassword">Lost your password?</a></span>

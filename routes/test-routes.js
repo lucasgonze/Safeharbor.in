@@ -51,6 +51,24 @@ function loggedout(req,res){
 		nop(req,res);
 }
 
+// note: there is no automated caller of this yet yet, because I can't figure out how to check mail
+// from the master test script.
+function mail(req,res){
+	var params = {};
+	params.templateVars = {
+		name: req.body.name,
+		email: req.body.email,
+		message: req.body.message
+	};
+	
+	params.template = "test-mail";
+	params.to = "lucas@gonze.com";
+	params.subject = "Test mail from SH.i";
+	params.viewsSubdir = 'test';
+
+	require('../lib/mail.js').to(params);
+	nop(req,res);
+}
 exports.install = function( app ){		
 	app.get('/test/nop', nop);	
 	app.get('/test/admin', app.checkRole(app.ROLES.admin), nop);	
@@ -60,8 +78,9 @@ exports.install = function( app ){
 	app.get('/test/404',status404);	
 	app.get('/test/400',status400);	
 	app.get('/test/runtimeException',runtimeException);	
-	app.get('/test/toStringOfUndefined',toStringOfUndefined)
-	app.get('/test/alerts',alerts)
+	app.get('/test/toStringOfUndefined',toStringOfUndefined);
+	app.get('/test/alerts',alerts);
+	app.get('/test/mail',mail);
 }
 
 
