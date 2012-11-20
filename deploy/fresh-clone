@@ -6,7 +6,12 @@
 
 # We store checkouts in a directory called "checkouts" in your home directory.
 DATE=`date +m%m_d%d_y%y_h%H_m%M`
-D="~/checkouts/$DATE"
+D="./$DATE"
+if [ -d "$D" ]
+	then 
+	echo "$D already exists, cowardly refusing to create it again"
+	exit 1
+fi
 mkdir -p "$D" || exit "$D" $?
 cd "$D" || exit $?
 
@@ -23,5 +28,6 @@ npm install || exit $?
 git remote add github https://github.com/lucasgonze/Safeharbor.in.git
 git remote add latest git@heroku.com:quiet-planet-1702.git
 git remote add paige git@heroku.com:severe-winter-9697.git
+git remote add production git@heroku.com:safeharbor-prod.git
 
-echo "Fresh clone in ~/latest-checkout ready for use"
+echo "Fresh clone in $D ready for use"
