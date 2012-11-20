@@ -1,7 +1,7 @@
 body {
   font-family: "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 background-image: url(/corporate_home/images/noise.png);
-}
+outline: 0 none;}
 
 
 /*
@@ -30,14 +30,6 @@ margin-bottom: 10px;
 }	
 
 body {
-background: rgb(255,255,255); /* Old browsers */
-background: -moz-linear-gradient(top,  rgba(255,255,255,1) 29%, rgba(215,223,230,1) 29%, rgba(215,223,230,1) 29%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(29%,rgba(255,255,255,1)), color-stop(29%,rgba(215,223,230,1)), color-stop(29%,rgba(215,223,230,1))); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 29%,rgba(215,223,230,1) 29%,rgba(215,223,230,1) 29%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  rgba(255,255,255,1) 29%,rgba(215,223,230,1) 29%,rgba(215,223,230,1) 29%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  rgba(255,255,255,1) 29%,rgba(215,223,230,1) 29%,rgba(215,223,230,1) 29%); /* IE10+ */
-background: linear-gradient(to bottom,  rgba(255,255,255,1) 29%,rgba(215,223,230,1) 29%,rgba(215,223,230,1) 29%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#d7dfe6',GradientType=0 ); /* IE6-9 */
 }
 
 a {
@@ -517,9 +509,9 @@ margin: 0;
 }
 
 .product-offering h2 {
-font-size: 3em;
+font-size: 2.7em;
 margin-bottom: 10px;
-color: #1b75bc;
+color: #336699;
 }
 
 
