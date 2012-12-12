@@ -342,12 +342,8 @@ function initAjaxForms(){
 
 function initTour(){
 
-	if(  window.location.search.match("autopilot=off") !== null ) 
-		return; // to allow opening /demo without running the script
-	if( window.location.pathname !== "/demo" && window.location.search.match("autopilot=on") === null )
-		return;
-
-	var tourdata = [	
+	var tourdata = 
+	[	
 		{
 			html: "Click the caption block to pause, stop, or skip",
 			element: "div#demo0",
@@ -384,13 +380,13 @@ function initTour(){
 			element: "div#demo50 div.show",
 			position: "w",
 			expose: true,
-			goTo: "/demo/blank?autopilot=on"
+			goTo: "/demo/blank"
 		}, 
 		
 		{
 			html: "<div class='goal'><h2>Etsy's Goal</h2> Minimize custom development by using off-the-shelf software.</div>",
 			position: "c",
-			goTo: "/inbox/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"
+			goTo: "/inbox/a87ff679a2f3e71d9181a67b7542122c"
 		}, 
 		{
 			html: "<div class='goal'><h2>Solution</h2> The Safeharbor.in hosted app is the only off-the-shelf package on the market.</div> ",
@@ -417,14 +413,14 @@ function initTour(){
 			html: "Attractive design conveys quality and makes the customer's site look good",
 			element: "span.youarehere",
 			position: "n", 
-			goTo: "/demo/blank?autopilot=on"
+			goTo: "/demo/blank"
 		},
 		
 
 		{
 			html: "<div class='goal'><h2>Etsy's Goal</h2> Save time by preventing invalid complaints and streamlining business processes.</div>",
 			position: "c",
-			goTo: "/inbox/help/learn/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"		
+			goTo: "/inbox/help/learn/a87ff679a2f3e71d9181a67b7542122c"		
 		}, 
 		{	
 			overlayOpacity: false,
@@ -437,13 +433,13 @@ function initTour(){
 			overlayOpacity: false,
 			html: "Pre-written answers to standard questions. Web sites can paste them into emails or just send a link",
 			position: "n",
-			goTo: "/inbox/role/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"
+			goTo: "/inbox/role/a87ff679a2f3e71d9181a67b7542122c"
 		}, 
 		{
 			html: "Discourage posters who don't have legal standing",
 			element: "div.yourrole",
 			position: "e",
-			goTo: "/inbox/form/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"		
+			goTo: "/inbox/form/a87ff679a2f3e71d9181a67b7542122c"		
 		},
 		{
 			html: "Copyright owners do the data entry for each request, rather than sending an email or paper mail and having the web site copy details into a form",
@@ -465,39 +461,39 @@ function initTour(){
 			element: "div#demo-tgt-bypass",
 			position: "n",
 			html: "Guide copyright owners away from email (and into the form) by showing this <em>Bypass</em> link after the form",
-			goTo: "/inbox/bymail/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"			
+			goTo: "/inbox/bymail/a87ff679a2f3e71d9181a67b7542122c"			
 		},
 		 {
 			html: "When copyright owners do use email instead of the form, help them get it right, so that the web site doesn't have to go back and forth with them",
 			element: "p.demo-highlight",
 			position: "w",
-			goTo: "/demo/blank?autopilot=on"
+			goTo: "/demo/blank"
 		},
 
 
 		{
 			html: "<div class='goal'><h2>Etsy's Goal</h2> Be a hard target for lawsuits.</div>",
 			position: "c",
-			goTo: "/inbox/bymail/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"
+			goTo: "/inbox/bymail/a87ff679a2f3e71d9181a67b7542122c"
 		}, 
 		{
 			html: "Sites often leave one of these pieces of contact information out, and they are all required by law",
 			element: "div#demo-tgt-20",
 			position: "e",
-			goTo: "/inbox/help/learn/a87ff679a2f3e71d9181a67b7542122c?autopilot=on",
+			goTo: "/inbox/help/learn/a87ff679a2f3e71d9181a67b7542122c",
 		},
 		{
 			html: "The sophisticated look and thorough feature set of our software says that the web site takes the law seriously",
 			element: "h3#demo-tgt-200",
 			position: "n",
-			goTo: "/demo/blank?autopilot=on"
+			goTo: "/demo/blank"
 		},
 
 
 		{
 			html: "<div class='goal'><h2>Etsy's Goal</h2> Avoid starting a conflict with copyright owners by providing an efficient notification process.</div>",
 			position: "c",
-			goTo: "/inbox/form/a87ff679a2f3e71d9181a67b7542122c?autopilot=on"		
+			goTo: "/inbox/form/a87ff679a2f3e71d9181a67b7542122c"		
 		}, 
 		{
 			element: "button#report_another",
@@ -507,7 +503,7 @@ function initTour(){
 			element: "div#legalrequiredfields",
 			position: "e",
 			html: "Readable typography makes it easier to fill in the form correctly",
-			goTo: "/demo/blank?autopilot=on"
+			goTo: "/demo/blank"
 		},
 		
 		{
@@ -516,7 +512,7 @@ function initTour(){
 		}
 		
 				
-		]; 
+	]; 
 		
 	/* For debugging */
 	nottourdata = [	
@@ -530,7 +526,7 @@ function initTour(){
 	var myTour = jTour(tourdata,{
 			keyboardNav: true,
 			overlayOpacity: 0,
-			expose: true,
+				expose: true,
 			onStart: function(current){console.log("onStart step "+current)},
 			onPause: function(current){console.log("onPause step "+current)},
 			onPlay: function(current){console.log("onPlay step "+current)},
