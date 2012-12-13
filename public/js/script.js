@@ -384,12 +384,12 @@ function initTour(){
 		}, 
 		
 		{
-			html: "<div class='goal'><h2>Etsy's Goal</h2> Minimize custom development by using off-the-shelf software.</div>",
+			html: "<div class='goal'><h2>Etsy's Goal</h2> Avoid developing their own DMCA forms.</div>",
 			position: "c",
 			goTo: "/inbox/a87ff679a2f3e71d9181a67b7542122c"
 		}, 
 		{
-			html: "<div class='goal'><h2>Solution</h2> The Safeharbor.in hosted app is the only off-the-shelf package on the market.</div> ",
+			html: "<div class='goal'><h2>Solution</h2> We provide a hosted app. It's the only off-the-shelf package on the market.</div> ",
 			position: "c"
 		}, 
 		{
@@ -407,7 +407,7 @@ function initTour(){
 			element: "#globalnavhighlight a",
 			position: "e",
 			offset: 20,
-			html: "Branding (just set logo image)"
+			html: "Simple customization (just set logo image)"
 		}, 
 		{
 			html: "Attractive design conveys quality and makes the customer's site look good",
