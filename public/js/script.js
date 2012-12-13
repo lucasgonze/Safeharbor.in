@@ -389,7 +389,7 @@ function initTour(){
 			goTo: "/inbox/a87ff679a2f3e71d9181a67b7542122c"
 		}, 
 		{
-			html: "<div class='goal'><h2>Solution</h2> We provide a hosted app. It's the only off-the-shelf package on the market.</div> ",
+			html: "<div class='goal nop'><h2>Solution</h2> We provide a hosted app. It's the only off-the-shelf package on the market.</div>  ",
 			position: "c"
 		}, 
 		{
